@@ -1,0 +1,22 @@
+$taskRuntimeRoot = 'D:\传智杯1\.counterlab-runtime'
+foreach ($taskSubdirectory in @('tmp','cache','npm','pnpm','node-cache','browser')) { New-Item -ItemType Directory -Path (Join-Path $taskRuntimeRoot $taskSubdirectory) -Force | Out-Null }
+$env:TEMP = Join-Path $taskRuntimeRoot 'tmp'
+$env:TMP = $env:TEMP
+$env:npm_config_cache = Join-Path $taskRuntimeRoot 'npm'
+$env:npm_config_userconfig = Join-Path $taskRuntimeRoot 'npmrc'
+$env:npm_config_update_notifier = 'false'
+$env:PNPM_HOME = Join-Path $taskRuntimeRoot 'pnpm'
+$env:COREPACK_HOME = Join-Path $taskRuntimeRoot 'cache\corepack'
+$env:NODE_COMPILE_CACHE = Join-Path $taskRuntimeRoot 'node-cache'
+$env:XDG_CACHE_HOME = Join-Path $taskRuntimeRoot 'cache'
+$env:XDG_CONFIG_HOME = Join-Path $taskRuntimeRoot 'config'
+$env:XDG_DATA_HOME = Join-Path $taskRuntimeRoot 'data'
+$env:XDG_STATE_HOME = Join-Path $taskRuntimeRoot 'state'
+$env:pnpm_config_cache_dir = Join-Path $taskRuntimeRoot 'cache\pnpm'
+$env:pnpm_config_state_dir = Join-Path $taskRuntimeRoot 'state\pnpm'
+$env:pnpm_config_store_dir = Join-Path $taskRuntimeRoot 'pnpm-store'
+$env:PLAYWRIGHT_BROWSERS_PATH = Join-Path $taskRuntimeRoot 'browser'
+$env:PYTHONDONTWRITEBYTECODE = '1'
+$env:PIP_CACHE_DIR = Join-Path $taskRuntimeRoot 'cache\pip'
+$env:GIT_TERMINAL_PROMPT = '0'
+

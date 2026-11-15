@@ -1,0 +1,11 @@
+:root {
+  --paper: #f7f4ed;
+  --ink: #222820;
+  --muted: #6b6257;
+  --line: #ded8cd;
+  --subtle: #eee8dd;
+  --orange: #bf411d;
+  --blue: #426988;
+  --green: #526c3e;
+  color-scheme: light;
+}

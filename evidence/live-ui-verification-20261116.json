@@ -1,0 +1,14 @@
+{
+  "kind": "real-provider-through-browser",
+  "at": "2026-11-15T17:49:39.739Z",
+  "provider": "DeepSeek",
+  "model": "deepseek-flash",
+  "calls": 2,
+  "inputTokens": 972,
+  "outputTokens": 419,
+  "elapsedMs": 5977,
+  "previewConfirmed": true,
+  "explanationRendered": true,
+  "pageErrors": [],
+  "scope": "Two real paid model requests through visible workbench; arbitrary model prose still needs human review."
+}

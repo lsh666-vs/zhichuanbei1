@@ -1,0 +1,14 @@
+{
+  "errors": [],
+  "violations": [],
+  "dimensions": {
+    "viewport": 390,
+    "document": 390
+  },
+  "timings": {
+    "readyMs": 182,
+    "evaluationUiMs": 82,
+    "playbackUiMs": 21,
+    "scope": "Single local browser run including automation and HTTP overhead; not a rendering profiler or cross-machine guarantee."
+  }
+}

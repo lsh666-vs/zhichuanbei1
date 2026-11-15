@@ -1,0 +1,55 @@
+{
+    "kind":  "portable-candidate-verification",
+    "testedAt":  "2026-11-15T18:10:38.9877930Z",
+    "archive":  "D:\\传智杯1\\counterlab\\release\\CounterLab-win-x64-20261116-020419-366.zip",
+    "archiveSha256":  "f0954f9bb4e180a863f99db721640b39a879a0259f63a6d3a5f0ba9dd4ecfdb7",
+    "sidecarChecksumVerified":  true,
+    "freshDirectory":  "D:\\CounterLab release check 20261116-020846-398",
+    "port":  4320,
+    "node":  {
+                 "version":  "v24.22.1",
+                 "node":  "D:\\CounterLab release check 20261116-020846-398\\CounterLab-win-x64-20261116-020419-366\\runtime\\node.exe",
+                 "tsx":  "file:///D:/CounterLab%20release%20check%2020261116-020846-398/CounterLab-win-x64-20261116-020419-366/node_modules/tsx/dist/loader.mjs",
+                 "fastify":  "file:///D:/CounterLab%20release%20check%2020261116-020846-398/CounterLab-win-x64-20261116-020419-366/node_modules/fastify/fastify.js"
+             },
+    "manifestFiles":  7278,
+    "extractionMs":  91533,
+    "integrityCheckMs":  13117,
+    "startupToHealthMs":  1710,
+    "extractionThroughIntegrityToHealthMs":  108090,
+    "restartToHealthMs":  1133,
+    "fullVerificationMs":  112587,
+    "keyless":  true,
+    "externalModelCalls":  0,
+    "domainChecks":  [
+                         {
+                             "shrinkAccepted":  26,
+                             "domain":  "interval",
+                             "searchChecked":  2,
+                             "regressionRows":  13,
+                             "savedAndImported":  true,
+                             "htmlReport":  true
+                         },
+                         {
+                             "shrinkAccepted":  32,
+                             "domain":  "knapsack",
+                             "searchChecked":  5,
+                             "regressionRows":  13,
+                             "savedAndImported":  true,
+                             "htmlReport":  true
+                         },
+                         {
+                             "shrinkAccepted":  11,
+                             "domain":  "graph",
+                             "searchChecked":  1,
+                             "regressionRows":  13,
+                             "savedAndImported":  true,
+                             "htmlReport":  true
+                         }
+                     ],
+    "persistedExperiments":  6,
+    "shutdownMethod":  "Exact release Node process termination; SQLite WAL recovery verified on restart",
+    "frontendHttp200":  true,
+    "browserWorkflowTested":  false,
+    "scope":  "Same Windows host, fresh extraction outside source, custom port/data directory, no dependency download and no model calls. Not a newly provisioned OS or a browser end-to-end test."
+}

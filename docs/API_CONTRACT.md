@@ -1,6 +1,6 @@
 # Shared module and API contract
 
-Types: `src/shared/types.ts` (root-owned). Engine exports `ENGINE_VERSION`, `evaluate(instance,strategy)`, `validateInstance(instance)`, `validateStrategy(strategy)`, `search(options,onProgress?,isCancelled?)`, `shrink(evaluation,onProgress?,isCancelled?)`, `regress(instance,before,after,seed,count,onProgress?,isCancelled?)`, `defaultStrategy(domain)`, `demoInstance(domain)` and `presets(domain)` from `src/engine/index.ts`.
+Types: `src/shared/types.ts`. Engine exports `ENGINE_VERSION`, `evaluate(instance,strategy)`, `validateInstance(instance)`, `validateStrategy(strategy)`, `search(options,onProgress?,isCancelled?)`, `shrink(evaluation,onProgress?,isCancelled?)`, `regress(instance,before,after,seed,count,onProgress?,isCancelled?,history?)`, `defaultStrategy(domain)`, `demoInstance(domain)` and `presets(domain)` from `src/engine/index.ts`.
 
 All deterministic engine functions are synchronous and execute in a worker for expensive API jobs. Validation throws human-readable Error. UI imports types and lightweight examples/presets only; API performs trusted evaluation. Engine outputs plain JSON values (no Infinity/NaN). Graph unreachable uses complete=false plus an explicit reason and a finite value sentinel, never serializes Infinity. Strategies carry a safely interpreted score arithmetic string, not JS.
 
@@ -12,11 +12,11 @@ API envelope: successful direct endpoint returns actual value; error is `{error:
 - GET /api/experiments -> Experiment[]
 - POST /api/experiments {title,instance,strategy,...optional saved results} -> Experiment
 - GET /api/experiments/:id -> Experiment
-- PUT /api/experiments/:id {title,instance,strategy,...saved results} -> Experiment (preserve createdAt, append strategy version on actual strategy change)
+- PUT /api/experiments/:id {title,instance,strategy,...saved results} -> Experiment (preserve createdAt; append input/strategy/evaluation snapshot on actual input or strategy change)
 - DELETE /api/experiments/:id -> {ok:true} (only D runtime records)
 - POST /api/jobs/search SearchOptions -> JobStatus
 - POST /api/jobs/shrink {evaluation} -> JobStatus
-- POST /api/jobs/regression {instance,before,after,seed,count} -> JobStatus
+- POST /api/jobs/regression {instance,before,after,seed,count,includeHistory?:boolean} -> JobStatus; history defaults true, includes at most 20 distinct same-domain saved counterexamples in addition to the original and generated holdouts
 - GET /api/jobs/:id -> JobStatus
 - POST /api/jobs/:id/cancel -> JobStatus
 - GET /api/experiments/:id/export -> ExperimentPackage downloadable JSON

@@ -248,6 +248,16 @@ export function GraphPlot({
   const current = stage(execution, step),
     selected = current?.selectedIds ?? [],
     active = current?.activeIds ?? [];
+  // Graph events carry edge and node identifiers in distinct positions. IDs may
+  // legally overlap across those namespaces; never infer node state from edge IDs.
+  const edgeEvent = current?.kind === 'select' || current?.kind === 'relax';
+  const activeEdges = edgeEvent ? active.slice(0, 1) : [];
+  const activeNodes = edgeEvent ? active.slice(1) : active;
+  const dataIds = (field: string): string[] => {
+    const value = current?.data?.[field];
+    return Array.isArray(value) ? value.filter((id): id is string => typeof id === 'string') : [];
+  };
+  const selectedNodes = [...dataIds('pathNodeIds'), ...dataIds('visitedNodeIds')];
   const finishDrag = () => {
     const currentDrag = drag.current;
     if (!currentDrag) return;
@@ -309,7 +319,7 @@ export function GraphPlot({
         return (
           <g
             key={edge.id}
-            className={`graph-edge ${picked ? 'selected' : ''} ${active.includes(edge.id) ? 'active' : ''} ${hovered === id ? 'hovered' : ''}`}
+            className={`graph-edge ${picked ? 'selected' : ''} ${activeEdges.includes(edge.id) ? 'active' : ''} ${hovered === id ? 'hovered' : ''}`}
             tabIndex={0}
             role="button"
             aria-label={`边 ${edge.id}，${edge.from} ${instance.directed ? '到' : '连接'} ${edge.to}，权重 ${edge.weight}`}
@@ -337,14 +347,11 @@ export function GraphPlot({
       {instance.nodes.map((node) => {
         const position = positions[node.id],
           id = `node:${node.id}`,
-          visited =
-            selected.includes(node.id) ||
-            current?.data?.node === node.id ||
-            (execution?.pathNodeIds?.includes(node.id) && current?.kind === 'finish');
+          visited = selectedNodes.includes(node.id);
         return (
           <g
             key={node.id}
-            className={`graph-node ${visited ? 'selected' : ''} ${active.includes(node.id) ? 'active' : ''} ${hovered === id ? 'hovered' : ''}`}
+            className={`graph-node ${visited ? 'selected' : ''} ${activeNodes.includes(node.id) ? 'active' : ''} ${hovered === id ? 'hovered' : ''}`}
             tabIndex={0}
             role="button"
             aria-label={`节点 ${node.id}${node.id === instance.source ? '，起点' : node.id === instance.target ? '，终点' : ''}${onChange ? '，可拖动或使用方向键移动' : ''}`}

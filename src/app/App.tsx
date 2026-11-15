@@ -41,7 +41,7 @@ import type {
   Strategy,
 } from '../shared/types';
 import { validateInstance, validateStrategy } from '../engine/validation';
-import { api, clone, domainLabels, initialInstance, initialStrategy, type Catalog } from './api';
+import { api, ApiError, clone, domainLabels, initialInstance, initialStrategy, type Catalog } from './api';
 import { Modal } from './components/Modal';
 import { InstanceEditor } from './components/InstanceEditor';
 import { EventList, GraphPlot, TraceCanvas } from './components/TraceCanvas';
@@ -79,10 +79,32 @@ const valueOf = (e: Evaluation, side: 'candidate' | 'reference') =>
     : e[side].value;
 const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 const DRAFT_KEY = 'counterlab.draft.v1';
-function storeDraft(draft: Draft) {
+const DOMAIN_DRAFTS_KEY = 'counterlab.domain-drafts.v1';
+function validateDraftStrategy(strategy: Strategy) {
+  if (typeof strategy.score !== 'string' || strategy.score.length > 160 || typeof strategy.name !== 'string')
+    throw new Error('草稿字段无效');
+  // Preserve unfinished editing text; execution still validates the real expression.
+  validateStrategy({
+    ...strategy,
+    name: strategy.name || '未命名策略',
+    score: strategy.domain === 'graph' ? 'weight' : 'value',
+  });
+}
+function draftInput(draft: Draft) {
+  return { id: draft.id, title: draft.title, instance: draft.instance, strategy: draft.strategy };
+}
+function storeDraft(draft: Draft, otherDrafts: Partial<Record<Domain, Draft>>) {
+  localStorage.setItem(DRAFT_KEY, JSON.stringify(draftInput(draft)));
   localStorage.setItem(
-    DRAFT_KEY,
-    JSON.stringify({ id: draft.id, title: draft.title, instance: draft.instance, strategy: draft.strategy }),
+    DOMAIN_DRAFTS_KEY,
+    JSON.stringify(
+      Object.fromEntries(
+        Object.entries({ ...otherDrafts, [draft.instance.domain]: draft }).map(([domain, value]) => [
+          domain,
+          draftInput(value),
+        ]),
+      ),
+    ),
   );
 }
 
@@ -113,6 +135,7 @@ export default function App() {
   const [editorError, setEditorError] = useState('');
   const fileInput = useRef<HTMLInputElement>(null);
   const draftRef = useRef(draft);
+  const domainDrafts = useRef<Partial<Record<Domain, Draft>>>({});
   const connectionSequence = useRef(0);
   draftRef.current = draft;
   const running = job?.state === 'queued' || job?.state === 'running';
@@ -153,11 +176,38 @@ export default function App() {
       if (!draftReady) {
         let restored = false;
         try {
+          const domainRaw = localStorage.getItem(DOMAIN_DRAFTS_KEY);
+          if (domainRaw) {
+            const cached = JSON.parse(domainRaw);
+            for (const domain of ['interval', 'knapsack', 'graph'] as Domain[]) {
+              const value = cached[domain];
+              if (!value) continue;
+              try {
+                validateInstance(value.instance);
+                validateDraftStrategy(value.strategy);
+                if (
+                  value.instance.domain !== domain ||
+                  value.strategy.domain !== domain ||
+                  typeof value.title !== 'string' ||
+                  value.title.length > 120
+                )
+                  continue;
+                const stored = saved.find((item) => item.id === value.id && item.domain === domain);
+                domainDrafts.current[domain] = {
+                  ...draftInput(value),
+                  id: stored?.id,
+                  versions: stored?.versions ?? [],
+                };
+              } catch {
+                /* Ignore only the malformed domain draft; keep other valid work. */
+              }
+            }
+          }
           const raw = localStorage.getItem(DRAFT_KEY);
           if (raw) {
             const value = JSON.parse(raw);
             validateInstance(value.instance);
-            validateStrategy(value.strategy);
+            validateDraftStrategy(value.strategy);
             if (
               value.instance.domain !== value.strategy.domain ||
               typeof value.title !== 'string' ||
@@ -199,7 +249,7 @@ export default function App() {
     setAutosave('草稿保存中…');
     const timer = window.setTimeout(() => {
       try {
-        storeDraft(draft);
+        storeDraft(draft, domainDrafts.current);
         setAutosave('草稿已自动保存');
       } catch {
         setAutosave('草稿存储不可用，请保存到实验档案');
@@ -211,7 +261,7 @@ export default function App() {
     if (!draftReady) return;
     const flush = () => {
       try {
-        storeDraft(draftRef.current);
+        storeDraft(draftRef.current, domainDrafts.current);
       } catch {
         /* The persistent UI warning already advises saving to the database. */
       }
@@ -223,6 +273,9 @@ export default function App() {
       window.removeEventListener('beforeunload', flush);
     };
   }, [draftReady]);
+  useEffect(() => {
+    setExplanation('');
+  }, [evaluation]);
   useEffect(() => {
     if (!playing) return;
     const timer = setInterval(
@@ -266,7 +319,10 @@ export default function App() {
               text:
                 result.status === 'counterexample'
                   ? `第 ${result.checked} 个样本找到并核验了反例。`
-                  : '本轮采样未找到反例，不代表策略普遍正确。',
+                  : result.status === 'incomplete'
+                    ? `搜索未完成：${result.reason || '样本计算没有得到完整结论。'}`
+                    : '本轮采样未找到反例，不代表策略普遍正确。',
+              error: result.status === 'incomplete',
             });
           }
           if (next.kind === 'shrink') {
@@ -295,6 +351,15 @@ export default function App() {
         else timer = setTimeout(poll, 250);
       } catch (error) {
         if (!cancelled) {
+          if (error instanceof ApiError && error.status === 404) {
+            setJob((current) =>
+              current?.id === job.id
+                ? { ...current, state: 'failed', error: '服务中已找不到这个任务，请重新运行。' }
+                : current,
+            );
+            setNotice({ text: '服务中已找不到这个任务，计算未完成。请重新运行。', error: true });
+            return;
+          }
           setNotice({
             text: `${error instanceof Error ? error.message : '连接中断'}；任务状态将在连接恢复后重试。`,
             error: true,
@@ -347,16 +412,21 @@ export default function App() {
     setPlaying(false);
     setStep(0);
   }
-  function newDomain(domain: Domain) {
+  function newDomain(domain: Domain, fresh = false) {
     const next = catalog?.domains.find((d) => d.domain === domain);
     if (!next || locked) return;
-    setDraft({
+    if (domain === draft.instance.domain && !fresh) return;
+    domainDrafts.current[draft.instance.domain] = clone(draft);
+    const cached = !fresh ? domainDrafts.current[domain] : undefined;
+    const nextDraft = cached ?? {
       title: `${next.title} · 新实验`,
       instance: clone(next.instance),
       strategy: clone(next.strategy),
       versions: [],
-    });
-    setBaseline(null);
+    };
+    setDraft(nextDraft);
+    domainDrafts.current[domain] = clone(nextDraft);
+    setBaseline(nextDraft.evaluation ?? null);
     setExplanation('');
     setJob(null);
     setHovered(null);
@@ -608,7 +678,7 @@ export default function App() {
             <button
               className="text-button"
               disabled={locked || !catalog}
-              onClick={() => newDomain(draft.instance.domain)}
+              onClick={() => newDomain(draft.instance.domain, true)}
             >
               <Plus size={15} />
               新建实验
@@ -725,6 +795,7 @@ export default function App() {
                     平局规则
                     <select
                       value={draft.strategy.tieBreak}
+                      disabled={['optimal', 'dijkstra'].includes(draft.strategy.algorithm)}
                       onChange={(e) =>
                         changeStrategy({
                           ...draft.strategy,
@@ -738,7 +809,11 @@ export default function App() {
                     </select>
                   </label>
                 </div>
-                <p className="field-note">value 平局按收益降序；其余字段升序，最终按 ID 升序。</p>
+                <p className="field-note">
+                  {['optimal', 'dijkstra'].includes(draft.strategy.algorithm)
+                    ? '精确算法按固定顺序确定等优解，评分、方向和平局字段不参与计算。'
+                    : 'value 平局按收益降序；其余字段升序，最终按 ID 升序。'}
+                </p>
                 <button
                   className="secondary-button full-width"
                   onClick={() => {
@@ -938,7 +1013,9 @@ export default function App() {
                     <span>
                       {draft.search.status === 'counterexample'
                         ? `第 ${draft.search.checked} 个样本发现反例，已载入工作台`
-                        : `检查 ${draft.search.checked} 个样本，未发现反例`}
+                        : draft.search.status === 'incomplete'
+                          ? `搜索未完成 · 已检查 ${draft.search.checked} 个样本；${draft.search.reason ?? '没有完整结论'}`
+                          : `检查 ${draft.search.checked} 个样本，未发现反例`}
                     </span>
                     <small>
                       SEED {draft.search.seed} · {draft.search.elapsedMs} ms

@@ -24,6 +24,17 @@ export interface Catalog {
   engineVersion: string;
 }
 
+/** Retain the HTTP status so callers can distinguish permanent errors from retryable disconnects. */
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    readonly status: number,
+  ) {
+    super(message);
+    this.name = 'ApiError';
+  }
+}
+
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   let response: Response;
   try {
@@ -32,10 +43,10 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
       headers: { 'Content-Type': 'application/json', ...options?.headers },
     });
   } catch {
-    throw new Error('无法连接本地实验服务。请确认 CounterLab 服务已启动，再重试。');
+    throw new ApiError('无法连接本地实验服务。请确认 CounterLab 服务已启动，再重试。', 0);
   }
   const data = await response.json().catch(() => null);
-  if (!response.ok) throw new Error(data?.error || `请求失败（${response.status}）`);
+  if (!response.ok) throw new ApiError(data?.error || `请求失败（${response.status}）`, response.status);
   return data as T;
 }
 const post = <T>(path: string, body: unknown) =>

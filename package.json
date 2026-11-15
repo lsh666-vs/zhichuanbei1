@@ -2,8 +2,8 @@
   "name": "counterlab", "version": "0.1.0", "private": true, "type": "module",
   "engines": { "node": ">=22.13" },
   "scripts": {
-    "dev": "tsx server/index.ts", "dev:ui": "vite --host 127.0.0.1",
-    "build": "tsc --noEmit && vite build", "start": "tsx server/index.ts",
+    "dev": "node --env-file-if-exists=.env --import tsx server/index.ts", "dev:ui": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build", "start": "node --env-file-if-exists=.env --import tsx server/index.ts",
     "test": "vitest run", "test:watch": "vitest", "test:e2e": "playwright test",
     "check": "tsc --noEmit", "oracle": "python -B tests/oracle.py"
   },

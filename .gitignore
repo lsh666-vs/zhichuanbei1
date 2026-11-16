@@ -20,4 +20,9 @@ __pycache__/
 id_ed25519*
 *.key
 evidence/private/
+.venv/
+.bootstrap/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
 

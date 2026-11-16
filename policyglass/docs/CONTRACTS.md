@@ -91,4 +91,12 @@ Additional temporal endpoint: `GET /api/traces/{id}/rollout` returns the complet
 
 An exclusive file lock prevents a second server from resetting jobs in an active store. Job-manager thread operations are synchronized. Keep both guarantees when integrating the frontend.
 
+## Stage3 compatible additions
+
+Explanation routes and consent/budgets are specified in EXPLANATION.md; all-seed catalogue and verified learned-state imports in REFERENCE_STUDY.md. No server-side model output is executable. Core numerical/physics contracts and all previous routes remain intact.
+
+Partial Trace reads now use immutable index/event/frame projections, with a SQLite record binding the manifest hash to the original full Trace SHA256. Every request validates source identity/stat, fixed paths, sizes and requested-part hash; raw UTF8 JSON is returned without a second encode. The original full Trace is retained and its full-read SHA check is unchanged. An old store lazily derives projections once, after complete original hash verification and under a file lock. Missing, corrupted, changed-source or invalid-index projections fail explicitly rather than return guessed values. Whole-store transport that changes original file timestamps needs a verified re-derivation; safe `.pgz` imports do not depend on those cache timestamps.
+
+The frontend binds a computed slice synchronously to its view, experiment, checkpoint, Trace and sample. Q and loss arrays cannot cross during the render before effect cleanup. Network incoming edges share a geometry while retaining all connections and signed numeric inspection; source tensors are unchanged. See PERFORMANCE.md for actual measurements and remaining limits.
+
 Read this contract, run the provided tests and demo, inspect actual JSON and OpenAPI. Build all four genuine 3D views and eight courses; connect selection IDs and source/checkpoint semantics. Provide component/E2E checks with the real server. The numerical/HTTP layer does not constitute a completed graphical product. Frontend, final policies, AI assistant and release have their own later acceptance evidence.

@@ -46,6 +46,8 @@ CounterLab 是一个原创、本地优先的算法策略实验工作台：把想
 
 使用步骤见 [用户指南](docs/USER_GUIDE.md)，版本、缓存路径、发行校验与故障排查见 [启动和复现](docs/REPRODUCIBILITY.md)。
 
+源码另提供 `Start-CounterLab-Background.cmd` / `Stop-CounterLab-Background.cmd`，将服务作为独立后台进程启动或停止；后台启动器退出后服务继续运行。该入口使用当前源码环境或指定的便携运行时，日志与进程记录在 D 盘数据目录。重启电脑后需再次启动。现有 ZIP 的前台入口仍需保持窗口打开；本机工作区的 `启动反例实验室.cmd` 已改用独立后台启动。
+
 ## 从源码运行
 
 把仓库克隆到 D 盘，例如 `D:\CounterLab-source`。使用 Windows x64、Node.js **24.22.1**、pnpm **11.25.0**，然后在 PowerShell 执行：

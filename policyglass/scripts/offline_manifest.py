@@ -399,6 +399,8 @@ def assemble(args):
         "AGENTS.md",
         "pyproject.toml",
         "requirements-win-py312.lock",
+        "requirements-study-py312.lock",
+        ".gitattributes",
         ".env.example",
     ):
         copy_file(project / name, bundle / name)

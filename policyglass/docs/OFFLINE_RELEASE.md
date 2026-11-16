@@ -2,6 +2,8 @@
 
 构建工具：`scripts/Build-Offline.ps1`。这是 Windows x64 的本地评审运行包，不代作者新增源码许可，不把同机换路径验证称为跨机复现。最终阶段是否完成以 `handoffs/STAGE_3.md` 和真实证据为准。
 
+当前三轮迭代后的实际核验包为`PolicyGlass-stage3-review-20261117-r5.zip`（995,065,649字节），冻结源码`93263c5617318b8ad8d2a7805a5978546a0f3151`，SHA256 `b98b98d1d4c5b4cec958d905fb1152b61ff26ff44673833f17615754b2f55269`。本机已安装到`D:/传智杯1/PolicyGlass-final-offline-20261117-r5-01/PolicyGlass-stage3-review-20261117-r5`，使用包根目录`Start-PolicyGlass-Offline.cmd`，网址`http://127.0.0.1:8787/`。350份Git文件、100份最终输入及完整交付manifest核对通过，20份参考状态和真实PPO/SAC更新通过。旧R4与原始数据保留。实际安装及键盘范围边界见[三轮记录](THREE_ROUND_REFINEMENT.md)；构建后065/066收据在仓库，未嵌入其自身冻结ZIP。
+
 ## 重新构建
 
 在项目 D 盘目录执行：

@@ -1,0 +1,17 @@
+{
+  "schema": "policyglass.installed-three-round-smoke.v1",
+  "status": "PASSED",
+  "url": "http://127.0.0.1:8787/",
+  "user_experiment_count": 1,
+  "actual_canvas_pick": true,
+  "selected_neuron": 5,
+  "actual_weight_and_bias_visible": true,
+  "counters_checkpoint_and_traces_unchanged": true,
+  "numerical_posts": 0,
+  "page_errors": [],
+  "focus_return_via_visible_exit": true,
+  "limitations": [
+    "An initial smoke attempt pressed Escape after a mouse Canvas click had left focus outside the network controls; no exit occurred. The final mouse smoke uses the visible exit button and verifies focus return. The existing full suite separately verifies Escape while network controls hold focus; global Escape from document body is not claimed."
+  ],
+  "scope": "Actual migrated user store and compiled r5 UI. Read-only network exploration; no experiment creation, training, parameter edit or notes."
+}

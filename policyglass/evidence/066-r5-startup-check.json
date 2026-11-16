@@ -1,0 +1,11 @@
+{
+  "created_utc": "2026-11-16T22:06:54.028977+00:00",
+  "url": "http://127.0.0.1:8787/",
+  "bundle": "D:/传智杯1/PolicyGlass-final-offline-20261117-r5-01/PolicyGlass-stage3-review-20261117-r5",
+  "service_pid": 9568,
+  "verified_shell_parent_pid": 6208,
+  "python_path": "D:/传智杯1/PolicyGlass-final-offline-20261117-r5-01/PolicyGlass-stage3-review-20261117-r5/runtime/python/python.exe",
+  "managed_exec_session": 28794,
+  "method": "Verified r5 .cmd launcher in a controlled foreground session",
+  "background_start_attempt": "Automatic approval rejected a background launch. The controlled foreground launcher succeeded."
+}

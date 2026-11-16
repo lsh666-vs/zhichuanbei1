@@ -1,0 +1,786 @@
+
+Running 6 tests using 1 worker
+
+(node:23900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\inspection.spec.ts:172:3 › Optimizer matrix, vector and alpha stay in the recorded event 1440x900 (3.2s)
+(node:24112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 tests\inspection.spec.ts:263:37 › Real q probe, nearest corners and rotated camera 1440x900 (27.5s)
+(node:22668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 tests\inspection.spec.ts:263:37 › Real loss probe, nearest corners and rotated camera 1440x900 (23.8s)
+(node:6064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 tests\inspection.spec.ts:172:3 › Optimizer matrix, vector and alpha stay in the recorded event 1280x720 (2.5s)
+(node:22456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  5 tests\inspection.spec.ts:263:37 › Real q probe, nearest corners and rotated camera 1280x720 (27.6s)
+(node:9092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  6 tests\inspection.spec.ts:263:37 › Real loss probe, nearest corners and rotated camera 1280x720 (23.6s)
+
+
+  1) tests\inspection.spec.ts:172:3 › Optimizer matrix, vector and alpha stay in the recorded event 1440x900 
+
+    Error: locator.selectOption: Error: strict mode violation: getByLabel('优化器参数') resolved to 2 elements:
+        1) <section aria-label="优化器参数检查" class="optimizer-inspection" data-testid="optimizer-inspection">…</section> aka getByTestId('optimizer-inspection')
+        2) <select aria-label="优化器参数">…</select> aka getByTestId('optimizer-inspection').getByLabel('优化器参数')
+
+    Call log:
+    [2m  - waiting for getByLabel('优化器参数')[22m
+
+
+      120 |     const traceSelection=await page.getByLabel('选择历史Trace').inputValue(), sample=await page.getByLabel('样本回放位置').inputValue();
+      121 |     let posts=0; page.on('request',r=>{if(r.method()==='POST')posts++;});
+    > 122 |     await page.getByLabel('优化器参数').selectOption('weights.1');
+          |                                    ^
+      123 |     await page.getByLabel('优化器矩阵行').fill('7'); await page.getByLabel('优化器矩阵列').fill('7');
+      124 |     const matrix=await assertOptimizer(page,event,'weights.1',[7,7]);
+      125 |     await page.getByTestId('optimizer-inspection').evaluate(el=>el.scrollIntoView({block:'center'}));
+        at D:\传智杯1\counterlab\policyglass\frontend\tests\inspection.spec.ts:122:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.runtime\e2e\test-results\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\.runtime\e2e\test-results\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\inspection.spec.ts:263:37 › Real q probe, nearest corners and rotated camera 1440x900 ───
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByTestId('surface-probe')
+    Expected: [32m"0"[39m
+    Received: [31m"14"[39m
+    Timeout:  20000ms
+
+    Call log:
+    [2m  - Expect "toHaveAttribute" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('surface-probe')[22m
+    [2m    23 × locator resolved to <aside data-j="0" data-i="14" tabindex="0" class="surface-probe" aria-label="曲面网格方向键检查" data-testid="surface-probe">…</aside>[22m
+    [2m       - unexpected value "14"[22m
+
+
+      93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);
+      94 |   const [i,j]=plan.index;
+    > 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));
+         |                                                   ^
+      96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));
+      97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));
+      98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));
+        at clickPlan (D:\传智杯1\counterlab\policyglass\frontend\tests\inspection.spec.ts:95:51)
+        at D:\传智杯1\counterlab\policyglass\frontend\tests\inspection.spec.ts:188:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Real-q-probe-ne-85195-and-rotated-camera-1440x900\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.runtime\e2e\test-results\inspection-Real-q-probe-ne-85195-and-rotated-camera-1440x900\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Real-q-probe-ne-85195-and-rotated-camera-1440x900\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\.runtime\e2e\test-results\inspection-Real-q-probe-ne-85195-and-rotated-camera-1440x900\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) tests\inspection.spec.ts:263:37 › Real loss probe, nearest corners and rotated camera 1440x900 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByTestId('surface-probe')
+    Expected: [32m"0"[39m
+    Received: [31m"7"[39m
+    Timeout:  20000ms
+
+    Call log:
+    [2m  - Expect "toHaveAttribute" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('surface-probe')[22m
+    [2m    23 × locator resolved to <aside data-i="7" data-j="7" tabindex="0" class="surface-probe" aria-label="曲面网格方向键检查" data-testid="surface-probe">…</aside>[22m
+    [2m       - unexpected value "7"[22m
+
+
+      93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);
+      94 |   const [i,j]=plan.index;
+    > 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));
+         |                                                   ^
+      96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));
+      97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));
+      98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));
+        at clickPlan (D:\传智杯1\counterlab\policyglass\frontend\tests\inspection.spec.ts:95:51)
+        at D:\传智杯1\counterlab\policyglass\frontend\tests\inspection.spec.ts:174:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Real-loss-probe-c572b-and-rotated-camera-1440x900\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.runtime\e2e\test-results\inspection-Real-loss-probe-c572b-and-rotated-camera-1440x900\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Real-loss-probe-c572b-and-rotated-camera-1440x900\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\.runtime\e2e\test-results\inspection-Real-loss-probe-c572b-and-rotated-camera-1440x900\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) tests\inspection.spec.ts:172:3 › Optimizer matrix, vector and alpha stay in the recorded event 1280x720 
+
+    Error: locator.selectOption: Error: strict mode violation: getByLabel('优化器参数') resolved to 2 elements:
+        1) <section aria-label="优化器参数检查" class="optimizer-inspection" data-testid="optimizer-inspection">…</section> aka getByTestId('optimizer-inspection')
+        2) <select aria-label="优化器参数">…</select> aka getByTestId('optimizer-inspection').getByLabel('优化器参数')
+
+    Call log:
+    [2m  - waiting for getByLabel('优化器参数')[22m
+
+
+      120 |     const traceSelection=await page.getByLabel('选择历史Trace').inputValue(), sample=await page.getByLabel('样本回放位置').inputValue();
+      121 |     let posts=0; page.on('request',r=>{if(r.method()==='POST')posts++;});
+    > 122 |     await page.getByLabel('优化器参数').selectOption('weights.1');
+          |                                    ^
+      123 |     await page.getByLabel('优化器矩阵行').fill('7'); await page.getByLabel('优化器矩阵列').fill('7');
+      124 |     const matrix=await assertOptimizer(page,event,'weights.1',[7,7]);
+      125 |     await page.getByTestId('optimizer-inspection').evaluate(el=>el.scrollIntoView({block:'center'}));
+        at D:\传智杯1\counterlab\policyglass\frontend\tests\inspection.spec.ts:122:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Optimizer-matri-638be-the-recorded-event-1280x720\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.runtime\e2e\test-results\inspection-Optimizer-matri-638be-the-recorded-event-1280x720\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Optimizer-matri-638be-the-recorded-event-1280x720\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\.runtime\e2e\test-results\inspection-Optimizer-matri-638be-the-recorded-event-1280x720\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) tests\inspection.spec.ts:263:37 › Real q probe, nearest corners and rotated camera 1280x720 ───
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByTestId('surface-probe')
+    Expected: [32m"0"[39m
+    Received: [31m"14"[39m
+    Timeout:  20000ms
+
+    Call log:
+    [2m  - Expect "toHaveAttribute" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('surface-probe')[22m
+    [2m    23 × locator resolved to <aside data-j="0" data-i="14" tabindex="0" class="surface-probe" aria-label="曲面网格方向键检查" data-testid="surface-probe">…</aside>[22m
+    [2m       - unexpected value "14"[22m
+
+
+      93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);
+      94 |   const [i,j]=plan.index;
+    > 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));
+         |                                                   ^
+      96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));
+      97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));
+      98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));
+        at clickPlan (D:\传智杯1\counterlab\policyglass\frontend\tests\inspection.spec.ts:95:51)
+        at D:\传智杯1\counterlab\policyglass\frontend\tests\inspection.spec.ts:188:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Real-q-probe-ne-04cf4-and-rotated-camera-1280x720\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.runtime\e2e\test-results\inspection-Real-q-probe-ne-04cf4-and-rotated-camera-1280x720\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Real-q-probe-ne-04cf4-and-rotated-camera-1280x720\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\.runtime\e2e\test-results\inspection-Real-q-probe-ne-04cf4-and-rotated-camera-1280x720\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) tests\inspection.spec.ts:263:37 › Real loss probe, nearest corners and rotated camera 1280x720 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByTestId('surface-probe')
+    Expected: [32m"0"[39m
+    Received: [31m"7"[39m
+    Timeout:  20000ms
+
+    Call log:
+    [2m  - Expect "toHaveAttribute" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('surface-probe')[22m
+    [2m    23 × locator resolved to <aside data-i="7" data-j="7" tabindex="0" class="surface-probe" aria-label="曲面网格方向键检查" data-testid="surface-probe">…</aside>[22m
+    [2m       - unexpected value "7"[22m
+
+
+      93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);
+      94 |   const [i,j]=plan.index;
+    > 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));
+         |                                                   ^
+      96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));
+      97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));
+      98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));
+        at clickPlan (D:\传智杯1\counterlab\policyglass\frontend\tests\inspection.spec.ts:95:51)
+        at D:\传智杯1\counterlab\policyglass\frontend\tests\inspection.spec.ts:174:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Real-loss-probe-427ac-and-rotated-camera-1280x720\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.runtime\e2e\test-results\inspection-Real-loss-probe-427ac-and-rotated-camera-1280x720\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Real-loss-probe-427ac-and-rotated-camera-1280x720\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\.runtime\e2e\test-results\inspection-Real-loss-probe-427ac-and-rotated-camera-1280x720\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    tests\inspection.spec.ts:172:3 › Optimizer matrix, vector and alpha stay in the recorded event 1440x900 
+    tests\inspection.spec.ts:263:37 › Real q probe, nearest corners and rotated camera 1440x900 ────
+    tests\inspection.spec.ts:263:37 › Real loss probe, nearest corners and rotated camera 1440x900 ─
+    tests\inspection.spec.ts:172:3 › Optimizer matrix, vector and alpha stay in the recorded event 1280x720 
+    tests\inspection.spec.ts:263:37 › Real q probe, nearest corners and rotated camera 1280x720 ────
+    tests\inspection.spec.ts:263:37 › Real loss probe, nearest corners and rotated camera 1280x720 ─
+{
+  "config": {
+    "configFile": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\playwright.config.ts",
+    "rootDir": "D:/传智杯1/counterlab/policyglass/frontend/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "D:/传智杯1/counterlab/policyglass/.runtime/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/传智杯1/counterlab/policyglass/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "inspection.spec.ts",
+      "file": "inspection.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Optimizer matrix, vector and alpha stay in the recorded event 1440x900",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3235,
+                  "error": {
+                    "message": "Error: locator.selectOption: Error: strict mode violation: getByLabel('优化器参数') resolved to 2 elements:\n    1) <section aria-label=\"优化器参数检查\" class=\"optimizer-inspection\" data-testid=\"optimizer-inspection\">…</section> aka getByTestId('optimizer-inspection')\n    2) <select aria-label=\"优化器参数\">…</select> aka getByTestId('optimizer-inspection').getByLabel('优化器参数')\n\nCall log:\n\u001b[2m  - waiting for getByLabel('优化器参数')\u001b[22m\n",
+                    "stack": "Error: locator.selectOption: Error: strict mode violation: getByLabel('优化器参数') resolved to 2 elements:\n    1) <section aria-label=\"优化器参数检查\" class=\"optimizer-inspection\" data-testid=\"optimizer-inspection\">…</section> aka getByTestId('optimizer-inspection')\n    2) <select aria-label=\"优化器参数\">…</select> aka getByTestId('optimizer-inspection').getByLabel('优化器参数')\n\nCall log:\n\u001b[2m  - waiting for getByLabel('优化器参数')\u001b[22m\n\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:122:36",
+                    "location": {
+                      "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                      "column": 36,
+                      "line": 122
+                    },
+                    "snippet": "  120 |     const traceSelection=await page.getByLabel('选择历史Trace').inputValue(), sample=await page.getByLabel('样本回放位置').inputValue();\n  121 |     let posts=0; page.on('request',r=>{if(r.method()==='POST')posts++;});\n> 122 |     await page.getByLabel('优化器参数').selectOption('weights.1');\n      |                                    ^\n  123 |     await page.getByLabel('优化器矩阵行').fill('7'); await page.getByLabel('优化器矩阵列').fill('7');\n  124 |     const matrix=await assertOptimizer(page,event,'weights.1',[7,7]);\n  125 |     await page.getByTestId('optimizer-inspection').evaluate(el=>el.scrollIntoView({block:'center'}));"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                        "column": 36,
+                        "line": 122
+                      },
+                      "message": "Error: locator.selectOption: Error: strict mode violation: getByLabel('优化器参数') resolved to 2 elements:\n    1) <section aria-label=\"优化器参数检查\" class=\"optimizer-inspection\" data-testid=\"optimizer-inspection\">…</section> aka getByTestId('optimizer-inspection')\n    2) <select aria-label=\"优化器参数\">…</select> aka getByTestId('optimizer-inspection').getByLabel('优化器参数')\n\nCall log:\n\u001b[2m  - waiting for getByLabel('优化器参数')\u001b[22m\n\n\n  120 |     const traceSelection=await page.getByLabel('选择历史Trace').inputValue(), sample=await page.getByLabel('样本回放位置').inputValue();\n  121 |     let posts=0; page.on('request',r=>{if(r.method()==='POST')posts++;});\n> 122 |     await page.getByLabel('优化器参数').selectOption('weights.1');\n      |                                    ^\n  123 |     await page.getByLabel('优化器矩阵行').fill('7'); await page.getByLabel('优化器矩阵列').fill('7');\n  124 |     const matrix=await assertOptimizer(page,event,'weights.1',[7,7]);\n  125 |     await page.getByTestId('optimizer-inspection').evaluate(el=>el.scrollIntoView({block:'center'}));\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:122:36"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:57:47.413Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                    "column": 36,
+                    "line": 122
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-1595c1ba2a8d3cfddf69",
+          "file": "inspection.spec.ts",
+          "line": 172,
+          "column": 3
+        },
+        {
+          "title": "Real q probe, nearest corners and rotated camera 1440x900",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 27536,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"14\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-j=\"0\" data-i=\"14\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"14\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"14\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-j=\"0\" data-i=\"14\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"14\"\u001b[22m\n\n    at clickPlan (D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:95:51)\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:188:51",
+                    "location": {
+                      "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                      "column": 51,
+                      "line": 95
+                    },
+                    "snippet": "  93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);\n  94 |   const [i,j]=plan.index;\n> 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));\n     |                                                   ^\n  96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));\n  97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));\n  98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                        "column": 51,
+                        "line": 95
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"14\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-j=\"0\" data-i=\"14\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"14\"\u001b[22m\n\n\n  93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);\n  94 |   const [i,j]=plan.index;\n> 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));\n     |                                                   ^\n  96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));\n  97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));\n  98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));\n    at clickPlan (D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:95:51)\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:188:51"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:57:52.268Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-q-probe-ne-85195-and-rotated-camera-1440x900\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-q-probe-ne-85195-and-rotated-camera-1440x900\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-q-probe-ne-85195-and-rotated-camera-1440x900\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                    "column": 51,
+                    "line": 95
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-66b01c529eed4999a4f4",
+          "file": "inspection.spec.ts",
+          "line": 263,
+          "column": 37
+        },
+        {
+          "title": "Real loss probe, nearest corners and rotated camera 1440x900",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 23786,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"7\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-i=\"7\" data-j=\"7\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"7\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"7\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-i=\"7\" data-j=\"7\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"7\"\u001b[22m\n\n    at clickPlan (D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:95:51)\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:174:74",
+                    "location": {
+                      "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                      "column": 51,
+                      "line": 95
+                    },
+                    "snippet": "  93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);\n  94 |   const [i,j]=plan.index;\n> 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));\n     |                                                   ^\n  96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));\n  97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));\n  98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                        "column": 51,
+                        "line": 95
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"7\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-i=\"7\" data-j=\"7\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"7\"\u001b[22m\n\n\n  93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);\n  94 |   const [i,j]=plan.index;\n> 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));\n     |                                                   ^\n  96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));\n  97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));\n  98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));\n    at clickPlan (D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:95:51)\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:174:74"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:58:22.299Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-loss-probe-c572b-and-rotated-camera-1440x900\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-loss-probe-c572b-and-rotated-camera-1440x900\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-loss-probe-c572b-and-rotated-camera-1440x900\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                    "column": 51,
+                    "line": 95
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-dd04c5c280e0192ea65a",
+          "file": "inspection.spec.ts",
+          "line": 263,
+          "column": 37
+        },
+        {
+          "title": "Optimizer matrix, vector and alpha stay in the recorded event 1280x720",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2477,
+                  "error": {
+                    "message": "Error: locator.selectOption: Error: strict mode violation: getByLabel('优化器参数') resolved to 2 elements:\n    1) <section aria-label=\"优化器参数检查\" class=\"optimizer-inspection\" data-testid=\"optimizer-inspection\">…</section> aka getByTestId('optimizer-inspection')\n    2) <select aria-label=\"优化器参数\">…</select> aka getByTestId('optimizer-inspection').getByLabel('优化器参数')\n\nCall log:\n\u001b[2m  - waiting for getByLabel('优化器参数')\u001b[22m\n",
+                    "stack": "Error: locator.selectOption: Error: strict mode violation: getByLabel('优化器参数') resolved to 2 elements:\n    1) <section aria-label=\"优化器参数检查\" class=\"optimizer-inspection\" data-testid=\"optimizer-inspection\">…</section> aka getByTestId('optimizer-inspection')\n    2) <select aria-label=\"优化器参数\">…</select> aka getByTestId('optimizer-inspection').getByLabel('优化器参数')\n\nCall log:\n\u001b[2m  - waiting for getByLabel('优化器参数')\u001b[22m\n\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:122:36",
+                    "location": {
+                      "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                      "column": 36,
+                      "line": 122
+                    },
+                    "snippet": "  120 |     const traceSelection=await page.getByLabel('选择历史Trace').inputValue(), sample=await page.getByLabel('样本回放位置').inputValue();\n  121 |     let posts=0; page.on('request',r=>{if(r.method()==='POST')posts++;});\n> 122 |     await page.getByLabel('优化器参数').selectOption('weights.1');\n      |                                    ^\n  123 |     await page.getByLabel('优化器矩阵行').fill('7'); await page.getByLabel('优化器矩阵列').fill('7');\n  124 |     const matrix=await assertOptimizer(page,event,'weights.1',[7,7]);\n  125 |     await page.getByTestId('optimizer-inspection').evaluate(el=>el.scrollIntoView({block:'center'}));"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                        "column": 36,
+                        "line": 122
+                      },
+                      "message": "Error: locator.selectOption: Error: strict mode violation: getByLabel('优化器参数') resolved to 2 elements:\n    1) <section aria-label=\"优化器参数检查\" class=\"optimizer-inspection\" data-testid=\"optimizer-inspection\">…</section> aka getByTestId('optimizer-inspection')\n    2) <select aria-label=\"优化器参数\">…</select> aka getByTestId('optimizer-inspection').getByLabel('优化器参数')\n\nCall log:\n\u001b[2m  - waiting for getByLabel('优化器参数')\u001b[22m\n\n\n  120 |     const traceSelection=await page.getByLabel('选择历史Trace').inputValue(), sample=await page.getByLabel('样本回放位置').inputValue();\n  121 |     let posts=0; page.on('request',r=>{if(r.method()==='POST')posts++;});\n> 122 |     await page.getByLabel('优化器参数').selectOption('weights.1');\n      |                                    ^\n  123 |     await page.getByLabel('优化器矩阵行').fill('7'); await page.getByLabel('优化器矩阵列').fill('7');\n  124 |     const matrix=await assertOptimizer(page,event,'weights.1',[7,7]);\n  125 |     await page.getByTestId('optimizer-inspection').evaluate(el=>el.scrollIntoView({block:'center'}));\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:122:36"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:58:48.088Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Optimizer-matri-638be-the-recorded-event-1280x720\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Optimizer-matri-638be-the-recorded-event-1280x720\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Optimizer-matri-638be-the-recorded-event-1280x720\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                    "column": 36,
+                    "line": 122
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-c37134bd3c3f895c9e55",
+          "file": "inspection.spec.ts",
+          "line": 172,
+          "column": 3
+        },
+        {
+          "title": "Real q probe, nearest corners and rotated camera 1280x720",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 27563,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"14\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-j=\"0\" data-i=\"14\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"14\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"14\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-j=\"0\" data-i=\"14\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"14\"\u001b[22m\n\n    at clickPlan (D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:95:51)\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:188:51",
+                    "location": {
+                      "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                      "column": 51,
+                      "line": 95
+                    },
+                    "snippet": "  93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);\n  94 |   const [i,j]=plan.index;\n> 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));\n     |                                                   ^\n  96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));\n  97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));\n  98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                        "column": 51,
+                        "line": 95
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"14\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-j=\"0\" data-i=\"14\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"14\"\u001b[22m\n\n\n  93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);\n  94 |   const [i,j]=plan.index;\n> 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));\n     |                                                   ^\n  96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));\n  97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));\n  98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));\n    at clickPlan (D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:95:51)\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:188:51"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:58:52.106Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-q-probe-ne-04cf4-and-rotated-camera-1280x720\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-q-probe-ne-04cf4-and-rotated-camera-1280x720\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-q-probe-ne-04cf4-and-rotated-camera-1280x720\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                    "column": 51,
+                    "line": 95
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-9355718e26759a252677",
+          "file": "inspection.spec.ts",
+          "line": 263,
+          "column": 37
+        },
+        {
+          "title": "Real loss probe, nearest corners and rotated camera 1280x720",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 23646,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"7\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-i=\"7\" data-j=\"7\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"7\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"7\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-i=\"7\" data-j=\"7\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"7\"\u001b[22m\n\n    at clickPlan (D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:95:51)\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:174:74",
+                    "location": {
+                      "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                      "column": 51,
+                      "line": 95
+                    },
+                    "snippet": "  93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);\n  94 |   const [i,j]=plan.index;\n> 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));\n     |                                                   ^\n  96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));\n  97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));\n  98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                        "column": 51,
+                        "line": 95
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('surface-probe')\nExpected: \u001b[32m\"0\"\u001b[39m\nReceived: \u001b[31m\"7\"\u001b[39m\nTimeout:  20000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('surface-probe')\u001b[22m\n\u001b[2m    23 × locator resolved to <aside data-i=\"7\" data-j=\"7\" tabindex=\"0\" class=\"surface-probe\" aria-label=\"曲面网格方向键检查\" data-testid=\"surface-probe\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"7\"\u001b[22m\n\n\n  93 |   await page.mouse.click(b.x+plan.px,b.y+plan.py);\n  94 |   const [i,j]=plan.index;\n> 95 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-i',String(i));\n     |                                                   ^\n  96 |   await expect(page.getByTestId('surface-probe')).toHaveAttribute('data-j',String(j));\n  97 |   await expect(page.getByLabel('网格 i',{exact:true})).toHaveValue(String(i));\n  98 |   await expect(page.getByLabel('网格 j',{exact:true})).toHaveValue(String(j));\n    at clickPlan (D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:95:51)\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:174:74"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:59:22.091Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-loss-probe-427ac-and-rotated-camera-1280x720\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-loss-probe-427ac-and-rotated-camera-1280x720\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Real-loss-probe-427ac-and-rotated-camera-1280x720\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                    "column": 51,
+                    "line": 95
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-956864fd59179f14ac5d",
+          "file": "inspection.spec.ts",
+          "line": 263,
+          "column": 37
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T20:57:46.427Z",
+    "duration": 120631.869,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

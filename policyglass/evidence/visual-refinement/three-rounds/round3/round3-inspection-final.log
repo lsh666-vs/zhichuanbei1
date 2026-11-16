@@ -1,0 +1,377 @@
+
+Running 6 tests using 1 worker
+
+(node:9244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\inspection.spec.ts:262:3 › Optimizer matrix, vector and alpha stay in the recorded event 1440x900 (23.1s)
+(node:19348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 tests\inspection.spec.ts:364:37 › Real q probe, nearest corners and rotated camera 1440x900 (14.4s)
+  ok 3 tests\inspection.spec.ts:364:37 › Real loss probe, nearest corners and rotated camera 1440x900 (12.7s)
+  ok 4 tests\inspection.spec.ts:262:3 › Optimizer matrix, vector and alpha stay in the recorded event 1280x720 (8.5s)
+  ok 5 tests\inspection.spec.ts:364:37 › Real q probe, nearest corners and rotated camera 1280x720 (13.5s)
+  ok 6 tests\inspection.spec.ts:364:37 › Real loss probe, nearest corners and rotated camera 1280x720 (12.6s)
+
+
+  1) tests\inspection.spec.ts:262:3 › Optimizer matrix, vector and alpha stay in the recorded event 1440x900 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('optimizer-inspection')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('optimizer-inspection')[22m
+
+
+      253 |     await page.getByRole('button', { name: '参数更新', exact: true }).focus();
+      254 |     await page.keyboard.press('Enter');
+    > 255 |     await expect(page.getByTestId('optimizer-inspection')).toBeVisible();
+          |                                                            ^
+      256 |     const traceSelection = await page.getByLabel('选择历史Trace').inputValue(),
+      257 |       sample = await page.getByLabel('样本回放位置').inputValue();
+      258 |     let posts = 0;
+        at D:\传智杯1\counterlab\policyglass\frontend\tests\inspection.spec.ts:255:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.runtime\e2e\test-results\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\.runtime\e2e\test-results\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\inspection.spec.ts:262:3 › Optimizer matrix, vector and alpha stay in the recorded event 1440x900 
+  5 passed (1.7m)
+{
+  "config": {
+    "configFile": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\playwright.config.ts",
+    "rootDir": "D:/传智杯1/counterlab/policyglass/frontend/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "D:/传智杯1/counterlab/policyglass/.runtime/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/传智杯1/counterlab/policyglass/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "inspection.spec.ts",
+      "file": "inspection.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Optimizer matrix, vector and alpha stay in the recorded event 1440x900",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 23091,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('optimizer-inspection')\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('optimizer-inspection')\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('optimizer-inspection')\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('optimizer-inspection')\u001b[22m\n\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:255:60",
+                    "location": {
+                      "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                      "column": 60,
+                      "line": 255
+                    },
+                    "snippet": "  253 |     await page.getByRole('button', { name: '参数更新', exact: true }).focus();\n  254 |     await page.keyboard.press('Enter');\n> 255 |     await expect(page.getByTestId('optimizer-inspection')).toBeVisible();\n      |                                                            ^\n  256 |     const traceSelection = await page.getByLabel('选择历史Trace').inputValue(),\n  257 |       sample = await page.getByLabel('样本回放位置').inputValue();\n  258 |     let posts = 0;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                        "column": 60,
+                        "line": 255
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('optimizer-inspection')\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('optimizer-inspection')\u001b[22m\n\n\n  253 |     await page.getByRole('button', { name: '参数更新', exact: true }).focus();\n  254 |     await page.keyboard.press('Enter');\n> 255 |     await expect(page.getByTestId('optimizer-inspection')).toBeVisible();\n      |                                                            ^\n  256 |     const traceSelection = await page.getByLabel('选择历史Trace').inputValue(),\n  257 |       sample = await page.getByLabel('样本回放位置').inputValue();\n  258 |     let posts = 0;\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts:255:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T21:16:41.454Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\inspection-Optimizer-matri-758bd-the-recorded-event-1440x900\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\inspection.spec.ts",
+                    "column": 60,
+                    "line": 255
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-1595c1ba2a8d3cfddf69",
+          "file": "inspection.spec.ts",
+          "line": 262,
+          "column": 3
+        },
+        {
+          "title": "Real q probe, nearest corners and rotated camera 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14371,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T21:17:12.855Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-66b01c529eed4999a4f4",
+          "file": "inspection.spec.ts",
+          "line": 364,
+          "column": 37
+        },
+        {
+          "title": "Real loss probe, nearest corners and rotated camera 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12733,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T21:17:33.934Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-dd04c5c280e0192ea65a",
+          "file": "inspection.spec.ts",
+          "line": 364,
+          "column": 37
+        },
+        {
+          "title": "Optimizer matrix, vector and alpha stay in the recorded event 1280x720",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8498,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T21:17:46.684Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-c37134bd3c3f895c9e55",
+          "file": "inspection.spec.ts",
+          "line": 262,
+          "column": 3
+        },
+        {
+          "title": "Real q probe, nearest corners and rotated camera 1280x720",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13509,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T21:17:55.202Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-9355718e26759a252677",
+          "file": "inspection.spec.ts",
+          "line": 364,
+          "column": 37
+        },
+        {
+          "title": "Real loss probe, nearest corners and rotated camera 1280x720",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12583,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T21:18:08.725Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a51aaa6f0beac0b13da5-956864fd59179f14ac5d",
+          "file": "inspection.spec.ts",
+          "line": 364,
+          "column": 37
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T21:16:40.638Z",
+    "duration": 101466.025,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

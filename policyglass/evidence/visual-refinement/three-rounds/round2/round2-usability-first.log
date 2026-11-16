@@ -1,0 +1,445 @@
+
+Running 6 tests using 1 worker
+
+(node:19284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\usability.spec.ts:57:3 › First-screen real forward and update to inspection 1440x900 (17.0s)
+(node:23936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 tests\usability.spec.ts:172:3 › Focused complete network, actual picking and path navigation 1440x900 (2.9s)
+  x  3 tests\usability.spec.ts:57:3 › First-screen real forward and update to inspection 1280x720 (16.8s)
+(node:21208) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21208) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 tests\usability.spec.ts:172:3 › Focused complete network, actual picking and path navigation 1280x720 (3.0s)
+  ok 5 tests\usability.spec.ts:286:1 › SAC full overview retains every model and focus changes no computation (2.4s)
+  ok 6 tests\usability.spec.ts:338:1 › Real missing-batch task fails visibly and can retry with the train mode (8.4s)
+
+
+  1) tests\usability.spec.ts:57:3 › First-screen real forward and update to inspection 1440x900 ────
+
+    TimeoutError: locator.click: Timeout 15000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: '前向传播', exact: true })[22m
+
+
+      46 |     await expect(page.getByTestId('compute-state')).toContainText('待运行');
+      47 |     await page.screenshot({ path: `${evidence}/01-entry-${size}.png` });
+    > 48 |     await page.getByRole('button', { name: '前向传播', exact: true }).click();
+         |                                                                   ^
+      49 |     await expect(page.getByTestId('phase-guide')).toContainText('前向尚未计算');
+      50 |     await expect(page.locator('.alert').filter({ hasText: '请先运行' })).toHaveCount(0);
+      51 |
+        at D:\传智杯1\counterlab\policyglass\frontend\tests\usability.spec.ts:48:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\usability-First-screen-rea-93670-date-to-inspection-1440x900\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.runtime\e2e\test-results\usability-First-screen-rea-93670-date-to-inspection-1440x900\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\usability-First-screen-rea-93670-date-to-inspection-1440x900\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\.runtime\e2e\test-results\usability-First-screen-rea-93670-date-to-inspection-1440x900\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\usability.spec.ts:57:3 › First-screen real forward and update to inspection 1280x720 ────
+
+    TimeoutError: locator.click: Timeout 15000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: '前向传播', exact: true })[22m
+
+
+      46 |     await expect(page.getByTestId('compute-state')).toContainText('待运行');
+      47 |     await page.screenshot({ path: `${evidence}/01-entry-${size}.png` });
+    > 48 |     await page.getByRole('button', { name: '前向传播', exact: true }).click();
+         |                                                                   ^
+      49 |     await expect(page.getByTestId('phase-guide')).toContainText('前向尚未计算');
+      50 |     await expect(page.locator('.alert').filter({ hasText: '请先运行' })).toHaveCount(0);
+      51 |
+        at D:\传智杯1\counterlab\policyglass\frontend\tests\usability.spec.ts:48:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\usability-First-screen-rea-86c29-date-to-inspection-1280x720\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.runtime\e2e\test-results\usability-First-screen-rea-86c29-date-to-inspection-1280x720\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\.runtime\e2e\test-results\usability-First-screen-rea-86c29-date-to-inspection-1280x720\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\.runtime\e2e\test-results\usability-First-screen-rea-86c29-date-to-inspection-1280x720\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    tests\usability.spec.ts:57:3 › First-screen real forward and update to inspection 1440x900 ─────
+    tests\usability.spec.ts:57:3 › First-screen real forward and update to inspection 1280x720 ─────
+  4 passed (53.8s)
+{
+  "config": {
+    "configFile": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\playwright.config.ts",
+    "rootDir": "D:/传智杯1/counterlab/policyglass/frontend/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "D:/传智杯1/counterlab/policyglass/.runtime/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/传智杯1/counterlab/policyglass/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "usability.spec.ts",
+      "file": "usability.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "First-screen real forward and update to inspection 1440x900",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 17044,
+                  "error": {
+                    "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '前向传播', exact: true })\u001b[22m\n",
+                    "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '前向传播', exact: true })\u001b[22m\n\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\usability.spec.ts:48:67",
+                    "location": {
+                      "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\usability.spec.ts",
+                      "column": 67,
+                      "line": 48
+                    },
+                    "snippet": "  46 |     await expect(page.getByTestId('compute-state')).toContainText('待运行');\n  47 |     await page.screenshot({ path: `${evidence}/01-entry-${size}.png` });\n> 48 |     await page.getByRole('button', { name: '前向传播', exact: true }).click();\n     |                                                                   ^\n  49 |     await expect(page.getByTestId('phase-guide')).toContainText('前向尚未计算');\n  50 |     await expect(page.locator('.alert').filter({ hasText: '请先运行' })).toHaveCount(0);\n  51 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\usability.spec.ts",
+                        "column": 67,
+                        "line": 48
+                      },
+                      "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '前向传播', exact: true })\u001b[22m\n\n\n  46 |     await expect(page.getByTestId('compute-state')).toContainText('待运行');\n  47 |     await page.screenshot({ path: `${evidence}/01-entry-${size}.png` });\n> 48 |     await page.getByRole('button', { name: '前向传播', exact: true }).click();\n     |                                                                   ^\n  49 |     await expect(page.getByTestId('phase-guide')).toContainText('前向尚未计算');\n  50 |     await expect(page.locator('.alert').filter({ hasText: '请先运行' })).toHaveCount(0);\n  51 |\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\usability.spec.ts:48:67"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:06:14.309Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\usability-First-screen-rea-93670-date-to-inspection-1440x900\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\usability-First-screen-rea-93670-date-to-inspection-1440x900\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\usability-First-screen-rea-93670-date-to-inspection-1440x900\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\usability.spec.ts",
+                    "column": 67,
+                    "line": 48
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d975817c2913cd240bb9-50d20c6c7b66ea4c2b0f",
+          "file": "usability.spec.ts",
+          "line": 57,
+          "column": 3
+        },
+        {
+          "title": "Focused complete network, actual picking and path navigation 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2919,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:06:32.421Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d975817c2913cd240bb9-b49a4e2a51467dbaa6ae",
+          "file": "usability.spec.ts",
+          "line": 172,
+          "column": 3
+        },
+        {
+          "title": "First-screen real forward and update to inspection 1280x720",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 16783,
+                  "error": {
+                    "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '前向传播', exact: true })\u001b[22m\n",
+                    "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '前向传播', exact: true })\u001b[22m\n\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\usability.spec.ts:48:67",
+                    "location": {
+                      "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\usability.spec.ts",
+                      "column": 67,
+                      "line": 48
+                    },
+                    "snippet": "  46 |     await expect(page.getByTestId('compute-state')).toContainText('待运行');\n  47 |     await page.screenshot({ path: `${evidence}/01-entry-${size}.png` });\n> 48 |     await page.getByRole('button', { name: '前向传播', exact: true }).click();\n     |                                                                   ^\n  49 |     await expect(page.getByTestId('phase-guide')).toContainText('前向尚未计算');\n  50 |     await expect(page.locator('.alert').filter({ hasText: '请先运行' })).toHaveCount(0);\n  51 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\usability.spec.ts",
+                        "column": 67,
+                        "line": 48
+                      },
+                      "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '前向传播', exact: true })\u001b[22m\n\n\n  46 |     await expect(page.getByTestId('compute-state')).toContainText('待运行');\n  47 |     await page.screenshot({ path: `${evidence}/01-entry-${size}.png` });\n> 48 |     await page.getByRole('button', { name: '前向传播', exact: true }).click();\n     |                                                                   ^\n  49 |     await expect(page.getByTestId('phase-guide')).toContainText('前向尚未计算');\n  50 |     await expect(page.locator('.alert').filter({ hasText: '请先运行' })).toHaveCount(0);\n  51 |\n    at D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\usability.spec.ts:48:67"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:06:35.520Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\usability-First-screen-rea-86c29-date-to-inspection-1280x720\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\usability-First-screen-rea-86c29-date-to-inspection-1280x720\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\e2e\\test-results\\usability-First-screen-rea-86c29-date-to-inspection-1280x720\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\tests\\usability.spec.ts",
+                    "column": 67,
+                    "line": 48
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d975817c2913cd240bb9-21803f67561e3a2f643f",
+          "file": "usability.spec.ts",
+          "line": 57,
+          "column": 3
+        },
+        {
+          "title": "Focused complete network, actual picking and path navigation 1280x720",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2971,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:06:53.142Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d975817c2913cd240bb9-57e1e1019b4baf9637e9",
+          "file": "usability.spec.ts",
+          "line": 172,
+          "column": 3
+        },
+        {
+          "title": "SAC full overview retains every model and focus changes no computation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2364,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:06:56.342Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d975817c2913cd240bb9-7624c166b84b2d3014ae",
+          "file": "usability.spec.ts",
+          "line": 286,
+          "column": 1
+        },
+        {
+          "title": "Real missing-batch task fails visibly and can retry with the train mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8442,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T20:06:58.718Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d975817c2913cd240bb9-59cdcc215e84a651e42a",
+          "file": "usability.spec.ts",
+          "line": 338,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T20:06:13.659Z",
+    "duration": 53759.799,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

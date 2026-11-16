@@ -1,0 +1,20 @@
+{
+  "schema": "policyglass.user-store-upgrade.v1",
+  "status": "PASSED",
+  "source": "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r4-01\\PolicyGlass-stage3-review-20261117-r4\\.runtime\\data",
+  "target": "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r5-01\\PolicyGlass-stage3-review-20261117-r5\\.runtime\\data",
+  "original_installation_and_data_retained": true,
+  "business_table_row_counts": {
+    "experiments": 1,
+    "checkpoints": 7,
+    "jobs": 2,
+    "traces": 2,
+    "notebooks": 0
+  },
+  "all_business_rows_identical": true,
+  "artifact_hash_checks": 9,
+  "copied_derived_projection_rows_rebound": 2,
+  "no_original_projection_changes": true,
+  "seconds": 1.7281470999987505,
+  "scope": "Actual existing user store copied only after service stopped and no queued/running/paused jobs. Original D installation retained for rollback. Copied derived Trace projections rebuilt after full original-object hash checks; no learning or note-content changes."
+}

@@ -1,0 +1,9 @@
+
+ RUN  v4.1.12 D:/传智杯1/counterlab/policyglass/frontend
+
+
+ Test Files  2 passed (2)
+      Tests  11 passed (11)
+   Start at  05:37:14
+   Duration  345ms (transform 103ms, setup 0ms, import 169ms, tests 12ms, environment 0ms)
+

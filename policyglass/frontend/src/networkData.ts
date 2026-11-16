@@ -62,6 +62,22 @@ export function networkCounts(spec: Doc) {
   };
 }
 
+export function networkBounds(points: number[][], margin = 0.8) {
+  const lo = [0, 1, 2].map((axis) => Math.min(...points.map((p) => p[axis])) - margin);
+  const hi = [0, 1, 2].map((axis) => Math.max(...points.map((p) => p[axis])) + margin);
+  return { center: lo.map((v, i) => (v + hi[i]) / 2), width: hi[0] - lo[0], height: hi[2] - lo[2] };
+}
+
+export function modelOffset(index: number, count: number) {
+  if (count === 1) return { x: 0, z: 0 };
+  const rows = Math.ceil(count / 2),
+    lastSingle = count % 2 === 1 && index === count - 1;
+  return {
+    x: lastSingle ? 0 : ((index % 2) - 0.5) * 13.5,
+    z: ((rows - 1) / 2 - Math.floor(index / 2)) * 7.2,
+  };
+}
+
 export function layerData(
   name: string,
   layer: number,

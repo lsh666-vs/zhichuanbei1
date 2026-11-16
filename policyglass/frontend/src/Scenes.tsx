@@ -415,6 +415,9 @@ export default function Scenes({
   onForward,
   busy,
   gridPick,
+  focused,
+  onFocused,
+  onDeepInspect,
 }: any) {
   if (view === 'network')
     return (
@@ -436,6 +439,9 @@ export default function Scenes({
             onParameter,
             onForward,
             busy,
+            focused,
+            onFocused,
+            onDeepInspect,
           }}
           probe={<FrameProbe />}
         />

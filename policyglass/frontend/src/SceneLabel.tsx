@@ -2,7 +2,15 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-export default function SceneLabel({ at, children }: { at: number[]; children: React.ReactNode }) {
+export default function SceneLabel({
+  at,
+  children,
+  pixels = 28,
+}: {
+  at: number[];
+  children: React.ReactNode;
+  pixels?: number;
+}) {
   const text = React.Children.toArray(children)
     .map((c) => (typeof c === 'string' || typeof c === 'number' ? String(c) : ''))
     .join('');
@@ -30,7 +38,10 @@ export default function SceneLabel({ at, children }: { at: number[]; children: R
     if (!sprite.current) return;
     const distance = camera.position.distanceTo(new THREE.Vector3(...(at as [number, number, number])));
     const height =
-      (2 * Math.tan(THREE.MathUtils.degToRad((camera as THREE.PerspectiveCamera).fov / 2)) * distance * 28) /
+      (2 *
+        Math.tan(THREE.MathUtils.degToRad((camera as THREE.PerspectiveCamera).fov / 2)) *
+        distance *
+        pixels) /
       size.height;
     sprite.current.scale.set(height * aspect, height, 1);
   });

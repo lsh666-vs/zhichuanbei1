@@ -81,6 +81,8 @@ export default function App() {
     [expanded, setExpanded] = useState(true),
     [path, setPath] = useState('actor'),
     [playing, setPlaying] = useState(false),
+    [networkFocus, setNetworkFocus] = useState(false),
+    [missingPhase, setMissingPhase] = useState(''),
     [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [target, setTarget] = useState([0.45, 0.12, 0.45]),
     [drag, setDrag] = useState(false),
@@ -136,7 +138,11 @@ export default function App() {
     sliceTask = useRef<string>('');
   const eventRequests = useRef(new Map<string, Promise<void>>());
   const autoSlice = useRef('');
+  const pendingOperations = useRef(new Map<number, string>()),
+    operationId = useRef(0);
   const run = useCallback(async (label: string, action: () => Promise<void>) => {
+    const id = ++operationId.current;
+    pendingOperations.current.set(id, label);
     setBusy(label);
     setError('');
     try {
@@ -144,7 +150,8 @@ export default function App() {
     } catch (e) {
       setError(String(e instanceof Error ? e.message : e));
     } finally {
-      setBusy('');
+      pendingOperations.current.delete(id);
+      setBusy([...pendingOperations.current.values()].at(-1) ?? '');
     }
   }, []);
   const list = async () => {
@@ -166,6 +173,7 @@ export default function App() {
     setRollout(undefined);
     setSurface(undefined);
     setBackward(false);
+    setMissingPhase('');
     reset();
   }, []);
   const open = useCallback(
@@ -408,10 +416,18 @@ export default function App() {
   };
   const start = async () => {
     if (!detail) return;
+    setNotice('');
+    setMissingPhase('');
     setPrediction(undefined);
     const j = await api(`/experiments/${detail.id}/jobs`, { iterations, record: true, mode });
     setJob(j);
     historyUrl(detail.id, j.id);
+  };
+  const startForward = () => {
+    setNotice('');
+    setPath('actor');
+    select({ model: 'actor', layer: 0, neuron: 0, input: 0 });
+    return run('实际 Actor 前向', predict);
   };
   const predict = async () => {
     const p = await api(`/experiments/${detail.id}/predict`, { observation, noise, checkpoint });
@@ -423,6 +439,7 @@ export default function App() {
     setHistory(await api(`/experiments/${detail.id}/traces`));
     select({ event: p.events.findIndex((e: Doc) => e.kind === 'policy_operation'), sample: 0 });
     setBackward(false);
+    setMissingPhase('');
     setView('network');
     setNotice('实时前向已完成 · 参数与物理未更新');
   };
@@ -741,8 +758,45 @@ export default function App() {
           : frames.length
             ? '物理分支记录'
             : '完整检查点状态';
+  const forwardOnly = !!prediction || trace?.phase === 'forward_only_no_parameter_update';
+  const nextEvent = events.findIndex((e) =>
+    forwardOnly ? e.kind === 'layer' && e.label === 'actor/layer0' : e.kind === 'optimizer',
+  );
+  const inspectComputed = async () => {
+    if (nextEvent < 0) return;
+    if (!prediction) await getEvent(nextEvent);
+    chooseEvent(nextEvent);
+    setView('network');
+    setPanel('inspect');
+    setMissingPhase('');
+  };
+  const computeState = busy.includes('前向')
+    ? '前向计算中'
+    : busy.includes('提交')
+      ? '正在提交真实更新'
+      : busy
+        ? busy
+        : active
+          ? job.status === 'paused'
+            ? '已暂停'
+            : '真实任务计算中'
+          : forwardOnly && nextEvent >= 0
+            ? '前向可检查 · 无参数更新'
+            : job?.status === 'failed'
+              ? '任务失败，可重试'
+              : job?.status === 'cancelled'
+                ? '任务已取消'
+                : nextEvent >= 0
+                  ? forwardOnly
+                    ? '前向可检查 · 无参数更新'
+                    : '真实更新可检查'
+                  : '待运行';
   return (
-    <div className={'app' + (reduced ? ' reduced' : '')}>
+    <div
+      className={
+        'app' + (reduced ? ' reduced' : '') + (networkFocus && view === 'network' ? ' network-focus' : '')
+      }
+    >
       <a className="skip-link" href="#experiment-content">
         跳到实验内容
       </a>
@@ -817,7 +871,7 @@ export default function App() {
           </button>
         </div>
       </div>
-      {error && (
+      {error && !detail && (
         <div className="alert error" role="alert">
           <strong>操作未完成</strong> {error}
           <button onClick={() => setError('')} aria-label="关闭错误">
@@ -965,6 +1019,115 @@ export default function App() {
               减弱动效
             </label>
           </div>
+          <section className="runbar" aria-label="真实计算控制" data-testid="compute-bar">
+            <div className="run-state" role="status" data-testid="compute-state">
+              <strong>{computeState}</strong>
+              <small>
+                {sourceLabel} · {checkpoint.slice(0, 10)} · {connection}
+              </small>
+            </div>
+            <button disabled={!!busy || active} onClick={startForward} data-testid="first-forward">
+              <Network size={17} />
+              <span>
+                看一次 Actor 前向<small>参数不更新 · 不推进物理</small>
+              </span>
+            </button>
+            <button
+              className="primary"
+              disabled={!!busy || active}
+              data-testid="first-update"
+              onClick={() => run(mode === 'train' ? '提交真实训练任务' : '提交固定批次反事实', start)}
+            >
+              <Play size={17} />
+              <span>
+                {detail.env_steps ? '继续计算' : '启动计算'}
+                <small>记录真实更新 · 会更新当前实验</small>
+              </span>
+            </button>
+            <button
+              disabled={!!busy || active || nextEvent < 0}
+              onClick={() => run('定位实际计算事件', inspectComputed)}
+              data-testid="inspect-computed"
+            >
+              {forwardOnly ? '检查 Actor 前向' : '检查实际参数更新'}
+              <ArrowRight size={16} />
+            </button>
+            <div className="run-secondary">
+              <details className="run-options">
+                <summary>预算与计算模式</summary>
+                <div className="run-controls">
+                  <select
+                    aria-label="计算模式"
+                    disabled={active}
+                    value={mode}
+                    onChange={(e) => setMode(e.target.value)}
+                  >
+                    <option value="train">train · 重新采样续训</option>
+                    <option value="fixed_batch">fixed_batch · 固定批次反事实</option>
+                  </select>
+                  <input
+                    aria-label="训练迭代预算"
+                    type="number"
+                    min="1"
+                    max="100"
+                    value={iterations}
+                    disabled={active}
+                    onChange={(e) => setIterations(+e.target.value)}
+                  />
+                  <span>迭代 · 按当前预算计算</span>
+                </div>
+              </details>
+              <div className="job-state" data-testid="job-status">
+                {job ? `${job.status} · ${job.completed}/${job.iterations} · ${job.mode}` : '尚无更新任务'}
+                {job?.control === 'pause' && job.status !== 'paused' ? ' · 等待安全边界暂停' : ''}
+                {job?.error && <strong>{job.error}</strong>}
+              </div>
+              <div className="run-controls">
+                <button
+                  aria-label="暂停任务"
+                  disabled={!active || job?.status === 'paused'}
+                  onClick={() =>
+                    run('请求安全边界暂停', async () =>
+                      setJob(await api(`/jobs/${job.id}/control/pause`, {})),
+                    )
+                  }
+                >
+                  <Pause size={16} />
+                </button>
+                <button
+                  aria-label="恢复任务"
+                  disabled={job?.status !== 'paused'}
+                  onClick={() =>
+                    run('恢复同一任务', async () => setJob(await api(`/jobs/${job.id}/control/run`, {})))
+                  }
+                >
+                  <Play size={16} />
+                </button>
+                <button
+                  aria-label="取消任务"
+                  disabled={!active}
+                  onClick={() =>
+                    run('请求安全边界取消', async () =>
+                      setJob(await api(`/jobs/${job.id}/control/cancel`, {})),
+                    )
+                  }
+                >
+                  <X size={16} />
+                </button>
+                <button aria-label="重连并刷新" onClick={() => run('重连并读取完整状态', refresh)}>
+                  <RotateCcw size={15} />
+                </button>
+              </div>
+            </div>
+            {error && (
+              <div className="run-error" role="alert">
+                <strong>操作未完成</strong> {error}
+                <button aria-label="关闭错误" onClick={() => setError('')}>
+                  <X size={14} />
+                </button>
+              </div>
+            )}
+          </section>
           <main className="workspace" id="experiment-content" tabIndex={-1}>
             <aside className="leftbar">
               <div className="section-heading">
@@ -975,6 +1138,7 @@ export default function App() {
                 {['forward', 'loss', 'backward', 'optimizer'].map((phase, i) => (
                   <button
                     key={phase}
+                    aria-label={['前向传播', '目标与损失', '梯度反传', '参数更新'][i]}
                     onClick={() => {
                       const index = events.findIndex((e) =>
                         phase === 'forward'
@@ -984,7 +1148,10 @@ export default function App() {
                             : e.kind === phase,
                       );
                       if (index >= 0) chooseEvent(index);
-                      else setNotice('请先运行一次真实更新，才能检查这个阶段。');
+                      else {
+                        setNotice('');
+                        setMissingPhase(phase);
+                      }
                     }}
                   >
                     <span>0{i + 1}</span>
@@ -992,6 +1159,22 @@ export default function App() {
                   </button>
                 ))}
               </div>
+              {missingPhase && (
+                <div className="phase-guide" role="status" data-testid="phase-guide">
+                  <b>{missingPhase === 'forward' ? '前向尚未计算' : '此阶段需要一次带梯度的真实更新'}</b>
+                  <p>
+                    {missingPhase === 'forward'
+                      ? '只运行 Actor 前向即可检查网络；参数和环境交互计数不增长。'
+                      : '仅前向记录不含学习目标、反传或 Adam 更新。记录一次真实更新后再检查。'}
+                  </p>
+                  <button
+                    disabled={!!busy || active}
+                    onClick={missingPhase === 'forward' ? startForward : () => run('提交真实训练任务', start)}
+                  >
+                    {missingPhase === 'forward' ? '运行 Actor 前向' : '记录真实更新'}
+                  </button>
+                </div>
+              )}
               <div className="section-heading">
                 <h3>事件时间线</h3>
                 <span>{events.length}</span>
@@ -1172,20 +1355,28 @@ export default function App() {
                   checkpoint,
                   traceId,
                   traceMeta: trace,
+                  focused: networkFocus,
+                  onFocused: setNetworkFocus,
+                  onDeepInspect: () => {
+                    setNetworkFocus(false);
+                    requestAnimationFrame(() => document.querySelector<HTMLElement>('.inspector')?.focus());
+                  },
                   onParameter: (handoff: ParameterHandoff) => {
+                    setNetworkFocus(false);
                     setBranchKind('parameter');
                     setBranchPath(handoff.path);
                     setBranchIndex(handoff.index.join(','));
                     setBranchValue(handoff.value);
                     setParameterEdit({ ...handoff, context: parameterContext });
                     setPanel('branch');
+                    requestAnimationFrame(() =>
+                      document
+                        .querySelector<HTMLElement>('.branch-provenance')
+                        ?.scrollIntoView({ block: 'center' }),
+                    );
                   },
                   busy: !!busy || !!active,
-                  onForward: () => {
-                    setPath('actor');
-                    select({ model: 'actor', layer: 0, neuron: 0, input: 0 });
-                    run('实际 Actor 前向', predict);
-                  },
+                  onForward: startForward,
                   empty: (
                     <>
                       <span className="eyebrow">
@@ -2249,72 +2440,6 @@ export default function App() {
               }}
             />
           </main>
-          <footer className="runbar">
-            <div className="run-controls">
-              <button
-                className="primary"
-                disabled={!!busy || active}
-                onClick={() => run(mode === 'train' ? '提交真实训练任务' : '提交固定批次反事实', start)}
-              >
-                <Play size={15} />
-                {detail.env_steps ? '继续计算' : '启动计算'}
-              </button>
-              <select
-                aria-label="计算模式"
-                disabled={active}
-                value={mode}
-                onChange={(e) => setMode(e.target.value)}
-              >
-                <option value="train">train · 重新采样续训</option>
-                <option value="fixed_batch">fixed_batch · 固定批次反事实</option>
-              </select>
-              <input
-                aria-label="训练迭代预算"
-                type="number"
-                min="1"
-                max="100"
-                value={iterations}
-                onChange={(e) => setIterations(+e.target.value)}
-              />
-              <span>迭代</span>
-              <button
-                aria-label="暂停任务"
-                disabled={!active}
-                onClick={() =>
-                  run('请求安全边界暂停', async () => setJob(await api(`/jobs/${job.id}/control/pause`, {})))
-                }
-              >
-                <Pause size={16} />
-              </button>
-              <button
-                aria-label="恢复任务"
-                disabled={job?.status !== 'paused'}
-                onClick={() =>
-                  run('恢复同一任务', async () => setJob(await api(`/jobs/${job.id}/control/run`, {})))
-                }
-              >
-                <Play size={16} />
-              </button>
-              <button
-                aria-label="取消任务"
-                disabled={!active}
-                onClick={() =>
-                  run('请求安全边界取消', async () => setJob(await api(`/jobs/${job.id}/control/cancel`, {})))
-                }
-              >
-                <X size={16} />
-              </button>
-            </div>
-            <div className="job-state" data-testid="job-status">
-              {job ? `${job.status} · ${job.completed}/${job.iterations} · ${job.mode}` : '尚无计算任务'}
-              {job?.control === 'pause' && job.status !== 'paused' ? ' · 等待安全边界暂停' : ''}
-              {job?.error && <strong>{job.error}</strong>}
-            </div>
-            <button onClick={() => run('重连并读取完整状态', refresh)}>
-              <RotateCcw size={15} />
-              刷新
-            </button>
-          </footer>
           <section className="checkpoint-bar">
             <label>
               来源检查点

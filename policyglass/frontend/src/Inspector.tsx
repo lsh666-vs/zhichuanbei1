@@ -94,7 +94,7 @@ export default function Inspector({
   const [parameter, setParameter] = useState('');
   if (!event)
     return (
-      <aside className="inspector">
+      <aside className="inspector" tabIndex={-1} aria-label="深层张量检查">
         <h3>对象检查器</h3>
         <p className="muted">选择一个事件，检查它的真实数值。</p>
       </aside>
@@ -114,7 +114,7 @@ export default function Inspector({
     ? event
     : Object.fromEntries(Object.entries(event).filter(([k]) => !k.includes('gradient')));
   return (
-    <aside className="inspector">
+    <aside className="inspector" tabIndex={-1} aria-label="深层张量检查">
       <div className="eyebrow">DEEP INSPECTOR</div>
       <h3>{event.label}</h3>
       <div className="tags">

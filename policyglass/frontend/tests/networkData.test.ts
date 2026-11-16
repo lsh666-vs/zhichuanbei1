@@ -1,7 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { layerData, networkCounts, nodePosition, parameterHandoff } from '../src/networkData';
+import { layerData, networkCounts, nodePosition, parameterHandoff, networkBounds } from '../src/networkData';
 
 describe('network topology and parameter provenance', () => {
+  it('fits every source unit and the actual target of a 64-wide hidden path', () => {
+    const source = Array.from({ length: 64 }, (_, i) => nodePosition(1, i, 64, 4));
+    const target = nodePosition(2, 63, 64, 4);
+    const bounds = networkBounds([...source, target], 1);
+    for (const p of [...source, target]) {
+      expect(Math.abs(p[0] - bounds.center[0])).toBeLessThan(bounds.width / 2);
+      expect(Math.abs(p[2] - bounds.center[2])).toBeLessThan(bounds.height / 2);
+    }
+    expect(bounds.center[0]).toBeGreaterThan(-1);
+  });
   it('binds shortcuts to a complete parent value while retaining the different historical source', () => {
     const source = {
       traceId: 'trace',

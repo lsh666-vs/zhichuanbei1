@@ -1823,3 +1823,239 @@ td small {
 .surface-status {
   margin-bottom: 10px;
 }
+
+.runbar {
+  position: sticky;
+  top: 0;
+  z-index: 25;
+  margin: 0 32px 14px;
+  display: grid;
+  grid-template-columns: minmax(170px, 1fr) auto auto auto;
+  padding: 12px 16px 8px;
+  box-shadow: 0 3px 12px #23404c0a;
+}
+.run-state {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+.run-state strong {
+  font-size: 13px;
+  color: #245d66;
+}
+.run-state small {
+  font-size: 10px;
+  color: #58717e;
+  overflow-wrap: anywhere;
+}
+.runbar > button {
+  min-height: 46px;
+}
+.runbar > button span {
+  display: grid;
+  text-align: left;
+  gap: 3px;
+}
+.runbar > button small {
+  font-size: 9px;
+  font-weight: normal;
+  opacity: 0.85;
+}
+.runbar > .primary small {
+  color: white;
+  opacity: 0.95;
+}
+.run-secondary {
+  grid-column: 1/-1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.run-secondary .run-controls {
+  margin-left: auto;
+}
+.run-options {
+  font-size: 10px;
+  position: relative;
+}
+.run-options summary {
+  cursor: pointer;
+  padding: 6px 0;
+}
+.run-options > .run-controls {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding: 14px;
+  background: white;
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 20px #233d4d1f;
+  border-radius: 6px;
+  width: 390px;
+  z-index: 30;
+}
+.run-secondary .job-state {
+  margin: 0;
+  max-width: none;
+  flex: 1;
+}
+.run-error {
+  grid-column: 1/-1;
+  color: #a54331;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.run-error button {
+  margin-left: auto;
+}
+.phase-guide {
+  padding: 12px;
+  border: 1px solid #c9dfdc;
+  background: #eef7f5;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 11px;
+}
+.phase-guide p {
+  font-size: 11px;
+  margin: 8px 0;
+}
+.network-toolbar button {
+  margin-left: 0;
+  font-size: 11px;
+}
+.network-toolbar {
+  gap: 8px;
+}
+.network-toolbar > .primary {
+  margin-left: auto;
+}
+.network-toolbar button span {
+  font-size: 9px;
+  opacity: 0.8;
+}
+.network-models {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.network-models button {
+  font-size: 10px;
+  padding: 4px 7px;
+}
+.workspace,
+.tools,
+.inspector,
+.branch-provenance {
+  scroll-margin-top: 145px;
+}
+.workspace :is(button, input, select, textarea, summary) {
+  scroll-margin-top: 160px;
+  scroll-margin-bottom: 20px;
+}
+
+.network-focus > .topbar,
+.network-focus > .pagebar,
+.network-focus > .experiment-strip,
+.network-focus > .runbar,
+.network-focus > .checkpoint-bar,
+.network-focus > .site-foot,
+.network-focus > .alert,
+.network-focus > .busy,
+.network-focus .leftbar,
+.network-focus .inspector,
+.network-focus .view-tabs,
+.network-focus .viewport-heading,
+.network-focus .viewport-footer,
+.network-focus .playback,
+.network-focus .tools {
+  display: none;
+}
+.network-focus .workspace {
+  display: block;
+  margin: 12px;
+  overflow: visible;
+}
+.network-focus .network-explorer {
+  height: calc(100dvh - 26px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+}
+.network-focus .network-toolbar,
+.network-focus .network-summary {
+  grid-column: 1/-1;
+}
+.network-focus .network-scene {
+  height: auto;
+  min-height: 0;
+  grid-column: 1;
+  grid-row: 3;
+}
+.network-focus .network-readout {
+  grid-column: 2;
+  grid-row: 3;
+  display: flex;
+  flex-direction: column;
+  border-top: 0;
+  border-left: 1px solid var(--line);
+  gap: 13px;
+  padding: 14px;
+  overflow-y: auto;
+  min-height: 0;
+}
+.network-focus .network-numbers {
+  gap: 12px;
+}
+.network-focus .network-equation {
+  gap: 7px;
+}
+.network-focus .network-equation p {
+  margin: 0;
+  padding: 8px;
+  font-size: 10px;
+}
+.network-focus .network-incoming {
+  grid-column: 1/-1;
+  max-height: 150px;
+  overflow-y: auto;
+  padding-block: 10px;
+}
+.network-focus .network-selection > .eyebrow {
+  display: none;
+}
+@media (max-width: 1100px) {
+  .runbar {
+    margin-inline: 16px;
+    grid-template-columns: 1fr auto auto;
+  }
+  .run-state {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 700px) {
+  .runbar {
+    position: relative;
+    grid-template-columns: 1fr;
+  }
+  .run-state,
+  .run-secondary {
+    grid-column: 1;
+  }
+  .run-secondary {
+    flex-wrap: wrap;
+  }
+  .network-focus .network-explorer {
+    grid-template-columns: minmax(0, 1fr);
+    height: auto;
+  }
+  .network-focus .network-scene {
+    min-height: 340px;
+  }
+  .network-focus .network-readout {
+    grid-column: 1;
+    grid-row: 4;
+  }
+}

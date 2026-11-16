@@ -7,25 +7,32 @@ import Label from './SceneLabel';
 import {
   layerData,
   modelTitle,
+  modelOffset,
   networkCounts,
+  networkBounds,
   nodePosition,
   parameterHandoff,
   ParameterHandoff,
 } from './networkData';
 
-function FitNetwork({ count, layers, reset }: { count: number; layers: number; reset: number }) {
-  const { camera, size, invalidate } = useThree();
+function FitNetwork({ bounds, reset }: { bounds: ReturnType<typeof networkBounds>; reset: number }) {
+  const { camera, size, invalidate, controls } = useThree();
+  const key = JSON.stringify(bounds);
   useLayoutEffect(() => {
-    const height = 7 + (count - 1) * 7.2;
-    const width = (layers - 1) * 3.25 + 2.6;
-    const distance = Math.max(height, width / (size.width / size.height)) / (2 * Math.tan(Math.PI / 9));
-    camera.position.set(0, -distance * 1.08, 0.55);
+    const distance =
+      Math.max(bounds.height, bounds.width / (size.width / size.height)) / (2 * Math.tan(Math.PI / 9));
+    const [x, y, z] = bounds.center;
+    camera.position.set(x, y - distance * 1.12, z + distance * 0.025);
     camera.up.set(0, 0, 1);
     (camera as THREE.PerspectiveCamera).fov = 40;
     (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
-    camera.lookAt(0, 0, 0);
+    camera.lookAt(x, y, z);
+    if (controls) {
+      (controls as any).target.set(x, y, z);
+      (controls as any).update();
+    }
     invalidate();
-  }, [count, layers, reset, size.width, size.height, camera]);
+  }, [key, reset, size.width, size.height, camera, controls]);
   return null;
 }
 
@@ -34,11 +41,13 @@ function NeuronLayer({
   values,
   selected,
   onPick,
+  dim = false,
 }: {
   points: [number, number, number][];
   values?: number[];
   selected: number;
   onPick: (index: number) => void;
+  dim?: boolean;
 }) {
   const ref = useRef<THREE.InstancedMesh>(null);
   useLayoutEffect(() => {
@@ -67,7 +76,7 @@ function NeuronLayer({
       }}
     >
       <sphereGeometry args={[0.085, 14, 12]} />
-      <meshStandardMaterial roughness={0.3} metalness={0.08} />
+      <meshStandardMaterial roughness={0.3} metalness={0.08} transparent={dim} opacity={dim ? 0.18 : 1} />
     </instancedMesh>
   );
 }
@@ -78,12 +87,14 @@ function DenseEdges({
   weight,
   focus,
   onPick,
+  opacity = 0.16,
 }: {
   before: [number, number, number][];
   after: [number, number, number][];
   weight?: number[][];
   focus?: number;
   onPick: (neuron: number, input: number) => void;
+  opacity?: number;
 }) {
   const geometry = useMemo(() => {
     const positions: number[] = [],
@@ -111,27 +122,46 @@ function DenseEdges({
         onPick(focus ?? Math.floor(edge / before.length), edge % before.length);
       }}
     >
-      <lineBasicMaterial vertexColors transparent opacity={focus == null ? 0.16 : 0.7} depthWrite={false} />
+      <lineBasicMaterial
+        vertexColors
+        transparent
+        opacity={focus == null ? opacity : 0.7}
+        depthWrite={false}
+      />
     </lineSegments>
   );
 }
 
 // Read-only diagnostic projection of the very same drawn nodes for actual
 // canvas-picking tests. It creates no log in ordinary product mode.
-function PickProbe({ models, architecture, selection }: any) {
+function PickProbe({ models, architecture, selection, mode, positions }: any) {
   const { camera, size } = useThree();
   const previous = useRef('');
   useFrame(() => {
     if (new URLSearchParams(location.search).get('diagnostics') !== '1') return;
     const key =
-      models.join() + ':' + selection.model + ':' + selection.layer + ':' + size.width + ':' + size.height;
+      models.join() +
+      ':' +
+      mode +
+      ':' +
+      selection.model +
+      ':' +
+      selection.layer +
+      ':' +
+      selection.neuron +
+      ':' +
+      selection.input +
+      ':' +
+      size.width +
+      ':' +
+      size.height +
+      ':' +
+      camera.matrixWorld.elements.join(',');
     if (previous.current === key) return;
     previous.current = key;
     const name = models.find((n: string) => n === selection.model.replace('_actor_path', '')) ?? models[0];
     if (!name) return;
-    const spec = architecture[name],
-      mi = models.indexOf(name);
-    const base = ((models.length - 1) / 2 - mi) * 7.2;
+    const spec = architecture[name];
     const layer = Math.min(selection.layer + 1, spec.sizes.length - 1);
     const project = (position: number[]) => {
       const p = new THREE.Vector3(...(position as [number, number, number])).project(camera);
@@ -139,11 +169,19 @@ function PickProbe({ models, architecture, selection }: any) {
     };
     (window as any).__policyglassNetworkPick = {
       name,
+      mode,
+      width: size.width,
+      height: size.height,
       layer: layer - 1,
       nodes: Array.from({ length: spec.sizes[layer] }, (_, i) => ({
         neuron: i,
-        ...project(nodePosition(layer, i, spec.sizes[layer], spec.sizes.length, base)),
+        ...project(positions[name][layer][i]),
       })),
+      sourceNodes: positions[name][layer - 1].map(project),
+      selectedTarget: project(positions[name][layer][Math.min(selection.neuron, spec.sizes[layer] - 1)]),
+      selectedSource: project(
+        positions[name][layer - 1][Math.min(selection.input, spec.sizes[layer - 1] - 1)],
+      ),
     };
   });
   return null;
@@ -166,6 +204,9 @@ export default function NetworkExplorer({
   onParameter,
   onForward,
   busy,
+  focused,
+  onFocused,
+  onDeepInspect,
 }: {
   architecture: Doc;
   events: Doc[];
@@ -183,16 +224,36 @@ export default function NetworkExplorer({
   onParameter: (handoff: ParameterHandoff) => void;
   onForward: () => void;
   busy: boolean;
+  focused: boolean;
+  onFocused: (value: boolean) => void;
+  onDeepInspect: () => void;
 }) {
   const selection = useLab((state) => state.selection),
     select = useLab((state) => state.select);
   const [snapshot, setSnapshot] = useState<Doc>(),
     [error, setError] = useState(''),
     [reset, setReset] = useState(0),
+    [cameraMode, setCameraMode] = useState<'overview' | 'path'>('overview'),
     [checkpointSource, setCheckpointSource] = useState('');
   const sourceKey = [experiment, checkpoint, traceId, selection.event].join(':');
   const checkpointOnly = checkpointSource === sourceKey;
   const shownEvents = checkpointOnly ? [] : events;
+  const entry = useRef<HTMLButtonElement>(null),
+    exit = useRef<HTMLButtonElement>(null),
+    previousScroll = useRef(0);
+  const toggleFocus = (value: boolean) => {
+    if (value) previousScroll.current = window.scrollY;
+    onFocused(value);
+    requestAnimationFrame(() => {
+      if (value) {
+        window.scrollTo(0, 0);
+        exit.current?.focus({ preventScroll: true });
+      } else {
+        window.scrollTo(0, previousScroll.current);
+        entry.current?.focus({ preventScroll: true });
+      }
+    });
+  };
   useEffect(() => {
     let current = true;
     setError('');
@@ -220,11 +281,15 @@ export default function NetworkExplorer({
       Object.fromEntries(
         models.map((name, mi) => {
           const model = architecture[name],
-            base = ((models.length - 1) / 2 - mi) * 7.2;
+            offset = modelOffset(mi, models.length);
           return [
             name,
             model.sizes.map((n: number, l: number) =>
-              Array.from({ length: n }, (_, i) => nodePosition(l, i, n, model.sizes.length, base)),
+              Array.from({ length: n }, (_, i) => {
+                const point = nodePosition(l, i, n, model.sizes.length, offset.z);
+                point[0] += offset.x;
+                return point;
+              }),
             ),
           ];
         }),
@@ -243,6 +308,20 @@ export default function NetworkExplorer({
   const output = data.event?.output?.[selection.sample]?.[neuron];
   const z = data.event?.preactivation?.[selection.sample]?.[neuron];
   const gradient = data.event?.preactivation_gradient?.[selection.sample]?.[neuron];
+  const bounds = useMemo(() => {
+    if (cameraMode === 'path') {
+      const points = positionsByModel[active];
+      const target = points[layer + 1][neuron];
+      return networkBounds([...points[layer], target, [target[0] - 0.7, target[1], target[2] + 0.65]], 1);
+    }
+    return networkBounds(
+      models.flatMap((name, mi) => [
+        ...positionsByModel[name].flat(),
+        [modelOffset(mi, models.length).x, 0, modelOffset(mi, models.length).z + 3.05],
+      ]),
+      1.25,
+    );
+  }, [positionsByModel, models, cameraMode, active, layer, neuron]);
   const counts = models.reduce(
     (sum, name) => {
       const current = networkCounts(architecture[name]);
@@ -275,7 +354,17 @@ export default function NetworkExplorer({
     onParameter(handoff);
   };
   return (
-    <div className="network-explorer">
+    <div
+      className="network-explorer"
+      data-focused={focused}
+      data-camera-mode={cameraMode}
+      onKeyDown={(event) => {
+        if (focused && event.key === 'Escape' && !event.defaultPrevented) {
+          event.preventDefault();
+          toggleFocus(false);
+        }
+      }}
+    >
       <div className="network-toolbar">
         <label>
           网络{' '}
@@ -299,10 +388,40 @@ export default function NetworkExplorer({
           <input type="checkbox" checked={expanded} onChange={(e) => onExpanded(e.target.checked)} />
           全部权重连线
         </label>
-        <button disabled={busy} onClick={onForward}>
-          计算 Actor 前向
+        {!focused && (
+          <button disabled={busy} onClick={onForward}>
+            计算 Actor 前向
+          </button>
+        )}
+        <button
+          aria-pressed={cameraMode === 'path'}
+          onClick={() => {
+            setCameraMode('path');
+            setReset((v) => v + 1);
+          }}
+        >
+          聚焦所选路径
         </button>
-        <button onClick={() => setReset((value) => value + 1)}>复位视角</button>
+        <button
+          onClick={() => {
+            setCameraMode('overview');
+            setReset((v) => v + 1);
+          }}
+        >
+          返回总览
+        </button>
+        {focused ? (
+          <>
+            <button onClick={onDeepInspect}>查看深层张量</button>
+            <button ref={exit} className="primary" onClick={() => toggleFocus(false)}>
+              退出专注 <span>Esc</span>
+            </button>
+          </>
+        ) : (
+          <button ref={entry} className="primary" onClick={() => toggleFocus(true)}>
+            专注网络检查
+          </button>
+        )}
       </div>
       <div
         className="network-summary"
@@ -326,6 +445,21 @@ export default function NetworkExplorer({
           正权重 <i className="negative" />
           负权重
         </span>
+        {models.length > 1 && (
+          <div className="network-models" aria-label="总览模型入口">
+            {models.map((name) => (
+              <button
+                key={name}
+                onClick={() => {
+                  pick(name, 0, 0, 0);
+                  setCameraMode('path');
+                }}
+              >
+                {modelTitle(name)}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       <div
         className="scene network-scene"
@@ -345,21 +479,21 @@ export default function NetworkExplorer({
           <color attach="background" args={['#f6f9fb']} />
           <ambientLight intensity={1.8} />
           <directionalLight position={[-2, -8, 6]} intensity={2.5} />
-          <FitNetwork
-            count={models.length}
-            layers={Math.max(...models.map((name) => architecture[name].sizes.length))}
-            reset={reset}
-          />
+          <FitNetwork bounds={bounds} reset={reset} />
           {models.map((name, mi) => {
             const model = architecture[name],
-              base = ((models.length - 1) / 2 - mi) * 7.2;
+              offset = modelOffset(mi, models.length),
+              base = offset.z;
             const positions = positionsByModel[name];
             const isActive = name === active;
+            const detailed = isActive && (models.length === 1 || cameraMode === 'path');
             return (
               <group key={name}>
-                <Label at={[0, 0, base + 3.05]}>
-                  {modelTitle(name)} · {model.sizes.join(' → ')}
-                </Label>
+                {(cameraMode === 'overview' || isActive) && (
+                  <Label at={[offset.x, 0, base + 3.05]} pixels={models.length > 1 ? 26 : 28}>
+                    {modelTitle(name)} · {model.sizes.join(' → ')}
+                  </Label>
+                )}
                 {model.sizes.map((n: number, l: number) => {
                   const item = layerData(name, Math.max(0, l - 1), shownEvents, parameters, selection.model);
                   const values = backward
@@ -376,6 +510,7 @@ export default function NetworkExplorer({
                           before={positions[l - 1]}
                           after={positions[l]}
                           weight={item.weight}
+                          opacity={cameraMode === 'path' ? 0.025 : 0.16}
                           onPick={(n, j) => pick(name, l - 1, n, j)}
                         />
                       )}
@@ -390,18 +525,22 @@ export default function NetworkExplorer({
                       )}
                       <NeuronLayer
                         points={positions[l]}
+                        dim={cameraMode === 'path' && (!isActive || (l !== layer && l !== layer + 1))}
                         values={values}
-                        selected={
-                          isActive ? (l === 0 && layer === 0 ? input : layer === l - 1 ? neuron : -1) : -1
-                        }
+                        selected={isActive ? (l === layer ? input : l === layer + 1 ? neuron : -1) : -1}
                         onPick={(index) =>
                           pick(name, Math.max(0, l - 1), l === 0 ? neuron : index, l === 0 ? index : input)
                         }
                       />
-                      <Label at={[nodePosition(l, 0, n, model.sizes.length, base)[0], 0, base - 2.95]}>
-                        {l === 0 ? '输入' : l === model.sizes.length - 1 ? '输出' : '隐藏层 ' + l} · {n}
-                      </Label>
-                      {l === model.sizes.length - 1 &&
+                      {detailed && (cameraMode !== 'path' || l === layer || l === layer + 1) && (
+                        <Label at={[positions[l][0][0], 0, base - 2.95]}>
+                          {l === 0 ? '输入' : l === model.sizes.length - 1 ? '输出' : '隐藏层 ' + l} · {n}
+                        </Label>
+                      )}
+                      {detailed &&
+                        cameraMode === 'path' &&
+                        l === layer + 1 &&
+                        l === model.sizes.length - 1 &&
                         positions[l].map((point: number[], i: number) => (
                           <Label key={'output-' + i} at={[point[0] + 0.67, point[1], point[2]]}>
                             {name === 'actor'
@@ -425,11 +564,13 @@ export default function NetworkExplorer({
                           return (
                             <>
                               <Line points={[source, target]} color="#db9239" lineWidth={3} />
-                              <Label
-                                at={source.map((value: number, axis: number) => (value + target[axis]) / 2)}
-                              >
-                                W[{neuron},{input}] = {fmt(item.weight?.[neuron]?.[input])}
-                              </Label>
+                              {detailed && (
+                                <Label
+                                  at={source.map((value: number, axis: number) => (value + target[axis]) / 2)}
+                                >
+                                  W[{neuron},{input}] = {fmt(item.weight?.[neuron]?.[input])}
+                                </Label>
+                              )}
                               <mesh position={one}>
                                 <sphereGeometry args={[0.07, 12, 10]} />
                                 <meshBasicMaterial color="#e2ad66" />
@@ -442,9 +583,11 @@ export default function NetworkExplorer({
                                 gapSize={0.035}
                                 lineWidth={1.5}
                               />
-                              <Label at={[one[0] - 0.22, one[1], one[2] + 0.16]}>
-                                1 · b[{neuron}] = {fmt(item.bias?.[neuron])}
-                              </Label>
+                              {detailed && (
+                                <Label at={[one[0] - 0.22, one[1], one[2] + 0.16]}>
+                                  1 · b[{neuron}] = {fmt(item.bias?.[neuron])}
+                                </Label>
+                              )}
                             </>
                           );
                         })()}
@@ -457,12 +600,18 @@ export default function NetworkExplorer({
           <OrbitControls
             key={models.join() + ':' + reset}
             makeDefault
-            target={[0, 0, 0]}
-            minDistance={2}
+            target={bounds.center as [number, number, number]}
+            minDistance={1}
             maxDistance={100}
             enableDamping={false}
           />
-          <PickProbe models={models} architecture={architecture} selection={selection} />
+          <PickProbe
+            models={models}
+            architecture={architecture}
+            selection={selection}
+            mode={cameraMode}
+            positions={positionsByModel}
+          />
         </Canvas>
         <div className="scene-hint">单击神经元 / 连线检查参数 · 拖动旋转 · 滚轮缩放</div>
       </div>
@@ -470,7 +619,7 @@ export default function NetworkExplorer({
         <div className="network-selection">
           <span className="eyebrow">SELECTED CONNECTION</span>
           <strong>
-            {active} / 第 {layer + 1} 层
+            {active} / 第 {layer + 1} 层 · W[{neuron},{input}]
           </strong>
           <div className="network-coordinates">
             <label>

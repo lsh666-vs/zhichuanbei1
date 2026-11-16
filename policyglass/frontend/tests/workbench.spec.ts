@@ -75,6 +75,8 @@ test('PPO actual create → inspect → branch → notes → export → import �
   await page.getByRole('button', { name: '创建受控分支' }).click();
   await expect(page.getByRole('heading', { level: 1 })).toContainText('ppo.learning_rate');
   const child = new URL(page.url()).searchParams.get('experiment')!;
+  if (!(await page.locator('.run-options').evaluate((el: HTMLDetailsElement) => el.open)))
+    await page.getByText('预算与计算模式', { exact: true }).click();
   await page.getByLabel('计算模式').selectOption('fixed_batch');
   await train(page);
   const childTraces = await (await page.request.get(`/api/experiments/${child}/traces`)).json();
@@ -99,6 +101,8 @@ test('PPO actual create → inspect → branch → notes → export → import �
   await page.locator('input[type=file]').setInputFiles(saved);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Imported experiment');
   const imported = new URL(page.url()).searchParams.get('experiment')!;
+  if (!(await page.locator('.run-options').evaluate((el: HTMLDetailsElement) => el.open)))
+    await page.getByText('预算与计算模式', { exact: true }).click();
   await page.getByLabel('计算模式').selectOption('fixed_batch');
   await train(page);
   const newTraces = await (await page.request.get(`/api/experiments/${imported}/traces`)).json();
@@ -173,6 +177,7 @@ test('SAC double-Q real grid, actor path and eight complete course controls', as
 test('Real task pause, reload, resume, cancel and corrupt import errors', async ({ page }) => {
   await page.goto('/');
   const id = await create(page, 'ppo', 'E2E task lifecycle');
+  await page.getByText('预算与计算模式', { exact: true }).click();
   await page.getByLabel('训练迭代预算').fill('100');
   await page.getByRole('button', { name: /启动计算|继续计算/ }).click();
   await page.getByRole('button', { name: '暂停任务', exact: true }).click();

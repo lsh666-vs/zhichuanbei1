@@ -206,6 +206,7 @@ function Surface({
   marker,
   gradient,
   pick,
+  labels,
 }: {
   data: Doc;
   fields: string[];
@@ -213,6 +214,7 @@ function Surface({
   marker?: number[];
   gradient?: number[];
   pick?: number[];
+  labels: string[];
 }) {
   const stats = useMemo(() => {
     const vals = fields.flatMap((k) => data[k].flat());
@@ -241,12 +243,8 @@ function Surface({
           onPick={onPick}
         />
       ))}
-      <Label at={[0, -1.3, 0]}>
-        x: {fmt(data.x[0])} … {fmt(data.x.at(-1))}
-      </Label>
-      <Label at={[1.4, 0, 0]}>
-        y: {fmt(data.y[0])} … {fmt(data.y.at(-1))}
-      </Label>
+      <Label at={[0, -1.3, 0]}>x · {labels[0]}</Label>
+      <Label at={[1.4, 0, 0]}>y · {labels[1]}</Label>
       <Label at={[-1.3, 0, 1]}>
         高度 {fmt(stats.lo)} … {fmt(stats.hi)}
       </Label>
@@ -410,6 +408,8 @@ export default function Scenes({
   experiment,
   checkpoint,
   traceId,
+  traceMeta,
+  surfaceLabels,
   empty,
   onParameter,
   onForward,
@@ -432,6 +432,7 @@ export default function Scenes({
             experiment,
             checkpoint,
             traceId,
+            traceMeta,
             onParameter,
             onForward,
             busy,
@@ -472,7 +473,12 @@ export default function Scenes({
             <Arm {...{ frame, geometry, frames, compare, target, onTarget, drag }} />
           )}
           {(view === 'q' || view === 'loss') && surface && (
-            <Surface data={surface} {...{ fields, onPick, marker, gradient }} pick={gridPick} />
+            <Surface
+              data={surface}
+              {...{ fields, onPick, marker, gradient }}
+              pick={gridPick}
+              labels={surfaceLabels}
+            />
           )}
           <OrbitControls
             key={view + ':' + modelCount}

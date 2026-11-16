@@ -40,6 +40,7 @@ import Inspector, { Formula, RawTree } from './Inspector';
 import { courses } from './courses';
 import { Explanation } from './Explanation';
 import { StudyLibrary } from './StudyLibrary';
+import { ParameterHandoff } from './networkData';
 const tabs: { id: View; label: string; icon: any; caption: string }[] = [
   { id: 'arm', label: '物理实验', icon: Box, caption: '世界坐标 · MuJoCo' },
   { id: 'network', label: '计算网络', icon: Network, caption: '概念空间 · 实际张量' },
@@ -90,6 +91,7 @@ export default function App() {
     [resetEnvironment, setResetEnvironment] = useState(false),
     [physicsSteps, setPhysicsSteps] = useState(16);
   const [surfaceData, setSurface] = useState<Doc>(),
+    [sliceAttempt, setSliceAttempt] = useState(''),
     [fields, setFields] = useState(['q1', 'q2']),
     [pick, setPick] = useState([0, 0]),
     [axes, setAxes] = useState([0, 1]),
@@ -107,6 +109,10 @@ export default function App() {
     [branchValue, setBranchValue] = useState(0.001),
     [branchIndex, setBranchIndex] = useState('0'),
     [resetOpt, setResetOpt] = useState(false);
+  const [parameterEdit, setParameterEdit] = useState<ParameterHandoff & { context: string }>(),
+    [parentParameters, setParentParameters] = useState<Doc>();
+  const parameterContext = JSON.stringify([detail?.id, checkpoint, traceId, s]);
+  const parameterEditStale = !!parameterEdit && parameterEdit.context !== parameterContext;
   const [iterations, setIterations] = useState(1),
     [mode, setMode] = useState('train'),
     [notes, setNotes] = useState<Doc[]>([]),
@@ -130,14 +136,6 @@ export default function App() {
     sliceTask = useRef<string>('');
   const eventRequests = useRef(new Map<string, Promise<void>>());
   const autoSlice = useRef('');
-  const surface =
-    surfaceData?.view === view &&
-    surfaceData?.checkpoint === checkpoint &&
-    surfaceData?.sample === s.sample &&
-    surfaceData?.traceId === traceId &&
-    surfaceData?.experiment === detail?.id
-      ? surfaceData.result
-      : undefined;
   const run = useCallback(async (label: string, action: () => Promise<void>) => {
     setBusy(label);
     setError('');
@@ -317,6 +315,69 @@ export default function App() {
     frame =
       selectedFrame?.after ??
       (selectedFrame?.schema === 'policyglass.physics.v1' ? selectedFrame : detail?.physics);
+  // Snapshot every numerical condition. Display-only Q fields are deliberately
+  // excluded. Raw index drafts remain safe to edit; validation runs on compute.
+  const sliceRequest = {
+    experiment: detail?.id,
+    kind: view === 'q' ? 'q' : 'loss',
+    sample: s.sample,
+    traceId,
+    body:
+      view === 'q'
+        ? {
+            checkpoint,
+            axes,
+            fixed_action: fixed,
+            observation: frame ? observationOf(selectedFrame?.before ?? frame) : detail?.observation,
+            resolution,
+          }
+        : {
+            checkpoint,
+            path_x: lossX,
+            index_x: lossIX.trim() ? lossIX.split(',').map(Number) : [],
+            path_y: lossY,
+            index_y: lossIY.trim() ? lossIY.split(',').map(Number) : [],
+            ...(checkpoint === trace?.origin_checkpoint ? { trace_id: traceId } : {}),
+            extent,
+            resolution: Math.min(resolution, 31),
+          },
+  };
+  const sliceKey = JSON.stringify({ view, ...sliceRequest });
+  const currentSliceKey = useRef(sliceKey);
+  currentSliceKey.current = sliceKey;
+  const surface = surfaceData?.key === sliceKey ? surfaceData.result : undefined;
+  const surfaceStale =
+    (!!surfaceData && surfaceData.key !== sliceKey) || (!!sliceAttempt && sliceAttempt !== sliceKey);
+  const surfaceRequest = surfaceData?.request;
+  const surfaceLabels =
+    surface &&
+    (surfaceRequest.kind === 'q'
+      ? surface.axes.map((axis: number) => `动作 a[${axis}] · Nm`)
+      : surface.directions.map((d: Doc) => `Δ ${d.path}[${d.index.join(',')}]`));
+  useEffect(() => {
+    if (panel !== 'branch' || branchKind !== 'parameter' || !detail) return;
+    let alive = true;
+    setParentParameters(undefined);
+    api(`/experiments/${detail.id}/parameters?checkpoint=${checkpoint}`)
+      .then((parameters) => {
+        if (alive) setParentParameters({ experiment: detail.id, checkpoint, parameters });
+      })
+      .catch((e) => {
+        if (alive) setError(String(e));
+      });
+    return () => {
+      alive = false;
+    };
+  }, [panel, branchKind, detail?.id, checkpoint]);
+  const parentParameter = (() => {
+    if (parentParameters?.experiment !== detail?.id || parentParameters?.checkpoint !== checkpoint) return;
+    try {
+      const [model, parameter] = branchPath.split('/');
+      return at(parentParameters.parameters[model]?.[parameter], parseIndex(branchIndex));
+    } catch {
+      return undefined;
+    }
+  })();
   useEffect(() => {
     if (!playing || reduced || frames.length < 2) return;
     const t = setInterval(
@@ -326,10 +387,9 @@ export default function App() {
     return () => clearInterval(t);
   }, [playing, reduced, frames.length]);
   useEffect(() => {
-    setSurface(undefined);
     sliceController.current?.abort();
     if (sliceTask.current) api(`/slice-jobs/${sliceTask.current}/cancel`, {}).catch(() => {});
-  }, [view, checkpoint, s.sample]);
+  }, [sliceKey]);
   useEffect(() => {
     if (view === 'loss' && trace) {
       const index = trace.events.findIndex((e) => e.kind === 'optimizer' && e.label === 'actor');
@@ -367,6 +427,8 @@ export default function App() {
     setNotice('实时前向已完成 · 参数与物理未更新');
   };
   const branch = async () => {
+    if (branchKind === 'parameter' && (parameterEditStale || !Number.isFinite(parentParameter)))
+      throw Error('参数来源已变化或父状态尚未加载；请从网络重新选择参数。');
     const child = await api(`/experiments/${detail.id}/branches`, {
       checkpoint,
       label: `${detail.label} · ${branchPath}=${branchValue}`,
@@ -400,33 +462,26 @@ export default function App() {
     setNotice('物理干预已记录为子分支；物理编辑使旧训练批次失效。');
   };
   const calculateSlice = async () => {
+    if (view === 'loss') {
+      parseIndex(lossIX);
+      parseIndex(lossIY);
+    }
     sliceController.current?.abort();
     const controller = new AbortController();
     sliceController.current = controller;
     setSurface(undefined);
-    const body =
-      view === 'q'
-        ? {
-            checkpoint,
-            axes,
-            fixed_action: fixed,
-            observation: frame ? observationOf(selectedFrame?.before ?? frame) : detail.observation,
-            resolution,
-          }
-        : {
-            checkpoint,
-            path_x: lossX,
-            ...(checkpoint === trace?.origin_checkpoint ? { trace_id: traceId } : {}),
-            index_x: parseIndex(lossIX),
-            path_y: lossY,
-            index_y: parseIndex(lossIY),
-            extent,
-            resolution: Math.min(resolution, 31),
-          };
-    const kind = view === 'q' ? 'q' : 'loss';
-    const task = await api(`/experiments/${detail.id}/slice-jobs`, { kind, [kind]: body });
-    sliceTask.current = task.id;
+    setSliceAttempt(sliceKey);
+    const request = JSON.parse(JSON.stringify(sliceRequest));
+    const key = sliceKey;
+    const { kind, body } = request;
+    let task: Doc | undefined;
     try {
+      task = await api(`/experiments/${request.experiment}/slice-jobs`, { kind, [kind]: body });
+      if (controller.signal.aborted || currentSliceKey.current !== key) {
+        await api(`/slice-jobs/${task.id}/cancel`, {});
+        return;
+      }
+      sliceTask.current = task.id;
       let current = task;
       while (!terminal(current.status)) {
         if (controller.signal.aborted) {
@@ -437,19 +492,22 @@ export default function App() {
         await new Promise((resolve) => setTimeout(resolve, 150));
         current = await api(`/slice-jobs/${task.id}`);
       }
+      if (
+        controller.signal.aborted ||
+        currentSliceKey.current !== key ||
+        sliceController.current !== controller
+      )
+        return;
       if (current.status === 'failed') throw Error(current.error);
-      if (current.status === 'cancelled' || controller.signal.aborted) return;
+      if (current.status === 'cancelled') return;
       setSurface({
         result: current.result,
-        view,
-        checkpoint,
-        sample: s.sample,
-        traceId,
-        experiment: detail.id,
+        key,
+        request,
       });
       setPick([Math.floor(current.result.x.length / 2), Math.floor(current.result.y.length / 2)]);
     } finally {
-      sliceTask.current = '';
+      if (sliceTask.current === task?.id) sliceTask.current = '';
     }
   };
   useEffect(() => {
@@ -1031,6 +1089,54 @@ export default function App() {
                 </div>
                 <span className="status-pill">{sourceLabel}</span>
               </div>
+              {(view === 'q' || view === 'loss') && surfaceStale && (
+                <div className="callout surface-status" role="status" data-testid="surface-stale">
+                  设置已变更，待重算。旧结果已隐藏；点击“计算真实切片”生成当前条件的网格。
+                </div>
+              )}
+              {surface && (
+                <div className="surface-provenance" data-testid="surface-provenance">
+                  <b>
+                    已计算结果：x = {surfaceLabels[0]}；y = {surfaceLabels[1]}
+                  </b>
+                  <span>
+                    结果检查点 {surfaceRequest.body.checkpoint} · 样本 {surfaceRequest.sample} ·{' '}
+                    {surface.x.length} × {surface.y.length} 网格
+                  </span>
+                  <span>
+                    x：{fmt(surface.x[0])} … {fmt(surface.x.at(-1))}；y：{fmt(surface.y[0])} …{' '}
+                    {fmt(surface.y.at(-1))}
+                  </span>
+                  {view === 'q' ? (
+                    <>
+                      <span>
+                        未绘动作固定：
+                        {surface.fixed_action
+                          .map((v: number, i: number) =>
+                            surface.axes.includes(i) ? null : `a[${i}]=${v} Nm`,
+                          )
+                          .filter(Boolean)
+                          .join('；')}
+                      </span>
+                      <details>
+                        <summary>固定状态 observation（来自所选经验 before 或实验状态）</summary>
+                        <p>{surface.observation.join(', ')}</p>
+                      </details>
+                    </>
+                  ) : (
+                    <>
+                      <span>
+                        参数偏移 ±{surfaceRequest.body.extent}；批次、目标、噪声、其余参数、Critic / α 固定。
+                      </span>
+                      <span>
+                        {surfaceRequest.body.trace_id
+                          ? `Trace ${surfaceRequest.body.trace_id}；Actor / α 与批次来自 origin。${surface.critic_version === 'after_recorded_critic_step' ? 'SAC Critic 来自该 Trace 的实际 critic 更新后阶段。' : '独立 Value 不参与 Actor 目标。'}`
+                          : '批次与全部模型来自该完整检查点。'}
+                      </span>
+                    </>
+                  )}
+                </div>
+              )}
               <Scenes
                 {...{
                   view,
@@ -1047,6 +1153,7 @@ export default function App() {
                   expanded,
                   path,
                   surface,
+                  surfaceLabels,
                   fields: view === 'loss' ? ['loss'] : fields,
                   onPick: (i, j) => setPick([i, j]),
                   gridPick: pick,
@@ -1064,11 +1171,13 @@ export default function App() {
                   experiment: detail.id,
                   checkpoint,
                   traceId,
-                  onParameter: (path, index, value) => {
+                  traceMeta: trace,
+                  onParameter: (handoff: ParameterHandoff) => {
                     setBranchKind('parameter');
-                    setBranchPath(path);
-                    setBranchIndex(index.join(','));
-                    setBranchValue(value);
+                    setBranchPath(handoff.path);
+                    setBranchIndex(handoff.index.join(','));
+                    setBranchValue(handoff.value);
+                    setParameterEdit({ ...handoff, context: parameterContext });
                     setPanel('branch');
                   },
                   busy: !!busy || !!active,
@@ -1346,6 +1455,7 @@ export default function App() {
                                 <label>
                                   动作轴 x
                                   <select
+                                    aria-label="动作轴 x"
                                     value={axes[0]}
                                     onChange={(e) => setAxes([+e.target.value, axes[1]])}
                                   >
@@ -1359,6 +1469,7 @@ export default function App() {
                                 <label>
                                   动作轴 y
                                   <select
+                                    aria-label="动作轴 y"
                                     value={axes[1]}
                                     onChange={(e) => setAxes([axes[0], +e.target.value])}
                                   >
@@ -1372,6 +1483,7 @@ export default function App() {
                                 <label>
                                   显示
                                   <select
+                                    aria-label="显示"
                                     value={fields.join(',')}
                                     onChange={(e) => setFields(e.target.value.split(','))}
                                   >
@@ -1386,19 +1498,35 @@ export default function App() {
                               <>
                                 <label>
                                   x 参数
-                                  <input value={lossX} onChange={(e) => setLossX(e.target.value)} />
+                                  <input
+                                    aria-label="x 参数"
+                                    value={lossX}
+                                    onChange={(e) => setLossX(e.target.value)}
+                                  />
                                 </label>
                                 <label>
                                   x 坐标
-                                  <input value={lossIX} onChange={(e) => setLossIX(e.target.value)} />
+                                  <input
+                                    aria-label="x 坐标"
+                                    value={lossIX}
+                                    onChange={(e) => setLossIX(e.target.value)}
+                                  />
                                 </label>
                                 <label>
                                   y 参数
-                                  <input value={lossY} onChange={(e) => setLossY(e.target.value)} />
+                                  <input
+                                    aria-label="y 参数"
+                                    value={lossY}
+                                    onChange={(e) => setLossY(e.target.value)}
+                                  />
                                 </label>
                                 <label>
                                   y 坐标
-                                  <input value={lossIY} onChange={(e) => setLossIY(e.target.value)} />
+                                  <input
+                                    aria-label="y 坐标"
+                                    value={lossIY}
+                                    onChange={(e) => setLossIY(e.target.value)}
+                                  />
                                 </label>
                                 <NumberField
                                   label="参数偏移范围 ±"
@@ -1534,8 +1662,8 @@ export default function App() {
                                 onClick={() =>
                                   download('actual-' + view + '-slice.json', {
                                     ...surface,
-                                    checkpoint,
-                                    trace_id: traceId,
+                                    checkpoint: surfaceRequest.body.checkpoint,
+                                    request: surfaceRequest,
                                   })
                                 }
                               >
@@ -1602,6 +1730,32 @@ export default function App() {
                   {panel === 'branch' && (
                     <>
                       <h3>从完整状态建立单变量对照</h3>
+                      <div className="callout branch-provenance" data-testid="branch-provenance">
+                        <span>父检查点：{checkpoint}</span>
+                        {branchKind === 'parameter' && (
+                          <>
+                            <span>
+                              父状态原值：
+                              <b data-testid="branch-original">
+                                {parentParameter == null ? '正在读取 / 坐标无效' : String(parentParameter)}
+                              </b>
+                            </span>
+                            <span>拟写入绝对值：{String(branchValue)}</span>
+                            {parameterEdit?.source.eventId && (
+                              <span>
+                                入口历史来源：Trace {parameterEdit.source.traceId} ·{' '}
+                                {parameterEdit.source.eventLabel} · {parameterEdit.source.eventId}；历史值{' '}
+                                {String(parameterEdit.source.recordedValue)}。本次从完整父状态修改。
+                              </span>
+                            )}
+                            {parameterEditStale && (
+                              <strong role="alert">
+                                参数来源已变化，此交接已失效。请从网络重新选择参数。
+                              </strong>
+                            )}
+                          </>
+                        )}
+                      </div>
                       <p className="small muted">
                         建议选择 Trace origin，先 fixed_batch 隔离一次更新。train
                         会按算法重新采集有效数据。参数编辑后可保留或重置优化器历史。
@@ -1614,6 +1768,7 @@ export default function App() {
                             value={branchKind}
                             onChange={(e) => {
                               setBranchKind(e.target.value);
+                              setParameterEdit(undefined);
                               setBranchPath(
                                 e.target.value === 'reward'
                                   ? 'rollout.reward'
@@ -1633,7 +1788,10 @@ export default function App() {
                           <input
                             aria-label="干预路径"
                             value={branchPath}
-                            onChange={(e) => setBranchPath(e.target.value)}
+                            onChange={(e) => {
+                              setBranchPath(e.target.value);
+                              setParameterEdit(undefined);
+                            }}
                           />
                         </label>
                         <label>
@@ -1642,7 +1800,10 @@ export default function App() {
                             aria-label="干预索引"
                             disabled={branchKind === 'hyperparameter'}
                             value={branchIndex}
-                            onChange={(e) => setBranchIndex(e.target.value)}
+                            onChange={(e) => {
+                              setBranchIndex(e.target.value);
+                              setParameterEdit(undefined);
+                            }}
                           />
                         </label>
                         <NumberField
@@ -1662,7 +1823,12 @@ export default function App() {
                       </label>
                       <button
                         className="primary"
-                        disabled={!!busy || active}
+                        disabled={
+                          !!busy ||
+                          active ||
+                          (branchKind === 'parameter' &&
+                            (parameterEditStale || !Number.isFinite(parentParameter)))
+                        }
                         onClick={() => run('建立完整状态分支', branch)}
                       >
                         <GitBranch size={16} />

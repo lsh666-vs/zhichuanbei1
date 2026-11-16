@@ -1,7 +1,28 @@
 import { describe, expect, it } from 'vitest';
-import { layerData, networkCounts, nodePosition } from '../src/networkData';
+import { layerData, networkCounts, nodePosition, parameterHandoff } from '../src/networkData';
 
 describe('network topology and parameter provenance', () => {
+  it('binds shortcuts to a complete parent value while retaining the different historical source', () => {
+    const source = {
+      traceId: 'trace',
+      eventId: 'u1/e17',
+      eventLabel: 'q1_actor_path/layer0',
+      sample: 2,
+      recordedValue: 0,
+      originCheckpoint: 'origin',
+      outputCheckpoint: 'output',
+    };
+    const parameters = { q1: { 'biases.0': [-0.0003], 'weights.0': [[0.4]] } };
+    const edit = parameterHandoff('experiment', 'output', parameters, 'q1/biases.0', [0], source)!;
+    expect(edit.value).toBe(-0.0003);
+    expect(edit.checkpoint).toBe('output');
+    expect(edit.source).toEqual(source);
+    expect(parameterHandoff('experiment', 'output', parameters, 'q1/weights.0', [0, 0], source)?.value).toBe(
+      0.4,
+    );
+    expect(parameterHandoff('experiment', 'output', undefined, 'q1/biases.0', [0], source)).toBeUndefined();
+    expect(parameterHandoff('experiment', 'output', parameters, 'q1/biases.0', [1], source)).toBeUndefined();
+  });
   it('retains every node and every dense connection in the actual reference architecture', () => {
     expect(networkCounts({ sizes: [15, 64, 64, 6] })).toEqual({
       neurons: 149,

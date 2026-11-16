@@ -1,5 +1,39 @@
 import { Doc } from './core';
 
+export interface ParameterHandoff {
+  experiment: string;
+  checkpoint: string;
+  path: string;
+  index: number[];
+  value: number;
+  source: {
+    traceId: string;
+    eventId?: string;
+    eventLabel?: string;
+    phase?: string;
+    originCheckpoint?: string;
+    outputCheckpoint?: string;
+    sample: number;
+    recordedValue?: number;
+  };
+}
+
+// Editing always starts from one complete, owned checkpoint. A layer event
+// (especially SAC's post-critic path) is never a substitute for that state.
+export function parameterHandoff(
+  experiment: string,
+  checkpoint: string,
+  parameters: Doc | undefined,
+  path: string,
+  index: number[],
+  source: ParameterHandoff['source'],
+): ParameterHandoff | undefined {
+  const [model, parameter] = path.split('/');
+  const value = index.reduce((v, i) => v?.[i], parameters?.[model]?.[parameter]);
+  if (!Number.isFinite(value)) return;
+  return { experiment, checkpoint, path, index: [...index], value, source: { ...source } };
+}
+
 export const modelTitle = (name: string) =>
   ({
     actor: 'Actor · 策略网络',

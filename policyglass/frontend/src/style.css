@@ -1804,3 +1804,22 @@ td small {
     min-width: 500px;
   }
 }
+
+.surface-provenance,
+.branch-provenance {
+  display: grid;
+  gap: 6px;
+  padding: 12px 16px;
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.surface-provenance {
+  background: #eef6f5;
+  border: 1px solid #d0e4e1;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.surface-status {
+  margin-bottom: 10px;
+}

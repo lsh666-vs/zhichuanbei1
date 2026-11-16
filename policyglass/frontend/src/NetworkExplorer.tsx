@@ -4,7 +4,14 @@ import { Line, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { api, Doc, fmt, useLab } from './core';
 import Label from './SceneLabel';
-import { layerData, modelTitle, networkCounts, nodePosition } from './networkData';
+import {
+  layerData,
+  modelTitle,
+  networkCounts,
+  nodePosition,
+  parameterHandoff,
+  ParameterHandoff,
+} from './networkData';
 
 function FitNetwork({ count, layers, reset }: { count: number; layers: number; reset: number }) {
   const { camera, size, invalidate } = useThree();
@@ -154,6 +161,7 @@ export default function NetworkExplorer({
   experiment,
   checkpoint,
   traceId,
+  traceMeta,
   probe,
   onParameter,
   onForward,
@@ -170,8 +178,9 @@ export default function NetworkExplorer({
   experiment: string;
   checkpoint: string;
   traceId: string;
+  traceMeta?: Doc;
   probe: React.ReactNode;
-  onParameter: (path: string, index: number[], value: number) => void;
+  onParameter: (handoff: ParameterHandoff) => void;
   onForward: () => void;
   busy: boolean;
 }) {
@@ -179,7 +188,11 @@ export default function NetworkExplorer({
     select = useLab((state) => state.select);
   const [snapshot, setSnapshot] = useState<Doc>(),
     [error, setError] = useState(''),
-    [reset, setReset] = useState(0);
+    [reset, setReset] = useState(0),
+    [checkpointSource, setCheckpointSource] = useState('');
+  const sourceKey = [experiment, checkpoint, traceId, selection.event].join(':');
+  const checkpointOnly = checkpointSource === sourceKey;
+  const shownEvents = checkpointOnly ? [] : events;
   useEffect(() => {
     let current = true;
     setError('');
@@ -221,7 +234,7 @@ export default function NetworkExplorer({
   const active = models.find((name) => name === selection.model.replace('_actor_path', '')) ?? models[0];
   const spec = architecture[active];
   const layer = Math.max(0, Math.min(selection.layer, spec.sizes.length - 2));
-  const data = layerData(active, layer, events, parameters, selection.model);
+  const data = layerData(active, layer, shownEvents, parameters, selection.model);
   const neuron = Math.max(0, Math.min(selection.neuron, spec.sizes[layer + 1] - 1));
   const input = Math.max(0, Math.min(selection.input, spec.sizes[layer] - 1));
   const weight = data.weight?.[neuron]?.[input],
@@ -242,9 +255,24 @@ export default function NetworkExplorer({
     { neurons: 0, weights: 0, biases: 0 },
   );
   const pick = (name: string, l: number, n: number, j: number) => {
-    const item = layerData(name, l, events, parameters, selection.model);
+    const item = layerData(name, l, shownEvents, parameters, selection.model);
     if (item.eventIndex >= 0) onEvent(item.eventIndex);
     select({ model: item.event?.label.split('/layer')[0] ?? name, layer: l, neuron: n, input: j });
+  };
+  const edit = (path: string, index: number[], recordedValue: number) => {
+    const handoff = parameterHandoff(experiment, checkpoint, parameters, path, index, {
+      traceId,
+      eventId: data.event?.id,
+      eventLabel: data.event?.label,
+      phase: traceMeta?.phase,
+      originCheckpoint: traceMeta?.origin_checkpoint,
+      outputCheckpoint: traceMeta?.output_checkpoint,
+      sample: selection.sample,
+      recordedValue,
+    });
+    if (!handoff) return;
+    setCheckpointSource(sourceKey);
+    onParameter(handoff);
   };
   return (
     <div className="network-explorer">
@@ -333,7 +361,7 @@ export default function NetworkExplorer({
                   {modelTitle(name)} · {model.sizes.join(' → ')}
                 </Label>
                 {model.sizes.map((n: number, l: number) => {
-                  const item = layerData(name, Math.max(0, l - 1), events, parameters, selection.model);
+                  const item = layerData(name, Math.max(0, l - 1), shownEvents, parameters, selection.model);
                   const values = backward
                     ? l === 0
                       ? item.event?.input_gradient?.[selection.sample]
@@ -530,16 +558,29 @@ export default function NetworkExplorer({
             来源：{data.source} · {data.event ? traceId : checkpoint.slice(0, 12)}
           </small>
           {!data.event && <small>已加载检查点的真实 W / b；激活值需要一次前向或已记录的训练事件。</small>}
+          {data.event && (
+            <p className="callout" data-testid="parameter-source-warning">
+              正在回放历史事件。快捷修改将先切换为所选完整检查点 {checkpoint} 的真实参数，并清除事件激活。
+              {data.event.label.includes('_actor_path') &&
+                ' SAC post-critic 是更新中间阶段，没有可直接分支的完整检查点；不会拼接或合成状态。'}
+            </p>
+          )}
+          {checkpointOnly && (
+            <p className="callout">
+              已切换为完整检查点参数；修改从该父状态开始。
+              <button onClick={() => setCheckpointSource('')}>返回历史事件参数</button>
+            </p>
+          )}
           <div className="network-parameters">
             <button
-              disabled={weight == null}
-              onClick={() => onParameter(active + '/weights.' + layer, [neuron, input], weight)}
+              disabled={weight == null || !parameters || busy}
+              onClick={() => edit(active + '/weights.' + layer, [neuron, input], weight)}
             >
               修改此权重…
             </button>
             <button
-              disabled={bias == null}
-              onClick={() => onParameter(active + '/biases.' + layer, [neuron], bias)}
+              disabled={bias == null || !parameters || busy}
+              onClick={() => edit(active + '/biases.' + layer, [neuron], bias)}
             >
               修改此偏置…
             </button>

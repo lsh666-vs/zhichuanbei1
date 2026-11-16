@@ -25,6 +25,7 @@ class EnvironmentConfig(StrictModel):
     timestep: float = Field(0.01, ge=0.0005, le=0.02)
     substeps: int = Field(4, ge=1, le=20)
     damping: float = Field(0.15, ge=0, le=5)
+    mass_scale: float = Field(1.0, ge=0.25, le=3)
     gravity: float = Field(9.81, ge=0, le=20)
     torque_limit: float = Field(5.0, gt=0, le=10)
     target: list[float] = Field(
@@ -79,7 +80,7 @@ class ExperimentConfig(StrictModel):
 
 
 class Intervention(StrictModel):
-    kind: Literal["hyperparameter", "parameter"]
+    kind: Literal["hyperparameter", "parameter", "reward"]
     path: str = Field(min_length=1, max_length=100)
     value: float
     index: list[int] = Field(default_factory=list, max_length=2)

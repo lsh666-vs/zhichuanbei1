@@ -114,7 +114,8 @@ class JobManager:
         self.repository = repository
         self.processes = {}
         self.lock = threading.RLock()
-        self.store_lock = FileLock(repository.root / "server.lock")
+        # Factory and ASGI lifespan may run on different threads.
+        self.store_lock = FileLock(repository.root / "server.lock", thread_local=False)
         try:
             self.store_lock.acquire(timeout=0)
         except Timeout as exc:

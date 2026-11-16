@@ -42,13 +42,13 @@ def model_xml(config):
       <worldbody>
         <body name="base" pos="0 0 {BASE_HEIGHT}">
           <joint name="yaw" axis="0 0 1" range="-2.8 2.8"/>
-          <geom type="cylinder" size="0.04 0.04" mass="0.2"/>
+          <geom type="cylinder" size="0.04 0.04" mass="{0.2 * config.mass_scale}"/>
           <body name="upper">
             <joint name="shoulder" axis="0 1 0" range="-1.75 1.4"/>
-            <geom fromto="0 0 0 {LENGTHS[0]} 0 0" mass="0.8"/>
+            <geom fromto="0 0 0 {LENGTHS[0]} 0 0" mass="{0.8 * config.mass_scale}"/>
             <body name="forearm" pos="{LENGTHS[0]} 0 0">
               <joint name="elbow" axis="0 1 0" range="-2.3 2.3"/>
-              <geom fromto="0 0 0 {LENGTHS[1]} 0 0" mass="0.5"/>
+              <geom fromto="0 0 0 {LENGTHS[1]} 0 0" mass="{0.5 * config.mass_scale}"/>
               <site name="tip" pos="{LENGTHS[1]} 0 0" size="0.018"/>
             </body>
           </body>
@@ -115,7 +115,7 @@ def pack_frame(frame):
     return values
 
 
-def static_gravity_torque(q, gravity=9.81):
+def static_gravity_torque(q, gravity=9.81, mass_scale=1.0):
     """Independent derivative of gravitational potential for the declared link COMs."""
     _, shoulder, elbow = q
     shoulder_torque = -gravity * (
@@ -123,7 +123,7 @@ def static_gravity_torque(q, gravity=9.81):
         + 0.5 * LENGTHS[1] / 2 * np.cos(shoulder + elbow)
     )
     elbow_torque = -gravity * 0.5 * LENGTHS[1] / 2 * np.cos(shoulder + elbow)
-    return np.array([0.0, shoulder_torque, elbow_torque])
+    return np.array([0.0, shoulder_torque, elbow_torque]) * mass_scale
 
 
 def unpack_frame(values):
@@ -372,7 +372,7 @@ class SpatialArm(gym.Env):
             "capsule_radius_m": 0.025,
             "base_cylinder_radius_m": 0.04,
             "base_cylinder_half_height_m": 0.04,
-            "masses_kg": [0.2, 0.8, 0.5],
+            "masses_kg": [v * self.config.mass_scale for v in [0.2, 0.8, 0.5]],
             "joint_axes_local": [[0, 0, 1], [0, 1, 0], [0, 1, 0]],
             "joint_limits_rad": self.model.jnt_range.tolist(),
             "observation_labels": OBSERVATION_LABELS,
@@ -382,10 +382,13 @@ class SpatialArm(gym.Env):
             "torque_limit_nm": self.config.torque_limit,
             "target_joint_solutions_rad": solutions,
             "target_static_torque_nm": [
-                static_gravity_torque(q, self.config.gravity).tolist() for q in solutions
+                static_gravity_torque(q, self.config.gravity, self.config.mass_scale).tolist()
+                for q in solutions
             ],
             "target_statically_holdable": any(
-                np.max(np.abs(static_gravity_torque(q, self.config.gravity)))
+                np.max(
+                    np.abs(static_gravity_torque(q, self.config.gravity, self.config.mass_scale))
+                )
                 <= self.config.torque_limit
                 for q in solutions
             ),

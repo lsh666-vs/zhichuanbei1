@@ -50,6 +50,8 @@ class Repository:
                   id TEXT PRIMARY KEY, experiment TEXT NOT NULL, job TEXT NOT NULL,
                   created REAL NOT NULL, sha256 TEXT NOT NULL, bytes INTEGER NOT NULL,
                   origin_checkpoint TEXT NOT NULL, output_checkpoint TEXT NOT NULL);
+                CREATE TABLE IF NOT EXISTS notebooks(
+                  experiment TEXT PRIMARY KEY, document TEXT NOT NULL);
             """)
 
     @contextmanager
@@ -313,3 +315,20 @@ class Repository:
                     "SELECT * FROM traces WHERE experiment=? ORDER BY created", (experiment,)
                 )
             ]
+
+    def notebook(self, experiment):
+        self.experiment(experiment)
+        with self.connect() as db:
+            row = db.execute(
+                "SELECT document FROM notebooks WHERE experiment=?", (experiment,)
+            ).fetchone()
+        return json.loads(row[0]) if row else {"notes": []}
+
+    def save_notebook(self, experiment, document):
+        self.experiment(experiment)
+        with self.connect() as db:
+            db.execute(
+                "INSERT INTO notebooks VALUES(?,?) ON CONFLICT(experiment) DO UPDATE SET document=excluded.document",
+                (experiment, json.dumps(document, ensure_ascii=False, allow_nan=False)),
+            )
+        return document

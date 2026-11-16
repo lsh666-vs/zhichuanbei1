@@ -2,13 +2,17 @@
 
 import asyncio
 import os
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Literal
 
+import numpy as np
+import torch
 from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
+from fastapi.staticfiles import StaticFiles
 from pydantic import Field
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
@@ -16,11 +20,13 @@ from . import __version__
 from .agents import Learner
 from .checkpoint import MAX_BYTES, decode
 from .config import ExperimentConfig, Intervention, StrictModel
-from .experiments import branch, loss_slice, q_slice
+from .environment import SpatialArm
+from .experiments import actor_path_probe, branch, loss_slice, q_slice
 from .jobs import JobManager
 from .numerics import sample_policy, tensor, trace_policy_operation
 from .physics_host import ENGINE_VERSION
 from .repository import Repository
+from .slice_jobs import SliceJobs
 from .trace import Trace, plain
 
 ALLOWED_ORIGINS = [
@@ -101,6 +107,12 @@ class LossSliceRequest(StrictModel):
     checkpoint: str | None = None
 
 
+class SliceJobRequest(StrictModel):
+    kind: Literal["q", "loss"]
+    q: QSliceRequest | None = None
+    loss: LossSliceRequest | None = None
+
+
 class PhysicsRequest(StrictModel):
     label: str = Field("Physical intervention", min_length=1, max_length=120)
     action: list[float] = Field(default_factory=lambda: [0, 0, 0], min_length=3, max_length=3)
@@ -108,11 +120,37 @@ class PhysicsRequest(StrictModel):
     force_newtons: list[float] | None = Field(None, min_length=3, max_length=3)
     force_steps: int = Field(1, ge=1, le=128)
     steps: int = Field(1, ge=0, le=128)
+    reset_environment: bool = False
+    damping: float | None = Field(None, ge=0, le=5)
+    mass_scale: float | None = Field(None, ge=0.25, le=3)
 
 
 class PredictionRequest(StrictModel):
     observation: list[float] | None = Field(None, min_length=15, max_length=15)
     noise: list[float] = Field(default_factory=lambda: [0, 0, 0], min_length=3, max_length=3)
+    checkpoint: str | None = None
+
+
+class NotebookNote(StrictModel):
+    text: str = Field(max_length=10000)
+    prediction: str = Field("", max_length=4000)
+    explanation: str = Field("", max_length=10000)
+    course: int = Field(0, ge=0, le=8)
+    experiment_id: str = Field(max_length=64)
+    checkpoint: str = Field(max_length=64)
+    trace_id: str = Field("", max_length=64)
+    event_id: str = Field("", max_length=120)
+    sample_id: int = Field(0, ge=0, le=100000000)
+    created: str = Field(max_length=64)
+
+
+class NotebookRequest(StrictModel):
+    notes: list[NotebookNote] = Field(default_factory=list, max_length=500)
+
+
+class EvaluationRequest(StrictModel):
+    seeds: list[int] = Field(default_factory=lambda: [701, 702, 703], min_length=1, max_length=5)
+    steps: int = Field(64, ge=1, le=256)
     checkpoint: str | None = None
 
 
@@ -124,11 +162,13 @@ def create_app(root=None):
     )
     repository = Repository(root)
     manager = JobManager(repository)
+    slices = SliceJobs(repository)
 
     @asynccontextmanager
     async def lifespan(_):
         yield
         manager.close()
+        slices.close()
 
     app = FastAPI(title="PolicyGlass exact-computation API", version=__version__, lifespan=lifespan)
     app.state.repository, app.state.jobs = repository, manager
@@ -233,6 +273,74 @@ def create_app(root=None):
             return {
                 name: plain(dict(model.named_parameters()))
                 for name, model in learner.models.items()
+            }
+        finally:
+            learner.env.close()
+
+    @app.get("/api/experiments/{experiment_id}/notebook")
+    def notebook(experiment_id: str):
+        return repository.notebook(experiment_id)
+
+    @app.post("/api/experiments/{experiment_id}/notebook")
+    def save_notebook(experiment_id: str, request: NotebookRequest):
+        return repository.save_notebook(experiment_id, request.model_dump())
+
+    @app.post("/api/experiments/{experiment_id}/evaluate")
+    def evaluate(experiment_id: str, request: EvaluationRequest):
+        experiment, learner = load_experiment(experiment_id, request.checkpoint)
+        started = time.perf_counter()
+        rows = []
+        try:
+            for seed in request.seeds:
+                if not 0 <= seed < 2**31:
+                    raise ValueError("Evaluation seed outside budget")
+                obs, _ = learner.env.reset(seed=seed)
+                total, distances, frames = 0.0, [], []
+                for _ in range(request.steps):
+                    with torch.no_grad():
+                        mu, _ = learner.models["actor"].distribution(
+                            learner.encode_observation(tensor(obs).reshape(1, 15))
+                        )
+                        action = (torch.tanh(mu) * learner.scale)[0].numpy()
+                    obs, reward, terminated, truncated, info = learner.env.step(action)
+                    total += reward
+                    distances.append(
+                        float(
+                            np.linalg.norm(np.array(info["physics"]["tip_m"]) - learner.env.target)
+                        )
+                    )
+                    frames.append(info["physics"])
+                    if terminated or truncated:
+                        break
+                rows.append(
+                    {
+                        "seed": seed,
+                        "return": total,
+                        "steps": len(distances),
+                        "mean_distance_m": float(np.mean(distances)),
+                        "final_distance_m": distances[-1],
+                        "success_fraction": float(np.mean(np.array(distances) < 0.04)),
+                        "frames": frames,
+                    }
+                )
+            return {
+                "source": "actual_frozen_policy_evaluation_no_learning",
+                "checkpoint": request.checkpoint or experiment["checkpoint"],
+                "action_rule": "tanh(mean)*physical_scale (deterministic)",
+                "results": rows,
+                "seconds": time.perf_counter() - started,
+                "scope": "short budget; no trained-policy success claim",
+            }
+        finally:
+            learner.env.close()
+
+    @app.post("/api/experiments/{experiment_id}/actor-path-probe")
+    def actor_paths(experiment_id: str, request: PredictionRequest):
+        experiment, learner = load_experiment(experiment_id, request.checkpoint)
+        try:
+            return {
+                **actor_path_probe(learner),
+                "checkpoint": request.checkpoint or experiment["checkpoint"],
             }
         finally:
             learner.env.close()
@@ -381,6 +489,21 @@ def create_app(root=None):
         finally:
             learner.env.close()
 
+    @app.post("/api/experiments/{experiment_id}/slice-jobs", status_code=202)
+    def start_slice(experiment_id: str, request: SliceJobRequest):
+        options = request.q if request.kind == "q" else request.loss
+        if options is None:
+            raise ValueError("Matching bounded slice options required")
+        return slices.start(experiment_id, request.kind, options.model_dump())
+
+    @app.get("/api/slice-jobs/{object_id}")
+    def get_slice(object_id: str):
+        return slices.get(object_id)
+
+    @app.post("/api/slice-jobs/{object_id}/cancel")
+    def cancel_slice(object_id: str):
+        return slices.cancel(object_id)
+
     @app.post("/api/experiments/{experiment_id}/loss-slice")
     def loss_surface(experiment_id: str, request: LossSliceRequest):
         _, learner = load_experiment(experiment_id, request.checkpoint)
@@ -401,6 +524,23 @@ def create_app(root=None):
     def physical_branch(experiment_id: str, request: PhysicsRequest):
         experiment, learner = load_experiment(experiment_id)
         try:
+            if request.damping is not None or request.mass_scale is not None:
+                if not request.reset_environment:
+                    raise ValueError(
+                        "Mass/damping changes require an explicitly recorded environment reset"
+                    )
+                config = learner.config.model_dump()
+                for key in ("damping", "mass_scale"):
+                    value = getattr(request, key)
+                    if value is not None:
+                        config["environment"][key] = value
+                learner.config = ExperimentConfig.model_validate(config)
+                learner.env.close()
+                learner.env = SpatialArm(learner.config.environment)
+                learner.obs = tensor(learner.env.reset(seed=learner.config.seed)[0])
+                learner.replay_size = learner.replay_pointer = 0
+                for value in (*learner.replay.values(), *learner.replay_physics.values()):
+                    value.zero_()
             if request.target is not None:
                 learner.env.set_target(request.target)
             if request.force_newtons is not None:
@@ -456,4 +596,7 @@ def create_app(root=None):
         finally:
             learner.env.close()
 
+    frontend = Path(__file__).resolve().parents[2] / "frontend" / "dist"
+    if (frontend / "index.html").is_file():
+        app.mount("/", StaticFiles(directory=frontend, html=True), name="workbench")
     return app

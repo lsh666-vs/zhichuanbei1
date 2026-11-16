@@ -365,7 +365,7 @@ class Learner:
             )
         return batch
 
-    def sac_actor_objective(self, batch, trace=None):
+    def sac_actor_objective(self, batch, trace=None, detach_q=False):
         mu, logstd = self.models["actor"].distribution(
             self.encode_observation(batch["obs"], trace, "actor_input"), trace
         )
@@ -386,7 +386,8 @@ class Learner:
         )
         q1 = self.models["q1"](inputs, trace, "q1_actor_path").squeeze(-1)
         q2 = self.models["q2"](inputs, trace, "q2_actor_path").squeeze(-1)
-        losses = self.log_alpha.exp().detach() * logp - torch.minimum(q1, q2)
+        minimum = torch.minimum(q1, q2)
+        losses = self.log_alpha.exp().detach() * logp - (minimum.detach() if detach_q else minimum)
         return losses, {"logp": logp, "latent": latent, "action": action, "q1": q1, "q2": q2}
 
     def update_sac(self, batch=None, record=False):

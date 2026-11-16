@@ -86,6 +86,35 @@ def branch(learner, intervention):
                 }
             )
             result.select_ppo_batch(result.last_batch_indices)
+    elif intervention.kind == "reward":
+        if (
+            result.config.algorithm != "ppo"
+            or result.rollout is None
+            or intervention.path != "rollout.reward"
+            or len(intervention.index) != 1
+            or not 0 <= intervention.index[0] < len(result.rollout["reward"])
+            or abs(intervention.value) > 100
+        ):
+            raise ValueError("Reward intervention requires a bounded PPO temporal rollout index")
+        b = result.rollout
+        b["reward"][intervention.index[0]] = intervention.value
+        cfg = result.config.ppo
+        raw, returns, delta = gae(
+            b["reward"],
+            b["value"],
+            b["next_value"],
+            b["terminated"],
+            b["boundary"],
+            cfg.gamma,
+            cfg.gae_lambda,
+        )
+        b.update(
+            raw_advantage=raw,
+            returns=returns,
+            delta=delta,
+            advantage=(raw - raw.mean()) / (raw.std(unbiased=False) + 1e-8),
+        )
+        result.select_ppo_batch(result.last_batch_indices)
     else:
         if abs(intervention.value) > 100:
             raise ValueError("Parameter edit exceeds numerical budget")
@@ -150,7 +179,47 @@ def q_slice(learner, axes=(0, 1), fixed_action=None, observation=None, resolutio
     )
 
 
-def loss_slice(learner, path_x, index_x, path_y, index_y, extent=0.1, resolution=15):
+def actor_path_probe(learner):
+    if learner.config.algorithm != "sac" or learner.last_batch is None:
+        raise ValueError("Actor path probe requires a real SAC replay batch")
+    rows = {}
+    flags = {
+        name: [p.requires_grad for p in learner.models[name].parameters()] for name in ("q1", "q2")
+    }
+    try:
+        for name in flags:
+            learner.models[name].requires_grad_(False)
+        for detach in (False, True):
+            losses, info = learner.sac_actor_objective(learner.last_batch, detach_q=detach)
+            parameters = dict(learner.models["actor"].named_parameters())
+            gradients = torch.autograd.grad(
+                losses.mean(), [info["action"], *parameters.values()], allow_unused=True
+            )
+            rows["detach_q" if detach else "frozen_critic_parameters"] = plain(
+                {
+                    "loss": losses,
+                    "action": info["action"],
+                    "q1": info["q1"],
+                    "q2": info["q2"],
+                    "d_loss_d_action": gradients[0],
+                    "actor_gradients": dict(zip(parameters, gradients[1:])),
+                    "critic_parameters_updated": False,
+                }
+            )
+        return {
+            "source": "actual_autograd_fixed_batch_noise_no_optimizer_step",
+            "variants": rows,
+            "scope": "detaching Q removes its action derivative; entropy actor path remains",
+        }
+    finally:
+        for name, values in flags.items():
+            for parameter, flag in zip(learner.models[name].parameters(), values):
+                parameter.requires_grad_(flag)
+
+
+def loss_slice(
+    learner, path_x, index_x, path_y, index_y, extent=0.1, resolution=15, cancelled=None
+):
     if learner.last_batch is None:
         raise ValueError("A real collected/sampled batch is required")
     if not 0 < extent <= 1 or not 2 <= resolution <= 31:
@@ -169,6 +238,8 @@ def loss_slice(learner, path_x, index_x, path_y, index_y, extent=0.1, resolution
         with torch.no_grad():
             for i, dx in enumerate(axis):
                 for j, dy in enumerate(axis):
+                    if cancelled is not None and cancelled():
+                        raise InterruptedError("Slice cancelled at grid-point boundary")
                     px[ix], py[iy] = original_x + dx, original_y + dy
                     if learner.config.algorithm == "ppo":
                         losses = learner.ppo_objective(batch)[0]

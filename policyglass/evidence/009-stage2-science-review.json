@@ -1,0 +1,89 @@
+{
+  "schema": "policyglass.science-report.v1",
+  "python": "3.12.7",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "torch": "2.8.0+cpu",
+  "numpy": "2.2.6",
+  "physics_engine": "canonical_mujoco_wasm_4.0.1",
+  "reference": "CPU float64, fixed physical-unit observation scaling, one torch thread",
+  "algorithms": {
+    "ppo": {
+      "trace_update": 1,
+      "event_count": 17,
+      "trace_json_bytes": 12281511,
+      "first_actual_iteration_seconds": 0.1450265000021318,
+      "independent_trace_checks": {
+        "sample_gradient_sum_max_abs": 4.440892098500626e-16,
+        "adam_update_max_abs": 1.0842021724855044e-19,
+        "parameter_addition_max_abs": 1.0842021724855044e-19,
+        "normalization_chain_max_abs": 0.0
+      },
+      "resume_max_parameter_abs": 0.0,
+      "source": "actual locally collected spatial-arm data",
+      "trained_policy_success_claimed": false
+    },
+    "sac": {
+      "trace_update": 1,
+      "event_count": 46,
+      "trace_json_bytes": 12730378,
+      "first_actual_iteration_seconds": 0.14380009999877075,
+      "independent_trace_checks": {
+        "sample_gradient_sum_max_abs": 1.7763568394002505e-15,
+        "adam_update_max_abs": 1.0842021724855044e-19,
+        "parameter_addition_max_abs": 1.0842021724855044e-19,
+        "normalization_chain_max_abs": 0.0
+      },
+      "resume_max_parameter_abs": 0.0,
+      "source": "actual locally collected spatial-arm data",
+      "trained_policy_success_claimed": false
+    }
+  },
+  "physics": {
+    "analytic_fk_max_abs_m": 1.6653345369377348e-16,
+    "damped_energy_start_j": 0.009258504394736147,
+    "damped_energy_end_j": 0.00040515150636773894,
+    "timestep_refinement": [
+      {
+        "dt_s": 0.01,
+        "duration_s": 0.5000000000000002,
+        "qpos_rad": [
+          0.35283295745402293,
+          -0.2585549853643257,
+          0.5469497583913804
+        ],
+        "error_vs_finest_rad": 0.00045835861589450664
+      },
+      {
+        "dt_s": 0.005,
+        "duration_s": 0.5000000000000003,
+        "qpos_rad": [
+          0.35283460849879067,
+          -0.2582993795742273,
+          0.5468940860294483
+        ],
+        "error_vs_finest_rad": 0.00019675563897162673
+      },
+      {
+        "dt_s": 0.0025,
+        "duration_s": 0.5000000000000003,
+        "qpos_rad": [
+          0.3528353728844666,
+          -0.25817118764104013,
+          0.5468665489953611
+        ],
+        "error_vs_finest_rad": 6.563725251660829e-05
+      },
+      {
+        "dt_s": 0.00125,
+        "duration_s": 0.49999999999999484,
+        "qpos_rad": [
+          0.35283573966684584,
+          -0.2581069948793137,
+          0.5468528594471381
+        ],
+        "error_vs_finest_rad": 0.0
+      }
+    ],
+    "scope": "ideal rigid body FK, dissipative behavior and smooth short-trajectory refinement; not real-robot validation"
+  }
+}

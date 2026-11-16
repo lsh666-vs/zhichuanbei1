@@ -4,6 +4,9 @@
 __pycache__/
 *.pyc
 *.egg-info/
+*.tsbuildinfo
+frontend/test-results/
+frontend/playwright-report/
 .pytest_cache/
 .ruff_cache/
 dist/

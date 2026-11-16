@@ -1,10 +1,10 @@
 {
   "schema": "policyglass.dialogue-export.v1",
-  "captured_at": "2026-11-16T12:23:03.779096+00:00",
+  "captured_at": "2026-11-16T12:26:39.931412+00:00",
   "native_source_name": "rollout-2026-11-16T18-03-10-01a1dadd-85ba-76c1-a171-0c928f68a8ee_01a1e3cf-8664-74a2-82ea-4220037b51a1.jsonl",
-  "native_sha256": "6b569eb3a1a1c4631e7faed965aa52972fd4523b2254a2d83827586208b20d6a",
-  "public_sha256": "1107180cbf34df08545b62391140e9b68e750f6cfdd1b1eb00c70685f982251b",
-  "records": 177,
+  "native_sha256": "71232f58672c812395ee33dd20230614be0073e048a5f5545483737daba86438",
+  "public_sha256": "244a5f4b5e944f832ff0c8eb84fe5a46f922352800ba0f05d57a352682f932c2",
+  "records": 182,
   "scope": "Available response-item messages and tool events from the real Stage1 authorization onward; current turn may still be running",
   "omissions": [
     "Earlier historical topic discussions",

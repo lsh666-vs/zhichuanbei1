@@ -1,0 +1,26 @@
+[
+  {
+    "Name": "python.exe",
+    "ProcessId": 2424,
+    "ParentProcessId": 4980,
+    "ExecutablePath": "D:\\传智杯1\\counterlab\\policyglass\\.venv\\Scripts\\python.exe"
+  },
+  {
+    "Name": "conhost.exe",
+    "ProcessId": 1748,
+    "ParentProcessId": 2424,
+    "ExecutablePath": "C:\\Windows\\system32\\conhost.exe"
+  },
+  {
+    "Name": "node.exe",
+    "ProcessId": 18116,
+    "ParentProcessId": 2424,
+    "ExecutablePath": "C:\\Program Files\\WindowsApps\\OpenAI.CodexPrimaryRuntime.v26-1112-611-0_26.1112.611.0_x64__3k8sg7r9htsxt\\dependencies\\node\\bin\\node.EXE"
+  },
+  {
+    "Name": "conhost.exe",
+    "ProcessId": 16656,
+    "ParentProcessId": 18116,
+    "ExecutablePath": "C:\\Windows\\system32\\conhost.exe"
+  }
+]

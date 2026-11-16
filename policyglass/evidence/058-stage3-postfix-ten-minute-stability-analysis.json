@@ -1,0 +1,982 @@
+{
+  "schema": "policyglass.performance.postfix-ten-minute-analysis.v1",
+  "finished_utc": "2026-11-16T17:39:37.270953+00:00",
+  "raw_report": {
+    "path": "evidence/058-stage3-postfix-ten-minute-stability.json",
+    "bytes": 4612043,
+    "sha256": "ca0d05c7d09ec67c176f9d56096944ec265eed3de8e2bf2237e5f94d5cfca245"
+  },
+  "status": "completed",
+  "source_revision_at_start": "5ae43c5cea44450d8aa493a59aec8765cbb8c6a7",
+  "source_bytes_unchanged_at_analysis": true,
+  "source_sha_checks": {
+    "scripts/measure_runtime.py": true,
+    "src/policyglass/__init__.py": true,
+    "src/policyglass/agents.py": true,
+    "src/policyglass/api.py": true,
+    "src/policyglass/checkpoint.py": true,
+    "src/policyglass/cli.py": true,
+    "src/policyglass/config.py": true,
+    "src/policyglass/environment.py": true,
+    "src/policyglass/experiments.py": true,
+    "src/policyglass/explanation.py": true,
+    "src/policyglass/jobs.py": true,
+    "src/policyglass/networks.py": true,
+    "src/policyglass/numerics.py": true,
+    "src/policyglass/optimizer.py": true,
+    "src/policyglass/physics_host.py": true,
+    "src/policyglass/repository.py": true,
+    "src/policyglass/science.py": true,
+    "src/policyglass/slice_jobs.py": true,
+    "src/policyglass/studies.py": true,
+    "src/policyglass/study_catalog.py": true,
+    "src/policyglass/trace.py": true,
+    "src/policyglass/validation.py": true
+  },
+  "runtime_environment_observed": {
+    "torch": "2.8.0+cpu",
+    "numpy": "2.2.6",
+    "setuptools": "84.1.0"
+  },
+  "node_version_observed": "v24.22.1",
+  "background_load": "Postfix bounded600s no-profiler observation after recursive checkpoint temporary tensor cleanup. Final browser checks were finishing at launch and then stop; no separate learner training. Offline r3 packaging and relocated same-host verification may overlap first few minutes after source seal. The command first creates five default64x64 real traced PPO and SAC updates each, then read-only Trace/detail pressure. This is not an isolated speed benchmark. Environment: Torch2.8.0+cpu NumPy2.2.6 setuptools84.1.0. No production GC policy changed.",
+  "actual_owned_process_identities": [
+    {
+      "Name": "python.exe",
+      "ProcessId": 2424,
+      "ParentProcessId": 4980,
+      "ExecutablePath": "D:\\传智杯1\\counterlab\\policyglass\\.venv\\Scripts\\python.exe"
+    },
+    {
+      "Name": "conhost.exe",
+      "ProcessId": 1748,
+      "ParentProcessId": 2424,
+      "ExecutablePath": "C:\\Windows\\system32\\conhost.exe"
+    },
+    {
+      "Name": "node.exe",
+      "ProcessId": 18116,
+      "ParentProcessId": 2424,
+      "ExecutablePath": "C:\\Program Files\\WindowsApps\\OpenAI.CodexPrimaryRuntime.v26-1112-611-0_26.1112.611.0_x64__3k8sg7r9htsxt\\dependencies\\node\\bin\\node.EXE"
+    },
+    {
+      "Name": "conhost.exe",
+      "ProcessId": 16656,
+      "ParentProcessId": 18116,
+      "ExecutablePath": "C:\\Windows\\system32\\conhost.exe"
+    }
+  ],
+  "process_execution_scope": "Source pressure reads existing Node24.22.1 executable under C:/Program Files/WindowsApps via PATH; temp/cache/project/evidence are D:. No C: modification or system installation command issued. This differs from the selfcontained offline bundle, whose Node/Python binaries are bundled under D:.",
+  "total_memory_samples": 1242,
+  "pressure_memory_samples": 1162,
+  "pressure_duration_seconds": 600.1690603,
+  "algorithm_cycles": 4028,
+  "pressure_requests": 12084,
+  "pressure_request_http_failures": 0,
+  "pre_pressure_sampled_request_http_failures": 0,
+  "warmup_jobs": {
+    "count": 10,
+    "all_completed": true
+  },
+  "one_minute_windows": [
+    {
+      "seconds": [
+        0,
+        60
+      ],
+      "sample_count": 117,
+      "median_private_bytes": 302940160,
+      "min_private_bytes": 298094592,
+      "max_private_bytes": 363036672,
+      "per_pid": {
+        "1748": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1286144,
+          "min_private_bytes": 1286144,
+          "max_private_bytes": 1286144
+        },
+        "2424": {
+          "observed_name": "python.exe",
+          "median_private_bytes": 219189248,
+          "min_private_bytes": 217939968,
+          "max_private_bytes": 246398976
+        },
+        "16656": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1249280,
+          "min_private_bytes": 1249280,
+          "max_private_bytes": 1249280
+        },
+        "18116": {
+          "observed_name": "node.exe",
+          "median_private_bytes": 79093760,
+          "min_private_bytes": 76410880,
+          "max_private_bytes": 127016960
+        }
+      }
+    },
+    {
+      "seconds": [
+        60,
+        120
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 343201792.0,
+      "min_private_bytes": 300552192,
+      "max_private_bytes": 373579776,
+      "per_pid": {
+        "1748": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1286144.0,
+          "min_private_bytes": 1286144,
+          "max_private_bytes": 1286144
+        },
+        "2424": {
+          "observed_name": "python.exe",
+          "median_private_bytes": 250435584.0,
+          "min_private_bytes": 218136576,
+          "max_private_bytes": 280682496
+        },
+        "16656": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1249280.0,
+          "min_private_bytes": 1249280,
+          "max_private_bytes": 1249280
+        },
+        "18116": {
+          "observed_name": "node.exe",
+          "median_private_bytes": 90087424.0,
+          "min_private_bytes": 79785984,
+          "max_private_bytes": 90775552
+        }
+      }
+    },
+    {
+      "seconds": [
+        120,
+        180
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 360953856.0,
+      "min_private_bytes": 345284608,
+      "max_private_bytes": 374333440,
+      "per_pid": {
+        "1748": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1286144.0,
+          "min_private_bytes": 1286144,
+          "max_private_bytes": 1286144
+        },
+        "2424": {
+          "observed_name": "python.exe",
+          "median_private_bytes": 267403264.0,
+          "min_private_bytes": 251973632,
+          "max_private_bytes": 280621056
+        },
+        "16656": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1249280.0,
+          "min_private_bytes": 1249280,
+          "max_private_bytes": 1249280
+        },
+        "18116": {
+          "observed_name": "node.exe",
+          "median_private_bytes": 91176960.0,
+          "min_private_bytes": 89829376,
+          "max_private_bytes": 91688960
+        }
+      }
+    },
+    {
+      "seconds": [
+        180,
+        240
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 362311680.0,
+      "min_private_bytes": 346243072,
+      "max_private_bytes": 375537664,
+      "per_pid": {
+        "1748": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1286144.0,
+          "min_private_bytes": 1286144,
+          "max_private_bytes": 1286144
+        },
+        "2424": {
+          "observed_name": "python.exe",
+          "median_private_bytes": 267403264.0,
+          "min_private_bytes": 251908096,
+          "max_private_bytes": 280621056
+        },
+        "16656": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1249280.0,
+          "min_private_bytes": 1249280,
+          "max_private_bytes": 1249280
+        },
+        "18116": {
+          "observed_name": "node.exe",
+          "median_private_bytes": 92360704.0,
+          "min_private_bytes": 91668480,
+          "max_private_bytes": 93220864
+        }
+      }
+    },
+    {
+      "seconds": [
+        240,
+        300
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 364142592.0,
+      "min_private_bytes": 346476544,
+      "max_private_bytes": 377368576,
+      "per_pid": {
+        "1748": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1368064.0,
+          "min_private_bytes": 1286144,
+          "max_private_bytes": 1368064
+        },
+        "2424": {
+          "observed_name": "python.exe",
+          "median_private_bytes": 267440128.0,
+          "min_private_bytes": 252104704,
+          "max_private_bytes": 280657920
+        },
+        "16656": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1335296.0,
+          "min_private_bytes": 1249280,
+          "max_private_bytes": 1335296
+        },
+        "18116": {
+          "observed_name": "node.exe",
+          "median_private_bytes": 93990912.0,
+          "min_private_bytes": 91828224,
+          "max_private_bytes": 94015488
+        }
+      }
+    },
+    {
+      "seconds": [
+        300,
+        360
+      ],
+      "sample_count": 117,
+      "median_private_bytes": 365432832,
+      "min_private_bytes": 364158976,
+      "max_private_bytes": 378687488,
+      "per_pid": {
+        "1748": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1368064,
+          "min_private_bytes": 1290240,
+          "max_private_bytes": 1368064
+        },
+        "2424": {
+          "observed_name": "python.exe",
+          "median_private_bytes": 267440128,
+          "min_private_bytes": 267366400,
+          "max_private_bytes": 280657920
+        },
+        "16656": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1335296,
+          "min_private_bytes": 1335296,
+          "max_private_bytes": 1335296
+        },
+        "18116": {
+          "observed_name": "node.exe",
+          "median_private_bytes": 95014912,
+          "min_private_bytes": 94015488,
+          "max_private_bytes": 95330304
+        }
+      }
+    },
+    {
+      "seconds": [
+        360,
+        420
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 367337472.0,
+      "min_private_bytes": 348655616,
+      "max_private_bytes": 380555264,
+      "per_pid": {
+        "1748": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1290240.0,
+          "min_private_bytes": 1290240,
+          "max_private_bytes": 1290240
+        },
+        "2424": {
+          "observed_name": "python.exe",
+          "median_private_bytes": 269291520.0,
+          "min_private_bytes": 251805696,
+          "max_private_bytes": 282509312
+        },
+        "16656": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1257472.0,
+          "min_private_bytes": 1257472,
+          "max_private_bytes": 1335296
+        },
+        "18116": {
+          "observed_name": "node.exe",
+          "median_private_bytes": 95383552.0,
+          "min_private_bytes": 94040064,
+          "max_private_bytes": 95571968
+        }
+      }
+    },
+    {
+      "seconds": [
+        420,
+        480
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 367996928.0,
+      "min_private_bytes": 367411200,
+      "max_private_bytes": 381214720,
+      "per_pid": {
+        "1748": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1290240.0,
+          "min_private_bytes": 1290240,
+          "max_private_bytes": 1290240
+        },
+        "2424": {
+          "observed_name": "python.exe",
+          "median_private_bytes": 269291520.0,
+          "min_private_bytes": 269291520,
+          "max_private_bytes": 282509312
+        },
+        "16656": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1257472.0,
+          "min_private_bytes": 1257472,
+          "max_private_bytes": 1257472
+        },
+        "18116": {
+          "observed_name": "node.exe",
+          "median_private_bytes": 96153600.0,
+          "min_private_bytes": 95571968,
+          "max_private_bytes": 96235520
+        }
+      }
+    },
+    {
+      "seconds": [
+        480,
+        540
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 368496640.0,
+      "min_private_bytes": 353480704,
+      "max_private_bytes": 381714432,
+      "per_pid": {
+        "1748": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1290240.0,
+          "min_private_bytes": 1290240,
+          "max_private_bytes": 1290240
+        },
+        "2424": {
+          "observed_name": "python.exe",
+          "median_private_bytes": 269291520.0,
+          "min_private_bytes": 253992960,
+          "max_private_bytes": 282509312
+        },
+        "16656": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1257472.0,
+          "min_private_bytes": 1257472,
+          "max_private_bytes": 1257472
+        },
+        "18116": {
+          "observed_name": "node.exe",
+          "median_private_bytes": 96657408.0,
+          "min_private_bytes": 96186368,
+          "max_private_bytes": 97009664
+        }
+      }
+    },
+    {
+      "seconds": [
+        540,
+        600
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 362231808.0,
+      "min_private_bytes": 346861568,
+      "max_private_bytes": 382513152,
+      "per_pid": {
+        "1748": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1327104.0,
+          "min_private_bytes": 1290240,
+          "max_private_bytes": 1327104
+        },
+        "2424": {
+          "observed_name": "python.exe",
+          "median_private_bytes": 269291520.0,
+          "min_private_bytes": 253935616,
+          "max_private_bytes": 282583040
+        },
+        "16656": {
+          "observed_name": "conhost.exe",
+          "median_private_bytes": 1294336.0,
+          "min_private_bytes": 1257472,
+          "max_private_bytes": 1294336
+        },
+        "18116": {
+          "observed_name": "node.exe",
+          "median_private_bytes": 97009664.0,
+          "min_private_bytes": 89763840,
+          "max_private_bytes": 97603584
+        }
+      }
+    }
+  ],
+  "last_five_minutes_median_slope": {
+    "design": "Ordinary least squares on all five one-minute medians for minutes6through10, x step1minute; bytes/minute. Descriptive same-host result, not a leak test.",
+    "tree_bytes_per_minute": -524288.0,
+    "per_pid_bytes_per_minute": {
+      "1748": -8192.0,
+      "2424": 370278.4,
+      "16656": -8192.0,
+      "18116": 526336.0
+    }
+  },
+  "first_last_window": {
+    "cycle_count": 4028,
+    "duration_seconds": 600.1690603,
+    "private_bytes": {
+      "count": 1162,
+      "p50": 364105728.0,
+      "p95": 377656115.2,
+      "min": 298094592,
+      "max": 382513152
+    },
+    "first_window_median_private_bytes": 314173440.0,
+    "last_window_median_private_bytes": 346988544.0,
+    "window_samples": 10
+  },
+  "http_log": {
+    "path": "evidence/api-1674ebf6d5b94870887c30d8281666a6.log",
+    "sha256": "52bac797c05802ff406c74d354229ca9ba444dc463fda6fca97583c00f40de71",
+    "status_count": 13403,
+    "non_2xx_count": 0,
+    "error_token_count": 0,
+    "traceback_token_count": 0
+  },
+  "ancillary_source_consistency_records": [
+    {
+      "utc": "2026-11-16T17:17:02.108459+00:00",
+      "phase": "early_pressure",
+      "status": "passed",
+      "artifacts": [
+        {
+          "kind": "checkpoints",
+          "id": "1f0f7bfec31349c09ec0e4e2e3de9411",
+          "bytes": 4737217,
+          "sha256": "37daf57a65af08073c061aaaea119c5f1ab6d7bbbde294cc53f572ea45312e24"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "729a1ab6f33e41868e18e6a99d6dd5b1",
+          "bytes": 4918482,
+          "sha256": "c34d6b46259e040b134e8ca46af0db9ab7eb33bd68fdfcf37a2e4d6faeca32e6"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "c7e5927dce9e4fffb831c9b109802d12",
+          "bytes": 4918482,
+          "sha256": "5b5c720a1c825edc0077b1c3afe444aae2977a77a89ffc5a1dd45d8244bba4aa"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "a3e68ec8cfcf4304be96d559d3f7f65e",
+          "bytes": 4918482,
+          "sha256": "2a805ed42441b371bb4378feac1901f4f4385647878383623c20d406338d6a9b"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "8fa67e3d149b4bc1aaee8a12026744a2",
+          "bytes": 4919171,
+          "sha256": "b6b4db17e9f603d0966b813c1bb9091ded346b0f9a3507def6b7f302cd21a447"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "ef117f849522417397107218ae3933d3",
+          "bytes": 4919171,
+          "sha256": "23edd51bbeda552f155aa14cbdf6bb945b7f59d547056d298c1d42ad681d17b5"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "7defd83807fb435f9a44d6d05ea8f6f2",
+          "bytes": 4919171,
+          "sha256": "9504bdd36c1e26892adfdd8680bcdebafd04fed20e1cd6fe30329073d69c2228"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "9fc87d11869242dda1e722e22135ffae",
+          "bytes": 4918628,
+          "sha256": "b5e204c7f733cf2a3a100bfc1ca4378141dc5624cfa5a13cf7d9dcc054de8f90"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "46a8ffe5284243c29743a316f040e8fc",
+          "bytes": 4918625,
+          "sha256": "eede9a2b5485c185b95f0c686d387eba3c563db205cd4941752cc5eb0f5afac5"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "8607a51fb49c4a11b8cb348ed431117a",
+          "bytes": 4918625,
+          "sha256": "5720754cadbe11b10d2291ab32b9714e8a5fb7ccef71369f27d23c42753cc929"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "75fc64b6734d45a38ee36ae62b36b6ae",
+          "bytes": 4918788,
+          "sha256": "f21ab254b7cce0a3be8767fcdb57a29710f002f2dc7b99c7005ee88187172bd8"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "3ffbd8b7d71943a29386234e5942f270",
+          "bytes": 4918788,
+          "sha256": "774f4465a841e1873a4cf21c14b8b81c2436386fb450e871e2e331ac96b29f7d"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "be21a732496a46bb9879a8bd2a327a80",
+          "bytes": 4918788,
+          "sha256": "4cb8a8e422e09d4704f6022f07339b066090915c1208cd1d663f4f3976bfe7e6"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "c8ed9b25f971495ab91899d90b6e5df3",
+          "bytes": 4918608,
+          "sha256": "cd857cb6a3a387e15dabb417a9d08a67a35cf21c1d62348aea98fdbb28641b84"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "117e252771bb408db119a504a47260ae",
+          "bytes": 4918608,
+          "sha256": "4a0fed1ecf207f71c08fa4c83835799d1fd041023ff9cb6c0d033e568445e09a"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "dea0fe8282d54162890156f1abc7c0a8",
+          "bytes": 4918608,
+          "sha256": "e2c8805bc74d14bbe5d16181ffd504484a233f3d30588ecb8a0b95f995f03723"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "1c7d3ea3b39843189d38f91eb5de24ad",
+          "bytes": 4962884,
+          "sha256": "d5c278fc607a2321aa833940ef1eee9e7f687853a5aa00ead72f0994325eccfd"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "30cdaea89f9a41168628570afb8fcfa1",
+          "bytes": 5009690,
+          "sha256": "f4b80525eb1d7d8a8ee822b98cbad18c0731b821438d24e09b2d068ed208a31b"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "3e9ca79adadc4a799cf81fc5d72bc724",
+          "bytes": 5009690,
+          "sha256": "a632a26b939ea92648d01b19c3ef5509c9c7521dd68e2d9bea8ada8b165ee3e8"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "4fd7fd0092c44ff6835ebf72e59a2deb",
+          "bytes": 5009690,
+          "sha256": "f4b80525eb1d7d8a8ee822b98cbad18c0731b821438d24e09b2d068ed208a31b"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "a36e2b7187a74ea9a2a39ef35164b34f",
+          "bytes": 5009718,
+          "sha256": "13845ff0cfac87aae547407fb8c05f3d70df410faa8a9ab85c7b183bd09fd3f2"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "feb457d92b5a4339aacc9184221af93a",
+          "bytes": 5009718,
+          "sha256": "44133502bfdf51b21ed149ff7d99cec81de9e052b93d3039915506221ed7d973"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "388405a837b141e2bcbb54a2c591fcb7",
+          "bytes": 5009718,
+          "sha256": "13845ff0cfac87aae547407fb8c05f3d70df410faa8a9ab85c7b183bd09fd3f2"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "f950a97036ee474792c1d12e10864aab",
+          "bytes": 5009657,
+          "sha256": "85351453ee2c4c96cbb8c2600517d2314a2ce1739d3dd6ab6837987ee43553c0"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "6356463e914149fe845436e7f7687e7b",
+          "bytes": 5009657,
+          "sha256": "067905f3e53f8933713ec1b95269f38280ca359e0d010d2355cf8fb1c459348b"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "6288b9ae8e1a433e9446fd5e0c959f08",
+          "bytes": 5009657,
+          "sha256": "85351453ee2c4c96cbb8c2600517d2314a2ce1739d3dd6ab6837987ee43553c0"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "656408e425dc44fc9935791f4e56d1b3",
+          "bytes": 5009735,
+          "sha256": "1c5a1900ac702b898db2f509af76a544eb793f53b3c25d5491b88182a1edda14"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "9ecc55ec90bd44deb7cc9b4fcaadc392",
+          "bytes": 5009735,
+          "sha256": "2ea4fd933a60e96fcd29958cd34be9a259a1558ed5bb885c4a5a90a7b4031dd5"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "fbc67b18f30f48bf8275a93895fe6883",
+          "bytes": 5009735,
+          "sha256": "1c5a1900ac702b898db2f509af76a544eb793f53b3c25d5491b88182a1edda14"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "2698a3e365a9483e87dd110200513bea",
+          "bytes": 5009677,
+          "sha256": "b13ddb83f045616aede8cf9bc9e3e2eaf71b957c1fd403262ebcc817d8b2e62d"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "5c9f9afcdc8447d1927a5c90c27912e7",
+          "bytes": 5009677,
+          "sha256": "f47d23e3f1fe9fb1fa238a36e6781869f10e1f9c2bb6e54392b297c449c9fe96"
+        },
+        {
+          "kind": "checkpoints",
+          "id": "f5d49d3569bd44c392c275febbbda471",
+          "bytes": 5009677,
+          "sha256": "b13ddb83f045616aede8cf9bc9e3e2eaf71b957c1fd403262ebcc817d8b2e62d"
+        },
+        {
+          "kind": "traces",
+          "id": "91a9a484315d499aad12adf5dc2d4897",
+          "bytes": 11734712,
+          "sha256": "d81bdbfc7558f4399f3bd8bbb5618cf6172d4a5996f78f7a142482078a274fff"
+        },
+        {
+          "kind": "traces",
+          "id": "f18387a84e9a469bbfbee5d31488920a",
+          "bytes": 12127184,
+          "sha256": "39c0aec2b43b660fbf64354c105c044373aaafda3acf8c2ba9e98f5701470b9e"
+        },
+        {
+          "kind": "traces",
+          "id": "2f66aa2d428343b289d81664443459c3",
+          "bytes": 12161869,
+          "sha256": "c82a647f17e968a46a25934256b12d9184ae72c484d29e7b0a1b46206565ab53"
+        },
+        {
+          "kind": "traces",
+          "id": "eefc8c8f98a04c30bcaabfb33d56f643",
+          "bytes": 12148991,
+          "sha256": "b7fd64e92318afbefb0d524f29e00ad4f0c0982a01d43ce9225cce7126e1c5b7"
+        },
+        {
+          "kind": "traces",
+          "id": "fa6390c73b724f5198b0c2b11e93888d",
+          "bytes": 12128377,
+          "sha256": "9c064016e43e0b21ef14cd8d82078495e764307a2826ac2169ae57e59cadc9ab"
+        },
+        {
+          "kind": "traces",
+          "id": "8357ee9f8bb8421380fa9649de3c866b",
+          "bytes": 12175279,
+          "sha256": "a4349e0b5ac9a35a24f7d52074ddba2759f3436fd4e9ae711f529fe05424484f"
+        },
+        {
+          "kind": "traces",
+          "id": "68c804dbda2648628bb2ee94d6b3dd09",
+          "bytes": 12802415,
+          "sha256": "6f698c5eb43416b4f1673ee5d40b95df5a25430f9ceb6498ac86dc14489cfbca"
+        },
+        {
+          "kind": "traces",
+          "id": "914f4b57220c41c0b9bfdb7c5df05411",
+          "bytes": 12802591,
+          "sha256": "85b47e8f867e98a215fa92c6aea55957410dceb543f07bdba4b4fc9e92ab38dd"
+        },
+        {
+          "kind": "traces",
+          "id": "0a0f29594441489fb525c6137feccb92",
+          "bytes": 12824851,
+          "sha256": "89ac05d712aca8be6c14a6452761b4fcb95054508829f3b55c9cbe93972ed1e2"
+        },
+        {
+          "kind": "traces",
+          "id": "5212b234d19a44949cd776f60dd897a7",
+          "bytes": 12792953,
+          "sha256": "4b12115a58f71be388a7ae00231e7e630dcfe143979ee88332dec58b5ac42309"
+        }
+      ],
+      "rows": [
+        {
+          "algorithm": "sac",
+          "experiment": "233a02986778476bad28973f28202ca8",
+          "current_checkpoint": "2698a3e365a9483e87dd110200513bea",
+          "trace": "5212b234d19a44949cd776f60dd897a7",
+          "origin": "5c9f9afcdc8447d1927a5c90c27912e7",
+          "output": "f5d49d3569bd44c392c275febbbda471",
+          "index_sha256": "a932f729e94d8f2cf712efa72605d783792a0016258126fd5a2e95e3c51c38b1",
+          "frames_sha256": "834997bb8de3ef5ba7489a29df15b261d3a69232c8a60a8bea731af9ca0f6aba",
+          "index_keys": [
+            "schema",
+            "algorithm",
+            "update",
+            "mode",
+            "architecture",
+            "experiment_id",
+            "job_id",
+            "origin_checkpoint",
+            "output_checkpoint",
+            "batch",
+            "events"
+          ],
+          "frames_type": "dict",
+          "sample_ids": null,
+          "mode": "actual_computation"
+        },
+        {
+          "algorithm": "ppo",
+          "experiment": "7447f7aab6884d9fb16e9c220cbebe4a",
+          "current_checkpoint": "c8ed9b25f971495ab91899d90b6e5df3",
+          "trace": "fa6390c73b724f5198b0c2b11e93888d",
+          "origin": "117e252771bb408db119a504a47260ae",
+          "output": "dea0fe8282d54162890156f1abc7c0a8",
+          "index_sha256": "09821b9fa36cca6f997beea797d781ec7c9bfef4695b1fb3301989304ece79d4",
+          "frames_sha256": "796ec0629ba9deddb625d4132c1bbc10ede1026fd0f2a45700bc91bdf2a38579",
+          "index_keys": [
+            "schema",
+            "algorithm",
+            "update",
+            "mode",
+            "architecture",
+            "epoch",
+            "rollout_size",
+            "rollout_indices",
+            "experiment_id",
+            "job_id",
+            "origin_checkpoint",
+            "output_checkpoint",
+            "batch",
+            "events"
+          ],
+          "frames_type": "dict",
+          "sample_ids": null,
+          "mode": "actual_computation"
+        }
+      ]
+    },
+    {
+      "utc": "2026-11-16T17:17:31.143769+00:00",
+      "phase": "early_pressure_sample_ids",
+      "status": "passed",
+      "rows": [
+        {
+          "algorithm": "sac",
+          "trace": "5212b234d19a44949cd776f60dd897a7",
+          "sample_id": {
+            "shape": [
+              16
+            ],
+            "dtype": "number"
+          }
+        },
+        {
+          "algorithm": "ppo",
+          "trace": "fa6390c73b724f5198b0c2b11e93888d",
+          "sample_id": {
+            "shape": [
+              32
+            ],
+            "dtype": "number"
+          }
+        }
+      ],
+      "note": "Actual field is index.batch.sample_id; earlier metadata looked at absent index.sample_ids while full index hash already bound all batch fields."
+    },
+    {
+      "utc": "2026-11-16T17:18:38.104210+00:00",
+      "phase": "early_pressure_actual_frame_sample_ids",
+      "status": "passed",
+      "rows": [
+        {
+          "algorithm": "sac",
+          "trace": "5212b234d19a44949cd776f60dd897a7",
+          "sample_ids": [
+            28,
+            10,
+            27,
+            12,
+            36,
+            2,
+            16,
+            28,
+            3,
+            3,
+            18,
+            11,
+            6,
+            16,
+            29,
+            12
+          ],
+          "mode": "saved_actual_physics"
+        },
+        {
+          "algorithm": "ppo",
+          "trace": "fa6390c73b724f5198b0c2b11e93888d",
+          "sample_ids": [
+            153,
+            134,
+            135,
+            136,
+            138,
+            155,
+            148,
+            150,
+            152,
+            145,
+            157,
+            132,
+            158,
+            146,
+            159,
+            160,
+            130,
+            147,
+            139,
+            142,
+            129,
+            149,
+            151,
+            137,
+            140,
+            144,
+            143,
+            131,
+            154,
+            141,
+            156,
+            133
+          ],
+          "mode": "saved_actual_physics"
+        }
+      ],
+      "note": "Numeric sample IDs are in frames.sample_ids; index.batch.sample_id describes shape/dtype only. Existing full frames SHA binds actual frame values and IDs."
+    },
+    {
+      "utc": "2026-11-16T17:38:32.5999007Z",
+      "phase": "after_measurement_auto_cleanup",
+      "status": "connection_refused",
+      "error_type": "ConnectionRefusedError",
+      "windows_error": 10061,
+      "note": "Ancillary late live-source check was actually executed after the600s measurement had completed at17:25:59UTC and closed its owned server. Not a pressure-cycleHTTPfailure. No extra longrun or restarted service."
+    },
+    {
+      "utc": "2026-11-16T17:39:37.025005+00:00",
+      "phase": "post_measurement_offline_file_checks",
+      "status": "passed",
+      "artifact_count": 42,
+      "all_artifact_sha_and_bytes_unchanged": true,
+      "rows": [
+        {
+          "algorithm": "sac",
+          "trace": "5212b234d19a44949cd776f60dd897a7",
+          "index_sha256": "a932f729e94d8f2cf712efa72605d783792a0016258126fd5a2e95e3c51c38b1",
+          "frames_sha256": "834997bb8de3ef5ba7489a29df15b261d3a69232c8a60a8bea731af9ca0f6aba",
+          "sample_ids": [
+            28,
+            10,
+            27,
+            12,
+            36,
+            2,
+            16,
+            28,
+            3,
+            3,
+            18,
+            11,
+            6,
+            16,
+            29,
+            12
+          ],
+          "mode": "saved_actual_physics"
+        },
+        {
+          "algorithm": "ppo",
+          "trace": "fa6390c73b724f5198b0c2b11e93888d",
+          "index_sha256": "09821b9fa36cca6f997beea797d781ec7c9bfef4695b1fb3301989304ece79d4",
+          "frames_sha256": "796ec0629ba9deddb625d4132c1bbc10ede1026fd0f2a45700bc91bdf2a38579",
+          "sample_ids": [
+            153,
+            134,
+            135,
+            136,
+            138,
+            155,
+            148,
+            150,
+            152,
+            145,
+            157,
+            132,
+            158,
+            146,
+            159,
+            160,
+            130,
+            147,
+            139,
+            142,
+            129,
+            149,
+            151,
+            137,
+            140,
+            144,
+            143,
+            131,
+            154,
+            141,
+            156,
+            133
+          ],
+          "mode": "saved_actual_physics"
+        }
+      ],
+      "note": "DirectDfilechecks after servicecleanup, not a secondliveHTTPcheck. Both fullTrace/index/framescontent remainsbound to earlyliveAPIresponses."
+    }
+  ],
+  "limits": [
+    "One bounded same-host observation; concurrent packaging/relocation disclosed, no isolated speedup claim.",
+    "No profiler or forced GC added; process private memory alone does not distinguish native allocator high-water marks from leaks.",
+    "All ten one-minute windows and every raw sample retained. No selected best window, retuning or identical repeat after this run.",
+    "Python cyclic tensor retention regression is separately established by054; this pressure observation cannot establish indefinite memory stability.",
+    "Source-check ancillary reads add a few actual HTTP requests outside the pressure cycle count."
+  ]
+}

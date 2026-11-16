@@ -1,0 +1,8 @@
+{
+  "utc": "2026-11-16T17:38:32.5999007Z",
+  "phase": "after_measurement_auto_cleanup",
+  "status": "connection_refused",
+  "error_type": "ConnectionRefusedError",
+  "windows_error": 10061,
+  "note": "Ancillary late live-source check was actually executed after the600s measurement had completed at17:25:59UTC and closed its owned server. Not a pressure-cycleHTTPfailure. No extra longrun or restarted service."
+}

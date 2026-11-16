@@ -1,16 +1,16 @@
 {
   "schema": "policyglass.dialogue-export.v1",
-  "captured_at": "2026-11-16T15:52:13.486508+00:00",
+  "captured_at": "2026-11-16T17:42:56.002250+00:00",
   "native_source_name": "rollout-2026-11-16T19-08-19-01a1e40b-28d2-7720-a473-a311e7352cc5.jsonl",
-  "native_sha256": "8f92f08d6d7f38728880890e00182e839664d4cdf652eb48179d6dc606edcad3",
-  "public_sha256": "1f71f30404aa1b8bce32778925e67f7da4b28ccdb079c439ffca0f54815523f1",
+  "native_sha256": "f5978f82e2b455ef531eca17d9a5c88e178792bebdaef928c75044233f146ea7",
+  "public_sha256": "9ef4ad92193132a90d476bcfc88f5d0a6fcf8e865dad9ea4228e19e4bbfc4ef8",
   "record_counts": {
-    "user": 2,
-    "function_call_output": 22,
-    "assistant": 14,
-    "custom_tool_call": 73,
-    "custom_tool_call_output": 72,
-    "function_call": 20
+    "user": 3,
+    "function_call_output": 53,
+    "assistant": 27,
+    "custom_tool_call": 136,
+    "custom_tool_call_output": 135,
+    "function_call": 51
   },
   "scope": "Stage3 native session snapshot through capture time; later messages/final handoff are not yet present.",
   "omissions": [

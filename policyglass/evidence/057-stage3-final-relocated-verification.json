@@ -1,0 +1,90 @@
+{
+  "schema": "policyglass.offline-verification.v1",
+  "status": "PASSED",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.7 (tags/v3.12.7:0b05ead, Oct  1 2024, 03:06:41) [MSC v.1941 64 bit (AMD64)]",
+  "executable": "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r3-01\\PolicyGlass-stage3-review-20261117-r3\\runtime\\python\\python.exe",
+  "prefix": "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r3-01\\PolicyGlass-stage3-review-20261117-r3\\runtime\\python",
+  "sys_path": [
+    "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r3-01\\PolicyGlass-stage3-review-20261117-r3\\runtime\\python\\python312.zip",
+    "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r3-01\\PolicyGlass-stage3-review-20261117-r3\\runtime\\python",
+    "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r3-01\\PolicyGlass-stage3-review-20261117-r3\\runtime\\python\\Lib\\site-packages",
+    "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r3-01\\PolicyGlass-stage3-review-20261117-r3\\src"
+  ],
+  "bundle": "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r3-01\\PolicyGlass-stage3-review-20261117-r3",
+  "same_machine_only": true,
+  "source_runtime_required": false,
+  "checks": {
+    "external_python_network_blocked": true,
+    "manifest_file_count": 16950,
+    "torch": {
+      "version": "2.8.0+cpu",
+      "file": "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r3-01\\PolicyGlass-stage3-review-20261117-r3\\runtime\\python\\Lib\\site-packages\\torch\\__init__.py"
+    },
+    "policyglass_source": "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r3-01\\PolicyGlass-stage3-review-20261117-r3\\src\\policyglass\\__init__.py",
+    "node": "v24.22.1",
+    "health": {
+      "status": "ok",
+      "version": "0.1.0",
+      "mode": "cpu_float64",
+      "physics": "canonical_mujoco_wasm_4.0.1",
+      "stage": "3_evaluation_and_release_candidate",
+      "frontend_complete": true,
+      "release_complete": false
+    },
+    "production_local_assets": [
+      "/assets/index-CBYIhJjr.js",
+      "/assets/index-Bg22sZwD.css"
+    ],
+    "actual_learning_jobs": [
+      {
+        "algorithm": "ppo",
+        "job_id": "2a5dd104b8ae479887a0f7587f278d38",
+        "trace_id": "440aa99d18014be08cc347b01e62436c",
+        "events": 17,
+        "checkpoint": "6bcbd205c08641a1a5a9b4c7a12390f4",
+        "summary": [
+          {
+            "policy_loss": 1.6653345369377348e-16,
+            "value_loss": 1.6111616442704682,
+            "entropy_mc": 6.79834080495037,
+            "kl_approx": 0.0,
+            "sampled_kl": 0.0,
+            "update": 1,
+            "env_steps": 8,
+            "epoch": 0,
+            "minibatch_size": 8,
+            "post_update_kl": 1.5419598087831887e-05
+          }
+        ]
+      },
+      {
+        "algorithm": "sac",
+        "job_id": "6bf2a5400d6c4a559c656500dad4c129",
+        "trace_id": "1976573f57b440ac88a330c6ca48eb60",
+        "events": 46,
+        "checkpoint": "b5caf4b2f9224f4384ce0f2ebf1d0390",
+        "summary": [
+          {
+            "q1_loss": 0.5241546453733419,
+            "q2_loss": 0.3241935725033458,
+            "actor_loss": -0.8543130530878942,
+            "alpha": 0.19994000899916367,
+            "entropy_mc": 6.436411912269378,
+            "update": 1,
+            "env_steps": 8,
+            "replay_update_index": 0
+          }
+        ]
+      }
+    ]
+  },
+  "elapsed_seconds": 49.96399220000012,
+  "under_ten_minutes_from_existing_local_bundle": true,
+  "limitations": [
+    "Same host, new D: package; not a cross-machine result",
+    "No learner or successful-policy claim",
+    "Network guard limits bundled Python, not the operating system or Node",
+    "Build/download/initial archive extraction are timed separately"
+  ]
+}

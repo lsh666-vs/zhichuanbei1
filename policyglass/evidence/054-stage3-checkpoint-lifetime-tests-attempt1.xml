@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="6" time="0.105" timestamp="2026-11-17T01:05:58.865296+08:00" hostname="DESKTOP-BE4ONJU"><testcase classname="tests.test_checkpoint_lifetime" name="test_encode_releases_temporary_clones_on_return" time="0.005" /><testcase classname="tests.test_checkpoint_lifetime" name="test_encode_releases_clones_when_serialization_fails" time="0.001" /><testcase classname="tests.test_checkpoint_lifetime" name="test_encode_releases_earlier_clones_when_packing_fails" time="0.001" /><testcase classname="tests.test_checkpoint_lifetime" name="test_decode_releases_loaded_tensors_while_returned_state_is_live" time="0.002" /><testcase classname="tests.test_checkpoint_lifetime" name="test_decode_releases_loaded_tensors_when_validation_fails" time="0.002" /><testcase classname="tests.test_checkpoint_lifetime" name="test_decode_releases_loaded_tensors_when_unpacking_fails" time="0.002"><failure message="assert False&#10; +  where False = all(&lt;generator object test_decode_releases_loaded_tensors_when_unpacking_fails.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001D52C8DE0C0&gt;)">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001D52C95FA40&gt;
+without_cyclic_gc = None
+
+    def test_decode_releases_loaded_tensors_when_unpacking_fails(monkeypatch, without_cyclic_gc):
+        blob = checkpoint.encode({"nested": [torch.ones(8), torch.ones(8)]})
+        references = observe_loaded_tensors(monkeypatch)
+        original = torch.Tensor.clone
+        calls = 0
+    
+        def fails_on_second_clone(tensor, *args, **kwargs):
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                raise RuntimeError("injected clone failure")
+            return original(tensor, *args, **kwargs)
+    
+        monkeypatch.setattr(torch.Tensor, "clone", fails_on_second_clone)
+        with pytest.raises(RuntimeError, match="injected clone failure") as error:
+            checkpoint.decode(blob)
+        assert error.value is not None
+        assert len(references) == 2
+&gt;       assert all(reference() is None for reference in references)
+E       assert False
+E        +  where False = all(&lt;generator object test_decode_releases_loaded_tensors_when_unpacking_fails.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001D52C8DE0C0&gt;)
+
+tests\test_checkpoint_lifetime.py:151: AssertionError</failure></testcase></testsuite></testsuites>

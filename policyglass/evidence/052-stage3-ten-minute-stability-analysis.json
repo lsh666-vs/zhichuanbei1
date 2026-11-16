@@ -1,0 +1,535 @@
+{
+  "schema": "policyglass.performance.ten-minute-analysis.v1",
+  "raw_report": {
+    "path": "evidence/052-stage3-ten-minute-stability.json",
+    "bytes": 5841137,
+    "sha256": "d4df933356a3529be30e2e2035f53b144aee56ac720fc0875d05ae14960a3388"
+  },
+  "runtime_environment_observed_before_run": {
+    "torch": "2.8.0+cpu",
+    "numpy": "2.2.6",
+    "setuptools": "84.1.0"
+  },
+  "background_load": "Ten-minute bounded stability check of the verified JSON byte-response path. No concurrent training or browser workloads at start. Offline r2 release packaging overlaps the first few minutes in another process; this is not an isolated speed benchmark. Benchmark-owned default 64x64 PPO/SAC traced jobs precede the read-only stress. Current main environment: Torch 2.8.0+cpu, NumPy 2.2.6, setuptools 84.1.0.",
+  "total_memory_samples": 1215,
+  "pressure_memory_samples": 1165,
+  "pressure_duration_seconds": 600.1297541000022,
+  "algorithm_cycles": 5826,
+  "one_minute_windows": [
+    {
+      "seconds": [
+        0,
+        60
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 343566336.0,
+      "min_private_bytes": 305442816,
+      "max_private_bytes": 380452864,
+      "per_pid": {
+        "1636": {
+          "median_private_bytes": 261812224.0,
+          "min_private_bytes": 225243136,
+          "max_private_bytes": 298123264
+        },
+        "8588": {
+          "median_private_bytes": 1257472.0,
+          "min_private_bytes": 1257472,
+          "max_private_bytes": 1294336
+        },
+        "18044": {
+          "median_private_bytes": 79380480.0,
+          "min_private_bytes": 76029952,
+          "max_private_bytes": 82210816
+        },
+        "18184": {
+          "median_private_bytes": 1253376.0,
+          "min_private_bytes": 1253376,
+          "max_private_bytes": 1290240
+        }
+      }
+    },
+    {
+      "seconds": [
+        60,
+        120
+      ],
+      "sample_count": 117,
+      "median_private_bytes": 347021312,
+      "min_private_bytes": 310177792,
+      "max_private_bytes": 381030400,
+      "per_pid": {
+        "1636": {
+          "median_private_bytes": 263061504,
+          "min_private_bytes": 228155392,
+          "max_private_bytes": 296775680
+        },
+        "8588": {
+          "median_private_bytes": 1257472,
+          "min_private_bytes": 1257472,
+          "max_private_bytes": 1257472
+        },
+        "18044": {
+          "median_private_bytes": 81432576,
+          "min_private_bytes": 79069184,
+          "max_private_bytes": 82259968
+        },
+        "18184": {
+          "median_private_bytes": 1253376,
+          "min_private_bytes": 1253376,
+          "max_private_bytes": 1253376
+        }
+      }
+    },
+    {
+      "seconds": [
+        120,
+        180
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 353744896.0,
+      "min_private_bytes": 329564160,
+      "max_private_bytes": 397783040,
+      "per_pid": {
+        "1636": {
+          "median_private_bytes": 268435456.0,
+          "min_private_bytes": 244269056,
+          "max_private_bytes": 311455744
+        },
+        "8588": {
+          "median_private_bytes": 1257472.0,
+          "min_private_bytes": 1257472,
+          "max_private_bytes": 1257472
+        },
+        "18044": {
+          "median_private_bytes": 83103744.0,
+          "min_private_bytes": 81666048,
+          "max_private_bytes": 84340736
+        },
+        "18184": {
+          "median_private_bytes": 1253376.0,
+          "min_private_bytes": 1253376,
+          "max_private_bytes": 1253376
+        }
+      }
+    },
+    {
+      "seconds": [
+        180,
+        240
+      ],
+      "sample_count": 117,
+      "median_private_bytes": 343949312,
+      "min_private_bytes": 320552960,
+      "max_private_bytes": 384655360,
+      "per_pid": {
+        "1636": {
+          "median_private_bytes": 256835584,
+          "min_private_bytes": 233222144,
+          "max_private_bytes": 297766912
+        },
+        "8588": {
+          "median_private_bytes": 1257472,
+          "min_private_bytes": 1257472,
+          "max_private_bytes": 1257472
+        },
+        "18044": {
+          "median_private_bytes": 84402176,
+          "min_private_bytes": 83542016,
+          "max_private_bytes": 84819968
+        },
+        "18184": {
+          "median_private_bytes": 1253376,
+          "min_private_bytes": 1253376,
+          "max_private_bytes": 1253376
+        }
+      }
+    },
+    {
+      "seconds": [
+        240,
+        300
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 352481280.0,
+      "min_private_bytes": 315596800,
+      "max_private_bytes": 389595136,
+      "per_pid": {
+        "1636": {
+          "median_private_bytes": 263864320.0,
+          "min_private_bytes": 228184064,
+          "max_private_bytes": 300613632
+        },
+        "8588": {
+          "median_private_bytes": 1257472.0,
+          "min_private_bytes": 1257472,
+          "max_private_bytes": 1347584
+        },
+        "18044": {
+          "median_private_bytes": 86134784.0,
+          "min_private_bytes": 84512768,
+          "max_private_bytes": 86298624
+        },
+        "18184": {
+          "median_private_bytes": 1253376.0,
+          "min_private_bytes": 1253376,
+          "max_private_bytes": 1339392
+        }
+      }
+    },
+    {
+      "seconds": [
+        300,
+        360
+      ],
+      "sample_count": 117,
+      "median_private_bytes": 360947712,
+      "min_private_bytes": 329613312,
+      "max_private_bytes": 393170944,
+      "per_pid": {
+        "1636": {
+          "median_private_bytes": 275214336,
+          "min_private_bytes": 246943744,
+          "max_private_bytes": 303665152
+        },
+        "8588": {
+          "median_private_bytes": 1347584,
+          "min_private_bytes": 1347584,
+          "max_private_bytes": 1347584
+        },
+        "18044": {
+          "median_private_bytes": 81752064,
+          "min_private_bytes": 78970880,
+          "max_private_bytes": 86818816
+        },
+        "18184": {
+          "median_private_bytes": 1339392,
+          "min_private_bytes": 1339392,
+          "max_private_bytes": 1339392
+        }
+      }
+    },
+    {
+      "seconds": [
+        360,
+        420
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 367450112.0,
+      "min_private_bytes": 338268160,
+      "max_private_bytes": 404508672,
+      "per_pid": {
+        "1636": {
+          "median_private_bytes": 282392576.0,
+          "min_private_bytes": 253546496,
+          "max_private_bytes": 318894080
+        },
+        "8588": {
+          "median_private_bytes": 1269760.0,
+          "min_private_bytes": 1269760,
+          "max_private_bytes": 1347584
+        },
+        "18044": {
+          "median_private_bytes": 82247680.0,
+          "min_private_bytes": 81883136,
+          "max_private_bytes": 83087360
+        },
+        "18184": {
+          "median_private_bytes": 1261568.0,
+          "min_private_bytes": 1261568,
+          "max_private_bytes": 1339392
+        }
+      }
+    },
+    {
+      "seconds": [
+        420,
+        480
+      ],
+      "sample_count": 116,
+      "median_private_bytes": 373143552.0,
+      "min_private_bytes": 351285248,
+      "max_private_bytes": 405131264,
+      "per_pid": {
+        "1636": {
+          "median_private_bytes": 287787008.0,
+          "min_private_bytes": 265900032,
+          "max_private_bytes": 319741952
+        },
+        "8588": {
+          "median_private_bytes": 1269760.0,
+          "min_private_bytes": 1269760,
+          "max_private_bytes": 1269760
+        },
+        "18044": {
+          "median_private_bytes": 82857984.0,
+          "min_private_bytes": 82419712,
+          "max_private_bytes": 83218432
+        },
+        "18184": {
+          "median_private_bytes": 1261568.0,
+          "min_private_bytes": 1261568,
+          "max_private_bytes": 1261568
+        }
+      }
+    },
+    {
+      "seconds": [
+        480,
+        540
+      ],
+      "sample_count": 117,
+      "median_private_bytes": 375275520,
+      "min_private_bytes": 351834112,
+      "max_private_bytes": 409518080,
+      "per_pid": {
+        "1636": {
+          "median_private_bytes": 288915456,
+          "min_private_bytes": 266076160,
+          "max_private_bytes": 322908160
+        },
+        "8588": {
+          "median_private_bytes": 1269760,
+          "min_private_bytes": 1269760,
+          "max_private_bytes": 1269760
+        },
+        "18044": {
+          "median_private_bytes": 84078592,
+          "min_private_bytes": 83222528,
+          "max_private_bytes": 84815872
+        },
+        "18184": {
+          "median_private_bytes": 1261568,
+          "min_private_bytes": 1261568,
+          "max_private_bytes": 1261568
+        }
+      }
+    },
+    {
+      "seconds": [
+        540,
+        600
+      ],
+      "sample_count": 117,
+      "median_private_bytes": 375062528,
+      "min_private_bytes": 342384640,
+      "max_private_bytes": 410386432,
+      "per_pid": {
+        "1636": {
+          "median_private_bytes": 287707136,
+          "min_private_bytes": 254914560,
+          "max_private_bytes": 323035136
+        },
+        "8588": {
+          "median_private_bytes": 1269760,
+          "min_private_bytes": 1269760,
+          "max_private_bytes": 1306624
+        },
+        "18044": {
+          "median_private_bytes": 84824064,
+          "min_private_bytes": 83656704,
+          "max_private_bytes": 86020096
+        },
+        "18184": {
+          "median_private_bytes": 1261568,
+          "min_private_bytes": 1261568,
+          "max_private_bytes": 1298432
+        }
+      }
+    }
+  ],
+  "later_half": {
+    "minute_windows": [
+      5,
+      10
+    ],
+    "first_to_last_window_median_growth_bytes": 14114816,
+    "median_pairwise_slope_bytes_per_minute": 3720704.0,
+    "last_two_minute_median_difference_bytes": -212992,
+    "interpretation": "The last two one-minute medians are nearly flat, but the full later half still rises. This run does not establish a sustained plateau or show that all growth was only warmup."
+  },
+  "api_server_pid_confirmed_by_log": 1636,
+  "process_name_limit": "Raw memory samples contain PIDs, not executable names. Other process roles are not directly established by these samples.",
+  "outcomes": {
+    "completed_traced_jobs": 10,
+    "official_benchmark_status": "completed",
+    "server_error_or_http_4xx_5xx_lines": 0,
+    "source_hash_mismatches_after_run": []
+  },
+  "server_log": {
+    "path": "evidence/api-81c27855fce34d92987eec909ff26041.log",
+    "bytes": 1892323,
+    "sha256": "9bdc10cb2fb23fede39e60dc127aa959aa4cadcf42f868138743a96323ff89ef"
+  },
+  "source_consistency_checks": {
+    "path": "evidence/052-stage3-source-consistency.jsonl",
+    "sha256": "603ca8053e9630168b9d56be13d143e5191355abab9a1a9421f1a5e43de171af",
+    "records": [
+      {
+        "utc": "2026-11-16T16:17:17.391667+00:00",
+        "status": "passed",
+        "rows": [
+          {
+            "algorithm": "sac",
+            "experiment": "13eb6f2023e94acb9878258461e24dfe",
+            "current_checkpoint": "7ab5bef3c37241a1b180a4075d5f749d",
+            "trace": "0552a186e3dd46c18b33c2c76a3e1fa6",
+            "origin": "9071c4ee6ff3441ea9da02be43ea92fc",
+            "output": "4efa9ba77cfd46bf98089b7b7dff1c99",
+            "sample_ids": [
+              28,
+              10,
+              27,
+              12,
+              36,
+              2,
+              16,
+              28,
+              3,
+              3,
+              18,
+              11,
+              6,
+              16,
+              29,
+              12
+            ],
+            "mode": "actual_computation"
+          },
+          {
+            "algorithm": "ppo",
+            "experiment": "0e6328bf3f5d4c83870df9a3213d3d35",
+            "current_checkpoint": "e0242195f61344e2ae1d0d7a68a35ab3",
+            "trace": "92e6c84e4cfb4858af12ef757ec93195",
+            "origin": "ad7d56bfbc12458bb48f19b69aae5442",
+            "output": "e18104770e6247329f79de45d0ad6d4f",
+            "sample_ids": [
+              153,
+              134,
+              135,
+              136,
+              138,
+              155,
+              148,
+              150,
+              152,
+              145,
+              157,
+              132,
+              158,
+              146,
+              159,
+              160,
+              130,
+              147,
+              139,
+              142,
+              129,
+              149,
+              151,
+              137,
+              140,
+              144,
+              143,
+              131,
+              154,
+              141,
+              156,
+              133
+            ],
+            "mode": "actual_computation"
+          }
+        ]
+      },
+      {
+        "utc": "2026-11-16T16:20:40.579850+00:00",
+        "status": "passed",
+        "rows": [
+          {
+            "algorithm": "sac",
+            "experiment": "13eb6f2023e94acb9878258461e24dfe",
+            "current_checkpoint": "7ab5bef3c37241a1b180a4075d5f749d",
+            "trace": "0552a186e3dd46c18b33c2c76a3e1fa6",
+            "origin": "9071c4ee6ff3441ea9da02be43ea92fc",
+            "output": "4efa9ba77cfd46bf98089b7b7dff1c99",
+            "sample_ids": [
+              28,
+              10,
+              27,
+              12,
+              36,
+              2,
+              16,
+              28,
+              3,
+              3,
+              18,
+              11,
+              6,
+              16,
+              29,
+              12
+            ],
+            "mode": "actual_computation"
+          },
+          {
+            "algorithm": "ppo",
+            "experiment": "0e6328bf3f5d4c83870df9a3213d3d35",
+            "current_checkpoint": "e0242195f61344e2ae1d0d7a68a35ab3",
+            "trace": "92e6c84e4cfb4858af12ef757ec93195",
+            "origin": "ad7d56bfbc12458bb48f19b69aae5442",
+            "output": "e18104770e6247329f79de45d0ad6d4f",
+            "sample_ids": [
+              153,
+              134,
+              135,
+              136,
+              138,
+              155,
+              148,
+              150,
+              152,
+              145,
+              157,
+              132,
+              158,
+              146,
+              159,
+              160,
+              130,
+              147,
+              139,
+              142,
+              129,
+              149,
+              151,
+              137,
+              140,
+              144,
+              143,
+              131,
+              154,
+              141,
+              156,
+              133
+            ],
+            "mode": "actual_computation"
+          }
+        ]
+      },
+      {
+        "recorded_utc": "2026-11-16T16:28:59.458690+00:00",
+        "phase": "after_measurement_auto_cleanup",
+        "status": "connection_refused",
+        "error_type": "urllib.error.URLError",
+        "windows_error": 10061,
+        "note": "Third ancillary check was attempted after the benchmark completed and closed its owned server; not a request failure during the pressure interval."
+      }
+    ]
+  },
+  "limits": [
+    "This was one bounded loaded observation; release packaging overlapped the first few minutes. Do not interpret request times as isolated microbenchmarks.",
+    "Process private memory is not an object-retention profiler and cannot distinguish allocator high-water marks from leaks by itself.",
+    "All ten one-minute windows and all raw samples are retained; no smallest-window selection was used.",
+    "No further identical long run or source changes were made. The owned API/physics process tree was stopped by the measurement helper."
+  ]
+}

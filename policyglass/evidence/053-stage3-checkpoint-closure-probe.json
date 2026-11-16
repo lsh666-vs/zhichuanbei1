@@ -1,0 +1,143 @@
+{
+  "schema": "policyglass.checkpoint-closure-probe.v1",
+  "started_utc": "2026-11-16T16:41:24.516225+00:00",
+  "checkpoint": "e0242195f61344e2ae1d0d7a68a35ab3",
+  "checkpoint_sha256": "cd857cb6a3a387e15dabb417a9d08a67a35cf21c1d62348aea98fdbb28641b84",
+  "design": "Three real bounded checkpoint decode calls in a separate process. Auto GC is temporarily disabled only to observe retention until explicit gc.collect; this is not a production workload or a new GC policy. Returned states are deleted before census.",
+  "steps": [
+    {
+      "decode_count": 1,
+      "closures": [
+        {
+          "qualname": "decode.<locals>.unpack",
+          "file": "src/policyglass/checkpoint.py",
+          "line": 135,
+          "freevars": [
+            "tensors",
+            "unpack"
+          ],
+          "self_referential_cell": true,
+          "retained_tensor_count": 83,
+          "retained_tensor_logical_bytes": 4748624
+        }
+      ],
+      "traced_bytes": 4812610
+    },
+    {
+      "decode_count": 2,
+      "closures": [
+        {
+          "qualname": "decode.<locals>.unpack",
+          "file": "src/policyglass/checkpoint.py",
+          "line": 135,
+          "freevars": [
+            "tensors",
+            "unpack"
+          ],
+          "self_referential_cell": true,
+          "retained_tensor_count": 83,
+          "retained_tensor_logical_bytes": 4748624
+        },
+        {
+          "qualname": "decode.<locals>.unpack",
+          "file": "src/policyglass/checkpoint.py",
+          "line": 135,
+          "freevars": [
+            "tensors",
+            "unpack"
+          ],
+          "self_referential_cell": true,
+          "retained_tensor_count": 83,
+          "retained_tensor_logical_bytes": 4748624
+        }
+      ],
+      "traced_bytes": 9598245
+    },
+    {
+      "decode_count": 3,
+      "closures": [
+        {
+          "qualname": "decode.<locals>.unpack",
+          "file": "src/policyglass/checkpoint.py",
+          "line": 135,
+          "freevars": [
+            "tensors",
+            "unpack"
+          ],
+          "self_referential_cell": true,
+          "retained_tensor_count": 83,
+          "retained_tensor_logical_bytes": 4748624
+        },
+        {
+          "qualname": "decode.<locals>.unpack",
+          "file": "src/policyglass/checkpoint.py",
+          "line": 135,
+          "freevars": [
+            "tensors",
+            "unpack"
+          ],
+          "self_referential_cell": true,
+          "retained_tensor_count": 83,
+          "retained_tensor_logical_bytes": 4748624
+        },
+        {
+          "qualname": "decode.<locals>.unpack",
+          "file": "src/policyglass/checkpoint.py",
+          "line": 135,
+          "freevars": [
+            "tensors",
+            "unpack"
+          ],
+          "self_referential_cell": true,
+          "retained_tensor_count": 83,
+          "retained_tensor_logical_bytes": 4748624
+        }
+      ],
+      "traced_bytes": 14384164
+    }
+  ],
+  "baseline": [],
+  "manual_gc": {
+    "collected": 279,
+    "closures_before": [
+      {
+        "qualname": "decode.<locals>.unpack",
+        "file": "src/policyglass/checkpoint.py",
+        "line": 135,
+        "freevars": [
+          "tensors",
+          "unpack"
+        ],
+        "self_referential_cell": true,
+        "retained_tensor_count": 83,
+        "retained_tensor_logical_bytes": 4748624
+      },
+      {
+        "qualname": "decode.<locals>.unpack",
+        "file": "src/policyglass/checkpoint.py",
+        "line": 135,
+        "freevars": [
+          "tensors",
+          "unpack"
+        ],
+        "self_referential_cell": true,
+        "retained_tensor_count": 83,
+        "retained_tensor_logical_bytes": 4748624
+      },
+      {
+        "qualname": "decode.<locals>.unpack",
+        "file": "src/policyglass/checkpoint.py",
+        "line": 135,
+        "freevars": [
+          "tensors",
+          "unpack"
+        ],
+        "self_referential_cell": true,
+        "retained_tensor_count": 83,
+        "retained_tensor_logical_bytes": 4748624
+      }
+    ],
+    "closures_after": [],
+    "traced_bytes_after": 4859
+  }
+}

@@ -43,8 +43,14 @@ def encode(state):
             return value.item()
         return value
 
-    metadata = json_bytes(pack(state))
-    payload = save_tensors(tensors)
+    try:
+        metadata = json_bytes(pack(state))
+        payload = save_tensors(tensors)
+    finally:
+        # Recursive local functions otherwise retain themselves and the cloned
+        # tensor table until cyclic GC runs, even after this call has returned.
+        pack = None
+        tensors.clear()
     if len(payload) + len(metadata) > MAX_BYTES or len(metadata) > MAX_JSON_BYTES:
         raise ValueError("Checkpoint exceeds resource budget")
     manifest = {
@@ -76,6 +82,8 @@ def encode(state):
 def decode(blob):
     if len(blob) > MAX_BYTES + 1024 * 1024:
         raise ValueError("Checkpoint exceeds resource budget")
+    inspect = unpack = None
+    tensors = {}
     try:
         with zipfile.ZipFile(io.BytesIO(blob)) as archive:
             entries = archive.infolist()
@@ -152,3 +160,8 @@ def decode(blob):
         SafetensorError,
     ) as exc:
         raise ValueError("Malformed checkpoint") from exc
+    finally:
+        # The returned state owns its clones; release the temporary loaded
+        # tensors and recursive helper cells on both success and failure.
+        inspect = unpack = None
+        tensors.clear()

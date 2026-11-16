@@ -1,0 +1,156 @@
+{
+  "schema": "policyglass.checkpoint-lifetime-verification.v1",
+  "status": "passed_for_defined_scope",
+  "finished_utc": "2026-11-16T17:09:12.342091+00:00",
+  "change": "Both recursive encode.pack and decode.inspect/unpack cells and temporary tensor dictionaries are cleared in finally, including exceptions. No forced collection, altered validation, tensor calculation, clone behavior, wire version, order, or bytes.",
+  "tests": {
+    "new_lifetime_tests": 6,
+    "targeted_tests": 51,
+    "all_preregistered_real_checkpoints_whole_bundle_byte_identical": 20,
+    "gc_design": "New lifetime tests disable cyclic GC and observe weakrefs to actual serializer clones and actual loaded tensors; returned state clones stay valid. Success, serialization error, packing validation, decode validation, unpacking error covered. Production GC policy unchanged.",
+    "diagnostic_attempt1": "First run had5pass1fail: injected Python clone failure retained its tensor argument through the intentionally kept traceback. Fixed only injection to delete its own argument before raising, so it measures checkpoint temporary table. First XML preserved. No production change followed the initial fix."
+  },
+  "diagnostic_comparison": {
+    "same_load": "Same052source store and trace/checkpoint IDs, same5warmup rounds, 200alternatingPPO/SACindex+eventcycles400HTTP plus200detailrequests. Same temporary tracemalloc depth3 and live Tensor census. Production source hash recorded in each raw report.",
+    "before_seconds": 53.31257750000077,
+    "after_seconds": 53.4612810000001,
+    "all_after_fix_samples_before_manual_gc_have_zero_live_tensors": true,
+    "physics_final": {
+      "create": 210,
+      "delete": 210,
+      "peak_live": 1,
+      "tracked_live_worlds": 0,
+      "node_pid": 19228
+    },
+    "rows": [
+      {
+        "point": "baseline_after_warmup_and_gc",
+        "before_fix_live_tensor_count_before_gc": 704,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 332099584,
+        "after_fix_private_bytes_before_gc": 310747136,
+        "before_fix_traced_bytes_before_gc": 23285992,
+        "after_fix_traced_bytes_before_gc": 3716871
+      },
+      {
+        "point": "trace_index_and_byte_event_after_50",
+        "before_fix_live_tensor_count_before_gc": 0,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 320991232,
+        "after_fix_private_bytes_before_gc": 314150912,
+        "before_fix_traced_bytes_before_gc": 3834125,
+        "after_fix_traced_bytes_before_gc": 3832225
+      },
+      {
+        "point": "trace_index_and_byte_event_after_100",
+        "before_fix_live_tensor_count_before_gc": 0,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 326242304,
+        "after_fix_private_bytes_before_gc": 321327104,
+        "before_fix_traced_bytes_before_gc": 4141740,
+        "after_fix_traced_bytes_before_gc": 4137814
+      },
+      {
+        "point": "trace_index_and_byte_event_after_150",
+        "before_fix_live_tensor_count_before_gc": 0,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 326242304,
+        "after_fix_private_bytes_before_gc": 321327104,
+        "before_fix_traced_bytes_before_gc": 4199718,
+        "after_fix_traced_bytes_before_gc": 4186957
+      },
+      {
+        "point": "trace_index_and_byte_event_after_200",
+        "before_fix_live_tensor_count_before_gc": 0,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 326242304,
+        "after_fix_private_bytes_before_gc": 321327104,
+        "before_fix_traced_bytes_before_gc": 4268497,
+        "after_fix_traced_bytes_before_gc": 4255385
+      },
+      {
+        "point": "trace_index_and_byte_event_final_gc",
+        "before_fix_live_tensor_count_before_gc": 0,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 326242304,
+        "after_fix_private_bytes_before_gc": 314998784,
+        "before_fix_traced_bytes_before_gc": 4334161,
+        "after_fix_traced_bytes_before_gc": 4330467
+      },
+      {
+        "point": "detail_baseline_after_partial_phase_gc",
+        "before_fix_live_tensor_count_before_gc": 0,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 326242304,
+        "after_fix_private_bytes_before_gc": 313937920,
+        "before_fix_traced_bytes_before_gc": 4463224,
+        "after_fix_traced_bytes_before_gc": 4459751
+      },
+      {
+        "point": "experiment_detail_after_50",
+        "before_fix_live_tensor_count_before_gc": 352,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 333594624,
+        "after_fix_private_bytes_before_gc": 318283776,
+        "before_fix_traced_bytes_before_gc": 14093557,
+        "after_fix_traced_bytes_before_gc": 4316621
+      },
+      {
+        "point": "experiment_detail_after_100",
+        "before_fix_live_tensor_count_before_gc": 186,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 329043968,
+        "after_fix_private_bytes_before_gc": 319102976,
+        "before_fix_traced_bytes_before_gc": 9384091,
+        "after_fix_traced_bytes_before_gc": 4387439
+      },
+      {
+        "point": "experiment_detail_after_150",
+        "before_fix_live_tensor_count_before_gc": 0,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 325062656,
+        "after_fix_private_bytes_before_gc": 320061440,
+        "before_fix_traced_bytes_before_gc": 4456498,
+        "after_fix_traced_bytes_before_gc": 4457010
+      },
+      {
+        "point": "experiment_detail_after_200",
+        "before_fix_live_tensor_count_before_gc": 352,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 340172800,
+        "after_fix_private_bytes_before_gc": 336244736,
+        "before_fix_traced_bytes_before_gc": 14308252,
+        "after_fix_traced_bytes_before_gc": 4523732
+      },
+      {
+        "point": "experiment_detail_final_gc",
+        "before_fix_live_tensor_count_before_gc": 166,
+        "after_fix_live_tensor_count_before_gc": 0,
+        "before_fix_private_bytes_before_gc": 337526784,
+        "after_fix_private_bytes_before_gc": 336244736,
+        "before_fix_traced_bytes_before_gc": 9619232,
+        "after_fix_traced_bytes_before_gc": 4827551
+      }
+    ]
+  },
+  "limits": [
+    "A bounded lifetime regression check and53second instrumented diagnostic do not prove unbounded process-memory stability.",
+    "After-fix process-tree private bytes still rose from313.94MB at detail baseline to336.25MB after200detailrequests; tracedPython memory stayed4.460→4.524MB between baseline and200point, and all liveTensor samples were0. Native allocator and Node memory are outside tracemalloc.",
+    "Runs were on same host at different times with other review workloads; no controlled performance speedup or cross-machine claim.",
+    "Temporary route exists only in ignored D: diagnostic wrapper, never in shipped API.",
+    "No learning, participant feedback, external provider calls, or checkpoint source modifications performed."
+  ],
+  "sha256": {
+    "src/policyglass/checkpoint.py": "527cd7647274da709a780c19969870caf9b3f93b073807032eb670033e2ff3dc",
+    "tests/test_checkpoint_lifetime.py": "27ddb6301d7fcce2e99587f6a77f8f79feef20559976899f3238190d6d975f10",
+    "evidence/053-stage3-checkpoint-closure-probe.json": "2ec22cb5164111067cc6cfca7b10ff7801edb88ce07cab52bf3b93713b599685",
+    "evidence/053-stage3-allocation-diagnostic.json": "6949f8ef365e3b3c344c345f5b1a3c630fac7c7a00eb792fb864fe07bde244e8",
+    "evidence/054-stage3-allocation-diagnostic.json": "ee466cb2be0f56bec17f33a78852b40078f649d39de94ad576d233e4f0096cb2",
+    "evidence/054-stage3-checkpoint-lifetime-tests-attempt1.xml": "c59972923cd2fd50e24d8ac50e7c982c653a15d24db89cd6b36b159a7cb3359e",
+    "evidence/054-stage3-checkpoint-lifetime-tests.xml": "d1d0005e393732cb1c01000ccd3f4a4cbd1db03d52593f0a3ba2c646d08bf131",
+    "evidence/054-stage3-targeted-tests.xml": "7af13ad6c68a41090c74e99dcbbc15f701ce04952bb62f7c6680feb4bcdf10c3",
+    "evidence/054-stage3-checkpoint-byte-compatibility.json": "c5b51b03a05f72a5bcaba746583b875ef57601c3a6059f4559c3390bddaf96f1",
+    ".runtime/profile054/run.py": "d1a57075bd47088b3d2916596f0dcad67599f88e82e15e140d77c60d25fe5adc",
+    ".runtime/profile054/server.py": "fe281c27eee8ab4f33d13ecc25b7045ab6bb3ded83c9a2433a042f0efd34598c"
+  }
+}

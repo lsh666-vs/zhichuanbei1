@@ -1,7 +1,6 @@
 {
   "schema": "policyglass.tested-inputs.v1",
-  "captured_utc": "2026-11-16T16:17:22.740066+00:00",
-  "implementation_revision": "020549fb7e6d80dead50752ce5df52bfe23895af",
+  "captured_utc": "2026-11-16T17:15:56.058930+00:00",
   "environment": "Python3.12.7, Torch2.8.0+cpu, NumPy2.2.6, setuptools84.1.0; CPU float64 one Torch thread",
   "inputs": {
     ".gitattributes": "42d2b1c08633873f75e56c978968720b875ae531468129bef49312e775a3c315",
@@ -60,7 +59,7 @@
     "src/policyglass/__init__.py": "b0762ce46d9df3681127e6fbbc3469c20bdddfa92fced6c3bba1e500886dd934",
     "src/policyglass/agents.py": "3ecf82bf1a7fe279eaa9d175346d1b5a9c9ea71a8d9468bb76ba124b3d5933e3",
     "src/policyglass/api.py": "83daf1ad6de8f53ec4218c21732ef19d747b3bf6fc30944868aaa868a8dee882",
-    "src/policyglass/checkpoint.py": "0eb1d36748a3a9e0c94fda6ab0a4ed435b273256b77a5d7456a5e6b7d3db316d",
+    "src/policyglass/checkpoint.py": "527cd7647274da709a780c19969870caf9b3f93b073807032eb670033e2ff3dc",
     "src/policyglass/cli.py": "82036cdb1f79afe814a9a9b3b924373ff466ab8846aed449f620c899a8370b42",
     "src/policyglass/config.py": "10ba5976e6ea3957e2a44692706c319ef643e9ab7250052da1226771feea6f9f",
     "src/policyglass/environment.py": "e54fed3730685f4e8f117043e52f21effaa7d86eaa965fdc74dafbe9703491a9",
@@ -80,6 +79,7 @@
     "src/policyglass/validation.py": "e7be6c82ebe7ca2f2cf672bbf796920fee19378dd715465461066b88373bc01b",
     "tests/conftest.py": "1cf593e6a5423fad4bbc353d4ea463562438bfb1257d19180c632424f6f4b983",
     "tests/test_api.py": "1ba4c770f907401bea041ed501d4b677964226f32a24f67c8b643ab57ffcd5cc",
+    "tests/test_checkpoint_lifetime.py": "27ddb6301d7fcce2e99587f6a77f8f79feef20559976899f3238190d6d975f10",
     "tests/test_experiments.py": "d27f4b085c72248b4c482f8b7b6b610a5f484d03b819c0eaad5b794682857caa",
     "tests/test_explanation.py": "3d7c6d2f9cd26669f99128522a3dbd2004d5197ad30168244343e7a492eb6762",
     "tests/test_learners.py": "1c0ac621dac7878b302d32fa70a13e61fbff37c02520c702c2a4582b7663bbd7",
@@ -106,7 +106,9 @@
     "frontend4 bridge tests",
     "043 setuptools compatibility14 complete states bit equal",
     "042 all20 learned states actual update",
-    "047 final renderer/selection measurements"
+    "047 final renderer/selection measurements",
+    "054 six lifetime tests;51 related regressions;20 real bundles byte identical;temporary tensor retention removed in all bounded profile points",
+    "055 final110 pytest,4 Vitest,11 real browser,scientific verification,Ruff andpipcheck;event latency miss under concurrent diagnostics recorded"
   ],
   "packaging_allowlist_patch": {
     "files": [
@@ -119,5 +121,6 @@
     ],
     "validation": "Ruff/format passed; both workspace boundaries and original source startup retained. Helper working-tree newlines unified with its existing Git LF blob; no semantic change."
   },
-  "revision_scope": "Implementation93c53bf; byte preservation020549f. Final packaging/document commit is identified by bundle manifest; exact source inputs use individual hashes."
+  "revision_scope": "Base5ae43c5 plus final checkpoint lifetime cleanup; exact90 individual input hashes identify tested source. Clean source commit for offline r3 is supplied by its manifest and post-build056 receipt. No numerical/serialization format change;054 confirms20 whole bundles byte-identical.",
+  "source_base_revision": "5ae43c5cea44450d8aa493a59aec8765cbb8c6a7"
 }

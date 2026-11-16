@@ -1,0 +1,190 @@
+{
+  "schema": "policyglass.checkpoint-lifetime-byte-compatibility.v1",
+  "status": "passed",
+  "finished_utc": "2026-11-16T17:07:34.042734+00:00",
+  "seconds": 4.408365300000014,
+  "checkpoint_source_sha256": "527cd7647274da709a780c19969870caf9b3f93b073807032eb670033e2ff3dc",
+  "scope": "All20preregistered real learned final checkpoints decoded and reencoded in pinned CPU environment; whole bundle bytes identical. Does not claim crossplatform byte identity. No source checkpoint modified or learning run.",
+  "rows": [
+    {
+      "condition": "ppo_reference",
+      "seed": 11,
+      "original_bytes": 22971181,
+      "original_sha256": "d446695564d2005d23a1ec81ca7a5a994848b4d249cfd5e531ae8222392b30f5",
+      "reencoded_sha256": "d446695564d2005d23a1ec81ca7a5a994848b4d249cfd5e531ae8222392b30f5",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "ppo_reference",
+      "seed": 23,
+      "original_bytes": 22970598,
+      "original_sha256": "8a3f22c3edd68f84a6daa9cddb1591caa75a31a1e4654456e585f44527c8adb9",
+      "reencoded_sha256": "8a3f22c3edd68f84a6daa9cddb1591caa75a31a1e4654456e585f44527c8adb9",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "ppo_reference",
+      "seed": 37,
+      "original_bytes": 22969320,
+      "original_sha256": "eebd9911df03b39d75097fd281c9eafdf40639e78baada16db1c34b7b37eed84",
+      "reencoded_sha256": "eebd9911df03b39d75097fd281c9eafdf40639e78baada16db1c34b7b37eed84",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "ppo_reference",
+      "seed": 53,
+      "original_bytes": 22970946,
+      "original_sha256": "869298433a0d9f6328484a907d95677f99d69607a98e81565b3e5ed55ed5c6a3",
+      "reencoded_sha256": "869298433a0d9f6328484a907d95677f99d69607a98e81565b3e5ed55ed5c6a3",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "ppo_reference",
+      "seed": 71,
+      "original_bytes": 22971161,
+      "original_sha256": "df43dc7d88f62cd420eafdd5887205c9147d8960d6fd1bfbfd53f1849a536f6a",
+      "reencoded_sha256": "df43dc7d88f62cd420eafdd5887205c9147d8960d6fd1bfbfd53f1849a536f6a",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "ppo_large_step",
+      "seed": 11,
+      "original_bytes": 22970974,
+      "original_sha256": "4db68b5ebcc2c0752da3a456ebac9b89aa460257b6f0ede1c8f55014ec8ea958",
+      "reencoded_sha256": "4db68b5ebcc2c0752da3a456ebac9b89aa460257b6f0ede1c8f55014ec8ea958",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "ppo_large_step",
+      "seed": 23,
+      "original_bytes": 22967667,
+      "original_sha256": "36c7208008b11d1469ce2854413004f1ef631a31a812528960f337a6b7312c4e",
+      "reencoded_sha256": "36c7208008b11d1469ce2854413004f1ef631a31a812528960f337a6b7312c4e",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "ppo_large_step",
+      "seed": 37,
+      "original_bytes": 22961846,
+      "original_sha256": "8e24ce8a228a8b8e476f7cfd130769a2c0997dd09e8b98027594d0655cb33f38",
+      "reencoded_sha256": "8e24ce8a228a8b8e476f7cfd130769a2c0997dd09e8b98027594d0655cb33f38",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "ppo_large_step",
+      "seed": 53,
+      "original_bytes": 22962712,
+      "original_sha256": "c041fcbb7fef16c627592dbfc67170394b0645c212e0bd66a34d4f779dada033",
+      "reencoded_sha256": "c041fcbb7fef16c627592dbfc67170394b0645c212e0bd66a34d4f779dada033",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "ppo_large_step",
+      "seed": 71,
+      "original_bytes": 22961749,
+      "original_sha256": "27219f0c89b3f62f589c2f7d7003a9cf922285a6e8e91b4969a22eb40ffd8b41",
+      "reencoded_sha256": "27219f0c89b3f62f589c2f7d7003a9cf922285a6e8e91b4969a22eb40ffd8b41",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "sac_reuse1",
+      "seed": 11,
+      "original_bytes": 22482121,
+      "original_sha256": "da21ab639ffee899deb5884dab92d6366b7df373eae61aca13e06397ca3e6766",
+      "reencoded_sha256": "da21ab639ffee899deb5884dab92d6366b7df373eae61aca13e06397ca3e6766",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "sac_reuse1",
+      "seed": 23,
+      "original_bytes": 22481982,
+      "original_sha256": "7f655122348b2ab5cbfd2157780266e36295df5abed6b6f84aba8a954c0b163e",
+      "reencoded_sha256": "7f655122348b2ab5cbfd2157780266e36295df5abed6b6f84aba8a954c0b163e",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "sac_reuse1",
+      "seed": 37,
+      "original_bytes": 22482169,
+      "original_sha256": "615e442725e5ac3f26d5657f20d2a5b0d7954d74207624e4502022736998f602",
+      "reencoded_sha256": "615e442725e5ac3f26d5657f20d2a5b0d7954d74207624e4502022736998f602",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "sac_reuse1",
+      "seed": 53,
+      "original_bytes": 22482599,
+      "original_sha256": "9c7fcf6eca141cf1422223db760cc60c6e0f40cb2ccffc19440c7d69f9d90f57",
+      "reencoded_sha256": "9c7fcf6eca141cf1422223db760cc60c6e0f40cb2ccffc19440c7d69f9d90f57",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "sac_reuse1",
+      "seed": 71,
+      "original_bytes": 22482170,
+      "original_sha256": "4e35dc38a88f52f486b1105cb791621c8272b0122c3f6e8977e19355fb5a2de1",
+      "reencoded_sha256": "4e35dc38a88f52f486b1105cb791621c8272b0122c3f6e8977e19355fb5a2de1",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "sac_reuse4",
+      "seed": 11,
+      "original_bytes": 22482793,
+      "original_sha256": "9fa9b372c5ad9c7078ac41ef2cceec9043d246c71e2cb60c3c2ad8a7a6d2b6e2",
+      "reencoded_sha256": "9fa9b372c5ad9c7078ac41ef2cceec9043d246c71e2cb60c3c2ad8a7a6d2b6e2",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "sac_reuse4",
+      "seed": 23,
+      "original_bytes": 22482499,
+      "original_sha256": "dd6ec9599448456d8a9f69d0828307aed24e05297144bba2d678c6d2c1e4327d",
+      "reencoded_sha256": "dd6ec9599448456d8a9f69d0828307aed24e05297144bba2d678c6d2c1e4327d",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "sac_reuse4",
+      "seed": 37,
+      "original_bytes": 22482602,
+      "original_sha256": "d1231f3d0a31bd86a1e1aa7c7489d9309879347707cb08a67a7da858069bb02c",
+      "reencoded_sha256": "d1231f3d0a31bd86a1e1aa7c7489d9309879347707cb08a67a7da858069bb02c",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "sac_reuse4",
+      "seed": 53,
+      "original_bytes": 22482707,
+      "original_sha256": "c61adeb09c13e571f07668a736abcd72144dd8374e02feca0b21a55e4b2bf6a6",
+      "reencoded_sha256": "c61adeb09c13e571f07668a736abcd72144dd8374e02feca0b21a55e4b2bf6a6",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    },
+    {
+      "condition": "sac_reuse4",
+      "seed": 71,
+      "original_bytes": 22482784,
+      "original_sha256": "903bc63f3bbb4ac37773b0234f265d5a2a11a323bddda8885a29b9978898dff5",
+      "reencoded_sha256": "903bc63f3bbb4ac37773b0234f265d5a2a11a323bddda8885a29b9978898dff5",
+      "whole_bundle_byte_identical": true,
+      "source_unchanged": true
+    }
+  ]
+}

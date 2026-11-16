@@ -1,0 +1,143 @@
+{
+  "schema": "policyglass.final-regression.v1",
+  "finished_utc": "2026-11-16T17:15:56.007213+00:00",
+  "status": "FUNCTIONAL_AND_NUMERICAL_REGRESSIONS_PASSED_PERFORMANCE_LIMITS_RECORDED",
+  "source_base_revision": "5ae43c5cea44450d8aa493a59aec8765cbb8c6a7",
+  "checkpoint_source_sha256": "527cd7647274da709a780c19969870caf9b3f93b073807032eb670033e2ff3dc",
+  "commands": [
+    {
+      "command": "python -m pytest -q --junitxml=evidence/055-stage3-final-python-tests.xml",
+      "result": {
+        "tests": 110,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 31.301,
+      "warnings": "Existing Starlette httpx deprecation only"
+    },
+    {
+      "command": "pnpm --dir frontend exec vitest run",
+      "passed": 4,
+      "files": 1
+    },
+    {
+      "command": "scripts/Test-Workbench.ps1 with POLICYGLASS_REQUIRE_STUDY=1",
+      "passed": 11,
+      "skipped": 0,
+      "unexpected": 0,
+      "seconds": 182.785014
+    },
+    {
+      "command": "python -m policyglass.cli verify --output evidence/055-stage3-final-science.json",
+      "result": "Completed: gradient max1.78e-15, Adam1.08e-19, resumed parameters0, FK1.67e-16m"
+    },
+    {
+      "command": "python -m ruff check src tests scripts; python -m ruff format --check src tests scripts",
+      "result": "All passed;51 files formatted"
+    },
+    {
+      "command": "python -m pip check",
+      "result": "No broken requirements found"
+    }
+  ],
+  "renderer": {
+    "background_load": "Same-host full pytest, delegated51 targeted tests and temporary tracemalloc profile054 overlapped the beginning of the full browser suite. This was not an isolated idle performance benchmark.",
+    "selection": {
+      "coldMs": {
+        "count": 2,
+        "p50": 138.84999999997672,
+        "p95": 159.14499999991386,
+        "min": 116.30000000004657,
+        "max": 161.39999999990687
+      },
+      "warmMs": {
+        "count": 20,
+        "p50": 126.14999999990687,
+        "p95": 137.7550000000396,
+        "min": 39.699999999953434,
+        "max": 146.39999999990687
+      },
+      "warmP95Within100MsTarget": false
+    },
+    "true1080p_views": {
+      "arm": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080,
+          "cssWidth": 1920,
+          "cssHeight": 1080
+        },
+        "frameIntervalMs": {
+          "count": 603,
+          "p50": 8.300000000046566,
+          "p95": 9.08999999987427,
+          "min": 6.099999999860302,
+          "max": 10.600000000093132
+        },
+        "deliveryFps": 120,
+        "p95Within30FpsBudget": true
+      },
+      "network": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080,
+          "cssWidth": 1920,
+          "cssHeight": 1080
+        },
+        "frameIntervalMs": {
+          "count": 604,
+          "p50": 8.300000000046566,
+          "p95": 8.599999999860302,
+          "min": 4.099999999860302,
+          "max": 9.800000000046566
+        },
+        "deliveryFps": 120.03656743113685,
+        "p95Within30FpsBudget": true
+      },
+      "q": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080,
+          "cssWidth": 1920,
+          "cssHeight": 1080
+        },
+        "frameIntervalMs": {
+          "count": 603,
+          "p50": 8.300000000046566,
+          "p95": 8.599999999860302,
+          "min": 3.7000000001862645,
+          "max": 9.899999999906868
+        },
+        "deliveryFps": 120.05017022039284,
+        "p95Within30FpsBudget": true
+      },
+      "loss": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080,
+          "cssWidth": 1920,
+          "cssHeight": 1080
+        },
+        "frameIntervalMs": {
+          "count": 602,
+          "p50": 8.300000000046566,
+          "p95": 8.5,
+          "min": 4.599999999860302,
+          "max": 12
+        },
+        "deliveryFps": 119.99681071599315,
+        "p95Within30FpsBudget": true
+      }
+    },
+    "page_errors": [],
+    "interpretation": "All functional scenarios passed; under concurrent diagnostics event selection p95 exceeded100ms. Preserve both this result and earlier047 reference measurement; no universal latency/SLA claim."
+  },
+  "reports": {
+    "055-stage3-final-browser-results.json": "88d9e8a3ebb71684560dd8944acec844bdc44a3245b5e2a5f867bf2ec2417613",
+    "055-stage3-final-python-tests.xml": "c275733a28c6ab3c115cb81398a7ebeeeb19f840eafe7fdc61c123dcb3b13f76",
+    "055-stage3-final-renderer-performance.json": "5f3c559b807109a84d3662a8d078c89888e2acf440edb2773e6aa7ad913b69cd",
+    "055-stage3-final-science.json": "1de97f05e1d716883162b8575b6d9c0cbaeac659d905c68a981d76071bf47ed8"
+  },
+  "scope": "Actual local services and browser, including all20 study states available and a real learned-state import. AI provider boundary checks remain mocks with real local event data; no live provider call. No human feedback, different-machine or perpetual stability claim."
+}

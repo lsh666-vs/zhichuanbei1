@@ -1,0 +1,61 @@
+{
+  "schema": "policyglass.allocation-diagnostic.v1",
+  "status": "failed",
+  "started_utc": "2026-11-16T16:35:32.284097+00:00",
+  "source_052_sha256": "d4df933356a3529be30e2e2035f53b144aee56ac720fc0875d05ae14960a3388",
+  "libraries": {
+    "torch": "2.8.0+cpu",
+    "numpy": "2.2.6",
+    "setuptools": "84.1.0"
+  },
+  "source_sha256": {
+    ".runtime/profile053/run.py": "8fe7cca0564d7b5933aa5d8c930e32322a3f6794f93aed3a4236270c5abdbdc7",
+    ".runtime/profile053/server.py": "ab1b4eb51005c3d4dfa622e20149e5769129721c68ee8d1219b691ff375dea87",
+    "src/policyglass/__init__.py": "b0762ce46d9df3681127e6fbbc3469c20bdddfa92fced6c3bba1e500886dd934",
+    "src/policyglass/agents.py": "3ecf82bf1a7fe279eaa9d175346d1b5a9c9ea71a8d9468bb76ba124b3d5933e3",
+    "src/policyglass/api.py": "83daf1ad6de8f53ec4218c21732ef19d747b3bf6fc30944868aaa868a8dee882",
+    "src/policyglass/checkpoint.py": "0eb1d36748a3a9e0c94fda6ab0a4ed435b273256b77a5d7456a5e6b7d3db316d",
+    "src/policyglass/cli.py": "82036cdb1f79afe814a9a9b3b924373ff466ab8846aed449f620c899a8370b42",
+    "src/policyglass/config.py": "10ba5976e6ea3957e2a44692706c319ef643e9ab7250052da1226771feea6f9f",
+    "src/policyglass/environment.py": "e54fed3730685f4e8f117043e52f21effaa7d86eaa965fdc74dafbe9703491a9",
+    "src/policyglass/experiments.py": "f1f6d6667a5345bc593cc299e8564ab69ae54f4f664623a8499469c4c50b6263",
+    "src/policyglass/explanation.py": "ec0a6c7f0b2223ba5168e954ffa3d1cb07a99fc6f0ea835d1990c2a05f23cbca",
+    "src/policyglass/jobs.py": "7c25b4b1b90bab5adcdd0cf70840d9313ea683be47dfd66d6083aa5a0434834d",
+    "src/policyglass/networks.py": "6bd8865af4aed868e8b353fc745333bb6f50792a1b76216c8d6695d2e4f15144",
+    "src/policyglass/numerics.py": "7aa9a17bffae3479f47f89b5a0fc7a1e23e916c51d91dfb2ad9735f359c36203",
+    "src/policyglass/optimizer.py": "4d2e4a0c35466fdbb00dd8ec718476520bbb7eef83c1ed190f6524818cfcbf49",
+    "src/policyglass/physics_host.py": "72df7ee167cb0aeae4c452432f8ee88804c0483d09720b5b866b13937a97f133",
+    "src/policyglass/repository.py": "7bd7cd2f260c9c3a4381d6e8b84824e722b76b052377c8ec094263ed935158ca",
+    "src/policyglass/science.py": "941432e6cb1a8cc22849af24c2e4056abdd98573cabd7f2c8e477c075ad56110",
+    "src/policyglass/slice_jobs.py": "40efa2353175db9b3c7ef33688f7a26bc8634782ddb92b0cdfc71e40a25f456e",
+    "src/policyglass/studies.py": "7596553262b549ea4da27fc12728383d5fafb2ec4fa906afc52d4859d92aadd4",
+    "src/policyglass/study_catalog.py": "0d7505bfc529afbaf5bdd06a1953925d2a6383909c15da77f3843dec202b315d",
+    "src/policyglass/trace.py": "4f9f8ac9dc723dbcbe05d0d5e709365c140107a0f913ebb1ad2b123368f733b0",
+    "src/policyglass/validation.py": "e7be6c82ebe7ca2f2cf672bbf796920fee19378dd715465461066b88373bc01b"
+  },
+  "instrumentation": "tracemalloc depth3 in temporary loopback wrapper; actual production API; counted successful physics create/delete calls; real 052 store; no learning",
+  "limits": [
+    "tracemalloc changes CPU/native memory and keeps one baseline snapshot; observer overhead is recorded separately.",
+    "Python traced memory does not include all native Torch/MuJoCo/allocator storage.",
+    "Tensor logical bytes may count shared storage more than once; this is a live-object census, not exact physical RAM.",
+    "Successful host create/delete counters observe the actual bridge return path; no Node worldsMap debug endpoint was added.",
+    "No production gc policy, model, kernel, package or user API was modified. Temporary profiler code and route stay under ignored .runtime and on loopback only."
+  ],
+  "phases": [],
+  "points": [],
+  "health": {
+    "status": "ok",
+    "version": "0.1.0",
+    "mode": "cpu_float64",
+    "physics": "canonical_mujoco_wasm_4.0.1",
+    "stage": "3_evaluation_and_release_candidate",
+    "frontend_complete": true,
+    "release_complete": false
+  },
+  "error": "RuntimeError: GET /__profile053?collect=true&reset=true: HTTP 500; b'Internal Server Error'",
+  "total_seconds": 4.340025700003025,
+  "server_log": {
+    "path": ".runtime/profile053/server.log",
+    "sha256": "a6b7d6cbed1929d94b016021adfd2918c7f09055c4571e4d3b02591020599b8b"
+  }
+}

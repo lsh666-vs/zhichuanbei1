@@ -18,11 +18,13 @@ ALLOWED_HYPERPARAMETERS = {
     "ppo.max_gradient_norm",
     "ppo.target_kl",
     "ppo.epochs",
+    "ppo.minibatch_size",
     "sac.learning_rate",
     "sac.gamma",
     "sac.tau",
     "sac.target_entropy",
     "sac.max_gradient_norm",
+    "sac.updates_per_step",
 }
 
 
@@ -55,7 +57,8 @@ def branch(learner, intervention):
         config = result.config.model_dump()
         config[group][key] = (
             int(intervention.value)
-            if key == "epochs" and intervention.value.is_integer()
+            if key in ("epochs", "minibatch_size", "updates_per_step")
+            and intervention.value.is_integer()
             else intervention.value
         )
         result.config = ExperimentConfig.model_validate(config)
@@ -64,7 +67,7 @@ def branch(learner, intervention):
             opt.lr = cfg.learning_rate
             opt.max_norm = cfg.max_gradient_norm
         if group == "ppo" and result.last_batch is not None and key in ("gamma", "gae_lambda"):
-            b = result.last_batch
+            b = result.rollout
             raw, returns, delta = gae(
                 b["reward"],
                 b["value"],
@@ -82,6 +85,7 @@ def branch(learner, intervention):
                     "advantage": (raw - raw.mean()) / (raw.std(unbiased=False) + 1e-8),
                 }
             )
+            result.select_ppo_batch(result.last_batch_indices)
     else:
         if abs(intervention.value) > 100:
             raise ValueError("Parameter edit exceeds numerical budget")
@@ -124,7 +128,7 @@ def q_slice(learner, axes=(0, 1), fixed_action=None, observation=None, resolutio
     x, y = torch.meshgrid(*coordinates, indexing="ij")
     actions = fixed.repeat(resolution**2, 1)
     actions[:, axes[0]], actions[:, axes[1]] = x.flatten(), y.flatten()
-    inputs = torch.cat([obs.repeat(len(actions), 1), actions], -1)
+    inputs = torch.cat([learner.encode_observation(obs.repeat(len(actions), 1)), actions], -1)
     with torch.no_grad():
         q1 = learner.models["q1"](inputs).reshape(resolution, resolution)
         q2 = learner.models["q2"](inputs).reshape(resolution, resolution)

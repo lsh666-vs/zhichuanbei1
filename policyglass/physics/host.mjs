@@ -14,7 +14,7 @@ function frame(world) {
   const {model:m, data:d} = world;
   mj.mj_energyPos(m,d); mj.mj_energyVel(m,d);
   return {time_s:d.time, qpos_rad:arr(d.qpos), qvel_rad_s:arr(d.qvel), torque_nm:arr(d.ctrl),
-    tip_m:arr(d.site_xpos).slice(0,3), energy_j:arr(d.energy),
+    tip_m:arr(d.site_xpos).slice(0,3), energy_j:arr(d.energy), bias_torque_nm:arr(d.qfrc_bias),
     bodies:['base','upper','forearm'].map((name,index)=>({name,
       position_m:arr(d.xpos).slice((index+1)*3,(index+2)*3),
       quaternion_wxyz:arr(d.xquat).slice((index+1)*4,(index+2)*4)}))};

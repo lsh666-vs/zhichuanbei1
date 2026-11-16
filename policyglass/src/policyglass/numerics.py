@@ -33,6 +33,35 @@ def ppo_terms(logp, old_logp, advantage, epsilon):
     return loss, ratio, clipped, flat
 
 
+def trace_policy_operation(trace, label, mu, logstd, latent, logp, scale, action=None, noise=None):
+    """Named partials hold the stated arguments fixed; total gradients are actual autograd values."""
+    if trace is None:
+        return
+    sigma = logstd.exp()
+    partials = {
+        "d_logp_d_mu_at_fixed_latent": (latent - mu) / sigma**2,
+        "d_logp_d_logstd_at_fixed_latent": ((latent - mu) / sigma) ** 2 - 1,
+        "d_logp_d_latent_at_fixed_distribution": -(latent - mu) / sigma**2 + 2 * latent.tanh(),
+        "d_action_d_latent": scale * (1 - latent.tanh() ** 2),
+    }
+    nodes = {"mean": mu, "logstd": logstd, "latent": latent, "logp": logp}
+    if action is not None:
+        nodes["action"] = action
+    if noise is not None:
+        partials["d_latent_d_logstd"] = sigma * noise
+        partials["d_latent_d_mu"] = torch.ones_like(mu)
+        nodes["noise"] = noise
+    trace.watch_operation(
+        "policy_operation",
+        label,
+        nodes,
+        partial_derivatives=partials,
+        scale=scale,
+        latent_mode="reparameterized" if noise is not None else "fixed_behavior_latent",
+        logp_units="density in physical torque units; includes action-scale Jacobian",
+    )
+
+
 def gae(reward, value, next_value, terminated, boundary, gamma, lam):
     """Bootstrap truncations, but never recurse across an episode reset."""
     delta = reward + gamma * (~terminated).to(DTYPE) * next_value - value

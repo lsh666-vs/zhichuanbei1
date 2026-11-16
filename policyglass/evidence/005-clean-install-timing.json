@@ -1,0 +1,6 @@
+{
+  "cached_dependencies": true,
+  "environment": ".runtime/repro-venv",
+  "elapsed_seconds": 160.1052212,
+  "python": "CPython3.12.7"
+}

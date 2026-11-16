@@ -117,6 +117,38 @@ def test_real_spatial_forward_kinematics_and_restore(small_config):
 
 def test_physics_rejects_nonfinite_and_out_of_range(small_config):
     env = SpatialArm(small_config.environment)
-    for action in ([float("nan"), 0, 0], [3, 0, 0], [0, 0]):
+    for action in ([float("nan"), 0, 0], [6, 0, 0], [0, 0]):
         with pytest.raises(ValueError):
             env.step(action)
+
+
+def test_sac_replayed_sample_keeps_its_original_physical_frames(small_config):
+    small_config.algorithm = "sac"
+    learner = Learner(small_config)
+    learner.collect_sac(20)
+    batch = learner.sample_replay()
+    assert [frame["sample_id"] for frame in learner.last_frames] == batch["sample_id"].tolist()
+    for i, record in enumerate(learner.last_frames):
+        for frame_name, observation_name in (("before", "obs"), ("after", "next_obs")):
+            frame = record[frame_name]
+            q = np.array(frame["qpos_rad"])
+            expected = np.concatenate(
+                [np.sin(q), np.cos(q), frame["qvel_rad_s"], frame["tip_m"], frame["target_m"]]
+            )
+            np.testing.assert_allclose(expected, batch[observation_name][i], atol=1e-14)
+
+
+def test_sac_replay_ratio_performs_real_resampled_updates(small_config):
+    small_config.algorithm = "sac"
+    small_config.sac.updates_per_step = 3
+    learner = Learner(small_config)
+    first = learner.iteration(record=True)
+    assert len(first) == 3
+    assert learner.updates == 3
+    assert learner.env_steps == 6
+    assert learner.trace_origin_state["updates"] == 0
+    assert learner.trace_result_state["updates"] == 1
+    second = learner.iteration()
+    assert len(second) == 3
+    assert learner.updates == 6
+    assert learner.env_steps == 7

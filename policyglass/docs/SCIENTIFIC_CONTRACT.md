@@ -4,6 +4,8 @@
 
 Reference execution: CPU float64, explicitly seeded RNGs, one torch CPU thread. Environment dynamics use SI and double precision. Gradients refer to minimized losses. Parameters are named; shapes, batch reduction and scalar loss coefficients are recorded. No batch-dependent normalization layers in the reference networks.
 
+The implemented reference observation normalization uses fixed physical-unit means/scales, saved in checkpoints and differentiated in traces (see CONTRACTS.md). It has no mutable running statistics. Canonical MuJoCo WASM4.0.1, rather than a blocked native Windows wheel, performs the actual physics; see PHYSICS_RUNTIME.md.
+
 The trace stores actual sample input, preactivation z, activation h, weight, bias, incoming/output gradients, loss terms, raw batch gradient, clipped gradient, pre/post optimizer states, and pre/post parameters. A sampled action's noise is stored. Tensor paths are stable and versioned.
 
 For h=f(x W^T+b), dW=(dL/dz)^T x, db=sum(dL/dz), dx=(dL/dz) W. Per-sample gradients are of the exact selected minimized objective with batch coefficients; their sum reproduces the pre-clip aggregate gradient. Freeze normalization/targets/noise when making that comparison. Optimizer moment updates are not sample-additive.

@@ -1,0 +1,33 @@
+{
+  "transport": "actual_loopback_tcp_uvicorn_and_spawned_workers",
+  "port": 52310,
+  "algorithms": {
+    "ppo": {
+      "experiment_id": "d2c2d03a1cf748f2b3fab6d588547202",
+      "job_status": "completed",
+      "events": 17,
+      "fixed_batch_branch_status": "completed",
+      "bundle_bytes": 210858,
+      "imported_id": "cfda76af6bbb47ba9457110971c7c5a2",
+      "physical_sample_link_verified": true
+    },
+    "sac": {
+      "experiment_id": "1cbd07ad82674b26a1414d7096e23762",
+      "job_status": "completed",
+      "events": 46,
+      "fixed_batch_branch_status": "completed",
+      "bundle_bytes": 188924,
+      "imported_id": "cd48c2e2a6bf4afebccdd38b2c4e3682",
+      "physical_sample_link_verified": true,
+      "q_grid": 5
+    }
+  },
+  "health": {
+    "status": "ok",
+    "version": "0.1.0",
+    "mode": "cpu_float64",
+    "physics": "canonical_mujoco_wasm_4.0.1",
+    "stage": "1_scientific_foundation",
+    "frontend_complete": false
+  }
+}

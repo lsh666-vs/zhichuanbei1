@@ -8,6 +8,7 @@ import zipfile
 
 import numpy as np
 import torch
+from safetensors import SafetensorError
 from safetensors.torch import load as load_tensors
 from safetensors.torch import save as save_tensors
 
@@ -124,5 +125,13 @@ def decode(blob):
         if seen != set(tensors):
             raise ValueError("Unexpected tensor payload")
         return state, manifest
-    except (KeyError, TypeError, RecursionError, zipfile.BadZipFile, json.JSONDecodeError) as exc:
+    except (
+        KeyError,
+        TypeError,
+        RecursionError,
+        zipfile.BadZipFile,
+        json.JSONDecodeError,
+        UnicodeDecodeError,
+        SafetensorError,
+    ) as exc:
         raise ValueError("Malformed checkpoint") from exc

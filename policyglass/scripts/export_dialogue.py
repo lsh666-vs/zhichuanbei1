@@ -59,7 +59,9 @@ def main():
         raise SystemExit("Authorization marker was not found; refusing a misleading export")
     output = root / "evidence" / "dialogue-stage1.jsonl"
     output.write_text(
-        "\n".join(json.dumps(r, ensure_ascii=False) for r in records) + "\n", encoding="utf-8"
+        "\n".join(json.dumps(r, ensure_ascii=False) for r in records) + "\n",
+        encoding="utf-8",
+        newline="\n",
     )
     manifest = {
         "schema": "policyglass.dialogue-export.v1",
@@ -79,7 +81,7 @@ def main():
         "competition_status": "This capture alone does not establish three complete human-guided feature iteration chains.",
     }
     (root / "evidence" / "dialogue-stage1-manifest.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     print(json.dumps({"records": len(records), "public_bytes": output.stat().st_size}))
 

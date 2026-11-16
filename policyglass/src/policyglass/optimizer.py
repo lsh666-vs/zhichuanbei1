@@ -78,12 +78,21 @@ class Adam:
         }
 
     def load(self, state):
+        if type(state["step"]) is not int or not 0 <= state["step"] <= 10**10:
+            raise ValueError("Invalid optimizer iteration")
+        if not 0 < state["lr"] <= 0.05 or not 0 < state["max_norm"] <= 100:
+            raise ValueError("Invalid optimizer hyperparameters")
         self.step_count, self.lr, self.max_norm = state["step"], state["lr"], state["max_norm"]
         for slot in ("m", "v"):
             if set(state[slot]) != set(self.parameters):
                 raise ValueError("Optimizer parameter names mismatch")
             for name, parameter in self.parameters.items():
                 value = state[slot][name]
-                if value.shape != parameter.shape or not torch.isfinite(value).all():
+                if (
+                    value.shape != parameter.shape
+                    or value.dtype != parameter.dtype
+                    or not torch.isfinite(value).all()
+                    or (slot == "v" and torch.any(value < 0))
+                ):
                     raise ValueError("Invalid optimizer tensor")
                 getattr(self, slot)[name].copy_(value)

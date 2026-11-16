@@ -26,7 +26,7 @@ class EnvironmentConfig(StrictModel):
     substeps: int = Field(4, ge=1, le=20)
     damping: float = Field(0.15, ge=0, le=5)
     gravity: float = Field(9.81, ge=0, le=20)
-    torque_limit: float = Field(2.0, gt=0, le=10)
+    torque_limit: float = Field(5.0, gt=0, le=10)
     target: list[float] = Field(
         default_factory=lambda: [0.45, 0.12, 0.45], min_length=3, max_length=3
     )
@@ -41,8 +41,19 @@ class PPOConfig(StrictModel):
     entropy_coefficient: float = Field(0.0, ge=0, le=1)
     max_gradient_norm: float = Field(0.5, gt=0, le=100)
     rollout_steps: int = Field(32, ge=2, le=512)
+    minibatch_size: int = Field(32, ge=2, le=512)
     epochs: int = Field(4, ge=1, le=20)
     target_kl: float = Field(0.03, gt=0, le=1)
+
+    @model_validator(mode="after")
+    def bounded_iteration(self):
+        if (
+            (self.rollout_steps + self.minibatch_size - 1) // self.minibatch_size
+        ) * self.epochs > 128:
+            raise ValueError(
+                "At most 128 PPO optimizer steps per cooperative task boundary; adjust rollout/minibatch/epochs"
+            )
+        return self
 
 
 class SACConfig(StrictModel):
@@ -54,6 +65,7 @@ class SACConfig(StrictModel):
     batch_size: int = Field(16, ge=2, le=128)
     replay_capacity: int = Field(4096, ge=128, le=100000)
     warmup_steps: int = Field(32, ge=2, le=10000)
+    updates_per_step: int = Field(1, ge=1, le=32)
     max_gradient_norm: float = Field(10, gt=0, le=100)
 
 

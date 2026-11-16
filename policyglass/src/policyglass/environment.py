@@ -12,6 +12,7 @@ from .physics_host import ENGINE_VERSION, host
 
 LENGTHS = (0.32, 0.28)
 BASE_HEIGHT = 0.18
+JOINT_LIMITS = np.array([[-2.8, 2.8], [-1.75, 1.4], [-2.3, 2.3]])
 OBSERVATION_LABELS = [
     "sin_yaw",
     "sin_shoulder",
@@ -69,6 +70,90 @@ def forward_kinematics(q):
     return np.array([np.cos(yaw) * radial, np.sin(yaw) * radial, z])
 
 
+def inverse_kinematics(target):
+    """Closed-form position reachability with all three declared joint limits."""
+    p = np.asarray(target, dtype=np.float64)
+    if p.shape != (3,) or not np.isfinite(p).all():
+        return []
+    rho, vertical = np.linalg.norm(p[:2]), BASE_HEIGHT - p[2]
+    cosine = (rho**2 + vertical**2 - LENGTHS[0] ** 2 - LENGTHS[1] ** 2) / (
+        2 * LENGTHS[0] * LENGTHS[1]
+    )
+    if not -1 - 1e-10 <= cosine <= 1 + 1e-10:
+        return []
+    solutions = []
+    for radial_sign in (1, -1):
+        yaw = np.arctan2(p[1], p[0]) + (np.pi if radial_sign == -1 else 0)
+        yaw = (yaw + np.pi) % (2 * np.pi) - np.pi
+        for elbow_sign in (1, -1):
+            elbow = elbow_sign * np.arccos(np.clip(cosine, -1, 1))
+            shoulder = np.arctan2(vertical, radial_sign * rho) - np.arctan2(
+                LENGTHS[1] * np.sin(elbow), LENGTHS[0] + LENGTHS[1] * np.cos(elbow)
+            )
+            shoulder = (shoulder + np.pi) % (2 * np.pi) - np.pi
+            q = np.array([yaw, shoulder, elbow])
+            if np.all(q >= JOINT_LIMITS[:, 0] - 1e-10) and np.all(q <= JOINT_LIMITS[:, 1] + 1e-10):
+                solutions.append(q.tolist())
+    return solutions
+
+
+def pack_frame(frame):
+    """Compact exact physical provenance for replay, stored as safe numeric tensors."""
+    values = [
+        frame["time_s"],
+        *frame["qpos_rad"],
+        *frame["qvel_rad_s"],
+        *frame["torque_nm"],
+        *frame["tip_m"],
+        *frame["target_m"],
+        *frame["energy_j"],
+    ]
+    for body in frame["bodies"]:
+        values.extend([*body["position_m"], *body["quaternion_wxyz"]])
+    values.extend([*frame["external_wrench_world"], frame["force_steps_remaining"]])
+    values.extend(frame["bias_torque_nm"])
+    return values
+
+
+def static_gravity_torque(q, gravity=9.81):
+    """Independent derivative of gravitational potential for the declared link COMs."""
+    _, shoulder, elbow = q
+    shoulder_torque = -gravity * (
+        (0.8 * LENGTHS[0] / 2 + 0.5 * LENGTHS[0]) * np.cos(shoulder)
+        + 0.5 * LENGTHS[1] / 2 * np.cos(shoulder + elbow)
+    )
+    elbow_torque = -gravity * 0.5 * LENGTHS[1] / 2 * np.cos(shoulder + elbow)
+    return np.array([0.0, shoulder_torque, elbow_torque])
+
+
+def unpack_frame(values):
+    values = list(values)
+    return {
+        "schema": "policyglass.physics.v1",
+        "time_s": values[0],
+        "qpos_rad": values[1:4],
+        "qvel_rad_s": values[4:7],
+        "torque_nm": values[7:10],
+        "tip_m": values[10:13],
+        "target_m": values[13:16],
+        "energy_j": values[16:18],
+        "bodies": [
+            {
+                "name": name,
+                "position_m": values[18 + 7 * i : 21 + 7 * i],
+                "quaternion_wxyz": values[21 + 7 * i : 25 + 7 * i],
+            }
+            for i, name in enumerate(("base", "upper", "forearm"))
+        ],
+        "external_wrench_world": values[39:45],
+        "bias_torque_nm": values[46:49],
+        "force_steps_remaining": int(values[45]),
+        "coordinate_system": "right-handed Z-up, SI",
+        "engine": "canonical_mujoco_wasm",
+        "engine_version": ENGINE_VERSION,
+    }
+
+
 class SpatialArm(gym.Env):
     metadata: ClassVar[dict] = {"render_modes": []}
 
@@ -104,10 +189,17 @@ class SpatialArm(gym.Env):
     def _validate_target(target):
         p = np.asarray(target, dtype=np.float64)
         radius = np.linalg.norm(p - [0, 0, BASE_HEIGHT])
-        if not np.isfinite(p).all() or radius > sum(LENGTHS) + 1e-10 or radius < 0.05:
+        if (
+            p.shape != (3,)
+            or not np.isfinite(p).all()
+            or radius > sum(LENGTHS) + 1e-10
+            or radius < 0.05
+        ):
             raise ValueError(
                 "Target outside geometric reach envelope [0.05, 0.60] m; joint limits may further restrict reach"
             )
+        if not inverse_kinematics(p):
+            raise ValueError("Target unreachable within declared joint limits")
 
     def observation(self):
         return np.concatenate(
@@ -207,6 +299,23 @@ class SpatialArm(gym.Env):
         ):
             raise ValueError("Invalid integration state")
         self._validate_target(state["target"])
+        previous_action = np.asarray(state["previous_action"], dtype=np.float64)
+        force = np.asarray(state["force"], dtype=np.float64)
+        if (
+            previous_action.shape != (3,)
+            or not np.isfinite(previous_action).all()
+            or np.any(np.abs(previous_action) > self.config.torque_limit + 1e-9)
+        ):
+            raise ValueError("Invalid saved action")
+        if force.shape != (6,) or not np.isfinite(force).all() or np.linalg.norm(force) > 30:
+            raise ValueError("Invalid saved external force")
+        if (
+            type(state["steps"]) is not int
+            or not 0 <= state["steps"] <= self.config.horizon
+            or type(state["force_steps"]) is not int
+            or not 0 <= state["force_steps"] <= 128
+        ):
+            raise ValueError("Invalid saved physics counters")
         self._sync(host().call("restore", id=self.world_id, integration=values.tolist()))
         self.steps = int(state["steps"])
         self.previous_action = np.asarray(state["previous_action"], dtype=np.float64)
@@ -241,6 +350,7 @@ class SpatialArm(gym.Env):
     def set_target(self, target):
         self._validate_target(target)
         self.target = np.asarray(target, dtype=np.float64)
+        self.config.target = self.target.tolist()
 
     def close(self):
         if getattr(self, "world_id", None) is not None:
@@ -254,6 +364,7 @@ class SpatialArm(gym.Env):
             pass
 
     def geometry(self):
+        solutions = inverse_kinematics(self.target)
         return {
             "schema": "policyglass.geometry.v1",
             "base_height_m": BASE_HEIGHT,
@@ -268,8 +379,18 @@ class SpatialArm(gym.Env):
             "timestep_s": self.config.timestep,
             "substeps": self.config.substeps,
             "gravity_m_s2": self.config.gravity,
+            "torque_limit_nm": self.config.torque_limit,
+            "target_joint_solutions_rad": solutions,
+            "target_static_torque_nm": [
+                static_gravity_torque(q, self.config.gravity).tolist() for q in solutions
+            ],
+            "target_statically_holdable": any(
+                np.max(np.abs(static_gravity_torque(q, self.config.gravity)))
+                <= self.config.torque_limit
+                for q in solutions
+            ),
             "damping_nm_s_rad": self.config.damping,
             "model_scope": "ideal rigid bodies; no self/ground contact; no real hardware safety claim",
-            "target_scope": "geometric radial envelope checked; joint-limited reachability not guaranteed",
+            "target_scope": "closed-form position reachability and declared joint limits checked; no collision model",
             "xml": model_xml(self.config),
         }

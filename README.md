@@ -1,4 +1,10 @@
-# 当前参赛作品：光铸 LightForge
+# 当前参赛作品：策镜 PolicyGlass
+
+用户于 2026-11-16 选定 **PPO / SAC 神经网络底层机制的真实计算与交互讲解**。当前开发入口为 [PolicyGlass](policyglass/README.md)，完整方案见 [开发文档](policyglass/docs/DEVELOPMENT_PLAN.md)，实际进度见 [阶段交接](policyglass/handoffs/STAGE_1.md)。三个独立聊天按科学基础、3D教学产品、评估与交付串行推进。
+
+下方光子芯片与 CounterLab 是历史项目，保留真实文件和 Git 演进，不代表当前作品范围。
+
+# 历史项目：光铸 LightForge
 
 当前开发入口与真实验收记录见 [LightForge](lightforge/README.md)。作品按用户选定的新方向重做，覆盖光子芯片逆向设计、电磁场、伴随梯度、约束优化与制造鲁棒性。旧项目及其真实 Git 历史保留归档，下面是原 CounterLab 的历史说明。
 

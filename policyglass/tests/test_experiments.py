@@ -85,7 +85,11 @@ def test_actual_q_grid_random_point_matches_direct_evaluation(small_config):
     surface = q_slice(learner, axes=(0, 2), fixed_action=[0, 0.3, 0], resolution=7)
     action = torch.tensor([surface["x"][2], 0.3, surface["y"][4]], dtype=torch.float64)
     with torch.no_grad():
-        expected = float(learner.models["q1"](torch.cat([learner.obs, action]).reshape(1, -1)))
+        expected = float(
+            learner.models["q1"](
+                torch.cat([learner.encode_observation(learner.obs), action]).reshape(1, -1)
+            )
+        )
     assert surface["q1"][2][4] == pytest.approx(expected, abs=1e-13)
     np.testing.assert_allclose(surface["minimum"], np.minimum(surface["q1"], surface["q2"]), atol=0)
 

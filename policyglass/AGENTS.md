@@ -1,0 +1,16 @@
+# PolicyGlass / 策镜 development contract
+
+This is the active competition project, explicitly authorized on 2026-11-16. Parent CounterLab and sibling LightForge product requirements are historical and do not govern this directory. Preserve their files and genuine Git history, including unrelated uncommitted files.
+
+- Never modify or delete C: files. Keep runtimes, caches, temporary files, logs, browser profiles and artifacts on D:. Read-only access is allowed. Do not install globally or change system settings.
+- Implement docs/DEVELOPMENT_PLAN.md and docs/SCIENTIFIC_CONTRACT.md. Quality, real PPO/SAC computation, deep interaction and meaningful 3D are required.
+- Three independent chats execute serially. Stage 1 owns the numerical/physical foundation, traces, snapshots, branching and API contracts; Stage 2 owns the integrated interactive 3D product and eight courses; Stage 3 owns AI explanations, independent evaluation, user feedback, hardening and reproducible release. A successor may mutate only after the predecessor's handoff is READY and its completion is explicitly delivered. Waiting chats may read, but may not install, edit, commit or train.
+- All quantities and animations must derive from actual computation. Clearly distinguish live execution, saved replay and resumed training. A conceptual graph layout is not physical space. A 2D loss slice is not the entire loss landscape.
+- PPO uses frozen old log-probabilities, correct GAE termination/truncation handling and fixed targets per rollout. SAC uses reparameterized squashed Gaussian policies, probability correction, double critics, stopped target gradients and correct actor-through-critic differentiation.
+- Trace collection must not alter the numerical update. Record actual tensors and optimizer states, not explanatory approximations. Per-sample gradient contributions sum before nonlinear optimizer processing; do not add per-sample Adam updates.
+- Save network, optimizer, RNG, environment, normalization, rollout/replay and iteration state for reproducible branching. Resume in the pinned CPU environment; report tolerance limits across platforms.
+- No eval/exec of user or AI code; validate structured configuration, path boundaries, imports, resource budgets and finite values. Do not deserialize untrusted pickle. Keep API keys and raw private transcripts out of Git, logs and exports.
+- Keep real incremental commits, actual test reports and real conversation exports. Never invent user messages, fixes, failures, test outcomes or independent reviews. Public excerpts identify omissions/redactions. Original transcripts stay under ignored evidence/private/.
+- Do not claim global novelty, paper-level educational efficacy, trained-policy success, completed 3D or final release without evidence. Follow docs/COMPETITOR_AUDIT.md.
+- Image generation is for explanatory artwork/visual assets; scientific plots, graph values and physical motion are computed. The current user request does not grant new C: writes for image tools.
+

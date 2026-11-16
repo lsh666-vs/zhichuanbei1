@@ -5,6 +5,9 @@ import torch
 from .config import ExperimentConfig
 from .numerics import DTYPE
 
+LOG_ALPHA_MIN = -50.0
+LOG_ALPHA_MAX = 10.0
+
 
 def _integer(value, lower, upper, name):
     if type(value) is not int or not lower <= value <= upper:
@@ -20,6 +23,13 @@ def _tensor(value, shape, dtype, name):
         raise ValueError(f"Invalid {name} shape or dtype")
     if not torch.isfinite(value).all():
         raise ValueError(f"Non-finite {name}")
+
+
+def validate_temperature(log_alpha):
+    """Constant-cost persistence guard, shared by imports and live commits."""
+    _tensor(log_alpha, (), DTYPE, "temperature")
+    if not LOG_ALPHA_MIN <= float(log_alpha.detach()) <= LOG_ALPHA_MAX:
+        raise ValueError("Temperature outside safe numerical range [-50, 10]")
 
 
 def validate_state(state):
@@ -38,9 +48,7 @@ def validate_state(state):
     if len(state["last_frames"]) > 10000:
         raise ValueError("Too many saved frames")
     if config.algorithm == "sac":
-        _tensor(state["log_alpha"], (), DTYPE, "temperature")
-        if not -50 <= float(state["log_alpha"]) <= 10:
-            raise ValueError("Temperature outside safe numerical range")
+        validate_temperature(state["log_alpha"])
     for batch in (state["last_batch"], state["rollout"]):
         if batch is None:
             continue

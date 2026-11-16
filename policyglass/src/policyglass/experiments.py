@@ -7,6 +7,7 @@ from .agents import Learner
 from .config import ExperimentConfig, Intervention
 from .numerics import gae, tensor
 from .trace import plain
+from .validation import LOG_ALPHA_MAX, LOG_ALPHA_MIN
 
 ALLOWED_HYPERPARAMETERS = {
     "ppo.learning_rate",
@@ -47,6 +48,12 @@ def parameter_at(learner, path, index):
 
 def branch(learner, intervention):
     intervention = Intervention.model_validate(intervention)
+    if (
+        intervention.kind == "parameter"
+        and intervention.path == "temperature/log_alpha"
+        and not LOG_ALPHA_MIN <= intervention.value <= LOG_ALPHA_MAX
+    ):
+        raise ValueError("Temperature outside safe numerical range [-50, 10]")
     result = Learner.from_state(learner.state())
     if intervention.kind == "hyperparameter":
         if intervention.path not in ALLOWED_HYPERPARAMETERS or not intervention.path.startswith(

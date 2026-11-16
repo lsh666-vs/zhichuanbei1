@@ -54,6 +54,8 @@ class Policy(MLP):
                 mean=mu,
                 raw_logstd=raw_logstd,
                 logstd=logstd,
-                clamp_derivative=((raw_logstd > -5) & (raw_logstd < 2)).to(output.dtype),
+                clamp_derivative=((raw_logstd >= -5) & (raw_logstd <= 2)).to(output.dtype),
+                nondifferentiable_boundary=(raw_logstd == -5) | (raw_logstd == 2),
+                boundary_convention="PyTorch clamp uses gradient 1 at either endpoint; classical derivative is undefined there",
             )
         return mu, logstd

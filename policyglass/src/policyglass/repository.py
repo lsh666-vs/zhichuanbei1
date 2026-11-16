@@ -12,6 +12,7 @@ from pathlib import Path
 
 from .agents import Learner
 from .checkpoint import decode, encode, json_bytes
+from .validation import validate_temperature
 
 
 def identifier(value):
@@ -84,6 +85,11 @@ class Repository:
     def save_checkpoint(self, learner, experiment, reason="update", state=None):
         identifier(experiment)
         state = learner.state() if state is None else state
+        # Imported states receive full validation on load. Live states still
+        # need this O(1) range guard before any file/DB commit; finite encoding
+        # alone cannot reject an unreloadable (but finite) SAC temperature.
+        if state["config"]["algorithm"] == "sac":
+            validate_temperature(state["log_alpha"])
         blob = encode(state)
         object_id = uuid.uuid4().hex
         self._atomic_write(self.root / "checkpoints" / f"{object_id}.pgz", blob)

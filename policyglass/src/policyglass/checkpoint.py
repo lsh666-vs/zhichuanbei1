@@ -101,30 +101,47 @@ def decode(blob):
         for name in ("metadata.json", "tensors.safetensors"):
             if hashlib.sha256(files[name]).hexdigest() != manifest["files"][name]:
                 raise ValueError("Checkpoint integrity mismatch")
-        tensors = load_tensors(files["tensors.safetensors"])
-        if any(not torch.isfinite(t).all() for t in tensors.values()):
-            raise ValueError("Non-finite tensor payload")
+        metadata = json.loads(files["metadata.json"])
         seen = set()
 
-        def unpack(value, depth=0):
+        def inspect(value, depth=0):
+            # encode emits one distinct tensor key for every occurrence. Validate
+            # that invariant BEFORE loading/cloning tensors: repeated references
+            # could otherwise amplify a small payload into unbounded allocation.
             if depth > 32:
                 raise ValueError("Checkpoint nesting too deep")
             if isinstance(value, dict):
                 if set(value) == {"__tensor__"}:
                     key = value["__tensor__"]
+                    if not isinstance(key, str) or key in seen:
+                        raise ValueError("Invalid or repeated tensor reference")
                     seen.add(key)
-                    return tensors[key].clone()
-                return {k: unpack(v, depth + 1) for k, v in value.items()}
-            if isinstance(value, list):
-                return [unpack(v, depth + 1) for v in value]
-            if isinstance(value, float) and not np.isfinite(value):
+                else:
+                    for item in value.values():
+                        inspect(item, depth + 1)
+            elif isinstance(value, list):
+                for item in value:
+                    inspect(item, depth + 1)
+            elif isinstance(value, float) and not np.isfinite(value):
                 raise ValueError("Non-finite metadata")
-            return value
 
-        state = unpack(json.loads(files["metadata.json"]))
+        inspect(metadata)
+        tensors = load_tensors(files["tensors.safetensors"])
         if seen != set(tensors):
             raise ValueError("Unexpected tensor payload")
-        return state, manifest
+        if any(not torch.isfinite(t).all() for t in tensors.values()):
+            raise ValueError("Non-finite tensor payload")
+
+        def unpack(value):
+            if isinstance(value, dict):
+                if set(value) == {"__tensor__"}:
+                    return tensors[value["__tensor__"]].clone()
+                return {k: unpack(v) for k, v in value.items()}
+            if isinstance(value, list):
+                return [unpack(v) for v in value]
+            return value
+
+        return unpack(metadata), manifest
     except (
         KeyError,
         TypeError,

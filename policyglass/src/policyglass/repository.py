@@ -241,7 +241,7 @@ class Repository:
         trace = {
             **trace,
             "experiment_id": experiment,
-            "job_id": job,
+            "job_id": job or None,
             "origin_checkpoint": origin,
             "output_checkpoint": output,
         }

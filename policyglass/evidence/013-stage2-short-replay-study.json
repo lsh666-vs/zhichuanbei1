@@ -1,0 +1,727 @@
+{
+  "seeds": [
+    11,
+    23,
+    37,
+    53,
+    71
+  ],
+  "ratios": [
+    1,
+    4
+  ],
+  "iterations": 1,
+  "rows": [
+    {
+      "seed": 11,
+      "ratio": 1,
+      "status": "completed",
+      "id": "d30b006b8dc1425e9b5b4ca16348f493",
+      "job": "2bc12198cf244fadb45b65385baf06a9",
+      "completed": 1,
+      "summary": [
+        {
+          "q1_loss": 0.4426880537460095,
+          "q2_loss": 0.18144315330767802,
+          "actor_loss": -0.9211980518137526,
+          "alpha": 0.19994000899916295,
+          "entropy_mc": 6.541194390221927,
+          "update": 1,
+          "env_steps": 16,
+          "replay_update_index": 0
+        }
+      ],
+      "error": null,
+      "evaluation": {
+        "source": "actual_frozen_policy_evaluation_no_learning",
+        "checkpoint": "072eea63c271485a9c7292114e0c049d",
+        "action_rule": "tanh(mean)*physical_scale (deterministic)",
+        "results": [
+          {
+            "seed": 701,
+            "return": -55.790475879065376,
+            "steps": 64,
+            "mean_distance_m": 0.9239693178380782,
+            "final_distance_m": 0.9685254166549738,
+            "success_fraction": 0
+          },
+          {
+            "seed": 702,
+            "return": -55.086172311416924,
+            "steps": 64,
+            "mean_distance_m": 0.9138392151502628,
+            "final_distance_m": 0.9722763692711692,
+            "success_fraction": 0
+          },
+          {
+            "seed": 703,
+            "return": -55.62190129283714,
+            "steps": 64,
+            "mean_distance_m": 0.9212310119101949,
+            "final_distance_m": 0.9707648162313178,
+            "success_fraction": 0
+          }
+        ],
+        "seconds": 0.1966019999999844,
+        "scope": "short budget; no trained-policy success claim"
+      },
+      "distance": 0.9196798482995119,
+      "seconds": 3.4755
+    },
+    {
+      "seed": 11,
+      "ratio": 4,
+      "status": "completed",
+      "id": "86a70ac17ccd4cd99eabacaedc1e0d4a",
+      "job": "4cbe4bc2762d477a991fbcd47c3163dc",
+      "completed": 1,
+      "summary": [
+        {
+          "q1_loss": 0.4426880537460095,
+          "q2_loss": 0.18144315330767802,
+          "actor_loss": -0.9211980518137526,
+          "alpha": 0.19994000899916295,
+          "entropy_mc": 6.541194390221927,
+          "update": 1,
+          "env_steps": 16,
+          "replay_update_index": 0
+        },
+        {
+          "q1_loss": 0.3905180926648876,
+          "q2_loss": 0.2149959454186562,
+          "actor_loss": -0.923223395644891,
+          "alpha": 0.1998800248942246,
+          "entropy_mc": 6.6116844393042165,
+          "update": 2,
+          "env_steps": 16,
+          "replay_update_index": 1
+        },
+        {
+          "q1_loss": 0.26752315376726976,
+          "q2_loss": 0.2048289006937141,
+          "actor_loss": -0.9601006922770818,
+          "alpha": 0.19982003847495136,
+          "entropy_mc": 6.691768740137707,
+          "update": 3,
+          "env_steps": 16,
+          "replay_update_index": 2
+        },
+        {
+          "q1_loss": 0.13499117722369358,
+          "q2_loss": 0.14920311961601704,
+          "actor_loss": -0.9819045839338474,
+          "alpha": 0.19976002492863904,
+          "entropy_mc": 6.845112963662299,
+          "update": 4,
+          "env_steps": 16,
+          "replay_update_index": 3
+        }
+      ],
+      "error": null,
+      "evaluation": {
+        "source": "actual_frozen_policy_evaluation_no_learning",
+        "checkpoint": "dba23c70e39844bfbbabdf8093d2eb8e",
+        "action_rule": "tanh(mean)*physical_scale (deterministic)",
+        "results": [
+          {
+            "seed": 701,
+            "return": -56.109642999602556,
+            "steps": 64,
+            "mean_distance_m": 0.9265846724069895,
+            "final_distance_m": 0.9732196789579759,
+            "success_fraction": 0
+          },
+          {
+            "seed": 702,
+            "return": -55.36540180475854,
+            "steps": 64,
+            "mean_distance_m": 0.9161445700840265,
+            "final_distance_m": 0.9765683872034165,
+            "success_fraction": 0
+          },
+          {
+            "seed": 703,
+            "return": -55.92501928581425,
+            "steps": 64,
+            "mean_distance_m": 0.923721608779694,
+            "final_distance_m": 0.9752752570292298,
+            "success_fraction": 0
+          }
+        ],
+        "seconds": 0.1799764999996114,
+        "scope": "short budget; no trained-policy success claim"
+      },
+      "distance": 0.9221502837569032,
+      "seconds": 3.514
+    },
+    {
+      "seed": 23,
+      "ratio": 1,
+      "status": "completed",
+      "id": "f4017ec359aa4283a272ce754810bf34",
+      "job": "5e3627a0c8cb4c3291dc5d176c3941c8",
+      "completed": 1,
+      "summary": [
+        {
+          "q1_loss": 0.202138558025868,
+          "q2_loss": 0.4762659304922767,
+          "actor_loss": -1.0031244506818997,
+          "alpha": 0.1999400089991626,
+          "entropy_mc": 6.596110602482701,
+          "update": 1,
+          "env_steps": 16,
+          "replay_update_index": 0
+        }
+      ],
+      "error": null,
+      "evaluation": {
+        "source": "actual_frozen_policy_evaluation_no_learning",
+        "checkpoint": "d9cb2d0d767746159159570de24b38d2",
+        "action_rule": "tanh(mean)*physical_scale (deterministic)",
+        "results": [
+          {
+            "seed": 701,
+            "return": -55.064915368508075,
+            "steps": 64,
+            "mean_distance_m": 0.9179234904287024,
+            "final_distance_m": 0.9581840137952827,
+            "success_fraction": 0
+          },
+          {
+            "seed": 702,
+            "return": -54.25044132706959,
+            "steps": 64,
+            "mean_distance_m": 0.9068031006074266,
+            "final_distance_m": 0.9597818677617828,
+            "success_fraction": 0
+          },
+          {
+            "seed": 703,
+            "return": -54.812097208407586,
+            "steps": 64,
+            "mean_distance_m": 0.9144696455255641,
+            "final_distance_m": 0.9588727599450974,
+            "success_fraction": 0
+          }
+        ],
+        "seconds": 0.17508799999995972,
+        "scope": "short budget; no trained-policy success claim"
+      },
+      "distance": 0.913065412187231,
+      "seconds": 3.4590999999977647
+    },
+    {
+      "seed": 23,
+      "ratio": 4,
+      "status": "completed",
+      "id": "312847bcb7c34bccbba779fe5fe0acce",
+      "job": "c4530eb01bcb47d8802981dfbc982214",
+      "completed": 1,
+      "summary": [
+        {
+          "q1_loss": 0.202138558025868,
+          "q2_loss": 0.4762659304922767,
+          "actor_loss": -1.0031244506818997,
+          "alpha": 0.1999400089991626,
+          "entropy_mc": 6.596110602482701,
+          "update": 1,
+          "env_steps": 16,
+          "replay_update_index": 0
+        },
+        {
+          "q1_loss": 0.13388498648694785,
+          "q2_loss": 0.3406526478070515,
+          "actor_loss": -0.975582663325135,
+          "alpha": 0.19988004384845687,
+          "entropy_mc": 6.549106150135435,
+          "update": 2,
+          "env_steps": 16,
+          "replay_update_index": 1
+        },
+        {
+          "q1_loss": 0.20418195646748805,
+          "q2_loss": 0.3116510449488588,
+          "actor_loss": -1.1470145776747767,
+          "alpha": 0.1998200605997031,
+          "entropy_mc": 6.731552860265975,
+          "update": 3,
+          "env_steps": 16,
+          "replay_update_index": 2
+        },
+        {
+          "q1_loss": 0.14061255003512665,
+          "q2_loss": 0.33072909774670023,
+          "actor_loss": -1.1596907936619378,
+          "alpha": 0.19976010832096042,
+          "entropy_mc": 6.607067902113697,
+          "update": 4,
+          "env_steps": 16,
+          "replay_update_index": 3
+        }
+      ],
+      "error": null,
+      "evaluation": {
+        "source": "actual_frozen_policy_evaluation_no_learning",
+        "checkpoint": "be814ea7cc8d43dcbb7d41dcde8fb627",
+        "action_rule": "tanh(mean)*physical_scale (deterministic)",
+        "results": [
+          {
+            "seed": 701,
+            "return": -55.21105973900315,
+            "steps": 64,
+            "mean_distance_m": 0.9191236498143267,
+            "final_distance_m": 0.9600370174811356,
+            "success_fraction": 0
+          },
+          {
+            "seed": 702,
+            "return": -54.32407367753922,
+            "steps": 64,
+            "mean_distance_m": 0.9074031965154759,
+            "final_distance_m": 0.9603212726547626,
+            "success_fraction": 0
+          },
+          {
+            "seed": 703,
+            "return": -54.9158529090563,
+            "steps": 64,
+            "mean_distance_m": 0.9153191840349164,
+            "final_distance_m": 0.9599314274339542,
+            "success_fraction": 0
+          }
+        ],
+        "seconds": 0.1630010000008042,
+        "scope": "short budget; no trained-policy success claim"
+      },
+      "distance": 0.9139486767882397,
+      "seconds": 3.434400000002235
+    },
+    {
+      "seed": 37,
+      "ratio": 1,
+      "status": "completed",
+      "id": "0d7482ba4ee94ec5a05e980faeb8a08f",
+      "job": "cc347e757fe74dde908dfa2ba95dcc30",
+      "completed": 1,
+      "summary": [
+        {
+          "q1_loss": 0.3809976592311588,
+          "q2_loss": 0.42513189573553783,
+          "actor_loss": -0.8139560334199791,
+          "alpha": 0.1999400089991613,
+          "entropy_mc": 6.798446882215488,
+          "update": 1,
+          "env_steps": 16,
+          "replay_update_index": 0
+        }
+      ],
+      "error": null,
+      "evaluation": {
+        "source": "actual_frozen_policy_evaluation_no_learning",
+        "checkpoint": "6614b70a5e5c4be08b0afe5dd0140d52",
+        "action_rule": "tanh(mean)*physical_scale (deterministic)",
+        "results": [
+          {
+            "seed": 701,
+            "return": -55.08631673175033,
+            "steps": 64,
+            "mean_distance_m": 0.918072617642095,
+            "final_distance_m": 0.9632660710990699,
+            "success_fraction": 0
+          },
+          {
+            "seed": 702,
+            "return": -54.65103289082852,
+            "steps": 64,
+            "mean_distance_m": 0.9100415316174244,
+            "final_distance_m": 0.9698939480191069,
+            "success_fraction": 0
+          },
+          {
+            "seed": 703,
+            "return": -55.04752236552345,
+            "steps": 64,
+            "mean_distance_m": 0.9163538262520139,
+            "final_distance_m": 0.9670546112303726,
+            "success_fraction": 0
+          }
+        ],
+        "seconds": 0.16277850000187755,
+        "scope": "short budget; no trained-policy success claim"
+      },
+      "distance": 0.9148226585038444,
+      "seconds": 2.8331000000014903
+    },
+    {
+      "seed": 37,
+      "ratio": 4,
+      "status": "completed",
+      "id": "a4718e26c5c649e79279e879c970049a",
+      "job": "cabdbb2fa9994431b7b18a34bb5397ea",
+      "completed": 1,
+      "summary": [
+        {
+          "q1_loss": 0.3809976592311588,
+          "q2_loss": 0.42513189573553783,
+          "actor_loss": -0.8139560334199791,
+          "alpha": 0.1999400089991613,
+          "entropy_mc": 6.798446882215488,
+          "update": 1,
+          "env_steps": 16,
+          "replay_update_index": 0
+        },
+        {
+          "q1_loss": 0.38678983721972543,
+          "q2_loss": 0.7081591044101603,
+          "actor_loss": -1.1286038834287284,
+          "alpha": 0.19988009375514687,
+          "entropy_mc": 6.489471306606262,
+          "update": 2,
+          "env_steps": 16,
+          "replay_update_index": 1
+        },
+        {
+          "q1_loss": 0.5236479203100093,
+          "q2_loss": 0.6371968361294542,
+          "actor_loss": -1.1361395730956978,
+          "alpha": 0.1998201351035896,
+          "entropy_mc": 6.839897307689127,
+          "update": 3,
+          "env_steps": 16,
+          "replay_update_index": 2
+        },
+        {
+          "q1_loss": 0.3983781098414105,
+          "q2_loss": 0.5540944256344573,
+          "actor_loss": -1.0813027948628076,
+          "alpha": 0.19976025613553383,
+          "entropy_mc": 6.481348680399766,
+          "update": 4,
+          "env_steps": 16,
+          "replay_update_index": 3
+        }
+      ],
+      "error": null,
+      "evaluation": {
+        "source": "actual_frozen_policy_evaluation_no_learning",
+        "checkpoint": "ceb6d39b6e0143d59498fbef2005112f",
+        "action_rule": "tanh(mean)*physical_scale (deterministic)",
+        "results": [
+          {
+            "seed": 701,
+            "return": -55.4892836970625,
+            "steps": 64,
+            "mean_distance_m": 0.9213875791903665,
+            "final_distance_m": 0.9699849261867884,
+            "success_fraction": 0
+          },
+          {
+            "seed": 702,
+            "return": -55.007728309982504,
+            "steps": 64,
+            "mean_distance_m": 0.9129856096972876,
+            "final_distance_m": 0.9756283126083208,
+            "success_fraction": 0
+          },
+          {
+            "seed": 703,
+            "return": -55.43613885707018,
+            "steps": 64,
+            "mean_distance_m": 0.9195523800396952,
+            "final_distance_m": 0.9733051090483977,
+            "success_fraction": 0
+          }
+        ],
+        "seconds": 0.16327190000083647,
+        "scope": "short budget; no trained-policy success claim"
+      },
+      "distance": 0.9179751896424498,
+      "seconds": 3.524199999999255
+    },
+    {
+      "seed": 53,
+      "ratio": 1,
+      "status": "completed",
+      "id": "eb1af7d2b33e46c1bd8c19ef54a6aa45",
+      "job": "03c15d2e409546e58222ffd78c639510",
+      "completed": 1,
+      "summary": [
+        {
+          "q1_loss": 0.35363235461081066,
+          "q2_loss": 0.4283555976776945,
+          "actor_loss": -0.6082920710062061,
+          "alpha": 0.1999400089991625,
+          "entropy_mc": 6.606086529483468,
+          "update": 1,
+          "env_steps": 16,
+          "replay_update_index": 0
+        }
+      ],
+      "error": null,
+      "evaluation": {
+        "source": "actual_frozen_policy_evaluation_no_learning",
+        "checkpoint": "021db7b002d741588f23db1a5aa25f5f",
+        "action_rule": "tanh(mean)*physical_scale (deterministic)",
+        "results": [
+          {
+            "seed": 701,
+            "return": -55.692304326728845,
+            "steps": 64,
+            "mean_distance_m": 0.9231226831230808,
+            "final_distance_m": 0.9653008168490081,
+            "success_fraction": 0
+          },
+          {
+            "seed": 702,
+            "return": -54.908522496151505,
+            "steps": 64,
+            "mean_distance_m": 0.9123514243182933,
+            "final_distance_m": 0.9673603462728045,
+            "success_fraction": 0
+          },
+          {
+            "seed": 703,
+            "return": -55.47098869490423,
+            "steps": 64,
+            "mean_distance_m": 0.9199571208349552,
+            "final_distance_m": 0.9664372383885007,
+            "success_fraction": 0
+          }
+        ],
+        "seconds": 0.16024990000005346,
+        "scope": "short budget; no trained-policy success claim"
+      },
+      "distance": 0.9184770760921097,
+      "seconds": 3.407699999999255
+    },
+    {
+      "seed": 53,
+      "ratio": 4,
+      "status": "completed",
+      "id": "37c82483db1d4553aabad97cac4fcc3e",
+      "job": "14fc99c123d64b93ba5d21435293abe4",
+      "completed": 1,
+      "summary": [
+        {
+          "q1_loss": 0.35363235461081066,
+          "q2_loss": 0.4283555976776945,
+          "actor_loss": -0.6082920710062061,
+          "alpha": 0.1999400089991625,
+          "entropy_mc": 6.606086529483468,
+          "update": 1,
+          "env_steps": 16,
+          "replay_update_index": 0
+        },
+        {
+          "q1_loss": 0.535037253483803,
+          "q2_loss": 0.5417900646133456,
+          "actor_loss": -0.8918613420473219,
+          "alpha": 0.1998800215030794,
+          "entropy_mc": 6.699953612394657,
+          "update": 2,
+          "env_steps": 16,
+          "replay_update_index": 1
+        },
+        {
+          "q1_loss": 0.18915552800246888,
+          "q2_loss": 0.5392497116547516,
+          "actor_loss": -0.8393188369231057,
+          "alpha": 0.19982008517451266,
+          "entropy_mc": 6.531556587511757,
+          "update": 3,
+          "env_steps": 16,
+          "replay_update_index": 2
+        },
+        {
+          "q1_loss": 0.5093466569229026,
+          "q2_loss": 0.3194440739717028,
+          "actor_loss": -0.9167905166005703,
+          "alpha": 0.19976015334627875,
+          "entropy_mc": 6.644906868576267,
+          "update": 4,
+          "env_steps": 16,
+          "replay_update_index": 3
+        }
+      ],
+      "error": null,
+      "evaluation": {
+        "source": "actual_frozen_policy_evaluation_no_learning",
+        "checkpoint": "753a02f84ad34deaa8d2b2f4611a3246",
+        "action_rule": "tanh(mean)*physical_scale (deterministic)",
+        "results": [
+          {
+            "seed": 701,
+            "return": -55.771250324082196,
+            "steps": 64,
+            "mean_distance_m": 0.9237591372201986,
+            "final_distance_m": 0.9655062612323747,
+            "success_fraction": 0
+          },
+          {
+            "seed": 702,
+            "return": -54.95356481571024,
+            "steps": 64,
+            "mean_distance_m": 0.9127090173894499,
+            "final_distance_m": 0.9672008302551381,
+            "success_fraction": 0
+          },
+          {
+            "seed": 703,
+            "return": -55.530515296548494,
+            "steps": 64,
+            "mean_distance_m": 0.9204336090702545,
+            "final_distance_m": 0.966390423876492,
+            "success_fraction": 0
+          }
+        ],
+        "seconds": 0.14282779999848572,
+        "scope": "short budget; no trained-policy success claim"
+      },
+      "distance": 0.9189672545599678,
+      "seconds": 3.412
+    },
+    {
+      "seed": 71,
+      "ratio": 1,
+      "status": "completed",
+      "id": "11c4b6b87fc64bf9a7ad8e78242272ff",
+      "job": "cdb08ca7c49445918d4a594c650a6a16",
+      "completed": 1,
+      "summary": [
+        {
+          "q1_loss": 0.7097145471856088,
+          "q2_loss": 0.8076327837848397,
+          "actor_loss": -1.3223877543938678,
+          "alpha": 0.199940008999163,
+          "entropy_mc": 6.533624440470404,
+          "update": 1,
+          "env_steps": 16,
+          "replay_update_index": 0
+        }
+      ],
+      "error": null,
+      "evaluation": {
+        "source": "actual_frozen_policy_evaluation_no_learning",
+        "checkpoint": "e498a8f290a448c5ad4301212ce6bf2f",
+        "action_rule": "tanh(mean)*physical_scale (deterministic)",
+        "results": [
+          {
+            "seed": 701,
+            "return": -55.58349288957252,
+            "steps": 64,
+            "mean_distance_m": 0.9221917245870295,
+            "final_distance_m": 0.9668836283598344,
+            "success_fraction": 0
+          },
+          {
+            "seed": 702,
+            "return": -54.53900579056495,
+            "steps": 64,
+            "mean_distance_m": 0.9092693383478617,
+            "final_distance_m": 0.9643275946854373,
+            "success_fraction": 0
+          },
+          {
+            "seed": 703,
+            "return": -55.20403035134183,
+            "steps": 64,
+            "mean_distance_m": 0.9177298584664584,
+            "final_distance_m": 0.9652333262814269,
+            "success_fraction": 0
+          }
+        ],
+        "seconds": 0.16172440000082133,
+        "scope": "short budget; no trained-policy success claim"
+      },
+      "distance": 0.9163969738004498,
+      "seconds": 2.805
+    },
+    {
+      "seed": 71,
+      "ratio": 4,
+      "status": "completed",
+      "id": "cd5072401bb74e1da57b9ede5eb7dac5",
+      "job": "30d6a76a681040b3a1cdc3cfdbfd6752",
+      "completed": 1,
+      "summary": [
+        {
+          "q1_loss": 0.7097145471856088,
+          "q2_loss": 0.8076327837848397,
+          "actor_loss": -1.3223877543938678,
+          "alpha": 0.199940008999163,
+          "entropy_mc": 6.533624440470404,
+          "update": 1,
+          "env_steps": 16,
+          "replay_update_index": 0
+        },
+        {
+          "q1_loss": 0.4806496356217409,
+          "q2_loss": 0.46830314634602976,
+          "actor_loss": -1.1740799813360816,
+          "alpha": 0.19988004668899434,
+          "entropy_mc": 6.470602976568099,
+          "update": 2,
+          "env_steps": 16,
+          "replay_update_index": 1
+        },
+        {
+          "q1_loss": 0.47205582362843745,
+          "q2_loss": 0.7595038823867328,
+          "actor_loss": -1.4479798652910627,
+          "alpha": 0.1998200625019267,
+          "entropy_mc": 6.673732483770269,
+          "update": 3,
+          "env_steps": 16,
+          "replay_update_index": 2
+        },
+        {
+          "q1_loss": 0.46270400468454115,
+          "q2_loss": 0.4232620758496563,
+          "actor_loss": -1.0726841309438742,
+          "alpha": 0.19976008422467526,
+          "entropy_mc": 6.6429877601674505,
+          "update": 4,
+          "env_steps": 16,
+          "replay_update_index": 3
+        }
+      ],
+      "error": null,
+      "evaluation": {
+        "source": "actual_frozen_policy_evaluation_no_learning",
+        "checkpoint": "a3d4bc19a39647369aed450b0fa9a324",
+        "action_rule": "tanh(mean)*physical_scale (deterministic)",
+        "results": [
+          {
+            "seed": 701,
+            "return": -55.720769053832875,
+            "steps": 64,
+            "mean_distance_m": 0.9233144283063958,
+            "final_distance_m": 0.9689839703003115,
+            "success_fraction": 0
+          },
+          {
+            "seed": 702,
+            "return": -54.661664741280006,
+            "steps": 64,
+            "mean_distance_m": 0.9102672003901262,
+            "final_distance_m": 0.9663165349703945,
+            "success_fraction": 0
+          },
+          {
+            "seed": 703,
+            "return": -55.33803985234121,
+            "steps": 64,
+            "mean_distance_m": 0.9188253524018604,
+            "final_distance_m": 0.9673209802388245,
+            "success_fraction": 0
+          }
+        ],
+        "seconds": 0.15152060000036727,
+        "scope": "short budget; no trained-policy success claim"
+      },
+      "distance": 0.9174689936994609,
+      "seconds": 2.813699999999255
+    }
+  ],
+  "scope": "short-budget actual experiment; all failures included"
+}

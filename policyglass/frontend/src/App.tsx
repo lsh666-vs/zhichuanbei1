@@ -82,9 +82,9 @@ export default function App() {
     [drag, setDrag] = useState(false),
     [force, setForce] = useState([0, 0, 0]),
     [forceSteps, setForceSteps] = useState(4),
-    [physicsDamping,setPhysicsDamping] = useState(.15),
-    [massScale,setMassScale] = useState(1),
-    [resetEnvironment,setResetEnvironment] = useState(false),
+    [physicsDamping, setPhysicsDamping] = useState(0.15),
+    [massScale, setMassScale] = useState(1),
+    [resetEnvironment, setResetEnvironment] = useState(false),
     [physicsSteps, setPhysicsSteps] = useState(16);
   const [surface, setSurface] = useState<Doc>(),
     [fields, setFields] = useState(['q1', 'q2']),
@@ -114,7 +114,7 @@ export default function App() {
   const [comparison, setComparison] = useState<Doc>(),
     [compareId, setCompareId] = useState(''),
     [evaluation, setEvaluation] = useState<Doc>(),
-    [pathProbe,setPathProbe]=useState<Doc>(),
+    [pathProbe, setPathProbe] = useState<Doc>(),
     [study, setStudy] = useState<Doc[]>([]),
     [studySeeds, setStudySeeds] = useState('11,23,37,53,71'),
     [studyBudget, setStudyBudget] = useState(4),
@@ -187,7 +187,7 @@ export default function App() {
       setCheckpoint(d.checkpoint);
       setTarget(d.physics.target_m);
       setPhysicsDamping(d.config.environment.damping);
-      setMassScale(d.config.environment.mass_scale??1);
+      setMassScale(d.config.environment.mass_scale ?? 1);
       setResetEnvironment(false);
       setObservation(d.observation);
       setBranchPath(d.config.algorithm + '.learning_rate');
@@ -212,7 +212,10 @@ export default function App() {
         id = q.get('experiment');
       if (id) {
         await open(id);
-        if (q.get('job')) setJob(await api('/jobs/' + q.get('job')));
+        if (q.get('job')) {
+          setJob(await api('/jobs/' + q.get('job')));
+          historyUrl(id, q.get('job'));
+        }
       }
     });
   }, []);
@@ -244,7 +247,7 @@ export default function App() {
           return;
         }
       } catch (e) {
-        setError('任务状态/产物同步失败：'+String(e));
+        setError('任务状态/产物同步失败：' + String(e));
         if (alive) setConnection('连接中断 · 正在重连（不推断任务成功）');
       }
       if (alive) timer = setTimeout(poll, 650);
@@ -304,8 +307,8 @@ export default function App() {
   }, [view, checkpoint, s.sample]);
   useEffect(() => {
     if (view === 'loss' && trace) {
-      const index = trace.events.findIndex(e => e.kind === 'optimizer' && e.label === 'actor');
-      if (index >= 0) getEvent(index).catch(e => setError(String(e)));
+      const index = trace.events.findIndex((e) => e.kind === 'optimizer' && e.label === 'actor');
+      if (index >= 0) getEvent(index).catch((e) => setError(String(e)));
     }
   }, [view, traceId]);
   const chooseEvent = (i: number) => {
@@ -328,7 +331,12 @@ export default function App() {
   };
   const predict = async () => {
     const p = await api(`/experiments/${detail.id}/predict`, { observation, noise, checkpoint });
-    setPrediction({...p, source_checkpoint:checkpoint});
+    setPrediction({ ...p, source_checkpoint: checkpoint });
+    setTraceId(p.trace_id);
+    setTrace(p);
+    setCache({});
+    setFrames([]);
+    setHistory(await api(`/experiments/${detail.id}/traces`));
     select({ event: p.events.findIndex((e: Doc) => e.kind === 'policy_operation'), sample: 0 });
     setBackward(false);
     setView('network');
@@ -358,7 +366,9 @@ export default function App() {
       steps: physicsSteps,
       action: [0, 0, 0],
       label: detail.label + ' · 物理干预',
-      ...(resetEnvironment?{reset_environment:true,damping:physicsDamping,mass_scale:massScale}:{}),
+      ...(resetEnvironment
+        ? { reset_environment: true, damping: physicsDamping, mass_scale: massScale }
+        : {}),
     });
     await list();
     await open(result.experiment.id);
@@ -382,6 +392,7 @@ export default function App() {
         : {
             checkpoint,
             path_x: lossX,
+            ...(checkpoint === trace?.origin_checkpoint ? { trace_id: traceId } : {}),
             index_x: parseIndex(lossIX),
             path_y: lossY,
             index_y: parseIndex(lossIY),
@@ -389,7 +400,7 @@ export default function App() {
             resolution: Math.min(resolution, 31),
           };
     const kind = view === 'q' ? 'q' : 'loss';
-    const task = await api(`/experiments/${detail.id}/slice-jobs`, {kind, [kind]:body});
+    const task = await api(`/experiments/${detail.id}/slice-jobs`, { kind, [kind]: body });
     sliceTask.current = task.id;
     try {
       let current = task;
@@ -399,24 +410,29 @@ export default function App() {
           setNotice('已请求服务端取消；损失切片在网格点边界停止。');
           return;
         }
-        await new Promise(resolve => setTimeout(resolve,150));
+        await new Promise((resolve) => setTimeout(resolve, 150));
         current = await api(`/slice-jobs/${task.id}`);
       }
       if (current.status === 'failed') throw Error(current.error);
       if (current.status === 'cancelled' || controller.signal.aborted) return;
       setSurface(current.result);
-      setPick([Math.floor(current.result.x.length/2),Math.floor(current.result.y.length/2)]);
-    } finally {sliceTask.current = '';}
+      setPick([Math.floor(current.result.x.length / 2), Math.floor(current.result.y.length / 2)]);
+    } finally {
+      sliceTask.current = '';
+    }
   };
   const saveNote = async () => {
     if (!note.trim() || !detail) return;
+    if (course >= 0 && (!guess.trim() || !explain.trim() || !traceId || !event?.id))
+      throw Error('课程记录需要预测、结合实际数字的解释，以及一个已计算并保存的来源事件。');
     const n = {
       text: note,
       prediction: guess,
       explanation: explain,
       course: course + 1,
       experiment_id: detail.id,
-      checkpoint: prediction?.source_checkpoint ?? (event ? trace?.origin_checkpoint : checkpoint) ?? checkpoint,
+      checkpoint:
+        prediction?.source_checkpoint ?? (event ? trace?.origin_checkpoint : checkpoint) ?? checkpoint,
       trace_id: traceId,
       event_id: event?.id ?? '',
       sample_id: sampleIds[s.sample] ?? 0,
@@ -438,18 +454,24 @@ export default function App() {
       source: { experiment: detail.id, checkpoint, trace: traceId },
       scope:
         'contains validated checkpoint and referenced notebook; historical trace IDs retain original provenance; recompute after import',
+      forward_input: prediction
+        ? { observation: prediction.observation, noise: prediction.noise[0] }
+        : trace?.phase === 'forward_only_no_parameter_update'
+          ? { observation: trace.observation, noise: trace.noise[0] }
+          : undefined,
     });
     setNotice('工作包已导出：完整检查点与笔记；导入后可 fixed_batch 重新计算 Trace。');
   };
   const importWork = async (file: File) => {
     if (file.size > 180 * 1024 * 1024) throw Error('导入超过 180MB 预算');
-    let bytes: Uint8Array, notebook: any;
+    let bytes: Uint8Array, notebook: any, forwardInput: any;
     if (file.name.endsWith('.pgwork')) {
       const d = JSON.parse(await file.text());
       if (d.schema !== 'policyglass.workspace.v1' || typeof d.checkpoint !== 'string')
         throw Error('工作包 schema 错误');
       bytes = decodeBlob(d.checkpoint);
       notebook = d.notebook;
+      forwardInput = d.forward_input;
     } else bytes = new Uint8Array(await file.arrayBuffer());
     const r = await fetch('/api/import', {
       method: 'POST',
@@ -461,6 +483,18 @@ export default function App() {
     if (notebook) await api(`/experiments/${result.experiment.id}/notebook`, notebook);
     await list();
     await open(result.experiment.id);
+    if (
+      forwardInput &&
+      Array.isArray(forwardInput.observation) &&
+      forwardInput.observation.length === 15 &&
+      Array.isArray(forwardInput.noise) &&
+      forwardInput.noise.length === 3 &&
+      [...forwardInput.observation, ...forwardInput.noise].every(Number.isFinite)
+    ) {
+      setObservation(forwardInput.observation);
+      setNoise(forwardInput.noise);
+      setPanel('predict');
+    }
     setNotice('已验证并导入新实验。原笔记引用保留来源 ID；可重算生成此实验的新事件。');
   };
   const compare = async () => {
@@ -486,7 +520,10 @@ export default function App() {
       detail: d,
       index: idx,
       objectives,
-      parameter_diff: av.length === bv.length ? Math.max(...av.map((v, i) => Math.abs(v - bv[i]))) : null,
+      parameter_diff:
+        av.length === bv.length && JSON.stringify(detail.architecture) === JSON.stringify(d.architecture)
+          ? av.reduce((largest, v, i) => Math.max(largest, Math.abs(v - bv[i])), 0)
+          : null,
     });
   };
   const evaluate = async () => {
@@ -496,6 +533,11 @@ export default function App() {
       steps: 64,
     });
     setEvaluation(result);
+    setTrace(undefined);
+    setTraceId('');
+    setCache({});
+    setPrediction(undefined);
+    reset();
     setFrames(result.results[0].frames);
     select({ sample: 0 });
     setView('arm');
@@ -580,7 +622,11 @@ export default function App() {
   const actorOpt = loadedEvents.find((e) => e.kind === 'optimizer' && e.label === 'actor' && e.parameters),
     projection =
       surface && view === 'loss' && actorOpt && checkpoint === trace?.origin_checkpoint
-        ? projectedUpdate(actorOpt, surface.directions.map(d=>d.path), surface.directions.map(d=>d.index))
+        ? projectedUpdate(
+            actorOpt,
+            surface.directions.map((d) => d.path),
+            surface.directions.map((d) => d.index),
+          )
         : null;
   const active = job && !terminal(job.status),
     origin = trace?.origin_checkpoint === checkpoint;
@@ -588,11 +634,13 @@ export default function App() {
     ? '实时前向 · 不更新'
     : evaluation
       ? '冻结策略评估 · 无学习'
-      : traceId
-        ? '历史 Trace 回放'
-        : frames.length
-          ? '物理分支记录'
-          : '完整检查点状态';
+      : trace?.phase === 'forward_only_no_parameter_update'
+        ? '历史前向记录 · 不更新'
+        : traceId
+          ? '历史 Trace 回放'
+          : frames.length
+            ? '物理分支记录'
+            : '完整检查点状态';
   return (
     <div className={'app' + (reduced ? ' reduced' : '')}>
       <header className="topbar">
@@ -923,8 +971,15 @@ export default function App() {
                   fields: view === 'loss' ? ['loss'] : fields,
                   onPick: (i, j) => setPick([i, j]),
                   marker: projection?.delta,
+                  gradient: projection
+                    ? surface.directions.map(
+                        (d) =>
+                          -actorOpt.lr *
+                          at(actorOpt.parameters?.[d.path.split('/')[1]]?.raw_gradient, d.index),
+                      )
+                    : undefined,
                   backward,
-                  onExpand:()=>setExpanded(true),
+                  onExpand: () => setExpanded(true),
                 }}
               />
               <div className="viewport-footer">
@@ -1004,8 +1059,34 @@ export default function App() {
                               在 3D 中拖动目标
                             </label>
                           </div>
-                          <label className="check"><input type="checkbox" checked={resetEnvironment} onChange={e=>setResetEnvironment(e.target.checked)}/>更改质量/阻尼并显式重置环境（清除旧批次）</label>
-                          {resetEnvironment&&<div className="field-row"><NumberField label="质量倍率" value={massScale} onChange={setMassScale} min={.25} max={3} step={.1}/><NumberField label="重置后阻尼 Nm·s/rad" value={physicsDamping} onChange={setPhysicsDamping} min={0} max={5} step={.05}/></div>}
+                          <label className="check">
+                            <input
+                              type="checkbox"
+                              checked={resetEnvironment}
+                              onChange={(e) => setResetEnvironment(e.target.checked)}
+                            />
+                            更改质量/阻尼并显式重置环境（清除旧批次）
+                          </label>
+                          {resetEnvironment && (
+                            <div className="field-row">
+                              <NumberField
+                                label="质量倍率"
+                                value={massScale}
+                                onChange={setMassScale}
+                                min={0.25}
+                                max={3}
+                                step={0.1}
+                              />
+                              <NumberField
+                                label="重置后阻尼 Nm·s/rad"
+                                value={physicsDamping}
+                                onChange={setPhysicsDamping}
+                                min={0}
+                                max={5}
+                                step={0.05}
+                              />
+                            </div>
+                          )}
                           <Vector label="目标位置 m" values={target} onChange={setTarget} />
                           <Vector label="外力 N · 世界轴 · 前臂质心" values={force} onChange={setForce} />
                           <div className="field-row">
@@ -1230,13 +1311,56 @@ export default function App() {
                                   橙线为实际 Adam Δθ 的二维投影：[{projection.delta.map(fmt).join(', ')}
                                   ]；离面残差 ‖Δθ⊥‖ = {fmt(projection.residual)}，全更新范数 ={' '}
                                   {fmt(projection.norm)}。源更新 {actorOpt.id}；只在 origin
-                                  与方向一致时可作一步解释。
+                                  与方向一致时可作一步解释。 蓝线为 −η∇L
+                                  的二维投影（普通梯度下降对照，未执行）；两条线固定在原点损失高度，仅表达参数平面方向，端点高度不代表新损失。
                                 </div>
                               )}
                               <details>
                                 <summary>完整网格与冻结条件（二维替代）</summary>
                                 <RawTree value={surface} />
                               </details>
+                              {view === 'loss' && (
+                                <div className="field-row">
+                                  <NumberField
+                                    label="对照学习率"
+                                    value={branchValue}
+                                    onChange={setBranchValue}
+                                    min={0.000001}
+                                    max={0.05}
+                                    step={0.0001}
+                                  />
+                                  <button
+                                    disabled={!!busy || active}
+                                    onClick={() =>
+                                      run('学习率分支实际重算', async () => {
+                                        const parent = detail.id;
+                                        const child = await api(`/experiments/${parent}/branches`, {
+                                          checkpoint,
+                                          label: detail.label + ' · lr=' + branchValue,
+                                          intervention: {
+                                            kind: 'hyperparameter',
+                                            path: detail.config.algorithm + '.learning_rate',
+                                            value: branchValue,
+                                          },
+                                        });
+                                        await list();
+                                        await open(child.id);
+                                        setCompareId(parent);
+                                        setMode('fixed_batch');
+                                        const j = await api(`/experiments/${child.id}/jobs`, {
+                                          iterations: 1,
+                                          record: true,
+                                          mode: 'fixed_batch',
+                                        });
+                                        setJob(j);
+                                        historyUrl(child.id, j.id);
+                                      })
+                                    }
+                                  >
+                                    创建学习率对照并实际重算
+                                  </button>
+                                </div>
+                              )}
                               <button
                                 onClick={() =>
                                   download('actual-' + view + '-slice.json', {
@@ -1563,7 +1687,34 @@ export default function App() {
                               完整时间序列与 GAE
                             </button>
                           )}
-                          {course === 4 && <><button disabled={!traceId||detail.config.algorithm!=='sac'||!!busy} onClick={()=>run('实际比较冻结参数与 detach Q',async()=>setPathProbe(await api(`/experiments/${detail.id}/actor-path-probe`,{checkpoint})))}>固定批次比较冻结参数 / detach Q</button>{pathProbe&&<><div className="callout">两次使用同批次、同噪声与同一 Critic 版本；均未更新参数。detach 只切断 Q 对动作路径，熵路径保留。来源检查点 {pathProbe.checkpoint}</div><RawTree value={pathProbe}/><button onClick={()=>download('actual-actor-path-probe.json',pathProbe)}>导出导数对照</button></>}</>}
+                          {course === 4 && (
+                            <>
+                              <button
+                                disabled={!traceId || detail.config.algorithm !== 'sac' || !!busy}
+                                onClick={() =>
+                                  run('实际比较冻结参数与 detach Q', async () =>
+                                    setPathProbe(
+                                      await api(`/experiments/${detail.id}/actor-path-probe`, { checkpoint }),
+                                    ),
+                                  )
+                                }
+                              >
+                                固定批次比较冻结参数 / detach Q
+                              </button>
+                              {pathProbe && (
+                                <>
+                                  <div className="callout">
+                                    两次使用同批次、同噪声与同一 Critic 版本；均未更新参数。detach 只切断 Q
+                                    对动作路径，熵路径保留。来源检查点 {pathProbe.checkpoint}
+                                  </div>
+                                  <RawTree value={pathProbe} />
+                                  <button onClick={() => download('actual-actor-path-probe.json', pathProbe)}>
+                                    导出导数对照
+                                  </button>
+                                </>
+                              )}
+                            </>
+                          )}
                           {course === 6 && (
                             <>
                               <div className="field-row">
@@ -1758,7 +1909,7 @@ export default function App() {
                 traceId,
                 checkpoint: prediction ? prediction.source_checkpoint : trace?.origin_checkpoint,
                 backward,
-                forwardOnly: !!prediction,
+                forwardOnly: !!prediction || trace?.phase === 'forward_only_no_parameter_update',
                 onBackward: () => setBackward(!backward),
               }}
             />
@@ -1911,7 +2062,7 @@ function NumberField({ label, value, onChange, min, max, step = 1 }: any) {
         aria-label={label}
         value={value ?? ''}
         onChange={(e) => onChange(e.target.value === '' ? 0 : Number(e.target.value))}
-        {...{ min, max, step: step===1?1:'any' }}
+        {...{ min, max, step: step === 1 ? 1 : 'any' }}
       />
     </label>
   );

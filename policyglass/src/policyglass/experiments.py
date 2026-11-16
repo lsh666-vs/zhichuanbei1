@@ -236,6 +236,13 @@ def loss_slice(
     batch = learner.last_batch
     try:
         with torch.no_grad():
+            origin_loss = float(
+                (
+                    learner.ppo_objective(batch)[0]
+                    if learner.config.algorithm == "ppo"
+                    else learner.sac_actor_objective(batch)[0]
+                ).mean()
+            )
             for i, dx in enumerate(axis):
                 for j, dy in enumerate(axis):
                     if cancelled is not None and cancelled():
@@ -261,6 +268,7 @@ def loss_slice(
         "x": axis.tolist(),
         "y": axis.tolist(),
         "loss": grid.tolist(),
+        "origin_loss": origin_loss,
         "frozen": "batch, old targets/probabilities, noise, other parameters, critics, alpha",
         "scope": "two scalar coordinate directions; not the full high-dimensional landscape",
     }

@@ -26,7 +26,7 @@ from .jobs import JobManager
 from .numerics import sample_policy, tensor, trace_policy_operation
 from .physics_host import ENGINE_VERSION
 from .repository import Repository
-from .slice_jobs import SliceJobs
+from .slice_jobs import SliceJobs, align_actor_critic
 from .trace import Trace, plain
 
 ALLOWED_ORIGINS = [
@@ -105,6 +105,7 @@ class LossSliceRequest(StrictModel):
     extent: float = Field(0.1, gt=0, le=1)
     resolution: int = Field(15, ge=2, le=31)
     checkpoint: str | None = None
+    trace_id: str | None = None
 
 
 class SliceJobRequest(StrictModel):
@@ -218,8 +219,11 @@ def create_app(root=None):
             "version": __version__,
             "mode": "cpu_float64",
             "physics": f"canonical_mujoco_wasm_{ENGINE_VERSION}",
-            "stage": "1_scientific_foundation",
-            "frontend_complete": False,
+            "stage": "2_integrated_teaching_workbench",
+            "frontend_complete": (
+                Path(__file__).resolve().parents[2] / "frontend/dist/index.html"
+            ).is_file(),
+            "release_complete": False,
         }
 
     @app.get("/api/schema")
@@ -347,7 +351,7 @@ def create_app(root=None):
 
     @app.post("/api/experiments/{experiment_id}/predict")
     def predict(experiment_id: str, request: PredictionRequest):
-        _, learner = load_experiment(experiment_id, request.checkpoint)
+        experiment, learner = load_experiment(experiment_id, request.checkpoint)
         try:
             observation = (
                 learner.obs if request.observation is None else tensor(request.observation)
@@ -364,7 +368,7 @@ def create_app(root=None):
                 trace, "interactive_forward", mu, logstd, latent, logp, learner.scale, action, noise
             )
             trace.flush_layers(backward=False)
-            return trace.finish(
+            result = trace.finish(
                 phase="forward_only_no_parameter_update",
                 observation=observation,
                 noise=noise,
@@ -372,7 +376,18 @@ def create_app(root=None):
                 logp=logp,
                 architecture=learner.architecture(),
                 scope="edited observations may be off the physical state manifold",
+                batch={"sample_id": [0], "obs": [plain(observation)]},
+                frames=[],
+                sample_scope="interactive_input_row_not_environment_transition",
             )
+            checkpoint = request.checkpoint or experiment["checkpoint"]
+            trace_id = repository.save_trace(result, experiment_id, "", checkpoint, checkpoint)
+            return {
+                **result,
+                "trace_id": trace_id,
+                "origin_checkpoint": checkpoint,
+                "output_checkpoint": checkpoint,
+            }
         finally:
             learner.env.close()
 
@@ -506,9 +521,16 @@ def create_app(root=None):
 
     @app.post("/api/experiments/{experiment_id}/loss-slice")
     def loss_surface(experiment_id: str, request: LossSliceRequest):
-        _, learner = load_experiment(experiment_id, request.checkpoint)
+        experiment, learner = load_experiment(experiment_id, request.checkpoint)
         try:
-            return loss_slice(
+            provenance = align_actor_critic(
+                repository,
+                learner,
+                experiment_id,
+                request.checkpoint or experiment["checkpoint"],
+                request.trace_id,
+            )
+            result = loss_slice(
                 learner,
                 request.path_x,
                 request.index_x,
@@ -517,6 +539,7 @@ def create_app(root=None):
                 request.extent,
                 request.resolution,
             )
+            return {**result, **provenance}
         finally:
             learner.env.close()
 

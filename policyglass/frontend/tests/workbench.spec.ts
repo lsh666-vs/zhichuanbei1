@@ -38,6 +38,7 @@ test('PPO actual create → inspect → branch → notes → export → import �
   await expect(page.locator('canvas')).toBeVisible();
   await page.screenshot({ path: evidence + '/01-arm.png', fullPage: true });
   await page.getByRole('tab', { name: '计算网络' }).click();
+  await page.getByLabel(/展开全部单元/).check();
   const li = idx.events.findIndex((e) => e.kind === 'layer' && e.label === 'actor/layer0');
   await page.locator('.event-list button').nth(li).click();
   await expect(page.locator('.inspector h3')).toHaveText('actor/layer0');
@@ -63,8 +64,10 @@ test('PPO actual create → inspect → branch → notes → export → import �
       },
     })
   ).json();
-  const displayed=Number(await page.getByTestId('value-loss').textContent());
-  expect(Math.abs(displayed-grid.loss[2][2])).toBeLessThanOrEqual(Math.max(1e-20,Math.abs(grid.loss[2][2])*1e-4));
+  const displayed = Number(await page.getByTestId('value-loss').textContent());
+  expect(Math.abs(displayed - grid.loss[2][2])).toBeLessThanOrEqual(
+    Math.max(1e-20, Math.abs(grid.loss[2][2]) * 1e-4),
+  );
   await page.screenshot({ path: evidence + '/03-loss.png', fullPage: true });
   await page.getByRole('button', { name: '受控分支', exact: true }).click();
   await page.getByLabel('干预路径').fill('ppo.learning_rate');
@@ -105,7 +108,7 @@ test('PPO actual create → inspect → branch → notes → export → import �
   await page.getByRole('button', { name: '引用与笔记', exact: true }).click();
   await expect(page.locator('.note')).toContainText('Real E2E');
   await page.reload();
-  await page.getByRole('button', { name: '引用与笔记', exact:true }).click();
+  await page.getByRole('button', { name: '引用与笔记', exact: true }).click();
   await expect(page.locator('.note')).toContainText('Real E2E');
   expect(errors).toEqual([]);
 });
@@ -163,5 +166,93 @@ test('SAC double-Q real grid, actor path and eight complete course controls', as
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: evidence + '/05-mobile.png', fullPage: true });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+  expect(errors).toEqual([]);
+});
+
+test('Real task pause, reload, resume, cancel and corrupt import errors', async ({ page }) => {
+  await page.goto('/');
+  const id = await create(page, 'ppo', 'E2E task lifecycle');
+  await page.getByLabel('训练迭代预算').fill('100');
+  await page.getByRole('button', { name: /启动计算|继续计算/ }).click();
+  await page.getByRole('button', { name: '暂停任务', exact: true }).click();
+  await expect(page.getByTestId('job-status')).toContainText('paused', { timeout: 60000 });
+  await page.reload();
+  await expect(page.getByTestId('job-status')).toContainText('paused');
+  await page.getByRole('button', { name: '恢复任务', exact: true }).click();
+  await page.getByRole('button', { name: '取消任务', exact: true }).click();
+  await expect(page.getByTestId('job-status')).toContainText('cancelled', { timeout: 60000 });
+  await page
+    .locator('input[type=file]')
+    .setInputFiles({
+      name: 'corrupt.pgz',
+      mimeType: 'application/octet-stream',
+      buffer: Buffer.from('not a checkpoint'),
+    });
+  await expect(page.getByRole('alert')).toContainText('操作未完成');
+  const exp = await (await page.request.get(`/api/experiments/${id}`)).json();
+  expect(exp.checkpoint).toMatch(/^[a-f0-9]{32}$/);
+});
+
+test('Saved forward events and actual physical reset keep sources explicit', async ({ page }) => {
+  await page.goto('/');
+  const id = await create(page, 'ppo', 'E2E forward and physics');
+  await page.getByRole('button', { name: '前向实验', exact: true }).click();
+  await page.getByRole('button', { name: '只运行前向' }).click();
+  await expect(page.locator('.tool-content')).toContainText('无参数更新');
+  let exp = await (await page.request.get(`/api/experiments/${id}`)).json();
+  expect(exp.updates).toBe(0);
+  const cp = exp.checkpoint;
+  const traceRows = await (await page.request.get(`/api/experiments/${id}/traces`)).json();
+  expect(traceRows.length).toBe(1);
+  await page.reload();
+  await expect(page.locator('.source-metric')).toContainText('历史前向记录');
+  await expect(page.locator('.inspector .small')).toContainText('未执行反传');
+  await page.getByRole('tab', { name: '物理实验' }).click();
+  await page.getByRole('button', { name: '视图控制', exact: true }).click();
+  await page.getByLabel('更改质量/阻尼并显式重置环境（清除旧批次）').check();
+  await page.getByLabel('质量倍率', { exact: true }).fill('2');
+  await page.getByLabel('实际仿真控制步', { exact: true }).fill('0');
+  await page.getByRole('button', { name: '记录并计算干预' }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('物理干预');
+  const child = new URL(page.url()).searchParams.get('experiment');
+  exp = await (await page.request.get(`/api/experiments/${child}`)).json();
+  expect(exp.geometry.masses_kg).toEqual([0.4, 1.6, 1]);
+  expect(exp.physics.time_s).toBe(0);
+  expect(exp.has_batch).toBe(false);
+  const parent = await (await page.request.get(`/api/experiments/${id}`)).json();
+  expect(parent.checkpoint).toBe(cp);
+});
+
+test('Actual SAC detach course and five-seed replay protocol execute through UI', async ({ page }) => {
+  test.setTimeout(180000);
+  await page.goto('/');
+  await create(page, 'sac', 'E2E actual course protocol');
+  await train(page);
+  await page.getByRole('button', { name: '机制课程', exact: true }).last().click();
+  await page.locator('.course-picker button').nth(4).click();
+  await page.getByRole('button', { name: '固定批次比较冻结参数 / detach Q' }).click();
+  await expect(page.locator('.tool-content')).toContainText('两次使用同批次');
+  await page.locator('.course-picker button').nth(6).click();
+  await page.getByLabel('每个实验 train 迭代数', { exact: true }).fill('1');
+  const done = page.waitForEvent('download');
+  await page.getByRole('button', { name: '登记并依次运行 10 个实验' }).click();
+  const artifact = await done;
+  await artifact.saveAs(evidence + '/actual-five-seed-study.json');
+  await expect(page.locator('.tool-content table tbody tr')).toHaveCount(10);
+  await expect(page.locator('.tool-content table tbody')).not.toContainText('failed');
+  await expect(page.locator('.tool-content')).toContainText('有效 5/5');
+});
+
+test('Production workbench serves local assets without CDN dependencies', async ({ page }) => {
+  const external: string[] = [];
+  const errors: string[] = [];
+  page.on('request', (r) => {
+    if (/^https?:/.test(r.url()) && !r.url().startsWith('http://127.0.0.1:8787')) external.push(r.url());
+  });
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto('http://127.0.0.1:8787/');
+  await expect(page.getByRole('heading', { name: '最近实验' })).toBeVisible();
+  await expect(page.locator('.connection')).toContainText('已连接');
+  expect(external).toEqual([]);
   expect(errors).toEqual([]);
 });

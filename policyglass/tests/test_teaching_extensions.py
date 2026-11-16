@@ -9,6 +9,7 @@ from policyglass.api import create_app
 from policyglass.checkpoint import encode
 from policyglass.experiments import actor_path_probe, loss_slice
 from policyglass.repository import Repository
+from policyglass.slice_jobs import align_actor_critic
 
 
 def test_detach_probe_is_real_derivative_ablation_and_keeps_parent(small_config):
@@ -104,6 +105,37 @@ def test_async_slice_lifecycle_and_mass_damping_reset(tmp_path, small_config):
         original = client.get(prefix).json()
         # Same reset seed gives identical q; static gravity scales exactly with masses.
         from policyglass.environment import static_gravity_torque
+
         a = static_gravity_torque(child["physics"]["qpos_rad"], mass_scale=2)
         np.testing.assert_allclose(a, child["physics"]["bias_torque_nm"], atol=1e-10)
         assert original["config"]["environment"]["mass_scale"] == 1
+
+
+def test_sac_actor_loss_plane_matches_recorded_post_critic_gradient(tmp_path, small_config):
+    small_config.algorithm = "sac"
+    learner = Learner(small_config)
+    outputs = learner.iteration(record=True)
+    document = next(t for _, t in outputs if t)
+    repo = Repository(tmp_path / "alignment")
+    exp = repo.create(learner)
+    origin = repo.save_checkpoint(learner, exp["id"], state=learner.trace_origin_state)
+    output = repo.save_checkpoint(learner, exp["id"], state=learner.trace_result_state)
+    trace = repo.save_trace(document, exp["id"], "f" * 32, origin, output)
+    frozen = repo.learner(origin)
+    source = repo.checkpoint_bytes(origin)
+    provenance = align_actor_critic(repo, frozen, exp["id"], origin, trace)
+    assert provenance["critic_version"] == "after_recorded_critic_step"
+    plane = loss_slice(
+        frozen, "actor/biases.2", [0], "actor/biases.2", [1], extent=1e-5, resolution=3
+    )
+    actor_event = next(
+        e for e in document["events"] if e["kind"] == "optimizer" and e["label"] == "actor"
+    )
+    dx = (plane["loss"][2][1] - plane["loss"][0][1]) / 2e-5
+    dy = (plane["loss"][1][2] - plane["loss"][1][0]) / 2e-5
+    np.testing.assert_allclose(
+        [dx, dy], actor_event["parameters"]["biases.2"]["raw_gradient"][:2], atol=1e-8, rtol=1e-6
+    )
+    assert repo.checkpoint_bytes(origin) == source
+    frozen.env.close()
+    learner.env.close()

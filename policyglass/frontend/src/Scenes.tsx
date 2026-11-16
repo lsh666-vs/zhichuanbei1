@@ -5,14 +5,68 @@ import * as THREE from 'three';
 import { Doc, fmt, quaternion, surfaceVertices, useLab } from './core';
 
 function Label({ at, children }: { at: number[]; children: React.ReactNode }) {
-  const text=React.Children.toArray(children).map(c=>typeof c==='string'||typeof c==='number'?String(c):'').join('');
-  const sprite=useRef<THREE.Sprite>(null);
-  const {texture,aspect}=useMemo(()=>{const canvas=document.createElement('canvas');const ctx=canvas.getContext('2d')!;ctx.font='20px "Segoe UI", "Microsoft YaHei",sans-serif';canvas.width=Math.ceil(ctx.measureText(text).width)+24;canvas.height=42;ctx.fillStyle='#ffffffeb';ctx.fillRect(0,0,canvas.width,42);ctx.strokeStyle='#dce6e9';ctx.strokeRect(1,1,canvas.width-2,40);ctx.font='20px "Segoe UI", "Microsoft YaHei",sans-serif';ctx.fillStyle='#607e8b';ctx.textBaseline='middle';ctx.fillText(text,12,21);const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;return {texture,aspect:canvas.width/42};},[text]);
-  useEffect(()=>()=>texture.dispose(),[texture]);
-  useFrame(({camera,size})=>{if(!sprite.current)return;const distance=camera.position.distanceTo(new THREE.Vector3(...at as [number,number,number]));const height=2*Math.tan(THREE.MathUtils.degToRad((camera as THREE.PerspectiveCamera).fov/2))*distance*18/size.height;sprite.current.scale.set(height*aspect,height,1);});
-  return <sprite ref={sprite} position={at as any} renderOrder={20}><spriteMaterial map={texture} transparent depthTest={false} depthWrite={false}/></sprite>;
+  const text = React.Children.toArray(children)
+    .map((c) => (typeof c === 'string' || typeof c === 'number' ? String(c) : ''))
+    .join('');
+  const sprite = useRef<THREE.Sprite>(null);
+  const { texture, aspect } = useMemo(() => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d')!;
+    ctx.font = '20px "Segoe UI", "Microsoft YaHei",sans-serif';
+    canvas.width = Math.ceil(ctx.measureText(text).width) + 24;
+    canvas.height = 42;
+    ctx.fillStyle = '#ffffffeb';
+    ctx.fillRect(0, 0, canvas.width, 42);
+    ctx.strokeStyle = '#dce6e9';
+    ctx.strokeRect(1, 1, canvas.width - 2, 40);
+    ctx.font = '20px "Segoe UI", "Microsoft YaHei",sans-serif';
+    ctx.fillStyle = '#607e8b';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, 12, 21);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    return { texture, aspect: canvas.width / 42 };
+  }, [text]);
+  useEffect(() => () => texture.dispose(), [texture]);
+  useFrame(({ camera, size }) => {
+    if (!sprite.current) return;
+    const distance = camera.position.distanceTo(new THREE.Vector3(...(at as [number, number, number])));
+    const height =
+      (2 * Math.tan(THREE.MathUtils.degToRad((camera as THREE.PerspectiveCamera).fov / 2)) * distance * 18) /
+      size.height;
+    sprite.current.scale.set(height * aspect, height, 1);
+  });
+  return (
+    <sprite ref={sprite} position={at as any} renderOrder={20}>
+      <spriteMaterial map={texture} transparent depthTest={false} depthWrite={false} />
+    </sprite>
+  );
 }
-function CameraPose({view,count}:{view:string;count:number}){const {camera,invalidate}=useThree();useLayoutEffect(()=>{const networkHeight=Math.max(1,(count-1)*2.7/2);const position=view==='arm'?[1,-1.1,.9]:view==='network'?[4,-Math.max(6,count*2),networkHeight+4]:[3,-3,2.7];camera.position.set(...position as [number,number,number]);camera.up.set(0,0,1);(camera as THREE.PerspectiveCamera).fov=view==='arm'?40:45;(camera as THREE.PerspectiveCamera).updateProjectionMatrix();camera.lookAt(view==='arm'?new THREE.Vector3(.18,0,.2):view==='network'?new THREE.Vector3(0,0,networkHeight):new THREE.Vector3(0,0,.35));invalidate();},[view,count,camera]);return null;}
+function CameraPose({ view, count }: { view: string; count: number }) {
+  const { camera, invalidate } = useThree();
+  useLayoutEffect(() => {
+    const networkHeight = Math.max(1, ((count - 1) * 2.7) / 2);
+    const position =
+      view === 'arm'
+        ? [1, -1.1, 0.9]
+        : view === 'network'
+          ? [4, -Math.max(6, count * 2), networkHeight + 4]
+          : [3, -3, 2.7];
+    camera.position.set(...(position as [number, number, number]));
+    camera.up.set(0, 0, 1);
+    (camera as THREE.PerspectiveCamera).fov = view === 'arm' ? 40 : 45;
+    (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
+    camera.lookAt(
+      view === 'arm'
+        ? new THREE.Vector3(0.18, 0, 0.2)
+        : view === 'network'
+          ? new THREE.Vector3(0, 0, networkHeight)
+          : new THREE.Vector3(0, 0, 0.35),
+    );
+    invalidate();
+  }, [view, count, camera]);
+  return null;
+}
 function Rod({
   a,
   b,
@@ -119,7 +173,17 @@ function Arm({
 }) {
   const ref = useRef<THREE.Mesh>(null);
   // Sampled minibatch rows are not chronological; connect only real transitions.
-  const segments = frames.flatMap((f,i) => f.before&&f.after ? [[f.before.tip_m,f.after.tip_m]] : i>0&&f.tip_m&&frames[i-1].tip_m&&f.time_s>frames[i-1].time_s&&f.time_s-frames[i-1].time_s<=geometry.timestep_s*geometry.substeps+1e-9 ? [[frames[i-1].tip_m,f.tip_m]] : []);
+  const segments = frames.flatMap((f, i) =>
+    f.before && f.after
+      ? [[f.before.tip_m, f.after.tip_m]]
+      : i > 0 &&
+          f.tip_m &&
+          frames[i - 1].tip_m &&
+          f.time_s > frames[i - 1].time_s &&
+          f.time_s - frames[i - 1].time_s <= geometry.timestep_s * geometry.substeps + 1e-9
+        ? [[frames[i - 1].tip_m, f.tip_m]]
+        : [],
+  );
   useEffect(() => {
     ref.current?.position.set(...(target as [number, number, number]));
   }, [target]);
@@ -136,7 +200,9 @@ function Arm({
       <Label at={[0, 0, 0.28]}>Z · m</Label>
       <ArmBodies frame={frame} geometry={geometry} />
       {compare && <ArmBodies frame={compare} geometry={geometry} ghost />}
-      {segments.map((points,i)=><Line key={i} points={points} color="#288e88" lineWidth={1.5} dashed dashSize={0.02} gapSize={0.01}/>)}
+      {segments.map((points, i) => (
+        <Line key={i} points={points} color="#288e88" lineWidth={1.5} dashed dashSize={0.02} gapSize={0.01} />
+      ))}
       <Line
         points={[frame.tip_m, frame.target_m]}
         color="#d9a65f"
@@ -246,7 +312,13 @@ function Network({
               {name} · {spec.sizes.join(' → ')}
             </Label>
             {!expanded ? (
-              <mesh position={[0, 0, base + 0.3]} onClick={() => {select({ model: name, layer: 0 });onExpand();}}>
+              <mesh
+                position={[0, 0, base + 0.3]}
+                onClick={() => {
+                  select({ model: name, layer: 0 });
+                  onExpand();
+                }}
+              >
                 <boxGeometry args={[4.4, 1.3, 0.5]} />
                 <meshStandardMaterial
                   color={s.model === name ? '#288e88' : '#8ba5b6'}
@@ -269,7 +341,13 @@ function Network({
                       `${s.model === name + '_actor_path' ? s.model : modelLabel}/layer${Math.max(0, l - 1)}`,
                 );
                 const ev = events[ei];
-                const values = backward ? (l === 0 ? ev?.input_gradient?.[s.sample] : ev?.output_gradient?.[s.sample]) : (l === 0 ? ev?.input?.[s.sample] : ev?.output?.[s.sample]);
+                const values = backward
+                  ? l === 0
+                    ? ev?.input_gradient?.[s.sample]
+                    : ev?.output_gradient?.[s.sample]
+                  : l === 0
+                    ? ev?.input?.[s.sample]
+                    : ev?.output?.[s.sample];
                 const positions = Array.from({ length: n }, (_, i) => nodePosition(l, i, n, base));
                 return (
                   <group key={l}>
@@ -280,10 +358,20 @@ function Network({
                       points={positions}
                       values={values}
                       selected={
-                        s.model.replace('_actor_path', '') === name && s.layer === l - 1 ? s.neuron : -1
+                        s.model.replace('_actor_path', '') === name
+                          ? l === 0 && s.layer === 0
+                            ? s.input
+                            : s.layer === l - 1
+                              ? s.neuron
+                              : -1
+                          : -1
                       }
                       onPick={(i) => {
-                        select({ model: name, layer: Math.max(0, l - 1), neuron: i });
+                        select(
+                          l === 0
+                            ? { model: name, layer: 0, input: i }
+                            : { model: name, layer: l - 1, neuron: i },
+                        );
                         if (ei >= 0) onEvent(ei);
                       }}
                     />
@@ -292,30 +380,53 @@ function Network({
                       s.layer === l - 1 &&
                       ev?.weight &&
                       Array.from({ length: spec.sizes[l - 1] }, (_, j) => {
-                        const ni = Math.min(s.neuron,n-1);
+                        const ni = Math.min(s.neuron, n - 1);
                         const w = ev.weight[ni]?.[j];
-                        const a = new THREE.Vector3(...nodePosition(l-1,j,spec.sizes[l-1],base) as [number,number,number]);
-                        const b = new THREE.Vector3(...nodePosition(l,ni,n,base) as [number,number,number]);
-                        const value = backward ? w*ev.preactivation_gradient?.[s.sample]?.[ni] : w*ev.input?.[s.sample]?.[j];
-                        const start = backward ? b : a, end = backward ? a : b;
+                        const a = new THREE.Vector3(
+                          ...(nodePosition(l - 1, j, spec.sizes[l - 1], base) as [number, number, number]),
+                        );
+                        const b = new THREE.Vector3(
+                          ...(nodePosition(l, ni, n, base) as [number, number, number]),
+                        );
+                        const value = backward
+                          ? w * ev.preactivation_gradient?.[s.sample]?.[ni]
+                          : w * ev.input?.[s.sample]?.[j];
+                        const start = backward ? b : a,
+                          end = backward ? a : b;
                         const direction = end.clone().sub(start);
                         return (
                           <group key={j}>
-                          <Line
-                            key={j}
-                            points={
-                              [
-                                nodePosition(l - 1, j, spec.sizes[l - 1], base),
-                                nodePosition(l, Math.min(s.neuron, n - 1), n, base),
-                              ] as any
-                            }
-                            color={value < 0 ? '#547cbe' : '#2b9e8e'}
-                            lineWidth={s.input === j ? 2.5 : 1}
-                            transparent
-                            opacity={s.input === j ? 1 : 0.32}
-                            onClick={() => select({ input: j })}
-                          />
-                          {s.input===j&&Number.isFinite(value)&&<><arrowHelper args={[direction.clone().normalize(),start,direction.length(),value<0?'#547cbe':'#2b9e8e',.15,.08]}/><Label at={a.clone().lerp(b,.5).toArray()}>{backward?'W·dL/dz':'W·x'} = {fmt(value)}</Label></>}
+                            <Line
+                              key={j}
+                              points={
+                                [
+                                  nodePosition(l - 1, j, spec.sizes[l - 1], base),
+                                  nodePosition(l, Math.min(s.neuron, n - 1), n, base),
+                                ] as any
+                              }
+                              color={value < 0 ? '#547cbe' : '#2b9e8e'}
+                              lineWidth={s.input === j ? 2.5 : 1}
+                              transparent
+                              opacity={s.input === j ? 1 : 0.32}
+                              onClick={() => select({ input: j })}
+                            />
+                            {s.input === j && Number.isFinite(value) && (
+                              <>
+                                <arrowHelper
+                                  args={[
+                                    direction.clone().normalize(),
+                                    start,
+                                    direction.length(),
+                                    value < 0 ? '#547cbe' : '#2b9e8e',
+                                    0.15,
+                                    0.08,
+                                  ]}
+                                />
+                                <Label at={a.clone().lerp(b, 0.5).toArray()}>
+                                  {backward ? 'W·dL/dz' : 'W·x'} = {fmt(value)}
+                                </Label>
+                              </>
+                            )}
                           </group>
                         );
                       })}
@@ -334,11 +445,13 @@ function Surface({
   fields,
   onPick,
   marker,
+  gradient,
 }: {
   data: Doc;
   fields: string[];
   onPick: (i: number, j: number) => void;
   marker?: number[];
+  gradient?: number[];
 }) {
   const stats = useMemo(() => {
     const vals = fields.flatMap((k) => data[k].flat());
@@ -376,31 +489,18 @@ function Surface({
       <Label at={[-1.3, 0, 1]}>
         高度 {fmt(stats.lo)} … {fmt(stats.hi)}
       </Label>
-      {marker && (
-        <>
+      {marker &&
+        [marker, gradient].filter(Boolean).map((vector, i) => (
           <Line
+            key={i}
             points={[
-              [
-                0,
-                0,
-                (data.loss[Math.floor(data.x.length / 2)][Math.floor(data.y.length / 2)] - stats.lo) / range,
-              ],
-              [
-                marker[0] / extent,
-                marker[1] / extent,
-                (data.loss[Math.floor(data.x.length / 2)][Math.floor(data.y.length / 2)] - stats.lo) / range +
-                  0.02,
-              ],
+              [0, 0, (data.origin_loss - stats.lo) / range + 0.015],
+              [vector[0] / extent, vector[1] / extent, (data.origin_loss - stats.lo) / range + 0.015],
             ]}
-            color="#cf643f"
-            lineWidth={4}
+            color={i === 0 ? '#cf643f' : '#547cbe'}
+            lineWidth={i === 0 ? 4 : 2}
           />
-          <mesh position={[marker[0] / extent, marker[1] / extent, 1.1]}>
-            <sphereGeometry args={[0.025]} />
-            <meshBasicMaterial color="#cf643f" />
-          </mesh>
-        </>
-      )}
+        ))}
     </>
   );
 }
@@ -479,6 +579,7 @@ export default function Scenes({
   fields,
   onPick,
   marker,
+  gradient,
   backward,
   onExpand,
 }: any) {
@@ -488,7 +589,7 @@ export default function Scenes({
       : view === 'network'
         ? { position: [6, -8, 7], zoom: 1 }
         : { position: [3, -3, 2.7], zoom: 1 };
-  const modelCount=path==='all'?Object.keys(architecture??{}).length:1;
+  const modelCount = path === 'all' ? Object.keys(architecture ?? {}).length : 1;
   return (
     <div className="scene" data-testid={`scene-${view}`}>
       <SceneBoundary>
@@ -500,20 +601,28 @@ export default function Scenes({
           fallback={<div>WebGL 不可用；二维数据仍可检查。</div>}
         >
           <color attach="background" args={['#f1f5f6']} />
-          <CameraPose view={view} count={modelCount}/>
+          <CameraPose view={view} count={modelCount} />
           <ambientLight intensity={1.7} />
           <directionalLight position={[3, -3, 7]} intensity={2.2} />
           {view === 'arm' && frame && (
             <Arm {...{ frame, geometry, frames, compare, target, onTarget, drag }} />
           )}
-          {view === 'network' && <Network {...{ architecture, events, onEvent, expanded, path,backward,onExpand }} />}
+          {view === 'network' && (
+            <Network {...{ architecture, events, onEvent, expanded, path, backward, onExpand }} />
+          )}
           {(view === 'q' || view === 'loss') && surface && (
-            <Surface data={surface} {...{ fields, onPick, marker }} />
+            <Surface data={surface} {...{ fields, onPick, marker, gradient }} />
           )}
           <OrbitControls
-            key={view+':'+modelCount}
+            key={view + ':' + modelCount}
             makeDefault
-            target={view === 'arm' ? [0.18, 0, 0.2] : view === 'network' ? [0, 0, Math.max(1,(modelCount-1)*2.7/2)] : [0, 0, 0.35]}
+            target={
+              view === 'arm'
+                ? [0.18, 0, 0.2]
+                : view === 'network'
+                  ? [0, 0, Math.max(1, ((modelCount - 1) * 2.7) / 2)]
+                  : [0, 0, 0.35]
+            }
             minDistance={view === 'arm' ? 0.3 : 1}
             maxDistance={view === 'arm' ? 4 : 25}
           />

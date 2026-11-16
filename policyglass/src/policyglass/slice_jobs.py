@@ -8,6 +8,29 @@ from .experiments import loss_slice, q_slice
 from .repository import identifier
 
 
+def align_actor_critic(repository, learner, experiment, checkpoint, trace_id):
+    """SAC's recorded actor uses Q AFTER critic update, at the old actor/alpha."""
+    if not trace_id:
+        return {"critic_version": "selected_checkpoint"}
+    document = repository.trace(trace_id)
+    if document["experiment_id"] != experiment or document["origin_checkpoint"] != checkpoint:
+        raise ValueError("Trace-aligned loss requires its experiment and exact origin checkpoint")
+    if learner.config.algorithm == "sac":
+        output = repository.learner(document["output_checkpoint"])
+        try:
+            for name in ("q1", "q2"):
+                learner.models[name].load_state_dict(output.models[name].state_dict())
+        finally:
+            output.env.close()
+    return {
+        "trace_id": trace_id,
+        "source_checkpoint": checkpoint,
+        "critic_version": "after_recorded_critic_step"
+        if learner.config.algorithm == "sac"
+        else "independent_value_not_in_actor_objective",
+    }
+
+
 class SliceJobs:
     def __init__(self, repository):
         self.repository = repository
@@ -54,7 +77,15 @@ class SliceJobs:
             if job["kind"] == "q":
                 result = q_slice(learner, **options)
             else:
+                provenance = align_actor_critic(
+                    self.repository,
+                    learner,
+                    job["experiment"],
+                    job["checkpoint"],
+                    options.pop("trace_id", None),
+                )
                 result = loss_slice(learner, **options, cancelled=job["cancel"].is_set)
+                result.update(provenance)
             with self.lock:
                 if job["cancel"].is_set():
                     job["status"] = "cancelled"
@@ -63,7 +94,15 @@ class SliceJobs:
         except InterruptedError:
             with self.lock:
                 job["status"] = "cancelled"
-        except (ValueError, RuntimeError, KeyError, FloatingPointError, OSError, TypeError, IndexError) as exc:
+        except (
+            ValueError,
+            RuntimeError,
+            KeyError,
+            FloatingPointError,
+            OSError,
+            TypeError,
+            IndexError,
+        ) as exc:
             with self.lock:
                 job.update(status="failed", error=str(exc)[:500])
         finally:

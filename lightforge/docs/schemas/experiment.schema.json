@@ -1,0 +1,246 @@
+{
+  "$defs": {
+    "ExcitationSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "default": "manufactured",
+          "enum": [
+            "manufactured",
+            "localized_current"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "amplitude": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Amplitude",
+          "type": "number"
+        },
+        "component": {
+          "default": "y",
+          "enum": [
+            "x",
+            "y",
+            "z"
+          ],
+          "title": "Component",
+          "type": "string"
+        },
+        "center_um": {
+          "anyOf": [
+            {
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Center Um"
+        },
+        "width_um": {
+          "default": 0.15,
+          "maximum": 1,
+          "minimum": 0.05,
+          "title": "Width Um",
+          "type": "number"
+        }
+      },
+      "title": "ExcitationSpec",
+      "type": "object"
+    },
+    "GeometrySpec": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "default": "manufactured_cavity",
+          "enum": [
+            "manufactured_cavity",
+            "layered_waveguide"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "length_um": {
+          "default": 3.0,
+          "maximum": 12,
+          "minimum": 0.5,
+          "title": "Length Um",
+          "type": "number"
+        },
+        "width_um": {
+          "default": 2.0,
+          "maximum": 8,
+          "minimum": 0.5,
+          "title": "Width Um",
+          "type": "number"
+        },
+        "height_um": {
+          "default": 1.6,
+          "maximum": 6,
+          "minimum": 0.5,
+          "title": "Height Um",
+          "type": "number"
+        },
+        "core_width_um": {
+          "default": 0.7,
+          "maximum": 4,
+          "minimum": 0.06,
+          "title": "Core Width Um",
+          "type": "number"
+        },
+        "core_thickness_um": {
+          "default": 0.4,
+          "maximum": 2,
+          "minimum": 0.06,
+          "title": "Core Thickness Um",
+          "type": "number"
+        },
+        "etch_depth_um": {
+          "default": 0.4,
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Etch Depth Um",
+          "type": "number"
+        },
+        "sidewall_angle_deg": {
+          "default": 90.0,
+          "maximum": 90,
+          "minimum": 60,
+          "title": "Sidewall Angle Deg",
+          "type": "number"
+        },
+        "core_index": {
+          "default": 2.0,
+          "maximum": 4,
+          "minimum": 1,
+          "title": "Core Index",
+          "type": "number"
+        },
+        "cladding_index": {
+          "default": 1.44,
+          "maximum": 4,
+          "minimum": 1,
+          "title": "Cladding Index",
+          "type": "number"
+        },
+        "design_length_um": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Design Length Um",
+          "type": "number"
+        },
+        "pml_thickness_um": {
+          "default": 0.3,
+          "maximum": 2,
+          "minimum": 0.1,
+          "title": "Pml Thickness Um",
+          "type": "number"
+        },
+        "material_loss": {
+          "default": 0.0,
+          "maximum": 0.2,
+          "minimum": 0,
+          "title": "Material Loss",
+          "type": "number"
+        }
+      },
+      "title": "GeometrySpec",
+      "type": "object"
+    },
+    "MeshSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "maxh_um": {
+          "default": 0.35,
+          "maximum": 0.8,
+          "minimum": 0.06,
+          "title": "Maxh Um",
+          "type": "number"
+        },
+        "order": {
+          "const": 2,
+          "default": 2,
+          "title": "Order",
+          "type": "integer"
+        },
+        "sample_shape": {
+          "default": [
+            25,
+            17,
+            13
+          ],
+          "items": {
+            "maximum": 129,
+            "minimum": 3,
+            "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "title": "Sample Shape",
+          "type": "array"
+        },
+        "max_dofs": {
+          "default": 250000,
+          "maximum": 500000,
+          "minimum": 1000,
+          "title": "Max Dofs",
+          "type": "integer"
+        }
+      },
+      "title": "MeshSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "name": {
+      "default": "PEC cavity verification",
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "wavelength_um": {
+      "default": 1.55,
+      "maximum": 8,
+      "minimum": 0.6,
+      "title": "Wavelength Um",
+      "type": "number"
+    },
+    "geometry": {
+      "$ref": "#/$defs/GeometrySpec"
+    },
+    "mesh": {
+      "$ref": "#/$defs/MeshSpec"
+    },
+    "excitation": {
+      "$ref": "#/$defs/ExcitationSpec"
+    }
+  },
+  "title": "ExperimentSpec",
+  "type": "object"
+}

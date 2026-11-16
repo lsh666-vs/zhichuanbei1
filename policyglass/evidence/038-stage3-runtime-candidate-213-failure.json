@@ -1,0 +1,60 @@
+{
+  "schema": "policyglass.runtime-candidate-attempt.v1",
+  "candidate": {
+    "torch": "2.13.0+cpu",
+    "setuptools": "84.1.0",
+    "environment": ".runtime/secure-venv"
+  },
+  "status": "NOT_VERIFIED",
+  "installed": true,
+  "pip_check": "No broken requirements found",
+  "osv_queries": [
+    {
+      "queried_utc": "2026-11-16T15:25:54.5414986Z",
+      "package": "torch",
+      "endpoint": "https://api.osv.dev/v1/query",
+      "response_keys": [
+        null
+      ],
+      "version": "2.13.0",
+      "advisory_ids": []
+    },
+    {
+      "queried_utc": "2026-11-16T15:25:56.8487785Z",
+      "package": "setuptools",
+      "endpoint": "https://api.osv.dev/v1/query",
+      "response_keys": [
+        null
+      ],
+      "version": "84.1.0",
+      "advisory_ids": []
+    }
+  ],
+  "commands": [
+    {
+      "command": ".runtime/secure-venv/Scripts/python.exe -m pytest -q --junitxml=evidence/036-stage3-patched-runtime-tests.xml",
+      "exit_code": 1,
+      "stage": "conftest import; no tests collected and pytest did not produce XML"
+    },
+    {
+      "command": ".runtime/secure-venv/Scripts/python.exe -m policyglass.cli verify --output evidence/037-stage3-patched-science.json",
+      "exit_code": 1,
+      "stage": "torch import; science checks did not run"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/compare_runtime_versions.py --output evidence/038-stage3-runtime-compatibility.json",
+      "exit_code": 1,
+      "stage": "original worker completed; candidate worker failed at torch import; comparator not executed"
+    }
+  ],
+  "failure": "OSError WinError1114 loading candidate torch/lib/c10.dll or one of its dependencies; exact dependency/cause not established",
+  "raw_candidate_log": ".runtime/runtime-compatibility/20261116T153014-22024/candidate.log",
+  "raw_candidate_log_sha256": "ab06f099d40d303d8e36ab92bf0704337cdad4dcc6fe45969f4768627fc210e1",
+  "raw_candidate_excerpt": "Traceback (most recent call last):\n  File \"D:\\���Ǳ�1\\counterlab\\policyglass\\scripts\\compare_runtime_versions.py\", line 396, in <module>\n    main()\n  File \"D:\\���Ǳ�1\\counterlab\\policyglass\\scripts\\compare_runtime_versions.py\", line 347, in main\n    worker(d_path(args.output))\n  File \"D:\\���Ǳ�1\\counterlab\\policyglass\\scripts\\compare_runtime_versions.py\", line 48, in worker\n    import torch\n  File \"D:\\���Ǳ�1\\counterlab\\policyglass\\.runtime\\secure-venv\\Lib\\site-packages\\torch\\__init__.py\", line 288, in <module>\n    _load_dll_libraries()\n  File \"D:\\���Ǳ�1\\counterlab\\policyglass\\.runtime\\secure-venv\\Lib\\site-packages\\torch\\__init__.py\", line 271, in _load_dll_libraries\n    raise err\nOSError: [WinError 1114] ��̬���ӿ�(DLL)��ʼ������ʧ�ܡ� Error loading \"D:\\���Ǳ�1\\counterlab\\policyglass\\.runtime\\secure-venv\\Lib\\site-packages\\torch\\lib\\c10.dll\" or one of its dependencies.\n",
+  "original_worker_metadata": ".runtime/runtime-compatibility/20261116T153014-22024/original/worker.json",
+  "limitations": [
+    "Installation and pip check are not numerical verification.",
+    "Candidate DLLs were not mixed with earlier versions; no global/system/C: repair was attempted.",
+    "The original .venv was not changed and no default runtime was switched."
+  ]
+}

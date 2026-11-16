@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import katex from 'katex';
 import { at, Doc, fmt, numeric, shape, useLab } from './core';
 export function Formula({ tex }: { tex: string }) {
+  const html = useMemo(
+    () => katex.renderToString(tex, { throwOnError: false, strict: 'ignore', trust: false }),
+    [tex],
+  );
   return (
     <div
       className="formula"
       dangerouslySetInnerHTML={{
-        __html: katex.renderToString(tex, { throwOnError: false, strict: 'ignore', trust: false }),
+        __html: html,
       }}
     />
   );
@@ -15,7 +19,7 @@ function Tensor({ value, path }: { value: any; path: string }) {
   const [page, setPage] = useState(0),
     [open, setOpen] = useState(false);
   const dims = shape(value);
-  const flat = Array.isArray(value) ? value.flat(Infinity) : [value],
+  const flat = open ? (Array.isArray(value) ? value.flat(Infinity) : [value]) : [],
     start = page * 64;
   return (
     <div className="tensor">

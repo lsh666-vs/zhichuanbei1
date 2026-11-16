@@ -276,11 +276,75 @@ function Neurons({
     </instancedMesh>
   );
 }
-const nodePosition = (layer: number, i: number, n: number, offset = 0) => [
+const nodePosition = (layer: number, i: number, n: number, offset = 0): [number, number, number] => [
   layer * 1.75 - 2.5,
   ((i % 8) - Math.min(n - 1, 7) / 2) * 0.23,
   Math.floor(i / 8) * 0.23 + offset,
 ];
+function Connections({ event, layer, width, base, sample, neuron, input, backward, onPick }: any) {
+  const edges = useMemo(
+    () =>
+      Array.from({ length: width }, (_, j) => {
+        const a = nodePosition(layer - 1, j, width, base),
+          b = nodePosition(layer, neuron, event.weight.length, base);
+        const value = backward
+          ? event.weight[neuron]?.[j] * event.preactivation_gradient?.[sample]?.[neuron]
+          : event.weight[neuron]?.[j] * event.input?.[sample]?.[j];
+        return { a, b, value };
+      }),
+    [event, layer, width, base, sample, neuron, backward],
+  );
+  const geometry = useMemo(() => {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute(
+      'position',
+      new THREE.Float32BufferAttribute(
+        edges.flatMap(({ a, b }) => [...a, ...b]),
+        3,
+      ),
+    );
+    g.setAttribute(
+      'color',
+      new THREE.Float32BufferAttribute(
+        edges.flatMap(({ value }) => {
+          const c = new THREE.Color(value < 0 ? '#547cbe' : '#2b9e8e');
+          return [...c.toArray(), ...c.toArray()];
+        }),
+        3,
+      ),
+    );
+    return g;
+  }, [edges]);
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  const selected = edges[Math.min(input, edges.length - 1)];
+  if (!selected) return null;
+  const start = new THREE.Vector3(...((backward ? selected.b : selected.a) as [number, number, number]));
+  const end = new THREE.Vector3(...((backward ? selected.a : selected.b) as [number, number, number]));
+  const direction = end.clone().sub(start),
+    color = selected.value < 0 ? '#547cbe' : '#2b9e8e';
+  return (
+    <>
+      <lineSegments
+        geometry={geometry}
+        onClick={(e) => {
+          e.stopPropagation();
+          onPick(Math.floor((e.index ?? 0) / 2));
+        }}
+      >
+        <lineBasicMaterial vertexColors transparent opacity={0.45} />
+      </lineSegments>
+      <Line points={[selected.a, selected.b]} color={color} lineWidth={2.5} />
+      {Number.isFinite(selected.value) && (
+        <>
+          <arrowHelper args={[direction.clone().normalize(), start, direction.length(), color, 0.15, 0.08]} />
+          <Label at={start.clone().lerp(end, 0.5).toArray()}>
+            {backward ? 'W·dL/dz' : 'W·x'} = {fmt(selected.value)}
+          </Label>
+        </>
+      )}
+    </>
+  );
+}
 function Network({
   architecture,
   events,
@@ -378,58 +442,19 @@ function Network({
                     {l > 0 &&
                       s.model.replace('_actor_path', '') === name &&
                       s.layer === l - 1 &&
-                      ev?.weight &&
-                      Array.from({ length: spec.sizes[l - 1] }, (_, j) => {
-                        const ni = Math.min(s.neuron, n - 1);
-                        const w = ev.weight[ni]?.[j];
-                        const a = new THREE.Vector3(
-                          ...(nodePosition(l - 1, j, spec.sizes[l - 1], base) as [number, number, number]),
-                        );
-                        const b = new THREE.Vector3(
-                          ...(nodePosition(l, ni, n, base) as [number, number, number]),
-                        );
-                        const value = backward
-                          ? w * ev.preactivation_gradient?.[s.sample]?.[ni]
-                          : w * ev.input?.[s.sample]?.[j];
-                        const start = backward ? b : a,
-                          end = backward ? a : b;
-                        const direction = end.clone().sub(start);
-                        return (
-                          <group key={j}>
-                            <Line
-                              key={j}
-                              points={
-                                [
-                                  nodePosition(l - 1, j, spec.sizes[l - 1], base),
-                                  nodePosition(l, Math.min(s.neuron, n - 1), n, base),
-                                ] as any
-                              }
-                              color={value < 0 ? '#547cbe' : '#2b9e8e'}
-                              lineWidth={s.input === j ? 2.5 : 1}
-                              transparent
-                              opacity={s.input === j ? 1 : 0.32}
-                              onClick={() => select({ input: j })}
-                            />
-                            {s.input === j && Number.isFinite(value) && (
-                              <>
-                                <arrowHelper
-                                  args={[
-                                    direction.clone().normalize(),
-                                    start,
-                                    direction.length(),
-                                    value < 0 ? '#547cbe' : '#2b9e8e',
-                                    0.15,
-                                    0.08,
-                                  ]}
-                                />
-                                <Label at={a.clone().lerp(b, 0.5).toArray()}>
-                                  {backward ? 'W·dL/dz' : 'W·x'} = {fmt(value)}
-                                </Label>
-                              </>
-                            )}
-                          </group>
-                        );
-                      })}
+                      ev?.weight && (
+                        <Connections
+                          event={ev}
+                          layer={l}
+                          width={spec.sizes[l - 1]}
+                          base={base}
+                          sample={s.sample}
+                          neuron={Math.min(s.neuron, n - 1)}
+                          input={s.input}
+                          backward={backward}
+                          onPick={(input) => select({ input })}
+                        />
+                      )}
                   </group>
                 );
               })
@@ -561,6 +586,44 @@ class SceneBoundary extends React.Component<{ children: React.ReactNode }, { err
     );
   }
 }
+
+// Opt-in local benchmark. Normal workbench keeps demand rendering and allocates no log.
+function FrameProbe() {
+  const { gl, invalidate } = useThree();
+  const enabled = new URLSearchParams(window.location.search).get('diagnostics') === '1';
+  useEffect(() => {
+    if (!enabled) return;
+    let request = 0;
+    const draw = () => {
+      invalidate();
+      request = requestAnimationFrame(draw);
+    };
+    request = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(request);
+  }, [enabled, invalidate]);
+  useFrame(() => {
+    if (!enabled) return;
+    const target = window as any;
+    const frames = (target.__policyglassFrames ??= []);
+    if (frames.length < 7200)
+      frames.push({
+        time: performance.now(),
+        calls: gl.info.render.calls,
+        triangles: gl.info.render.triangles,
+        geometries: gl.info.memory.geometries,
+        textures: gl.info.memory.textures,
+      });
+    const context = gl.getContext();
+    target.__policyglassRenderer ??= {
+      renderer: context.getParameter(context.RENDERER),
+      vendor: context.getParameter(context.VENDOR),
+      pixelRatio: gl.getPixelRatio(),
+      width: gl.domElement.width,
+      height: gl.domElement.height,
+    };
+  });
+  return null;
+}
 export default function Scenes({
   view,
   frame,
@@ -591,7 +654,13 @@ export default function Scenes({
         : { position: [3, -3, 2.7], zoom: 1 };
   const modelCount = path === 'all' ? Object.keys(architecture ?? {}).length : 1;
   return (
-    <div className="scene" data-testid={`scene-${view}`}>
+    <div
+      className="scene"
+      data-testid={`scene-${view}`}
+      role="tabpanel"
+      id={'view-panel-' + view}
+      aria-labelledby={'view-tab-' + view}
+    >
       <SceneBoundary>
         <Canvas
           camera={{ ...camera, up: [0, 0, 1], near: 0.01, far: 100 } as any}
@@ -600,6 +669,7 @@ export default function Scenes({
           gl={{ antialias: true, powerPreference: 'high-performance' }}
           fallback={<div>WebGL 不可用；二维数据仍可检查。</div>}
         >
+          <FrameProbe />
           <color attach="background" args={['#f1f5f6']} />
           <CameraPose view={view} count={modelCount} />
           <ambientLight intensity={1.7} />

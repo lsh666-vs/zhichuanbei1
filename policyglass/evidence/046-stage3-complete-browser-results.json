@@ -1,0 +1,474 @@
+{
+  "config": {
+    "configFile": "D:\\传智杯1\\counterlab\\policyglass\\frontend\\playwright.config.ts",
+    "rootDir": "D:/传智杯1/counterlab/policyglass/frontend/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../.runtime/e2e/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "D:/传智杯1/counterlab/policyglass/.runtime/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/传智杯1/counterlab/policyglass/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "performance.spec.ts",
+      "file": "performance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Collect genuine renderer, event-selection and repeated-view performance evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 76086,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T15:36:21.703Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b15d6361b2fc38288977-efa413c4840195ffd61f",
+          "file": "performance.spec.ts",
+          "line": 146,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "stage3.spec.ts",
+      "file": "stage3.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Keyboard dialog, reduced motion and source tabs remain usable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1684,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T15:37:38.072Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "109864117818eee9cf27-27c24b9d0f905337d0bb",
+          "file": "stage3.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "Offline optional assistant previews actual authorized event and sends nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1242,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T15:37:39.764Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "109864117818eee9cf27-a720a0d858d10827b0a8",
+          "file": "stage3.spec.ts",
+          "line": 68,
+          "column": 1
+        },
+        {
+          "title": "Production uses local docs, defensive headers and text-only user labels",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 864,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T15:37:41.013Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "109864117818eee9cf27-2521388bd73d605a73db",
+          "file": "stage3.spec.ts",
+          "line": 111,
+          "column": 1
+        },
+        {
+          "title": "All registered research results stay visible and selected trained state imports without learning",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2557,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T15:37:41.883Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "actual-study-availability",
+                      "contentType": "application/json",
+                      "body": "eyJzY2hlbWEiOiJwb2xpY3lnbGFzcy5zdHVkeS1jYXRhbG9nLnYxIiwic291cmNlIjoiZXZpZGVuY2UvMDI1LXN0YWdlMy1zdHVkeS1yZXN1bHRzLmpzb24iLCJzY29wZSI6IuWbuuWumuebruaghyBbMC40NSwwLjEyLDAuNDVdIG3vvJvkupTkuKrorq3nu4Pnp43lrZDliIbliKvor4Tku7fkupTkuKrliJ3lp4vnirbmgIHnp43lrZDjgILmmL7npLrlhajpg6jnmbvorrDnu5PmnpzvvIzkuI3pu5jorqTmjJHpgInmnIDlpb3np43lrZDjgILot53nprvotorlsI/otorlpb3vvJvmiJDlip/ljaDmr5TmmK/ot53nprvlsI/kuo4wLjA0beeahOatpeaVsOavlOS+i++8jOS4jeetieS6juetlueVpeaZrumBjeaIkOWKn+OAglBQTy9TQUPpooTnrpfkuI3lkIzvvIzkuI3mja7mraTkvZzlkIznrYnnrpflipvmjpLlkI3vvJvmnKrpqozor4HmlrDnm67moIfjgIHnnJ/lrp7noazku7bmiJbmlZnlrabmlYjmnpzjgIIiLCJyb3dzIjpbeyJjb25kaXRpb24iOiJwcG9fcmVmZXJlbmNlIiwic2VlZCI6MTEsInN0YXR1cyI6ImNvbXBsZXRlZCIsImF2YWlsYWJsZSI6dHJ1ZSwiYXZhaWxhYmlsaXR5IjoiYXZhaWxhYmxlIiwiYnVkZ2V0X2Vudl9zdGVwcyI6MzI3NjgsIm1ldHJpY3MiOnsiZW52X3N0ZXBzIjozMjc2OCwidXBkYXRlcyI6MTU5OSwic2Vjb25kcyI6NjcuODE3OTkyMjAwMDAxNzUsImluaXRpYWxfbWVhbl9kaXN0YW5jZV9tIjowLjkzNjgxMTYxMTAyMjgyMDcsIm1lYW5fZGlzdGFuY2VfbSI6MC4wMjM1Njc2NzcwNzg4ODYyNywibGFzdDMyX2Rpc3RhbmNlX20iOjAuMDA0MDc0NDYyNzEwOTYzOTY5LCJyZXR1cm4iOi0zLjE3Mjc2NDQ0OTA4MTAwNywic3VjY2Vzc19mcmFjdGlvbiI6MC44MzkwNjI1fSwiY2hlY2twb2ludF9zaGEyNTYiOiJkNDQ2Njk1NTY0ZDIwMDVkMjNhMWVjODFjYTdhNWE5OTQ4NDhiNGQyNDljZmQ1ZTUzMWFlODIyMjM5MmIzMGY1IiwiY2hlY2twb2ludF9zb3VyY2UiOiJsb2NhbF9zdHVkeSJ9LHsiY29uZGl0aW9uIjoicHBvX3JlZmVyZW5jZSIsInNlZWQiOjIzLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJhdmFpbGFibGUiOnRydWUsImF2YWlsYWJpbGl0eSI6ImF2YWlsYWJsZSIsImJ1ZGdldF9lbnZfc3RlcHMiOjMyNzY4LCJtZXRyaWNzIjp7ImVudl9zdGVwcyI6MzI3NjgsInVwZGF0ZXMiOjE2MDAsInNlY29uZHMiOjcwLjUwODg4ODc5OTk5OTExLCJpbml0aWFsX21lYW5fZGlzdGFuY2VfbSI6MC45NDA3MTk4NTQwNjM5NDQsIm1lYW5fZGlzdGFuY2VfbSI6MC4wNTY3MTk4NDc5OTk2NzEzNTYsImxhc3QzMl9kaXN0YW5jZV9tIjowLjA0MTk2NjA2MDU0Nzg2NjE0LCJyZXR1cm4iOi0zLjMxMDA3MTM5OTAxNjE4OCwic3VjY2Vzc19mcmFjdGlvbiI6MC4wOTIxODc1fSwiY2hlY2twb2ludF9zaGEyNTYiOiI4YTNmMjJjM2VkZDY4Zjg0YTZkYWE5Y2RkYjE1OTFjYWE3NWEzMWExZTQ2NTQ0NTZlNTg1ZjQ0NTI3YzhhZGI5IiwiY2hlY2twb2ludF9zb3VyY2UiOiJsb2NhbF9zdHVkeSJ9LHsiY29uZGl0aW9uIjoicHBvX3JlZmVyZW5jZSIsInNlZWQiOjM3LCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJhdmFpbGFibGUiOnRydWUsImF2YWlsYWJpbGl0eSI6ImF2YWlsYWJsZSIsImJ1ZGdldF9lbnZfc3RlcHMiOjMyNzY4LCJtZXRyaWNzIjp7ImVudl9zdGVwcyI6MzI3NjgsInVwZGF0ZXMiOjE3OTcsInNlY29uZHMiOjcxLjQzODAxMDAwMDAwMTY3LCJpbml0aWFsX21lYW5fZGlzdGFuY2VfbSI6MC45MzMyNTEwNjg0NjY2ODkxLCJtZWFuX2Rpc3RhbmNlX20iOjAuMTEwMjkyNjk1NTgzNDc0MjgsImxhc3QzMl9kaXN0YW5jZV9tIjowLjA3NzQzNzA1MzE2MzU4ODc1LCJyZXR1cm4iOi00LjQ0ODk1NzkwMjEzNjEwNiwic3VjY2Vzc19mcmFjdGlvbiI6MH0sImNoZWNrcG9pbnRfc2hhMjU2IjoiZWViZDk5MTFkZjAzYjM5ZDc1MDk3ZmQyODFjOWVhZmRmNDA2MzllNzhiYWFkYTE2ZGIxYzM0YjdiMzdlZWQ4NCIsImNoZWNrcG9pbnRfc291cmNlIjoibG9jYWxfc3R1ZHkifSx7ImNvbmRpdGlvbiI6InBwb19yZWZlcmVuY2UiLCJzZWVkIjo1Mywic3RhdHVzIjoiY29tcGxldGVkIiwiYXZhaWxhYmxlIjp0cnVlLCJhdmFpbGFiaWxpdHkiOiJhdmFpbGFibGUiLCJidWRnZXRfZW52X3N0ZXBzIjozMjc2OCwibWV0cmljcyI6eyJlbnZfc3RlcHMiOjMyNzY4LCJ1cGRhdGVzIjoxODI3LCJzZWNvbmRzIjo3NC4yMDI1NTE0MDAwMDE1NCwiaW5pdGlhbF9tZWFuX2Rpc3RhbmNlX20iOjAuOTQzNjk2Mzc2ODkxNTU0MiwibWVhbl9kaXN0YW5jZV9tIjowLjAzNDgyOTM0Njc2OTE5NDA3LCJsYXN0MzJfZGlzdGFuY2VfbSI6MC4wMTkwNTE3OTYwNTg1OTUyNCwicmV0dXJuIjotMy4xNjg4MjMwMzEzOTkxMTc3LCJzdWNjZXNzX2ZyYWN0aW9uIjowLjg2NTYyNX0sImNoZWNrcG9pbnRfc2hhMjU2IjoiODY5Mjk4NDMzYTBkOWY2MzI4NDg0YTkwN2Q5NTY3N2Y5OWQ2OTYwN2E5OGU4MTU2NWIzZTVlZDU1ZWQ1YzZhMyIsImNoZWNrcG9pbnRfc291cmNlIjoibG9jYWxfc3R1ZHkifSx7ImNvbmRpdGlvbiI6InBwb19yZWZlcmVuY2UiLCJzZWVkIjo3MSwic3RhdHVzIjoiY29tcGxldGVkIiwiYXZhaWxhYmxlIjp0cnVlLCJhdmFpbGFiaWxpdHkiOiJhdmFpbGFibGUiLCJidWRnZXRfZW52X3N0ZXBzIjozMjc2OCwibWV0cmljcyI6eyJlbnZfc3RlcHMiOjMyNzY4LCJ1cGRhdGVzIjoxODI1LCJzZWNvbmRzIjo3Ni41Mjc4NTg0OTk5OTc4MiwiaW5pdGlhbF9tZWFuX2Rpc3RhbmNlX20iOjAuOTMzOTc4Mjc3MDM2MDk1MiwibWVhbl9kaXN0YW5jZV9tIjowLjA0OTY0MTY1NzA3NTIyNTgxLCJsYXN0MzJfZGlzdGFuY2VfbSI6MC4wMjg5MTI3Njg3OTkwNzc5MDMsInJldHVybiI6LTMuMzY4NzAwODMyNDQwNDA0LCJzdWNjZXNzX2ZyYWN0aW9uIjowLjgxMjV9LCJjaGVja3BvaW50X3NoYTI1NiI6ImRmNDNkYzdkODhmNjJjZDQyMGVhZmRkNTg4NzIwNWM5MTQ3ZDg5NjBkNmZkMWJmYmZkNTNmMTg0OWE1MzZmNmEiLCJjaGVja3BvaW50X3NvdXJjZSI6ImxvY2FsX3N0dWR5In0seyJjb25kaXRpb24iOiJwcG9fbGFyZ2Vfc3RlcCIsInNlZWQiOjExLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJhdmFpbGFibGUiOnRydWUsImF2YWlsYWJpbGl0eSI6ImF2YWlsYWJsZSIsImJ1ZGdldF9lbnZfc3RlcHMiOjgxOTIsIm1ldHJpY3MiOnsiZW52X3N0ZXBzIjo4MTkyLCJ1cGRhdGVzIjozMiwic2Vjb25kcyI6MTYuNzc0MDI2NDk5OTk5MzEsImluaXRpYWxfbWVhbl9kaXN0YW5jZV9tIjowLjkzNjgxMTYxMTAyMjgyMDcsIm1lYW5fZGlzdGFuY2VfbSI6MC41NzQ4OTM0NDY4MjEwMDA3LCJsYXN0MzJfZGlzdGFuY2VfbSI6MC41MjAzNDMxNjIwODAxNjQyLCJyZXR1cm4iOi02Ny4yMjg0OTIxMjY5MjM5Miwic3VjY2Vzc19mcmFjdGlvbiI6MH0sImNoZWNrcG9pbnRfc2hhMjU2IjoiNGRiNjhiNWViY2MyYzA3NTJkYTNhNDU2ZWJhYzliODlhYTQ2MDI1N2I2ZjBlZGUxYzhmNTUwMTRlYzhlYTk1OCIsImNoZWNrcG9pbnRfc291cmNlIjoibG9jYWxfc3R1ZHkifSx7ImNvbmRpdGlvbiI6InBwb19sYXJnZV9zdGVwIiwic2VlZCI6MjMsInN0YXR1cyI6ImNvbXBsZXRlZCIsImF2YWlsYWJsZSI6dHJ1ZSwiYXZhaWxhYmlsaXR5IjoiYXZhaWxhYmxlIiwiYnVkZ2V0X2Vudl9zdGVwcyI6ODE5MiwibWV0cmljcyI6eyJlbnZfc3RlcHMiOjgxOTIsInVwZGF0ZXMiOjMyLCJzZWNvbmRzIjoxNi40NTY1MDEwMDAwMDA1NywiaW5pdGlhbF9tZWFuX2Rpc3RhbmNlX20iOjAuOTQwNzE5ODU0MDYzOTQ0LCJtZWFuX2Rpc3RhbmNlX20iOjAuNDA2MjA2MTU5MzQ5MzQyOCwibGFzdDMyX2Rpc3RhbmNlX20iOjAuMzUzNDY3MTkxNzY2ODE0MzUsInJldHVybiI6LTQ0LjUwMDM1Nzg0MzI1NTcyLCJzdWNjZXNzX2ZyYWN0aW9uIjowfSwiY2hlY2twb2ludF9zaGEyNTYiOiIzNmM3MjA4MDA4YjExZDE0NjljZTI4NTQ0MTMwMDRmMWVmNjMxYTMxYTgxMjUyODk2MGYzMzdhNmI3MzEyYzRlIiwiY2hlY2twb2ludF9zb3VyY2UiOiJsb2NhbF9zdHVkeSJ9LHsiY29uZGl0aW9uIjoicHBvX2xhcmdlX3N0ZXAiLCJzZWVkIjozNywic3RhdHVzIjoiY29tcGxldGVkIiwiYXZhaWxhYmxlIjp0cnVlLCJhdmFpbGFiaWxpdHkiOiJhdmFpbGFibGUiLCJidWRnZXRfZW52X3N0ZXBzIjo4MTkyLCJtZXRyaWNzIjp7ImVudl9zdGVwcyI6ODE5MiwidXBkYXRlcyI6MzIsInNlY29uZHMiOjE2LjI0ODUwMDAwMDAwMTUxMywiaW5pdGlhbF9tZWFuX2Rpc3RhbmNlX20iOjAuOTMzMjUxMDY4NDY2Njg5MSwibWVhbl9kaXN0YW5jZV9tIjowLjMxMDUxNjUxOTQ0NjE4MTcsImxhc3QzMl9kaXN0YW5jZV9tIjowLjI5NzEzNjA4MjM4ODcyNjYsInJldHVybiI6LTMxLjg4NjEwMTM4Mjg1NTc1LCJzdWNjZXNzX2ZyYWN0aW9uIjowfSwiY2hlY2twb2ludF9zaGEyNTYiOiI4ZTI0Y2U4YTIyOGE4YjhlNDc2ZjdjZmQxMzA3NjlhMmMwOTk3ZGQwOWU4Yjk4MDI3NTk0ZDA2NTVjYjMzZjM4IiwiY2hlY2twb2ludF9zb3VyY2UiOiJsb2NhbF9zdHVkeSJ9LHsiY29uZGl0aW9uIjoicHBvX2xhcmdlX3N0ZXAiLCJzZWVkIjo1Mywic3RhdHVzIjoiY29tcGxldGVkIiwiYXZhaWxhYmxlIjp0cnVlLCJhdmFpbGFiaWxpdHkiOiJhdmFpbGFibGUiLCJidWRnZXRfZW52X3N0ZXBzIjo4MTkyLCJtZXRyaWNzIjp7ImVudl9zdGVwcyI6ODE5MiwidXBkYXRlcyI6MzIsInNlY29uZHMiOjE1LjYxNTk1NTY5OTk5OTE3NiwiaW5pdGlhbF9tZWFuX2Rpc3RhbmNlX20iOjAuOTQzNjk2Mzc2ODkxNTU0MiwibWVhbl9kaXN0YW5jZV9tIjowLjU1MzkzNzMxMDAzNTk0MTMsImxhc3QzMl9kaXN0YW5jZV9tIjowLjUyMDM1MTIzMjMzMTgyNDcsInJldHVybiI6LTU5LjY5ODA5Nzk3OTgxOTI0LCJzdWNjZXNzX2ZyYWN0aW9uIjowfSwiY2hlY2twb2ludF9zaGEyNTYiOiJjMDQxZmNiYjdmZWYxNmM2Mjc1OTJkYmZjNjcxNzAzOTRiMDY0NWMyMTJlMGJkNjZhMzRkNGY3NzlkYWRhMDMzIiwiY2hlY2twb2ludF9zb3VyY2UiOiJsb2NhbF9zdHVkeSJ9LHsiY29uZGl0aW9uIjoicHBvX2xhcmdlX3N0ZXAiLCJzZWVkIjo3MSwic3RhdHVzIjoiY29tcGxldGVkIiwiYXZhaWxhYmxlIjp0cnVlLCJhdmFpbGFiaWxpdHkiOiJhdmFpbGFibGUiLCJidWRnZXRfZW52X3N0ZXBzIjo4MTkyLCJtZXRyaWNzIjp7ImVudl9zdGVwcyI6ODE5MiwidXBkYXRlcyI6MzIsInNlY29uZHMiOjE1LjY3MjA5MDcwMDAwMTcxOCwiaW5pdGlhbF9tZWFuX2Rpc3RhbmNlX20iOjAuOTMzOTc4Mjc3MDM2MDk1MiwibWVhbl9kaXN0YW5jZV9tIjowLjY4MTczMzcwNjUyMjM5MSwibGFzdDMyX2Rpc3RhbmNlX20iOjAuNjU5NTk1MDY5MDMyMTQ2NSwicmV0dXJuIjotODcuNzM3NTE5MTQyMzE0MjYsInN1Y2Nlc3NfZnJhY3Rpb24iOjB9LCJjaGVja3BvaW50X3NoYTI1NiI6IjI3MjE5ZjBjODliM2Y2MmY1ODljMmY3ZDcwMDNhOWNmOTIyMjg1YTZlOGU5MWI0OTY5YTIyZWI0MGZmZDhiNDEiLCJjaGVja3BvaW50X3NvdXJjZSI6ImxvY2FsX3N0dWR5In0seyJjb25kaXRpb24iOiJzYWNfcmV1c2UxIiwic2VlZCI6MTEsInN0YXR1cyI6ImNvbXBsZXRlZCIsImF2YWlsYWJsZSI6dHJ1ZSwiYXZhaWxhYmlsaXR5IjoiYXZhaWxhYmxlIiwiYnVkZ2V0X2Vudl9zdGVwcyI6MTYzODQsIm1ldHJpY3MiOnsiZW52X3N0ZXBzIjoxNjM4NCwidXBkYXRlcyI6MTU4NzMsInNlY29uZHMiOjIzMS43MDA4OTY1OTk5OTk0LCJpbml0aWFsX21lYW5fZGlzdGFuY2VfbSI6MC45MzY4MTE2MTEwMjI4MjA3LCJtZWFuX2Rpc3RhbmNlX20iOjAuMDQwMDAxOTU1MTI1NjI0NjE0LCJsYXN0MzJfZGlzdGFuY2VfbSI6MC4wMzEwMjA2NzQyMjcwNzIwOSwicmV0dXJuIjotMy4yOTA3MTQzMTUwOTU4NjI3LCJzdWNjZXNzX2ZyYWN0aW9uIjowLjkzMjgxMjV9LCJjaGVja3BvaW50X3NoYTI1NiI6ImRhMjFhYjYzOWZmZWU4OTlkZWI1ODg0ZGFiOTJkNjM2NmI3ZGYzNzNlYWU2MWFjYTEzZTA2Mzk3Y2EzZTY3NjYiLCJjaGVja3BvaW50X3NvdXJjZSI6ImxvY2FsX3N0dWR5In0seyJjb25kaXRpb24iOiJzYWNfcmV1c2UxIiwic2VlZCI6MjMsInN0YXR1cyI6ImNvbXBsZXRlZCIsImF2YWlsYWJsZSI6dHJ1ZSwiYXZhaWxhYmlsaXR5IjoiYXZhaWxhYmxlIiwiYnVkZ2V0X2Vudl9zdGVwcyI6MTYzODQsIm1ldHJpY3MiOnsiZW52X3N0ZXBzIjoxNjM4NCwidXBkYXRlcyI6MTU4NzMsInNlY29uZHMiOjIzNC41OTM2NTk5OTk5OTg2NCwiaW5pdGlhbF9tZWFuX2Rpc3RhbmNlX20iOjAuOTQwNzE5ODU0MDYzOTQ0LCJtZWFuX2Rpc3RhbmNlX20iOjAuMDc2MDA3MDUxNDkzMDk5OTEsImxhc3QzMl9kaXN0YW5jZV9tIjowLjA2ODk5Njc0MTgxMjI3Mjg5LCJyZXR1cm4iOi0zLjg4MTY0NDM0NDY4MDYwMywic3VjY2Vzc19mcmFjdGlvbiI6MH0sImNoZWNrcG9pbnRfc2hhMjU2IjoiN2Y2NTUxMjIzNDhiMmFiNWNiZmQyMTU3NzgwMjY2ZTM2Mjk1ZGY1YWJlZDZiNmY4NGFiYThhOTU0YzBiMTYzZSIsImNoZWNrcG9pbnRfc291cmNlIjoibG9jYWxfc3R1ZHkifSx7ImNvbmRpdGlvbiI6InNhY19yZXVzZTEiLCJzZWVkIjozNywic3RhdHVzIjoiY29tcGxldGVkIiwiYXZhaWxhYmxlIjp0cnVlLCJhdmFpbGFiaWxpdHkiOiJhdmFpbGFibGUiLCJidWRnZXRfZW52X3N0ZXBzIjoxNjM4NCwibWV0cmljcyI6eyJlbnZfc3RlcHMiOjE2Mzg0LCJ1cGRhdGVzIjoxNTg3Mywic2Vjb25kcyI6MjEzLjQyMjc1MzU5OTk5OTg1LCJpbml0aWFsX21lYW5fZGlzdGFuY2VfbSI6MC45MzMyNTEwNjg0NjY2ODkxLCJtZWFuX2Rpc3RhbmNlX20iOjAuMDY1NzY5MTE2ODEyMzQ1NDIsImxhc3QzMl9kaXN0YW5jZV9tIjowLjA1OTI0NzMxOTU4MTQ0ODE5LCJyZXR1cm4iOi0zLjQwNTU0MTA1OTAzOTk2NCwic3VjY2Vzc19mcmFjdGlvbiI6MC4wMDc4MTI1fSwiY2hlY2twb2ludF9zaGEyNTYiOiI2MTVlNDQyNzI1ZTVhYzNmMjZkNTY1N2YyMGQyYTViMGQ3OTU0ZDc0MjA3NjI0ZTQ1MDIwMjI3MzY5OThmNjAyIiwiY2hlY2twb2ludF9zb3VyY2UiOiJsb2NhbF9zdHVkeSJ9LHsiY29uZGl0aW9uIjoic2FjX3JldXNlMSIsInNlZWQiOjUzLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJhdmFpbGFibGUiOnRydWUsImF2YWlsYWJpbGl0eSI6ImF2YWlsYWJsZSIsImJ1ZGdldF9lbnZfc3RlcHMiOjE2Mzg0LCJtZXRyaWNzIjp7ImVudl9zdGVwcyI6MTYzODQsInVwZGF0ZXMiOjE1ODczLCJzZWNvbmRzIjoxOTIuMjA1MjI3MjAwMDAwMDgsImluaXRpYWxfbWVhbl9kaXN0YW5jZV9tIjowLjk0MzY5NjM3Njg5MTU1NDIsIm1lYW5fZGlzdGFuY2VfbSI6MC4wNjQ0MDEyNTM4Mjc0MTM4OCwibGFzdDMyX2Rpc3RhbmNlX20iOjAuMDU3NDA2MzA3NjM5NjcxNDYsInJldHVybiI6LTMuNjM5ODAxMjIyNjU4NjA1Niwic3VjY2Vzc19mcmFjdGlvbiI6MC4wMDkzNzV9LCJjaGVja3BvaW50X3NoYTI1NiI6IjljN2ZjZjZlY2ExNDFjZjE0MjIyMjNkYjc2MGNjNjBjNmUwZjQwY2IyY2NmZmMxOTQ0MGM3ZDY5ZjlkOTBmNTciLCJjaGVja3BvaW50X3NvdXJjZSI6ImxvY2FsX3N0dWR5In0seyJjb25kaXRpb24iOiJzYWNfcmV1c2UxIiwic2VlZCI6NzEsInN0YXR1cyI6ImNvbXBsZXRlZCIsImF2YWlsYWJsZSI6dHJ1ZSwiYXZhaWxhYmlsaXR5IjoiYXZhaWxhYmxlIiwiYnVkZ2V0X2Vudl9zdGVwcyI6MTYzODQsIm1ldHJpY3MiOnsiZW52X3N0ZXBzIjoxNjM4NCwidXBkYXRlcyI6MTU4NzMsInNlY29uZHMiOjE4OS4zMTIyMDY1OTk5OTk2MywiaW5pdGlhbF9tZWFuX2Rpc3RhbmNlX20iOjAuOTMzOTc4Mjc3MDM2MDk1MiwibWVhbl9kaXN0YW5jZV9tIjowLjA1MzU1NTg5MTAwOTA5Nzc0NSwibGFzdDMyX2Rpc3RhbmNlX20iOjAuMDQ1MzAwODUzNjk2OTIwNDc1LCJyZXR1cm4iOi0zLjQzMzgzNTY5NTI5Mzc0NDUsInN1Y2Nlc3NfZnJhY3Rpb24iOjAuMDczNDM3NX0sImNoZWNrcG9pbnRfc2hhMjU2IjoiNGUzNWRjMzhhODhmNTJmNDg2YjExMDVjYjc5MTYyMWM4MjcyYjAxMjJjM2Y2ZTg5NzdlMTkzNTVmYjVhMmRlMSIsImNoZWNrcG9pbnRfc291cmNlIjoibG9jYWxfc3R1ZHkifSx7ImNvbmRpdGlvbiI6InNhY19yZXVzZTQiLCJzZWVkIjoxMSwic3RhdHVzIjoiY29tcGxldGVkIiwiYXZhaWxhYmxlIjp0cnVlLCJhdmFpbGFiaWxpdHkiOiJhdmFpbGFibGUiLCJidWRnZXRfZW52X3N0ZXBzIjoxNjM4NCwibWV0cmljcyI6eyJlbnZfc3RlcHMiOjE2Mzg0LCJ1cGRhdGVzIjo2MzQ5Miwic2Vjb25kcyI6Njg0Ljg0NTY2OTkwMDAwMTcsImluaXRpYWxfbWVhbl9kaXN0YW5jZV9tIjowLjkzNjgxMTYxMTAyMjgyMDcsIm1lYW5fZGlzdGFuY2VfbSI6MC4xMjQ5NDE4NTkyNjA0NjYzNywibGFzdDMyX2Rpc3RhbmNlX20iOjAuMTE5NjQxNzQ2NDI3OTI4OTEsInJldHVybiI6LTQuODMzNDcxMDkzMzE4Njk4LCJzdWNjZXNzX2ZyYWN0aW9uIjowLjAwMzEyNX0sImNoZWNrcG9pbnRfc2hhMjU2IjoiOWZhOWIzNzJjNWFkOWM3MDc4YWM0MWVmMmNjZWVjOTA0M2QyNDZjNzFlMmNiNjBjM2MyYWQ4YTdhNmQyYjZlMiIsImNoZWNrcG9pbnRfc291cmNlIjoibG9jYWxfc3R1ZHkifSx7ImNvbmRpdGlvbiI6InNhY19yZXVzZTQiLCJzZWVkIjoyMywic3RhdHVzIjoiY29tcGxldGVkIiwiYXZhaWxhYmxlIjp0cnVlLCJhdmFpbGFiaWxpdHkiOiJhdmFpbGFibGUiLCJidWRnZXRfZW52X3N0ZXBzIjoxNjM4NCwibWV0cmljcyI6eyJlbnZfc3RlcHMiOjE2Mzg0LCJ1cGRhdGVzIjo2MzQ5Miwic2Vjb25kcyI6Nzc1LjMwMTU3NzE5OTk5OTksImluaXRpYWxfbWVhbl9kaXN0YW5jZV9tIjowLjk0MDcxOTg1NDA2Mzk0NCwibWVhbl9kaXN0YW5jZV9tIjowLjA1OTg0MDM1MTk2Njk5MDgzNSwibGFzdDMyX2Rpc3RhbmNlX20iOjAuMDUzODQ0OTkxNjAzNTc5MzA2LCJyZXR1cm4iOi0zLjMzOTg4NzQxNzcxMzk1NTUsInN1Y2Nlc3NfZnJhY3Rpb24iOjAuMDE0MDYyNX0sImNoZWNrcG9pbnRfc2hhMjU2IjoiZGQ2ZWM5NTk5NDQ4NDU2ZDhhOWY2OWQwODI4MzA3YWVkMjRlMDUyOTcxNDRiYmEyZDY3OGM2ZDJjMWU0MzI3ZCIsImNoZWNrcG9pbnRfc291cmNlIjoibG9jYWxfc3R1ZHkifSx7ImNvbmRpdGlvbiI6InNhY19yZXVzZTQiLCJzZWVkIjozNywic3RhdHVzIjoiY29tcGxldGVkIiwiYXZhaWxhYmxlIjp0cnVlLCJhdmFpbGFiaWxpdHkiOiJhdmFpbGFibGUiLCJidWRnZXRfZW52X3N0ZXBzIjoxNjM4NCwibWV0cmljcyI6eyJlbnZfc3RlcHMiOjE2Mzg0LCJ1cGRhdGVzIjo2MzQ5Miwic2Vjb25kcyI6NzkwLjUzOTcyNDkwMDAwMTYsImluaXRpYWxfbWVhbl9kaXN0YW5jZV9tIjowLjkzMzI1MTA2ODQ2NjY4OTEsIm1lYW5fZGlzdGFuY2VfbSI6MC4wNjQ3MzEwOTU2MzgwMjQ3LCJsYXN0MzJfZGlzdGFuY2VfbSI6MC4wNTg1NzY4Nzg3MTIwMzMzOTYsInJldHVybiI6LTMuMzE0Njc4MDkwNjM0MzE0LCJzdWNjZXNzX2ZyYWN0aW9uIjowLjAwNzgxMjV9LCJjaGVja3BvaW50X3NoYTI1NiI6ImQxMjMxZjNkMGEzMWJkODZhMWUxYWE3Yzc0ODlkOTMwOTg3OTM0NzcwN2NiMDhhNjdhN2RhODU4MDY5YmIwMmMiLCJjaGVja3BvaW50X3NvdXJjZSI6ImxvY2FsX3N0dWR5In0seyJjb25kaXRpb24iOiJzYWNfcmV1c2U0Iiwic2VlZCI6NTMsInN0YXR1cyI6ImNvbXBsZXRlZCIsImF2YWlsYWJsZSI6dHJ1ZSwiYXZhaWxhYmlsaXR5IjoiYXZhaWxhYmxlIiwiYnVkZ2V0X2Vudl9zdGVwcyI6MTYzODQsIm1ldHJpY3MiOnsiZW52X3N0ZXBzIjoxNjM4NCwidXBkYXRlcyI6NjM0OTIsInNlY29uZHMiOjY0My43MjIzMzkxOTk5OTc4LCJpbml0aWFsX21lYW5fZGlzdGFuY2VfbSI6MC45NDM2OTYzNzY4OTE1NTQyLCJtZWFuX2Rpc3RhbmNlX20iOjAuMTM3NDAzMTgwMzM5NjE1MjQsImxhc3QzMl9kaXN0YW5jZV9tIjowLjEzOTQ4MzQ5ODY3MTY2NDg3LCJyZXR1cm4iOi00LjkwNTU3NTQwNTE2NDg5MSwic3VjY2Vzc19mcmFjdGlvbiI6MC4wMTA5Mzc1fSwiY2hlY2twb2ludF9zaGEyNTYiOiJjNjFhZGViMDljMTNlNTcxZjA3NjY4YTczNmFiY2Q3MjE0NGRkODM3NGUwMmZlY2EwYjIxYTU1ZTRiMmJmNmE2IiwiY2hlY2twb2ludF9zb3VyY2UiOiJsb2NhbF9zdHVkeSJ9LHsiY29uZGl0aW9uIjoic2FjX3JldXNlNCIsInNlZWQiOjcxLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJhdmFpbGFibGUiOnRydWUsImF2YWlsYWJpbGl0eSI6ImF2YWlsYWJsZSIsImJ1ZGdldF9lbnZfc3RlcHMiOjE2Mzg0LCJtZXRyaWNzIjp7ImVudl9zdGVwcyI6MTYzODQsInVwZGF0ZXMiOjYzNDkyLCJzZWNvbmRzIjo0MjMuNzMzNzM0OTAwMDAwODUsImluaXRpYWxfbWVhbl9kaXN0YW5jZV9tIjowLjkzMzk3ODI3NzAzNjA5NTIsIm1lYW5fZGlzdGFuY2VfbSI6MC4xMjQ3NTM3NzA0ODg3MjM3NCwibGFzdDMyX2Rpc3RhbmNlX20iOjAuMTM0MTE1OTk5MTYzNjE2OTcsInJldHVybiI6LTQuNzgxNTM5Njk4NTQwOTY5NSwic3VjY2Vzc19mcmFjdGlvbiI6MC4wMjAzMTI1fSwiY2hlY2twb2ludF9zaGEyNTYiOiI5MDNiYzYzZjNiYmI0YWMzNzc3M2IwMjM0ZjI2NWQ1YTJhMTFhMzIzYmRkZGE4ODg1YTI5Yjk5Nzg4OThkZmY1IiwiY2hlY2twb2ludF9zb3VyY2UiOiJsb2NhbF9zdHVkeSJ9XSwiYWdncmVnYXRlcyI6eyJwcG9fcmVmZXJlbmNlIjp7Im1lYW5fZGlzdGFuY2VfbSI6eyJtZWRpYW4iOjAuMDQ5NjQxNjU3MDc1MjI1ODEsInEyNSI6MC4wMzQ4MjkzNDY3NjkxOTQwNywicTc1IjowLjA1NjcxOTg0Nzk5OTY3MTM1NiwibWluIjowLjAyMzU2NzY3NzA3ODg4NjI3LCJtYXgiOjAuMTEwMjkyNjk1NTgzNDc0Mjh9LCJsYXN0MzJfZGlzdGFuY2VfbSI6eyJtZWRpYW4iOjAuMDI4OTEyNzY4Nzk5MDc3OTAzLCJxMjUiOjAuMDE5MDUxNzk2MDU4NTk1MjQsInE3NSI6MC4wNDE5NjYwNjA1NDc4NjYxNCwibWluIjowLjAwNDA3NDQ2MjcxMDk2Mzk2OSwibWF4IjowLjA3NzQzNzA1MzE2MzU4ODc1fSwicmV0dXJuIjp7Im1lZGlhbiI6LTMuMzEwMDcxMzk5MDE2MTg4LCJxMjUiOi0zLjM2ODcwMDgzMjQ0MDQwNCwicTc1IjotMy4xNzI3NjQ0NDkwODEwMDcsIm1pbiI6LTQuNDQ4OTU3OTAyMTM2MTA2LCJtYXgiOi0zLjE2ODgyMzAzMTM5OTExNzd9LCJzdWNjZXNzX2ZyYWN0aW9uIjp7Im1lZGlhbiI6MC44MTI1LCJxMjUiOjAuMDkyMTg3NSwicTc1IjowLjgzOTA2MjUsIm1pbiI6MCwibWF4IjowLjg2NTYyNX0sInNlY29uZHMiOnsibWVkaWFuIjo3MS40MzgwMTAwMDAwMDE2NywicTI1Ijo3MC41MDg4ODg3OTk5OTkxMSwicTc1Ijo3NC4yMDI1NTE0MDAwMDE1NCwibWluIjo2Ny44MTc5OTIyMDAwMDE3NSwibWF4Ijo3Ni41Mjc4NTg0OTk5OTc4Mn19LCJwcG9fbGFyZ2Vfc3RlcCI6eyJtZWFuX2Rpc3RhbmNlX20iOnsibWVkaWFuIjowLjU1MzkzNzMxMDAzNTk0MTMsInEyNSI6MC40MDYyMDYxNTkzNDkzNDI4LCJxNzUiOjAuNTc0ODkzNDQ2ODIxMDAwNywibWluIjowLjMxMDUxNjUxOTQ0NjE4MTcsIm1heCI6MC42ODE3MzM3MDY1MjIzOTF9LCJsYXN0MzJfZGlzdGFuY2VfbSI6eyJtZWRpYW4iOjAuNTIwMzQzMTYyMDgwMTY0MiwicTI1IjowLjM1MzQ2NzE5MTc2NjgxNDM1LCJxNzUiOjAuNTIwMzUxMjMyMzMxODI0NywibWluIjowLjI5NzEzNjA4MjM4ODcyNjYsIm1heCI6MC42NTk1OTUwNjkwMzIxNDY1fSwicmV0dXJuIjp7Im1lZGlhbiI6LTU5LjY5ODA5Nzk3OTgxOTI0LCJxMjUiOi02Ny4yMjg0OTIxMjY5MjM5MiwicTc1IjotNDQuNTAwMzU3ODQzMjU1NzIsIm1pbiI6LTg3LjczNzUxOTE0MjMxNDI2LCJtYXgiOi0zMS44ODYxMDEzODI4NTU3NX0sInN1Y2Nlc3NfZnJhY3Rpb24iOnsibWVkaWFuIjowLCJxMjUiOjAsInE3NSI6MCwibWluIjowLCJtYXgiOjB9LCJzZWNvbmRzIjp7Im1lZGlhbiI6MTYuMjQ4NTAwMDAwMDAxNTEzLCJxMjUiOjE1LjY3MjA5MDcwMDAwMTcxOCwicTc1IjoxNi40NTY1MDEwMDAwMDA1NywibWluIjoxNS42MTU5NTU2OTk5OTkxNzYsIm1heCI6MTYuNzc0MDI2NDk5OTk5MzF9fSwic2FjX3JldXNlMSI6eyJtZWFuX2Rpc3RhbmNlX20iOnsibWVkaWFuIjowLjA2NDQwMTI1MzgyNzQxMzg4LCJxMjUiOjAuMDUzNTU1ODkxMDA5MDk3NzQ1LCJxNzUiOjAuMDY1NzY5MTE2ODEyMzQ1NDIsIm1pbiI6MC4wNDAwMDE5NTUxMjU2MjQ2MTQsIm1heCI6MC4wNzYwMDcwNTE0OTMwOTk5MX0sImxhc3QzMl9kaXN0YW5jZV9tIjp7Im1lZGlhbiI6MC4wNTc0MDYzMDc2Mzk2NzE0NiwicTI1IjowLjA0NTMwMDg1MzY5NjkyMDQ3NSwicTc1IjowLjA1OTI0NzMxOTU4MTQ0ODE5LCJtaW4iOjAuMDMxMDIwNjc0MjI3MDcyMDksIm1heCI6MC4wNjg5OTY3NDE4MTIyNzI4OX0sInJldHVybiI6eyJtZWRpYW4iOi0zLjQzMzgzNTY5NTI5Mzc0NDUsInEyNSI6LTMuNjM5ODAxMjIyNjU4NjA1NiwicTc1IjotMy40MDU1NDEwNTkwMzk5NjQsIm1pbiI6LTMuODgxNjQ0MzQ0NjgwNjAzLCJtYXgiOi0zLjI5MDcxNDMxNTA5NTg2Mjd9LCJzdWNjZXNzX2ZyYWN0aW9uIjp7Im1lZGlhbiI6MC4wMDkzNzUsInEyNSI6MC4wMDc4MTI1LCJxNzUiOjAuMDczNDM3NSwibWluIjowLCJtYXgiOjAuOTMyODEyNX0sInNlY29uZHMiOnsibWVkaWFuIjoyMTMuNDIyNzUzNTk5OTk5ODUsInEyNSI6MTkyLjIwNTIyNzIwMDAwMDA4LCJxNzUiOjIzMS43MDA4OTY1OTk5OTk0LCJtaW4iOjE4OS4zMTIyMDY1OTk5OTk2MywibWF4IjoyMzQuNTkzNjU5OTk5OTk4NjR9fSwic2FjX3JldXNlNCI6eyJtZWFuX2Rpc3RhbmNlX20iOnsibWVkaWFuIjowLjEyNDc1Mzc3MDQ4ODcyMzc0LCJxMjUiOjAuMDY0NzMxMDk1NjM4MDI0NywicTc1IjowLjEyNDk0MTg1OTI2MDQ2NjM3LCJtaW4iOjAuMDU5ODQwMzUxOTY2OTkwODM1LCJtYXgiOjAuMTM3NDAzMTgwMzM5NjE1MjR9LCJsYXN0MzJfZGlzdGFuY2VfbSI6eyJtZWRpYW4iOjAuMTE5NjQxNzQ2NDI3OTI4OTEsInEyNSI6MC4wNTg1NzY4Nzg3MTIwMzMzOTYsInE3NSI6MC4xMzQxMTU5OTkxNjM2MTY5NywibWluIjowLjA1Mzg0NDk5MTYwMzU3OTMwNiwibWF4IjowLjEzOTQ4MzQ5ODY3MTY2NDg3fSwicmV0dXJuIjp7Im1lZGlhbiI6LTQuNzgxNTM5Njk4NTQwOTY5NSwicTI1IjotNC44MzM0NzEwOTMzMTg2OTgsInE3NSI6LTMuMzM5ODg3NDE3NzEzOTU1NSwibWluIjotNC45MDU1NzU0MDUxNjQ4OTEsIm1heCI6LTMuMzE0Njc4MDkwNjM0MzE0fSwic3VjY2Vzc19mcmFjdGlvbiI6eyJtZWRpYW4iOjAuMDEwOTM3NSwicTI1IjowLjAwNzgxMjUsInE3NSI6MC4wMTQwNjI1LCJtaW4iOjAuMDAzMTI1LCJtYXgiOjAuMDIwMzEyNX0sInNlY29uZHMiOnsibWVkaWFuIjo2ODQuODQ1NjY5OTAwMDAxNywicTI1Ijo2NDMuNzIyMzM5MTk5OTk3OCwicTc1Ijo3NzUuMzAxNTc3MTk5OTk5OSwibWluIjo0MjMuNzMzNzM0OTAwMDAwODUsIm1heCI6NzkwLjUzOTcyNDkwMDAwMTZ9fX0sInByb3RvY29sIjp7InRyYWluaW5nX3NlZWRzIjpbMTEsMjMsMzcsNTMsNzFdLCJldmFsdWF0aW9uX3NlZWRzIjpbNzAxLDcwMiw3MDMsNzA0LDcwNV0sImV2YWx1YXRpb25fc3RlcHMiOjEyOCwibmV0d29yayI6WzY0LDY0XSwiY29uZGl0aW9ucyI6W3sibmFtZSI6InBwb19yZWZlcmVuY2UiLCJhbGdvcml0aG0iOiJwcG8iLCJlbnZpcm9ubWVudF9zdGVwcyI6MzI3NjgsImxlYXJuaW5nX3JhdGUiOjAuMDAwM30seyJuYW1lIjoicHBvX2xhcmdlX3N0ZXAiLCJhbGdvcml0aG0iOiJwcG8iLCJlbnZpcm9ubWVudF9zdGVwcyI6ODE5MiwibGVhcm5pbmdfcmF0ZSI6MC4wNX0seyJuYW1lIjoic2FjX3JldXNlMSIsImFsZ29yaXRobSI6InNhYyIsImVudmlyb25tZW50X3N0ZXBzIjoxNjM4NCwidXBkYXRlc19wZXJfc3RlcCI6MX0seyJuYW1lIjoic2FjX3JldXNlNCIsImFsZ29yaXRobSI6InNhYyIsImVudmlyb25tZW50X3N0ZXBzIjoxNjM4NCwidXBkYXRlc19wZXJfc3RlcCI6NH1dfSwiYXZhaWxhYmxlIjp0cnVlLCJlcnJvciI6bnVsbCwicmVwb3J0X3NoYTI1NiI6IjIzM2Q5M2IwMGE5NzVhZWFkNTMzMjc1ZjQyYTE1ZTg5YzY1MGMyODhjMWVlYTQwNDE4MjY1ZDQ2OWQ5MzJlNTkifQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "109864117818eee9cf27-5406d7cf479b3690fdad",
+          "file": "stage3.spec.ts",
+          "line": 149,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "workbench.spec.ts",
+      "file": "workbench.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "PPO actual create → inspect → branch → notes → export → import → deterministic recomputation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15153,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T15:37:44.464Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "921e070f285a8b470d11-7af9043490d3c04d0d51",
+          "file": "workbench.spec.ts",
+          "line": 47,
+          "column": 1
+        },
+        {
+          "title": "SAC double-Q real grid, actor path and eight complete course controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6765,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T15:37:59.626Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "921e070f285a8b470d11-4b4aa3c6ebeb051b15fd",
+          "file": "workbench.spec.ts",
+          "line": 178,
+          "column": 1
+        },
+        {
+          "title": "Real task pause, reload, resume, cancel and corrupt import errors",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6063,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T15:38:06.400Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "921e070f285a8b470d11-d1a7425b04100eec6bf7",
+          "file": "workbench.spec.ts",
+          "line": 252,
+          "column": 1
+        },
+        {
+          "title": "Saved forward events and actual physical reset keep sources explicit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2948,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T15:38:12.471Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "921e070f285a8b470d11-16ffcc621c02925406f5",
+          "file": "workbench.spec.ts",
+          "line": 290,
+          "column": 1
+        },
+        {
+          "title": "Actual SAC detach course and five-seed replay protocol execute through UI",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 30440,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T15:38:15.428Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "921e070f285a8b470d11-3f087d484fafa4c8ee22",
+          "file": "workbench.spec.ts",
+          "line": 339,
+          "column": 1
+        },
+        {
+          "title": "Production workbench serves local assets without CDN dependencies",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 383,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T15:38:45.876Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "921e070f285a8b470d11-76b793f2223adf573cf3",
+          "file": "workbench.spec.ts",
+          "line": 369,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T15:36:21.005Z",
+    "duration": 145587.754,
+    "expected": 11,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

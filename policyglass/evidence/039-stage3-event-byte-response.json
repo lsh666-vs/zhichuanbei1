@@ -1,0 +1,1810 @@
+{
+  "schema": "policyglass.performance.trace-bytes.v1",
+  "status": "completed",
+  "started_utc": "2026-11-16T15:32:47.574288+00:00",
+  "machine": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "architecture": "AMD64",
+    "cpu": "AMD Ryzen 7 8745HS w/ Radeon 780M Graphics",
+    "logical_cpus": 16,
+    "python": "3.12.7",
+    "memory_backend": "Windows GetProcessMemoryInfo/PrivateUsage; Toolhelp process tree",
+    "physical_memory_bytes": 33599430656,
+    "available_memory_bytes_at_start": 16055418880
+  },
+  "libraries": {
+    "torch": "2.8.0+cpu",
+    "fastapi": "0.163.1",
+    "starlette": "1.10.0",
+    "pydantic": "2.14.3"
+  },
+  "background_load": "Coordinator declared one independent SAC research process, 64x64/reuse4/seed71, one Torch CPU thread plus Node MuJoCo WASM. No browser measurement at start. Loaded endpoint observation, not an idle baseline.",
+  "transport": "actual loopback HTTP keep-alive; no Origin; existing 033 immutable Traces; no new training",
+  "source_report": {
+    "path": "evidence/033-stage3-api-performance-projected.json",
+    "sha256": "f78d5fc416a97aa6ddb771b5a781ac46d0ea027f06bc53caa18f0407b85eca49"
+  },
+  "source_sha256": {
+    "scripts/measure_event_bytes.py": "9b521ce575b6f4f4ab90edd4975d1dcf1629c4f937ac39983ad787fd4aa76a32",
+    "scripts/measure_runtime.py": "ae74667c6a9407118e34dc00ddd69709bbfc824a714d9aaabfe0f9bc2a94aba8",
+    "src/policyglass/repository.py": "7bd7cd2f260c9c3a4381d6e8b84824e722b76b052377c8ec094263ed935158ca",
+    "src/policyglass/api.py": "066b8732213af1381bdebbd228d482f91341caab07c47df1e5dd70ffc31080e1"
+  },
+  "git_revision": "61bbf004e82dc1c1a7c396c3db191af341c524c0",
+  "algorithms": {
+    "ppo": {
+      "trace": "6ed8db5fee684c90802d635388ae8bd1",
+      "origin": "747b27dd48084da198177c1e588c172a",
+      "requests": {
+        "trace_index": {
+          "raw": [
+            {
+              "sample": 0,
+              "elapsed_seconds": 2.120990100000199,
+              "http_ms": 3.803100000368431,
+              "client_json_parse_ms": 0.2046999979938846,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 1,
+              "elapsed_seconds": 2.124471499999345,
+              "http_ms": 3.1329999983427115,
+              "client_json_parse_ms": 0.3233999996155035,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 2,
+              "elapsed_seconds": 2.127981699999509,
+              "http_ms": 3.368000001501059,
+              "client_json_parse_ms": 0.1187999987450894,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 3,
+              "elapsed_seconds": 2.1313066000002436,
+              "http_ms": 3.1799999997019768,
+              "client_json_parse_ms": 0.1263999984075781,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 4,
+              "elapsed_seconds": 2.134425000000192,
+              "http_ms": 2.98800000018673,
+              "client_json_parse_ms": 0.11399999857530929,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 5,
+              "elapsed_seconds": 2.138029599998845,
+              "http_ms": 3.459600000496721,
+              "client_json_parse_ms": 0.1235999989148695,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 6,
+              "elapsed_seconds": 2.141558700001042,
+              "http_ms": 3.3977999992202967,
+              "client_json_parse_ms": 0.11549999908311293,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 7,
+              "elapsed_seconds": 2.1447853999998188,
+              "http_ms": 3.077299999858951,
+              "client_json_parse_ms": 0.12430000060703605,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 8,
+              "elapsed_seconds": 2.1486638999995193,
+              "http_ms": 3.657600002043182,
+              "client_json_parse_ms": 0.1933999992616009,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 9,
+              "elapsed_seconds": 2.151893900001596,
+              "http_ms": 3.0899000012141187,
+              "client_json_parse_ms": 0.11999999696854502,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 10,
+              "elapsed_seconds": 2.157135900000867,
+              "http_ms": 4.83170000006794,
+              "client_json_parse_ms": 0.34020000020973384,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 11,
+              "elapsed_seconds": 2.1622743000007176,
+              "http_ms": 4.834399998799199,
+              "client_json_parse_ms": 0.21349999951780774,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 12,
+              "elapsed_seconds": 2.1665667000015674,
+              "http_ms": 4.003599999123253,
+              "client_json_parse_ms": 0.21600000036414713,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 13,
+              "elapsed_seconds": 2.1705269000012777,
+              "http_ms": 3.661800001282245,
+              "client_json_parse_ms": 0.21349999951780774,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 14,
+              "elapsed_seconds": 2.174714100001438,
+              "http_ms": 3.865800001221942,
+              "client_json_parse_ms": 0.23689999943599105,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 15,
+              "elapsed_seconds": 2.1788147000006575,
+              "http_ms": 3.7443000001076143,
+              "client_json_parse_ms": 0.2817999993567355,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 16,
+              "elapsed_seconds": 2.182660800001031,
+              "http_ms": 3.595900001528207,
+              "client_json_parse_ms": 0.194500000361586,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 17,
+              "elapsed_seconds": 2.1865483000001404,
+              "http_ms": 3.6355000011099037,
+              "client_json_parse_ms": 0.18649999765329994,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 18,
+              "elapsed_seconds": 2.1909091000015906,
+              "http_ms": 4.129999997530831,
+              "client_json_parse_ms": 0.18080000154441223,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 19,
+              "elapsed_seconds": 2.1949027000009664,
+              "http_ms": 3.722699999343604,
+              "client_json_parse_ms": 0.18030000137514435,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 20,
+              "elapsed_seconds": 2.1987300000000687,
+              "http_ms": 3.5785000000032596,
+              "client_json_parse_ms": 0.21080000078654848,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 21,
+              "elapsed_seconds": 2.2030314000003273,
+              "http_ms": 4.088100002263673,
+              "client_json_parse_ms": 0.17110000044340268,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 22,
+              "elapsed_seconds": 2.206916099999944,
+              "http_ms": 3.555600000254344,
+              "client_json_parse_ms": 0.2189999977417756,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 23,
+              "elapsed_seconds": 2.2125130999993416,
+              "http_ms": 5.184400000871392,
+              "client_json_parse_ms": 0.2905000001192093,
+              "response_bytes": 16292,
+              "status": 200
+            },
+            {
+              "sample": 24,
+              "elapsed_seconds": 2.217695899998944,
+              "http_ms": 4.648099999030819,
+              "client_json_parse_ms": 0.400400000216905,
+              "response_bytes": 16292,
+              "status": 200
+            }
+          ],
+          "http_ms": {
+            "count": 25,
+            "p50": 3.657600002043182,
+            "p95": 4.833859999052947,
+            "min": 2.98800000018673,
+            "max": 5.184400000871392
+          },
+          "client_json_parse_ms": {
+            "count": 25,
+            "p50": 0.194500000361586,
+            "p95": 0.3368400000908877,
+            "min": 0.11399999857530929,
+            "max": 0.400400000216905
+          }
+        },
+        "layer_event": {
+          "raw": [
+            {
+              "sample": 0,
+              "elapsed_seconds": 2.2507728000018687,
+              "http_ms": 3.9996999985305592,
+              "client_json_parse_ms": 2.7650000010908116,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 1,
+              "elapsed_seconds": 2.258954299999459,
+              "http_ms": 4.443500001798384,
+              "client_json_parse_ms": 3.6255999984859955,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 2,
+              "elapsed_seconds": 2.2666972000006353,
+              "http_ms": 4.893199999060016,
+              "client_json_parse_ms": 2.7578000008361414,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 3,
+              "elapsed_seconds": 2.2741529000013543,
+              "http_ms": 4.085000000486616,
+              "client_json_parse_ms": 3.2505000017408747,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 4,
+              "elapsed_seconds": 2.281707099999039,
+              "http_ms": 4.647699999623001,
+              "client_json_parse_ms": 2.8103000004193746,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 5,
+              "elapsed_seconds": 2.289951700000529,
+              "http_ms": 4.927800000587013,
+              "client_json_parse_ms": 3.1974000012269244,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 6,
+              "elapsed_seconds": 2.298590599999443,
+              "http_ms": 5.751700002292637,
+              "client_json_parse_ms": 2.793999999994412,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 7,
+              "elapsed_seconds": 2.3060914000016055,
+              "http_ms": 4.452000001037959,
+              "client_json_parse_ms": 2.76060000032885,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 8,
+              "elapsed_seconds": 2.3142917000004672,
+              "http_ms": 5.282199999783188,
+              "client_json_parse_ms": 2.8212999968673103,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 9,
+              "elapsed_seconds": 2.322577300001285,
+              "http_ms": 4.926800000248477,
+              "client_json_parse_ms": 3.151400000206195,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 10,
+              "elapsed_seconds": 2.330812899999728,
+              "http_ms": 5.348800001229392,
+              "client_json_parse_ms": 2.790499998809537,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 11,
+              "elapsed_seconds": 2.3384990000013204,
+              "http_ms": 4.785199998877943,
+              "client_json_parse_ms": 2.781499999400694,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 12,
+              "elapsed_seconds": 2.3458695000008447,
+              "http_ms": 4.552999998850282,
+              "client_json_parse_ms": 2.729900003032526,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 13,
+              "elapsed_seconds": 2.35347449999972,
+              "http_ms": 4.237700002704514,
+              "client_json_parse_ms": 3.238299999793526,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 14,
+              "elapsed_seconds": 2.360257200001797,
+              "http_ms": 3.9417999978468288,
+              "client_json_parse_ms": 2.7464000013424084,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 15,
+              "elapsed_seconds": 2.367689700000483,
+              "http_ms": 4.0805999997246545,
+              "client_json_parse_ms": 3.2415999994555023,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 16,
+              "elapsed_seconds": 2.3824069000002055,
+              "http_ms": 11.027299999113893,
+              "client_json_parse_ms": 3.607800001191208,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 17,
+              "elapsed_seconds": 2.3899526999994123,
+              "http_ms": 4.667400000471389,
+              "client_json_parse_ms": 2.748200000496581,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 18,
+              "elapsed_seconds": 2.3965472000018053,
+              "http_ms": 3.8296999991871417,
+              "client_json_parse_ms": 2.6895000009972136,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 19,
+              "elapsed_seconds": 2.403933900000993,
+              "http_ms": 4.5226000002003275,
+              "client_json_parse_ms": 2.76780000058352,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 20,
+              "elapsed_seconds": 2.4113409999990836,
+              "http_ms": 3.770700001041405,
+              "client_json_parse_ms": 3.5053999999945518,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 21,
+              "elapsed_seconds": 2.4543912000008277,
+              "http_ms": 39.71520000050077,
+              "client_json_parse_ms": 3.1976999998732936,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 22,
+              "elapsed_seconds": 2.4616199000010965,
+              "http_ms": 3.9617000002181157,
+              "client_json_parse_ms": 3.1506999985140283,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 23,
+              "elapsed_seconds": 2.4696986000017205,
+              "http_ms": 4.762000000482658,
+              "client_json_parse_ms": 3.2380000011471566,
+              "response_bytes": 255527,
+              "status": 200
+            },
+            {
+              "sample": 24,
+              "elapsed_seconds": 2.4760635000020557,
+              "http_ms": 3.5475000004225876,
+              "client_json_parse_ms": 2.7436999989731703,
+              "response_bytes": 255527,
+              "status": 200
+            }
+          ],
+          "http_ms": {
+            "count": 25,
+            "p50": 4.552999998850282,
+            "p95": 9.972179999749628,
+            "min": 3.5475000004225876,
+            "max": 39.71520000050077
+          },
+          "client_json_parse_ms": {
+            "count": 25,
+            "p50": 2.8103000004193746,
+            "p95": 3.5873200009518764,
+            "min": 2.6895000009972136,
+            "max": 3.6255999984859955
+          }
+        },
+        "optimizer_event": {
+          "raw": [
+            {
+              "sample": 0,
+              "elapsed_seconds": 2.562072500000795,
+              "http_ms": 6.697500000882428,
+              "client_json_parse_ms": 15.546200000244426,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 1,
+              "elapsed_seconds": 2.584187899999961,
+              "http_ms": 6.206599999131868,
+              "client_json_parse_ms": 15.464500000234693,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 2,
+              "elapsed_seconds": 2.609100199999375,
+              "http_ms": 7.004600000072969,
+              "client_json_parse_ms": 17.5122000000556,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 3,
+              "elapsed_seconds": 2.631637200000114,
+              "http_ms": 7.212799999251729,
+              "client_json_parse_ms": 14.716300000145566,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 4,
+              "elapsed_seconds": 2.652428000001237,
+              "http_ms": 5.427400003100047,
+              "client_json_parse_ms": 14.934699996956624,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 5,
+              "elapsed_seconds": 2.675704000001133,
+              "http_ms": 6.976900000154274,
+              "client_json_parse_ms": 15.264800000295509,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 6,
+              "elapsed_seconds": 2.699500900002022,
+              "http_ms": 7.164100003137719,
+              "client_json_parse_ms": 15.832299999601673,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 7,
+              "elapsed_seconds": 2.7221996000007493,
+              "http_ms": 6.8109999992884696,
+              "client_json_parse_ms": 15.012100000603823,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 8,
+              "elapsed_seconds": 2.74553190000006,
+              "http_ms": 6.925600002432475,
+              "client_json_parse_ms": 15.685899998061359,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 9,
+              "elapsed_seconds": 2.7693380000018806,
+              "http_ms": 7.615899998199893,
+              "client_json_parse_ms": 15.198900000541471,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 10,
+              "elapsed_seconds": 2.7917481000004045,
+              "http_ms": 6.19619999997667,
+              "client_json_parse_ms": 15.414900000905618,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 11,
+              "elapsed_seconds": 2.815457000000606,
+              "http_ms": 7.103700001607649,
+              "client_json_parse_ms": 15.539199997874675,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 12,
+              "elapsed_seconds": 2.8397417000014684,
+              "http_ms": 7.5633000014931895,
+              "client_json_parse_ms": 15.817499999684514,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 13,
+              "elapsed_seconds": 2.8637595000000147,
+              "http_ms": 7.682499999646097,
+              "client_json_parse_ms": 15.404100002342602,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 14,
+              "elapsed_seconds": 2.8878087000011874,
+              "http_ms": 7.072200001857709,
+              "client_json_parse_ms": 16.62959999885061,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 15,
+              "elapsed_seconds": 2.910990899999888,
+              "http_ms": 6.799099999625469,
+              "client_json_parse_ms": 15.037600001960527,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 16,
+              "elapsed_seconds": 2.934136200001376,
+              "http_ms": 6.908300001668977,
+              "client_json_parse_ms": 15.71459999831859,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 17,
+              "elapsed_seconds": 2.9579819999999017,
+              "http_ms": 7.119300000340445,
+              "client_json_parse_ms": 15.643099999579135,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 18,
+              "elapsed_seconds": 2.981473300002108,
+              "http_ms": 7.2199000023829285,
+              "client_json_parse_ms": 15.363299997261493,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 19,
+              "elapsed_seconds": 3.0029064000009384,
+              "http_ms": 6.113499999628402,
+              "client_json_parse_ms": 14.86300000033225,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 20,
+              "elapsed_seconds": 3.0236311000007845,
+              "http_ms": 5.483099997945828,
+              "client_json_parse_ms": 14.798100000916747,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 21,
+              "elapsed_seconds": 3.047624499999074,
+              "http_ms": 6.962899999052752,
+              "client_json_parse_ms": 15.47750000099768,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 22,
+              "elapsed_seconds": 3.070669699998689,
+              "http_ms": 7.252899999002693,
+              "client_json_parse_ms": 15.37559999997029,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 23,
+              "elapsed_seconds": 3.091398399999889,
+              "http_ms": 5.3752999992866535,
+              "client_json_parse_ms": 14.864400000078604,
+              "response_bytes": 1369380,
+              "status": 200
+            },
+            {
+              "sample": 24,
+              "elapsed_seconds": 3.1141079000008176,
+              "http_ms": 6.058700000721728,
+              "client_json_parse_ms": 15.53549999880488,
+              "response_bytes": 1369380,
+              "status": 200
+            }
+          ],
+          "http_ms": {
+            "count": 25,
+            "p50": 6.962899999052752,
+            "p95": 7.605379998858552,
+            "min": 5.3752999992866535,
+            "max": 7.682499999646097
+          },
+          "client_json_parse_ms": {
+            "count": 25,
+            "p50": 15.414900000905618,
+            "p95": 16.470139999000818,
+            "min": 14.716300000145566,
+            "max": 17.5122000000556
+          }
+        },
+        "frames": {
+          "raw": [
+            {
+              "sample": 0,
+              "elapsed_seconds": 3.137716500001261,
+              "http_ms": 4.150100001425017,
+              "client_json_parse_ms": 0.9637000002840068,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 1,
+              "elapsed_seconds": 3.142650500001764,
+              "http_ms": 3.893599998264108,
+              "client_json_parse_ms": 0.9386999990965705,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 2,
+              "elapsed_seconds": 3.1475577000019257,
+              "http_ms": 3.85400000232039,
+              "client_json_parse_ms": 0.8046999973885249,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 3,
+              "elapsed_seconds": 3.1520440000022063,
+              "http_ms": 3.429200001846766,
+              "client_json_parse_ms": 0.8170000000973232,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 4,
+              "elapsed_seconds": 3.1582108000002336,
+              "http_ms": 4.694700000982266,
+              "client_json_parse_ms": 1.2710000009974465,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 5,
+              "elapsed_seconds": 3.1641072999991593,
+              "http_ms": 4.252200000337325,
+              "client_json_parse_ms": 1.404700000421144,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 6,
+              "elapsed_seconds": 3.170157799999288,
+              "http_ms": 4.7611000009055715,
+              "client_json_parse_ms": 1.1802999979408924,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 7,
+              "elapsed_seconds": 3.1748823000016273,
+              "http_ms": 3.8821000016469043,
+              "client_json_parse_ms": 0.7775999984005466,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 8,
+              "elapsed_seconds": 3.179416899998614,
+              "http_ms": 3.048099999432452,
+              "client_json_parse_ms": 1.3494000013452023,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 9,
+              "elapsed_seconds": 3.1845953000010923,
+              "http_ms": 4.284200000256533,
+              "client_json_parse_ms": 0.8048000017879531,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 10,
+              "elapsed_seconds": 3.1901547999987088,
+              "http_ms": 4.107799999474082,
+              "client_json_parse_ms": 1.399700002366444,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 11,
+              "elapsed_seconds": 3.195204700001341,
+              "http_ms": 3.4874000011768658,
+              "client_json_parse_ms": 1.3767999989795499,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 12,
+              "elapsed_seconds": 3.2010880000016186,
+              "http_ms": 4.809400001249742,
+              "client_json_parse_ms": 0.934299998334609,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 13,
+              "elapsed_seconds": 3.206226800000877,
+              "http_ms": 4.103800001757918,
+              "client_json_parse_ms": 0.8778999981586821,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 14,
+              "elapsed_seconds": 3.2121157000001404,
+              "http_ms": 4.206800000247313,
+              "client_json_parse_ms": 1.4588999983971007,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 15,
+              "elapsed_seconds": 3.217519400001038,
+              "http_ms": 4.271500001777895,
+              "client_json_parse_ms": 0.974599999608472,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 16,
+              "elapsed_seconds": 3.222466600000189,
+              "http_ms": 3.7838000025658403,
+              "client_json_parse_ms": 0.9718999972392339,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 17,
+              "elapsed_seconds": 3.2281294999993406,
+              "http_ms": 4.445200000191107,
+              "client_json_parse_ms": 1.0575999986031093,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 18,
+              "elapsed_seconds": 3.233237899999949,
+              "http_ms": 3.7907000005361624,
+              "client_json_parse_ms": 1.2137999983679038,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 19,
+              "elapsed_seconds": 3.2385877999986405,
+              "http_ms": 3.915400000551017,
+              "client_json_parse_ms": 1.2921999987156596,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 20,
+              "elapsed_seconds": 3.243734100000438,
+              "http_ms": 4.080899998371024,
+              "client_json_parse_ms": 0.923999999940861,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 21,
+              "elapsed_seconds": 3.2481626000007964,
+              "http_ms": 3.4659000011743046,
+              "client_json_parse_ms": 0.8419000005233102,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 22,
+              "elapsed_seconds": 3.2531588999991072,
+              "http_ms": 3.931499999453081,
+              "client_json_parse_ms": 1.0202999983448535,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 23,
+              "elapsed_seconds": 3.258956199999375,
+              "http_ms": 4.423499998665648,
+              "client_json_parse_ms": 1.2406000023474917,
+              "response_bytes": 79724,
+              "status": 200
+            },
+            {
+              "sample": 24,
+              "elapsed_seconds": 3.2642612000017834,
+              "http_ms": 4.228899997542612,
+              "client_json_parse_ms": 0.9288000001106411,
+              "response_bytes": 79724,
+              "status": 200
+            }
+          ],
+          "http_ms": {
+            "count": 25,
+            "p50": 4.103800001757918,
+            "p95": 4.74782000092091,
+            "min": 3.048099999432452,
+            "max": 4.809400001249742
+          },
+          "client_json_parse_ms": {
+            "count": 25,
+            "p50": 0.974599999608472,
+            "p95": 1.403700000810204,
+            "min": 0.7775999984005466,
+            "max": 1.4588999983971007
+          }
+        }
+      }
+    },
+    "sac": {
+      "trace": "91cbbbeedf494d7598332603f75eadb6",
+      "origin": "a4944a06009c4f849388fd0bb25ab524",
+      "requests": {
+        "trace_index": {
+          "raw": [
+            {
+              "sample": 0,
+              "elapsed_seconds": 3.2862480000003416,
+              "http_ms": 3.4639999976207037,
+              "client_json_parse_ms": 0.4409000030136667,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 1,
+              "elapsed_seconds": 3.2906948999989254,
+              "http_ms": 3.961999998864485,
+              "client_json_parse_ms": 0.36160000308882445,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 2,
+              "elapsed_seconds": 3.296143600000505,
+              "http_ms": 4.530099999101367,
+              "client_json_parse_ms": 0.6511999999929685,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 3,
+              "elapsed_seconds": 3.301383400001214,
+              "http_ms": 4.368100002466235,
+              "client_json_parse_ms": 0.6463999998231884,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 4,
+              "elapsed_seconds": 3.306989299999259,
+              "http_ms": 4.8427000001538545,
+              "client_json_parse_ms": 0.5286999985401053,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 5,
+              "elapsed_seconds": 3.3130617999995593,
+              "http_ms": 5.381500002840767,
+              "client_json_parse_ms": 0.6571999983862042,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 6,
+              "elapsed_seconds": 3.317951000000903,
+              "http_ms": 3.9775000004738104,
+              "client_json_parse_ms": 0.6539999994856771,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 7,
+              "elapsed_seconds": 3.3234247000000323,
+              "http_ms": 4.534099996817531,
+              "client_json_parse_ms": 0.6962000006751623,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 8,
+              "elapsed_seconds": 3.3284462000010535,
+              "http_ms": 4.241999999067048,
+              "client_json_parse_ms": 0.5659000016748905,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 9,
+              "elapsed_seconds": 3.3330440999998245,
+              "http_ms": 4.1103000003204215,
+              "client_json_parse_ms": 0.3541000005498063,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 10,
+              "elapsed_seconds": 3.3387646000010136,
+              "http_ms": 4.609899999195477,
+              "client_json_parse_ms": 0.8922999986680225,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 11,
+              "elapsed_seconds": 3.3440508999992744,
+              "http_ms": 4.508599999098806,
+              "client_json_parse_ms": 0.5611000015051104,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 12,
+              "elapsed_seconds": 3.3486173000019335,
+              "http_ms": 3.904999997757841,
+              "client_json_parse_ms": 0.5085000011604279,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 13,
+              "elapsed_seconds": 3.3535770999988017,
+              "http_ms": 4.05010000031325,
+              "client_json_parse_ms": 0.7233999967866112,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 14,
+              "elapsed_seconds": 3.3577121999987867,
+              "http_ms": 3.4362000005785376,
+              "client_json_parse_ms": 0.5557000004046131,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 15,
+              "elapsed_seconds": 3.3624091999990924,
+              "http_ms": 3.9007000013953075,
+              "client_json_parse_ms": 0.5662999974447303,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 16,
+              "elapsed_seconds": 3.3683936999987054,
+              "http_ms": 4.88979999863659,
+              "client_json_parse_ms": 0.49170000056619756,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 17,
+              "elapsed_seconds": 3.373133000000962,
+              "http_ms": 3.9711999997962266,
+              "client_json_parse_ms": 0.7187999981397297,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 18,
+              "elapsed_seconds": 3.3776676999987103,
+              "http_ms": 3.8214999985939357,
+              "client_json_parse_ms": 0.5614000001514796,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 19,
+              "elapsed_seconds": 3.3823058000016317,
+              "http_ms": 3.9939999987836927,
+              "client_json_parse_ms": 0.4820000031031668,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 20,
+              "elapsed_seconds": 3.387328199998592,
+              "http_ms": 4.439899999852059,
+              "client_json_parse_ms": 0.44410000191419385,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 21,
+              "elapsed_seconds": 3.3919057000020985,
+              "http_ms": 4.11569999778294,
+              "client_json_parse_ms": 0.38069999936851673,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 22,
+              "elapsed_seconds": 3.396910999999818,
+              "http_ms": 4.374799998913659,
+              "client_json_parse_ms": 0.4881000022578519,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 23,
+              "elapsed_seconds": 3.401834100000997,
+              "http_ms": 4.227399997034809,
+              "client_json_parse_ms": 0.5388000026869122,
+              "response_bytes": 28389,
+              "status": 200
+            },
+            {
+              "sample": 24,
+              "elapsed_seconds": 3.4070269000003464,
+              "http_ms": 4.370099999505328,
+              "client_json_parse_ms": 0.6673999996564817,
+              "response_bytes": 28389,
+              "status": 200
+            }
+          ],
+          "http_ms": {
+            "count": 25,
+            "p50": 4.227399997034809,
+            "p95": 4.880379998940043,
+            "min": 3.4362000005785376,
+            "max": 5.381500002840767
+          },
+          "client_json_parse_ms": {
+            "count": 25,
+            "p50": 0.5611000015051104,
+            "p95": 0.7224799970572349,
+            "min": 0.3541000005498063,
+            "max": 0.8922999986680225
+          }
+        },
+        "layer_event": {
+          "raw": [
+            {
+              "sample": 0,
+              "elapsed_seconds": 3.4345656000004965,
+              "http_ms": 4.923100001178682,
+              "client_json_parse_ms": 1.6531000001123175,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 1,
+              "elapsed_seconds": 3.441157799999928,
+              "http_ms": 4.9140000010083895,
+              "client_json_parse_ms": 1.5700000003562309,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 2,
+              "elapsed_seconds": 3.4481702000011865,
+              "http_ms": 4.810499998711748,
+              "client_json_parse_ms": 2.1220999988145195,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 3,
+              "elapsed_seconds": 3.4556832000016584,
+              "http_ms": 4.781300001923228,
+              "client_json_parse_ms": 2.5299000008089934,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 4,
+              "elapsed_seconds": 3.462700899999618,
+              "http_ms": 4.980099998647347,
+              "client_json_parse_ms": 1.7296000005444512,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 5,
+              "elapsed_seconds": 3.4688932999997633,
+              "http_ms": 4.3770999982370995,
+              "client_json_parse_ms": 1.5965000020514708,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 6,
+              "elapsed_seconds": 3.4757868999986385,
+              "http_ms": 4.545499999949243,
+              "client_json_parse_ms": 1.8812999987858348,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 7,
+              "elapsed_seconds": 3.482452200001717,
+              "http_ms": 4.7921000004862435,
+              "client_json_parse_ms": 1.6500999990967102,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 8,
+              "elapsed_seconds": 3.4880219000006036,
+              "http_ms": 3.6823000009462703,
+              "client_json_parse_ms": 1.6854999994393438,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 9,
+              "elapsed_seconds": 3.494068200001493,
+              "http_ms": 4.179799998382805,
+              "client_json_parse_ms": 1.6572000022279099,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 10,
+              "elapsed_seconds": 3.500825099999929,
+              "http_ms": 4.363300002296455,
+              "client_json_parse_ms": 2.1636999990732875,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 11,
+              "elapsed_seconds": 3.507479700001568,
+              "http_ms": 4.413400001794798,
+              "client_json_parse_ms": 1.8552999972598627,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 12,
+              "elapsed_seconds": 3.5140826999995625,
+              "http_ms": 4.574900001898641,
+              "client_json_parse_ms": 1.7875000012281816,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 13,
+              "elapsed_seconds": 3.519363399998838,
+              "http_ms": 3.5385000010137446,
+              "client_json_parse_ms": 1.575799997226568,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 14,
+              "elapsed_seconds": 3.525757399998838,
+              "http_ms": 4.4846999990113545,
+              "client_json_parse_ms": 1.701199998933589,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 15,
+              "elapsed_seconds": 3.5322402000019792,
+              "http_ms": 4.641799998353235,
+              "client_json_parse_ms": 1.666500000283122,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 16,
+              "elapsed_seconds": 3.5382338000017626,
+              "http_ms": 4.215000000840519,
+              "client_json_parse_ms": 1.6749999995226972,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 17,
+              "elapsed_seconds": 3.544567000000825,
+              "http_ms": 4.65759999860893,
+              "client_json_parse_ms": 1.5689000028942246,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 18,
+              "elapsed_seconds": 3.5502323000000615,
+              "http_ms": 4.0296999977726955,
+              "client_json_parse_ms": 1.578499999595806,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 19,
+              "elapsed_seconds": 3.5575099000016053,
+              "http_ms": 4.979199999070261,
+              "client_json_parse_ms": 2.08070000007865,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 20,
+              "elapsed_seconds": 3.5644768999991356,
+              "http_ms": 5.024000001867535,
+              "client_json_parse_ms": 1.6964999995252583,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 21,
+              "elapsed_seconds": 3.5705993000010494,
+              "http_ms": 4.023400000733091,
+              "client_json_parse_ms": 1.6300999996019527,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 22,
+              "elapsed_seconds": 3.577518099998997,
+              "http_ms": 5.202200001804158,
+              "client_json_parse_ms": 1.6507000000274274,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 23,
+              "elapsed_seconds": 3.583031000001938,
+              "http_ms": 3.8167000020621344,
+              "client_json_parse_ms": 1.5795999970578123,
+              "response_bytes": 142466,
+              "status": 200
+            },
+            {
+              "sample": 24,
+              "elapsed_seconds": 3.589989299998706,
+              "http_ms": 4.866299997956958,
+              "client_json_parse_ms": 1.8057000015687663,
+              "response_bytes": 142466,
+              "status": 200
+            }
+          ],
+          "http_ms": {
+            "count": 25,
+            "p50": 4.574900001898641,
+            "p95": 5.015220001223497,
+            "min": 3.5385000010137446,
+            "max": 5.202200001804158
+          },
+          "client_json_parse_ms": {
+            "count": 25,
+            "p50": 1.6749999995226972,
+            "p95": 2.155379999021534,
+            "min": 1.5689000028942246,
+            "max": 2.5299000008089934
+          }
+        },
+        "optimizer_event": {
+          "raw": [
+            {
+              "sample": 0,
+              "elapsed_seconds": 3.6753586000013456,
+              "http_ms": 5.271199999697274,
+              "client_json_parse_ms": 14.288200000009965,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 1,
+              "elapsed_seconds": 3.695602100000542,
+              "http_ms": 5.558199998631608,
+              "client_json_parse_ms": 14.4246000018029,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 2,
+              "elapsed_seconds": 3.718431100001908,
+              "http_ms": 5.1677999981620815,
+              "client_json_parse_ms": 17.35220000045956,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 3,
+              "elapsed_seconds": 3.7378897000016877,
+              "http_ms": 5.274799998005619,
+              "client_json_parse_ms": 13.703500000701752,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 4,
+              "elapsed_seconds": 3.7567497999989428,
+              "http_ms": 4.541800000879448,
+              "client_json_parse_ms": 13.951099997939309,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 5,
+              "elapsed_seconds": 3.776617499999702,
+              "http_ms": 5.64719999965746,
+              "client_json_parse_ms": 13.630900000862312,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 6,
+              "elapsed_seconds": 3.7956802000007883,
+              "http_ms": 4.681599999457831,
+              "client_json_parse_ms": 13.998800000990741,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 7,
+              "elapsed_seconds": 3.837991799999145,
+              "http_ms": 26.99189999839291,
+              "client_json_parse_ms": 14.822100001765648,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 8,
+              "elapsed_seconds": 3.857106200000999,
+              "http_ms": 4.9230000004172325,
+              "client_json_parse_ms": 13.778399999864632,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 9,
+              "elapsed_seconds": 3.8766391999997722,
+              "http_ms": 4.779100003361236,
+              "client_json_parse_ms": 14.19259999966016,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 10,
+              "elapsed_seconds": 3.896285499999067,
+              "http_ms": 4.880099997535581,
+              "client_json_parse_ms": 14.308100002381252,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 11,
+              "elapsed_seconds": 3.915578000000096,
+              "http_ms": 4.9932000001717824,
+              "client_json_parse_ms": 13.806700000714045,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 12,
+              "elapsed_seconds": 3.93514679999862,
+              "http_ms": 5.123499999172054,
+              "client_json_parse_ms": 13.968700000987155,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 13,
+              "elapsed_seconds": 3.955194800000754,
+              "http_ms": 5.820800000947202,
+              "client_json_parse_ms": 13.75479999842355,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 14,
+              "elapsed_seconds": 3.9759874000010313,
+              "http_ms": 5.269599998428021,
+              "client_json_parse_ms": 15.265599999111146,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 15,
+              "elapsed_seconds": 3.995112299999164,
+              "http_ms": 4.7541000021738,
+              "client_json_parse_ms": 13.794399998005247,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 16,
+              "elapsed_seconds": 4.014512800000375,
+              "http_ms": 5.021699998906115,
+              "client_json_parse_ms": 13.990900002681883,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 17,
+              "elapsed_seconds": 4.034471899998607,
+              "http_ms": 5.799100003059721,
+              "client_json_parse_ms": 13.682899996638298,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 18,
+              "elapsed_seconds": 4.053483499999857,
+              "http_ms": 4.738400002679555,
+              "client_json_parse_ms": 13.81059999766876,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 19,
+              "elapsed_seconds": 4.072733600001811,
+              "http_ms": 4.817400000320049,
+              "client_json_parse_ms": 13.925499999459134,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 20,
+              "elapsed_seconds": 4.092000799999369,
+              "http_ms": 4.98640000296291,
+              "client_json_parse_ms": 13.873699997930089,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 21,
+              "elapsed_seconds": 4.112312900000688,
+              "http_ms": 5.730599998059915,
+              "client_json_parse_ms": 13.971100001072045,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 22,
+              "elapsed_seconds": 4.1317111999997,
+              "http_ms": 5.085500000859611,
+              "client_json_parse_ms": 13.858300000720192,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 23,
+              "elapsed_seconds": 4.150795300000027,
+              "http_ms": 4.876400002103765,
+              "client_json_parse_ms": 13.688700000784593,
+              "response_bytes": 1315024,
+              "status": 200
+            },
+            {
+              "sample": 24,
+              "elapsed_seconds": 4.170096599998942,
+              "http_ms": 4.907099999400089,
+              "client_json_parse_ms": 13.915700001234654,
+              "response_bytes": 1315024,
+              "status": 200
+            }
+          ],
+          "http_ms": {
+            "count": 25,
+            "p50": 5.021699998906115,
+            "p95": 5.816460001369705,
+            "min": 4.541800000879448,
+            "max": 26.99189999839291
+          },
+          "client_json_parse_ms": {
+            "count": 25,
+            "p50": 13.925499999459134,
+            "p95": 15.176899999642044,
+            "min": 13.630900000862312,
+            "max": 17.35220000045956
+          }
+        },
+        "frames": {
+          "raw": [
+            {
+              "sample": 0,
+              "elapsed_seconds": 4.186390800001391,
+              "http_ms": 3.838000000541797,
+              "client_json_parse_ms": 0.5227000001468696,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 1,
+              "elapsed_seconds": 4.189959700001054,
+              "http_ms": 3.087799999775598,
+              "client_json_parse_ms": 0.4608999988704454,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 2,
+              "elapsed_seconds": 4.193246800001361,
+              "http_ms": 2.8806999980588444,
+              "client_json_parse_ms": 0.3715999991982244,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 3,
+              "elapsed_seconds": 4.196376700001565,
+              "http_ms": 2.72449999829405,
+              "client_json_parse_ms": 0.3811999995377846,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 4,
+              "elapsed_seconds": 4.200164800000493,
+              "http_ms": 3.384299998288043,
+              "client_json_parse_ms": 0.37169999995967373,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 5,
+              "elapsed_seconds": 4.203422800001135,
+              "http_ms": 2.8511000018625055,
+              "client_json_parse_ms": 0.37789999987580813,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 6,
+              "elapsed_seconds": 4.2091203999989375,
+              "http_ms": 3.6015000005136244,
+              "client_json_parse_ms": 2.029300001595402,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 7,
+              "elapsed_seconds": 4.213260200001969,
+              "http_ms": 3.6605999994208105,
+              "client_json_parse_ms": 0.4337999998824671,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 8,
+              "elapsed_seconds": 4.217134999998962,
+              "http_ms": 3.4592000010889024,
+              "client_json_parse_ms": 0.38240000139921904,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 9,
+              "elapsed_seconds": 4.221568100001605,
+              "http_ms": 4.012400000647176,
+              "client_json_parse_ms": 0.3905000012309756,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 10,
+              "elapsed_seconds": 4.225523000000976,
+              "http_ms": 3.5481999984767754,
+              "client_json_parse_ms": 0.3797999997914303,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 11,
+              "elapsed_seconds": 4.22900170000139,
+              "http_ms": 3.065799999603769,
+              "client_json_parse_ms": 0.3830999994534068,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 12,
+              "elapsed_seconds": 4.232447400001547,
+              "http_ms": 3.0106000012892764,
+              "client_json_parse_ms": 0.40669999725650996,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 13,
+              "elapsed_seconds": 4.236250300000393,
+              "http_ms": 3.3963999994739424,
+              "client_json_parse_ms": 0.37710000106017105,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 14,
+              "elapsed_seconds": 4.239740699998947,
+              "http_ms": 3.0790000018896535,
+              "client_json_parse_ms": 0.38219999987632036,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 15,
+              "elapsed_seconds": 4.243113799999264,
+              "http_ms": 2.9633999984071124,
+              "client_json_parse_ms": 0.38219999987632036,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 16,
+              "elapsed_seconds": 4.247842500000843,
+              "http_ms": 4.058400001667906,
+              "client_json_parse_ms": 0.5885999999009073,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 17,
+              "elapsed_seconds": 4.2517360000019835,
+              "http_ms": 3.437600000324892,
+              "client_json_parse_ms": 0.411000000895001,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 18,
+              "elapsed_seconds": 4.255106900000101,
+              "http_ms": 2.955900003144052,
+              "client_json_parse_ms": 0.3811999995377846,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 19,
+              "elapsed_seconds": 4.258912600002077,
+              "http_ms": 3.3972000019275583,
+              "client_json_parse_ms": 0.3804000007221475,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 20,
+              "elapsed_seconds": 4.262688900002104,
+              "http_ms": 3.3296000001428183,
+              "client_json_parse_ms": 0.41369999962626025,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 21,
+              "elapsed_seconds": 4.265974500001903,
+              "http_ms": 2.891000000090571,
+              "client_json_parse_ms": 0.3695999985211529,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 22,
+              "elapsed_seconds": 4.269783300002018,
+              "http_ms": 3.3928999982890673,
+              "client_json_parse_ms": 0.3843000013148412,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 23,
+              "elapsed_seconds": 4.273089099999197,
+              "http_ms": 2.9090999996697064,
+              "client_json_parse_ms": 0.37180000072112307,
+              "response_bytes": 40252,
+              "status": 200
+            },
+            {
+              "sample": 24,
+              "elapsed_seconds": 4.2769375999996555,
+              "http_ms": 3.126900002826005,
+              "client_json_parse_ms": 0.6498999973700847,
+              "response_bytes": 40252,
+              "status": 200
+            }
+          ],
+          "http_ms": {
+            "count": 25,
+            "p50": 3.3296000001428183,
+            "p95": 3.9775200006261,
+            "min": 2.72449999829405,
+            "max": 4.058400001667906
+          },
+          "client_json_parse_ms": {
+            "count": 25,
+            "p50": 0.38240000139921904,
+            "p95": 0.637639997876249,
+            "min": 0.3695999985211529,
+            "max": 2.029300001595402
+          }
+        }
+      }
+    }
+  },
+  "log": ".runtime/performance/byte-response-89300e98dfe94b6da29ed7861cde565d.log",
+  "limitations": [
+    "This compares actual endpoint observations; OS/background scheduling is not controlled exactly across runs.",
+    "Verified JSON bytes remove server-side large-part json.loads plus FastAPI dictionary traversal/re-encoding; manifest parsing and every hash/source/path guard remain.",
+    "HTTP receive time excludes separately recorded client Python JSON parsing; UI commit/render time is not measured here.",
+    "Existing hot immutable projections, three warmup requests per endpoint; no claim about cold disks.",
+    "No storage/lifecycle changes were made for byte responses, so no additional 120-second memory soak is claimed."
+  ],
+  "health": {
+    "status": "ok",
+    "version": "0.1.0",
+    "mode": "cpu_float64",
+    "physics": "canonical_mujoco_wasm_4.0.1",
+    "stage": "3_evaluation_and_release_candidate",
+    "frontend_complete": true,
+    "release_complete": false
+  },
+  "total_seconds": 4.300215300001582
+}

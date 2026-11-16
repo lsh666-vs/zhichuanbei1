@@ -1,0 +1,210 @@
+{
+  "schema": "policyglass.all-learned-state-check.v1",
+  "status": "passed",
+  "rows": [
+    {
+      "condition": "ppo_reference",
+      "seed": 11,
+      "source_sha256": "d446695564d2005d23a1ec81ca7a5a994848b4d249cfd5e531ae8222392b30f5",
+      "env_steps": 32768,
+      "before_updates": 1599,
+      "after_updates": 1600,
+      "max_parameter_change": 0.00028399826015026997,
+      "status": "passed"
+    },
+    {
+      "condition": "ppo_reference",
+      "seed": 23,
+      "source_sha256": "8a3f22c3edd68f84a6daa9cddb1591caa75a31a1e4654456e585f44527c8adb9",
+      "env_steps": 32768,
+      "before_updates": 1600,
+      "after_updates": 1601,
+      "max_parameter_change": 0.00017247112843810086,
+      "status": "passed"
+    },
+    {
+      "condition": "ppo_reference",
+      "seed": 37,
+      "source_sha256": "eebd9911df03b39d75097fd281c9eafdf40639e78baada16db1c34b7b37eed84",
+      "env_steps": 32768,
+      "before_updates": 1797,
+      "after_updates": 1798,
+      "max_parameter_change": 0.0004025725756103826,
+      "status": "passed"
+    },
+    {
+      "condition": "ppo_reference",
+      "seed": 53,
+      "source_sha256": "869298433a0d9f6328484a907d95677f99d69607a98e81565b3e5ed55ed5c6a3",
+      "env_steps": 32768,
+      "before_updates": 1827,
+      "after_updates": 1828,
+      "max_parameter_change": 0.00022653032367606074,
+      "status": "passed"
+    },
+    {
+      "condition": "ppo_reference",
+      "seed": 71,
+      "source_sha256": "df43dc7d88f62cd420eafdd5887205c9147d8960d6fd1bfbfd53f1849a536f6a",
+      "env_steps": 32768,
+      "before_updates": 1825,
+      "after_updates": 1826,
+      "max_parameter_change": 0.00019795232856033296,
+      "status": "passed"
+    },
+    {
+      "condition": "ppo_large_step",
+      "seed": 11,
+      "source_sha256": "4db68b5ebcc2c0752da3a456ebac9b89aa460257b6f0ede1c8f55014ec8ea958",
+      "env_steps": 8192,
+      "before_updates": 32,
+      "after_updates": 33,
+      "max_parameter_change": 0.030221898795182833,
+      "status": "passed"
+    },
+    {
+      "condition": "ppo_large_step",
+      "seed": 23,
+      "source_sha256": "36c7208008b11d1469ce2854413004f1ef631a31a812528960f337a6b7312c4e",
+      "env_steps": 8192,
+      "before_updates": 32,
+      "after_updates": 33,
+      "max_parameter_change": 0.04478609856894522,
+      "status": "passed"
+    },
+    {
+      "condition": "ppo_large_step",
+      "seed": 37,
+      "source_sha256": "8e24ce8a228a8b8e476f7cfd130769a2c0997dd09e8b98027594d0655cb33f38",
+      "env_steps": 8192,
+      "before_updates": 32,
+      "after_updates": 33,
+      "max_parameter_change": 0.03558296295651103,
+      "status": "passed"
+    },
+    {
+      "condition": "ppo_large_step",
+      "seed": 53,
+      "source_sha256": "c041fcbb7fef16c627592dbfc67170394b0645c212e0bd66a34d4f779dada033",
+      "env_steps": 8192,
+      "before_updates": 32,
+      "after_updates": 33,
+      "max_parameter_change": 0.043353297987754225,
+      "status": "passed"
+    },
+    {
+      "condition": "ppo_large_step",
+      "seed": 71,
+      "source_sha256": "27219f0c89b3f62f589c2f7d7003a9cf922285a6e8e91b4969a22eb40ffd8b41",
+      "env_steps": 8192,
+      "before_updates": 32,
+      "after_updates": 33,
+      "max_parameter_change": 0.04745204299821304,
+      "status": "passed"
+    },
+    {
+      "condition": "sac_reuse1",
+      "seed": 11,
+      "source_sha256": "da21ab639ffee899deb5884dab92d6366b7df373eae61aca13e06397ca3e6766",
+      "env_steps": 16384,
+      "before_updates": 15873,
+      "after_updates": 15874,
+      "max_parameter_change": 0.0005451826153431982,
+      "status": "passed"
+    },
+    {
+      "condition": "sac_reuse1",
+      "seed": 23,
+      "source_sha256": "7f655122348b2ab5cbfd2157780266e36295df5abed6b6f84aba8a954c0b163e",
+      "env_steps": 16384,
+      "before_updates": 15873,
+      "after_updates": 15874,
+      "max_parameter_change": 0.00028677405535176836,
+      "status": "passed"
+    },
+    {
+      "condition": "sac_reuse1",
+      "seed": 37,
+      "source_sha256": "615e442725e5ac3f26d5657f20d2a5b0d7954d74207624e4502022736998f602",
+      "env_steps": 16384,
+      "before_updates": 15873,
+      "after_updates": 15874,
+      "max_parameter_change": 0.0003712665229899034,
+      "status": "passed"
+    },
+    {
+      "condition": "sac_reuse1",
+      "seed": 53,
+      "source_sha256": "9c7fcf6eca141cf1422223db760cc60c6e0f40cb2ccffc19440c7d69f9d90f57",
+      "env_steps": 16384,
+      "before_updates": 15873,
+      "after_updates": 15874,
+      "max_parameter_change": 0.00032203617301351795,
+      "status": "passed"
+    },
+    {
+      "condition": "sac_reuse1",
+      "seed": 71,
+      "source_sha256": "4e35dc38a88f52f486b1105cb791621c8272b0122c3f6e8977e19355fb5a2de1",
+      "env_steps": 16384,
+      "before_updates": 15873,
+      "after_updates": 15874,
+      "max_parameter_change": 0.0002857212353802874,
+      "status": "passed"
+    },
+    {
+      "condition": "sac_reuse4",
+      "seed": 11,
+      "source_sha256": "9fa9b372c5ad9c7078ac41ef2cceec9043d246c71e2cb60c3c2ad8a7a6d2b6e2",
+      "env_steps": 16384,
+      "before_updates": 63492,
+      "after_updates": 63493,
+      "max_parameter_change": 0.00044459267018037707,
+      "status": "passed"
+    },
+    {
+      "condition": "sac_reuse4",
+      "seed": 23,
+      "source_sha256": "dd6ec9599448456d8a9f69d0828307aed24e05297144bba2d678c6d2c1e4327d",
+      "env_steps": 16384,
+      "before_updates": 63492,
+      "after_updates": 63493,
+      "max_parameter_change": 0.0002374522967601711,
+      "status": "passed"
+    },
+    {
+      "condition": "sac_reuse4",
+      "seed": 37,
+      "source_sha256": "d1231f3d0a31bd86a1e1aa7c7489d9309879347707cb08a67a7da858069bb02c",
+      "env_steps": 16384,
+      "before_updates": 63492,
+      "after_updates": 63493,
+      "max_parameter_change": 0.0005066299631159565,
+      "status": "passed"
+    },
+    {
+      "condition": "sac_reuse4",
+      "seed": 53,
+      "source_sha256": "c61adeb09c13e571f07668a736abcd72144dd8374e02feca0b21a55e4b2bf6a6",
+      "env_steps": 16384,
+      "before_updates": 63492,
+      "after_updates": 63493,
+      "max_parameter_change": 0.00037077009492927915,
+      "status": "passed"
+    },
+    {
+      "condition": "sac_reuse4",
+      "seed": 71,
+      "source_sha256": "903bc63f3bbb4ac37773b0234f265d5a2a11a323bddda8885a29b9978898dff5",
+      "env_steps": 16384,
+      "before_updates": 63492,
+      "after_updates": 63493,
+      "max_parameter_change": 0.0004760764019098862,
+      "status": "passed"
+    }
+  ],
+  "torch": "2.8.0+cpu",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "seconds": 3.4468989000015426,
+  "scope": "All 20 actual learned checkpoints hash-verified, safe reloaded and given one real fixed-batch counterfactual update. Sources untouched; not new on-policy training or an independent formula proof."
+}

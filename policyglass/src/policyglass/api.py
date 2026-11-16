@@ -1,6 +1,8 @@
 """Loopback API for exact numerical experiments. Final React UI belongs to Stage2."""
 
 import asyncio
+import html
+import json
 import os
 import time
 from contextlib import asynccontextmanager
@@ -11,7 +13,7 @@ import numpy as np
 import torch
 from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import Field
 from starlette.middleware.trustedhost import TrustedHostMiddleware
@@ -22,11 +24,13 @@ from .checkpoint import MAX_BYTES, decode
 from .config import ExperimentConfig, Intervention, StrictModel
 from .environment import SpatialArm
 from .experiments import actor_path_probe, branch, loss_slice, q_slice
+from .explanation import install_explanations
 from .jobs import JobManager
 from .numerics import sample_policy, tensor, trace_policy_operation
 from .physics_host import ENGINE_VERSION
 from .repository import Repository
 from .slice_jobs import SliceJobs, align_actor_critic
+from .study_catalog import install_study_catalog
 from .trace import Trace, plain
 
 ALLOWED_ORIGINS = [
@@ -168,11 +172,20 @@ def create_app(root=None):
     @asynccontextmanager
     async def lifespan(_):
         yield
+        await explanations.close()
         manager.close()
         slices.close()
 
-    app = FastAPI(title="PolicyGlass exact-computation API", version=__version__, lifespan=lifespan)
+    app = FastAPI(
+        title="PolicyGlass exact-computation API",
+        version=__version__,
+        lifespan=lifespan,
+        docs_url=None,
+        redoc_url=None,
+    )
     app.state.repository, app.state.jobs = repository, manager
+    explanations = install_explanations(app, repository)
+    install_study_catalog(app, repository)
     app.add_middleware(BodyLimitMiddleware)
     app.add_middleware(
         TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "testserver", "[::1]"]
@@ -190,7 +203,29 @@ def create_app(root=None):
             origin = request.headers.get("origin")
             if origin and origin not in ALLOWED_ORIGINS:
                 return JSONResponse({"detail": "Untrusted origin"}, status_code=403)
-        return await call_next(request)
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "no-referrer"
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data: blob:; font-src 'self'; connect-src 'self' "
+            "ws://127.0.0.1:8787 ws://localhost:8787; object-src 'none'; "
+            "base-uri 'none'; frame-ancestors 'none'; form-action 'self'"
+        )
+        if request.url.path.startswith("/api/"):
+            response.headers["Cache-Control"] = "no-store"
+        return response
+
+    @app.get("/docs", response_class=HTMLResponse, include_in_schema=False)
+    def local_docs():
+        # Local, escaped schema: no Swagger CDN or inline JavaScript required.
+        schema = json.dumps(app.openapi(), ensure_ascii=False, indent=2)
+        return (
+            "<!doctype html><html lang='zh-CN'><meta charset='utf-8'><title>PolicyGlass API</title><body><main><h1>PolicyGlass 本地 API</h1><p>此页和完整接口规范均可离线查看。</p><a href='/'>打开工作台</a> · <a href='/openapi.json'>下载 OpenAPI JSON</a><pre>"
+            + html.escape(schema)
+            + "</pre></main></body></html>"
+        )
 
     @app.exception_handler(ValueError)
     async def value_error(_, exc):
@@ -219,7 +254,7 @@ def create_app(root=None):
             "version": __version__,
             "mode": "cpu_float64",
             "physics": f"canonical_mujoco_wasm_{ENGINE_VERSION}",
-            "stage": "2_integrated_teaching_workbench",
+            "stage": "3_evaluation_and_release_candidate",
             "frontend_complete": (
                 Path(__file__).resolve().parents[2] / "frontend/dist/index.html"
             ).is_file(),
@@ -441,23 +476,17 @@ def create_app(root=None):
 
     @app.get("/api/traces/{trace_id}/index")
     def trace_index(trace_id: str):
-        return repository.trace_index(trace_id)
+        return Response(repository.trace_index_bytes(trace_id), media_type="application/json")
 
     @app.get("/api/traces/{trace_id}/events/{event_index}")
     def trace_event(trace_id: str, event_index: int):
-        document = repository.trace(trace_id)
-        if not 0 <= event_index < len(document["events"]):
-            raise ValueError("Event index outside trace")
-        return document["events"][event_index]
+        return Response(
+            repository.trace_event_bytes(trace_id, event_index), media_type="application/json"
+        )
 
     @app.get("/api/traces/{trace_id}/frames")
     def trace_frames(trace_id: str):
-        document = repository.trace(trace_id)
-        return {
-            "mode": "saved_actual_physics",
-            "frames": document["frames"],
-            "sample_ids": document["batch"]["sample_id"],
-        }
+        return Response(repository.trace_frames_bytes(trace_id), media_type="application/json")
 
     @app.get("/api/traces/{trace_id}/rollout")
     def trace_rollout(trace_id: str):

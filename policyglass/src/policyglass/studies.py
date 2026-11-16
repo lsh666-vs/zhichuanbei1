@@ -151,7 +151,7 @@ def run(protocol, condition, seed, out, pilot=False):
             checkpoint_sha256=hashlib.sha256(blob).hexdigest(),
             **{k: final[k] for k in ("env_steps", "updates")},
         )
-    except Exception as exc:
+    except (ValueError, RuntimeError, OSError, FloatingPointError, TimeoutError) as exc:
         result.update(status="failed", error=f"{type(exc).__name__}: {exc}")
         if learner is not None:
             result.update(env_steps=learner.env_steps, updates=learner.updates)

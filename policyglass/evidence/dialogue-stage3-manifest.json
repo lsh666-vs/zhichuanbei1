@@ -1,0 +1,23 @@
+{
+  "schema": "policyglass.dialogue-export.v1",
+  "captured_at": "2026-11-16T15:52:13.486508+00:00",
+  "native_source_name": "rollout-2026-11-16T19-08-19-01a1e40b-28d2-7720-a473-a311e7352cc5.jsonl",
+  "native_sha256": "8f92f08d6d7f38728880890e00182e839664d4cdf652eb48179d6dc606edcad3",
+  "public_sha256": "1f71f30404aa1b8bce32778925e67f7da4b28ccdb079c439ffca0f54815523f1",
+  "record_counts": {
+    "user": 2,
+    "function_call_output": 22,
+    "assistant": 14,
+    "custom_tool_call": 73,
+    "custom_tool_call_output": 72,
+    "function_call": 20
+  },
+  "scope": "Stage3 native session snapshot through capture time; later messages/final handoff are not yet present.",
+  "omissions": [
+    "system/developer context and internal reasoning are excluded from public excerpt",
+    "event metadata outside response_item omitted",
+    "private original stays ignored; API/private-key patterns redacted in excerpt"
+  ],
+  "authorship": "Coordinator/delegation messages are machine-generated handoffs, never independent human feedback. No learner feedback or three human Prompt chains are fabricated.",
+  "private_copy": "evidence/private/stage3-native-session.jsonl"
+}

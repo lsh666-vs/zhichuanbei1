@@ -5,7 +5,7 @@
   font-synthesis: none;
   --teal: #137d76;
   --line: #dce4e8;
-  --muted: #72828d;
+  --muted: #526875;
   --ink: #233d4d;
 }
 * {
@@ -13,6 +13,50 @@
 }
 body {
   margin: 0;
+}
+.skip-link {
+  position: fixed;
+  top: -70px;
+  left: 12px;
+  z-index: 100;
+  padding: 12px;
+  background: white;
+  color: #075d58;
+  border: 2px solid #075d58;
+}
+.skip-link:focus {
+  top: 12px;
+}
+.study-library {
+  grid-column: 1 / -1;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+}
+.study-library th,
+.study-library td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-size: 12px;
+}
+.study-library > details {
+  margin-top: 16px;
+}
+.study-library p {
+  line-height: 1.8;
+}
+.source,
+.tags code,
+.boundary-note,
+.viewport-footer,
+.scene-hint,
+.tool-tabs button,
+dt {
+  color: #4d6673;
+  font-size: 11px;
 }
 button,
 input,

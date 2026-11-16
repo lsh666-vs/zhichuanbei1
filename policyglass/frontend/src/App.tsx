@@ -38,6 +38,8 @@ import {
 import Scenes from './Scenes';
 import Inspector, { Formula, RawTree } from './Inspector';
 import { courses } from './courses';
+import { Explanation } from './Explanation';
+import { StudyLibrary } from './StudyLibrary';
 const tabs: { id: View; label: string; icon: any; caption: string }[] = [
   { id: 'arm', label: '物理实验', icon: Box, caption: '世界坐标 · MuJoCo' },
   { id: 'network', label: '计算网络', icon: Network, caption: '概念空间 · 实际张量' },
@@ -77,7 +79,7 @@ export default function App() {
     [expanded, setExpanded] = useState(false),
     [path, setPath] = useState('actor'),
     [playing, setPlaying] = useState(false),
-    [reduced, setReduced] = useState(false);
+    [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [target, setTarget] = useState([0.45, 0.12, 0.45]),
     [drag, setDrag] = useState(false),
     [force, setForce] = useState([0, 0, 0]),
@@ -86,7 +88,7 @@ export default function App() {
     [massScale, setMassScale] = useState(1),
     [resetEnvironment, setResetEnvironment] = useState(false),
     [physicsSteps, setPhysicsSteps] = useState(16);
-  const [surface, setSurface] = useState<Doc>(),
+  const [surfaceData, setSurface] = useState<Doc>(),
     [fields, setFields] = useState(['q1', 'q2']),
     [pick, setPick] = useState([0, 0]),
     [axes, setAxes] = useState([0, 1]),
@@ -125,6 +127,15 @@ export default function App() {
     importRef = useRef<HTMLInputElement>(null),
     sliceController = useRef<AbortController>(undefined),
     sliceTask = useRef<string>('');
+  const eventRequests = useRef(new Map<string, Promise<void>>());
+  const surface =
+    surfaceData?.view === view &&
+    surfaceData?.checkpoint === checkpoint &&
+    surfaceData?.sample === s.sample &&
+    surfaceData?.traceId === traceId &&
+    surfaceData?.experiment === detail?.id
+      ? surfaceData.result
+      : undefined;
   const run = useCallback(async (label: string, action: () => Promise<void>) => {
     setBusy(label);
     setError('');
@@ -201,7 +212,9 @@ export default function App() {
     [loadTrace],
   );
   function historyUrl(id: string, jid?: string) {
-    window.history.replaceState(null, '', `?experiment=${id}${jid ? '&job=' + jid : ''}`);
+    const diagnostics =
+      new URLSearchParams(window.location.search).get('diagnostics') === '1' ? '&diagnostics=1' : '';
+    window.history.replaceState(null, '', `?experiment=${id}${jid ? '&job=' + jid : ''}${diagnostics}`);
   }
   useEffect(() => {
     run('连接科学计算服务', async () => {
@@ -263,14 +276,24 @@ export default function App() {
   const getEvent = useCallback(
     async (i: number) => {
       if (!traceId || cache[i]) return;
+      const key = `${traceId}/${i}`;
+      if (eventRequests.current.has(key)) return eventRequests.current.get(key);
       const revision = traceGen.current;
-      const e = await api(`/traces/${traceId}/events/${i}`);
-      if (revision === traceGen.current) setCache((c) => ({ ...c, [i]: e }));
+      const pending = (async () => {
+        const e = await api(`/traces/${traceId}/events/${i}`);
+        if (revision === traceGen.current) setCache((c) => ({ ...c, [i]: e }));
+      })();
+      eventRequests.current.set(key, pending);
+      try {
+        await pending;
+      } finally {
+        eventRequests.current.delete(key);
+      }
     },
     [traceId, cache],
   );
   useEffect(() => {
-    if (traceId && !prediction) run('读取实际事件', () => getEvent(s.event));
+    if (traceId && !prediction && !cache[s.event]) run('读取实际事件', () => getEvent(s.event));
   }, [traceId, s.event, prediction]);
   useEffect(() => {
     if (view !== 'network' || prediction || !trace) return;
@@ -312,13 +335,12 @@ export default function App() {
     }
   }, [view, traceId]);
   const chooseEvent = (i: number) => {
-    select({ event: i });
     const e = events[i];
     if (e?.kind === 'layer') {
       const [model, l] = e.label.split('/layer');
-      select({ model, layer: +l });
+      select({ event: i, model, layer: +l });
       setPath(model.replace('_actor_path', ''));
-    }
+    } else select({ event: i });
     if (e?.kind === 'backward' || e?.kind === 'optimizer' || e?.kind === 'sample_gradients')
       setBackward(true);
   };
@@ -415,7 +437,14 @@ export default function App() {
       }
       if (current.status === 'failed') throw Error(current.error);
       if (current.status === 'cancelled' || controller.signal.aborted) return;
-      setSurface(current.result);
+      setSurface({
+        result: current.result,
+        view,
+        checkpoint,
+        sample: s.sample,
+        traceId,
+        experiment: detail.id,
+      });
       setPick([Math.floor(current.result.x.length / 2), Math.floor(current.result.y.length / 2)]);
     } finally {
       sliceTask.current = '';
@@ -643,6 +672,9 @@ export default function App() {
             : '完整检查点状态';
   return (
     <div className={'app' + (reduced ? ' reduced' : '')}>
+      <a className="skip-link" href="#experiment-content">
+        跳到实验内容
+      </a>
       <header className="topbar">
         <a
           className="brand"
@@ -659,9 +691,9 @@ export default function App() {
           <span>
             策镜 <b>PolicyGlass</b>
           </span>
-          <span className="beta">LAB 02</span>
+          <span className="beta">LAB 03</span>
         </a>
-        <nav>
+        <nav aria-label="主导航">
           <button className={panel === 'inspect' ? 'nav-active' : ''} onClick={() => setPanel('inspect')}>
             实验工作台
           </button>
@@ -738,7 +770,7 @@ export default function App() {
         </div>
       )}
       {!detail ? (
-        <main className="home">
+        <main className="home" id="experiment-content" tabIndex={-1}>
           <section className="intro">
             <div className="eyebrow">MAKE EVERY UPDATE EXPLAINABLE</div>
             <h2>
@@ -807,6 +839,12 @@ export default function App() {
               ))}
             </div>
           </section>
+          <StudyLibrary
+            onOpen={async (id) => {
+              await list();
+              await open(id);
+            }}
+          />
         </main>
       ) : (
         <>
@@ -856,7 +894,7 @@ export default function App() {
               减弱动效
             </label>
           </div>
-          <main className="workspace">
+          <main className="workspace" id="experiment-content" tabIndex={-1}>
             <aside className="leftbar">
               <div className="section-heading">
                 <h3>计算导航</h3>
@@ -923,11 +961,39 @@ export default function App() {
               <div className="boundary-note">环境轨迹提供奖励和观测。标准 PPO / SAC 不穿过物理引擎反传。</div>
             </aside>
             <section className="central">
-              <div className="view-tabs" role="tablist">
+              <div
+                className="view-tabs"
+                role="tablist"
+                aria-label="可视化视图"
+                onKeyDown={(e) => {
+                  const buttons = Array.from(
+                    e.currentTarget.querySelectorAll<HTMLButtonElement>('[role="tab"]'),
+                  );
+                  const current = buttons.indexOf(document.activeElement as HTMLButtonElement);
+                  const target =
+                    e.key === 'Home'
+                      ? 0
+                      : e.key === 'End'
+                        ? buttons.length - 1
+                        : e.key === 'ArrowRight'
+                          ? (current + 1) % buttons.length
+                          : e.key === 'ArrowLeft'
+                            ? (current + buttons.length - 1) % buttons.length
+                            : -1;
+                  if (target >= 0) {
+                    e.preventDefault();
+                    buttons[target].focus();
+                    buttons[target].click();
+                  }
+                }}
+              >
                 {tabs.map((t) => (
                   <button
                     key={t.id}
                     role="tab"
+                    id={'view-tab-' + t.id}
+                    aria-controls={'view-panel-' + t.id}
+                    tabIndex={view === t.id ? 0 : -1}
                     aria-selected={view === t.id}
                     className={view === t.id ? 'active' : ''}
                     onClick={() => setView(t.id)}
@@ -1037,6 +1103,7 @@ export default function App() {
                     ['compare', '对照比较'],
                     ['courses', '机制课程'],
                     ['notes', '引用与笔记'],
+                    ['explanation', '数值讲解'],
                   ].map(([id, name]) => (
                     <button key={id} className={panel === id ? 'active' : ''} onClick={() => setPanel(id)}>
                       {name}
@@ -1044,6 +1111,14 @@ export default function App() {
                   ))}
                 </div>
                 <div className="tool-content">
+                  {panel === 'explanation' && (
+                    <Explanation
+                      experimentId={detail.id}
+                      traceId={traceId}
+                      eventIndex={s.event}
+                      onLocate={chooseEvent}
+                    />
+                  )}
                   {panel === 'inspect' && (
                     <>
                       {view === 'arm' ? (
@@ -2023,7 +2098,7 @@ export default function App() {
       <div className="site-foot">
         <span>策镜 · PolicyGlass</span>
         <span>真实计算 / 可恢复状态 / 受控解释</span>
-        <span>Stage 2 · 策略成效与用户研究待独立验收</span>
+        <span>真实实验与独立技术核验 · 用户研究待真实参与</span>
       </div>
       {createOpen && (
         <CreateDialog
@@ -2087,6 +2162,49 @@ function Vector({ label, values, onChange }: any) {
   );
 }
 function CreateDialog({ course, busy, onClose, onCreate }: any) {
+  const dialog = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    const previous = document.activeElement as HTMLElement | null;
+    const form = dialog.current!;
+    const backdrop = form.parentElement!;
+    const background = Array.from(backdrop.parentElement!.children).filter(
+      (node) => node !== backdrop,
+    ) as HTMLElement[];
+    const priorInert = background.map((node) => node.inert);
+    background.forEach((node) => {
+      node.inert = true;
+    });
+    form.querySelector<HTMLInputElement>('[aria-label="实验名称"]')?.focus();
+    const keys = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+      }
+      if (event.key !== 'Tab') return;
+      const controls = Array.from(
+        form.querySelectorAll<HTMLElement>(
+          'button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),summary,[tabindex="0"]',
+        ),
+      ).filter((node) => node.getClientRects().length > 0);
+      const first = controls[0],
+        last = controls.at(-1);
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+    form.addEventListener('keydown', keys);
+    return () => {
+      form.removeEventListener('keydown', keys);
+      background.forEach((node, i) => {
+        node.inert = priorInert[i];
+      });
+      previous?.focus();
+    };
+  }, []);
   const [label, setLabel] = useState(course >= 0 ? courses[course].title : '空间机械臂 · 机制实验'),
     [algorithm, setAlgorithm] = useState(course >= 0 ? courses[course].algorithm : 'ppo'),
     [seed, setSeed] = useState(17),
@@ -2127,7 +2245,14 @@ function CreateDialog({ course, busy, onClose, onCreate }: any) {
   };
   return (
     <div className="modal-backdrop">
-      <form role="dialog" aria-modal="true" aria-labelledby="new-title" className="modal" onSubmit={submit}>
+      <form
+        ref={dialog}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="new-title"
+        className="modal"
+        onSubmit={submit}
+      >
         <div className="section-heading">
           <div>
             <span className="eyebrow">NEW EXPERIMENT</span>

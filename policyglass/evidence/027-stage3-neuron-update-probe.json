@@ -1,0 +1,157 @@
+{
+  "schema": "policyglass.induced-inactivity.v1",
+  "rows": [
+    {
+      "seed": 11,
+      "origin_sha256": "a9ece8f646de7b17ec24a3b00d1b2b4cd182549dad35acead84c2cf5594055eb",
+      "cases": {
+        "original": {
+          "activation_mean_abs_before_update": 0.15999642272885894,
+          "incoming_gradient_l2": 0.0038940135071469976,
+          "bias_gradient_l2": 0.0014266509004573261,
+          "previous_adam_moment_l2": 0.00015653493461095674,
+          "actual_incoming_parameter_delta_l2": 0.0030233740681094405,
+          "actual_optimizer_step": 2
+        },
+        "inactive_moments_preserved": {
+          "activation_mean_abs_before_update": 0.0,
+          "incoming_gradient_l2": 0.0,
+          "bias_gradient_l2": 0.0,
+          "previous_adam_moment_l2": 0.00015653493461095674,
+          "actual_incoming_parameter_delta_l2": 0.0020584752130204864,
+          "actual_optimizer_step": 2
+        },
+        "restored": {
+          "activation_mean_abs_before_update": 0.15999642272885894,
+          "incoming_gradient_l2": 0.0038940135071469976,
+          "bias_gradient_l2": 0.0014266509004573261,
+          "previous_adam_moment_l2": 0.00015653493461095674,
+          "actual_incoming_parameter_delta_l2": 0.0030233740681094405,
+          "actual_optimizer_step": 2
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "origin_sha256": "484167dc9f1d71b1e88bd955ab033d78f22eb69a15b3797ce9fe82dc5df19477",
+      "cases": {
+        "original": {
+          "activation_mean_abs_before_update": 0.19485957912096336,
+          "incoming_gradient_l2": 0.0024305083753162456,
+          "bias_gradient_l2": 0.0008409625990326487,
+          "previous_adam_moment_l2": 9.527077304169798e-05,
+          "actual_incoming_parameter_delta_l2": 0.0031052455963915034,
+          "actual_optimizer_step": 2
+        },
+        "inactive_moments_preserved": {
+          "activation_mean_abs_before_update": 0.0,
+          "incoming_gradient_l2": 0.0,
+          "bias_gradient_l2": 0.0,
+          "previous_adam_moment_l2": 9.527077304169798e-05,
+          "actual_incoming_parameter_delta_l2": 0.0021942356738724423,
+          "actual_optimizer_step": 2
+        },
+        "restored": {
+          "activation_mean_abs_before_update": 0.19485957912096336,
+          "incoming_gradient_l2": 0.0024305083753162456,
+          "bias_gradient_l2": 0.0008409625990326487,
+          "previous_adam_moment_l2": 9.527077304169798e-05,
+          "actual_incoming_parameter_delta_l2": 0.0031052455963915034,
+          "actual_optimizer_step": 2
+        }
+      }
+    },
+    {
+      "seed": 37,
+      "origin_sha256": "49060c5d2019021dc95ac9e64652d60f75f7e773f391e7acccc4f4c9ef98ce07",
+      "cases": {
+        "original": {
+          "activation_mean_abs_before_update": 0.2810367115948493,
+          "incoming_gradient_l2": 0.005451341579602221,
+          "bias_gradient_l2": 0.001980949199321531,
+          "previous_adam_moment_l2": 0.0001995597334433024,
+          "actual_incoming_parameter_delta_l2": 0.003103384994570166,
+          "actual_optimizer_step": 2
+        },
+        "inactive_moments_preserved": {
+          "activation_mean_abs_before_update": 0.0,
+          "incoming_gradient_l2": 0.0,
+          "bias_gradient_l2": 0.0,
+          "previous_adam_moment_l2": 0.0001995597334433024,
+          "actual_incoming_parameter_delta_l2": 0.002200067919406157,
+          "actual_optimizer_step": 2
+        },
+        "restored": {
+          "activation_mean_abs_before_update": 0.2810367115948493,
+          "incoming_gradient_l2": 0.005451341579602221,
+          "bias_gradient_l2": 0.001980949199321531,
+          "previous_adam_moment_l2": 0.0001995597334433024,
+          "actual_incoming_parameter_delta_l2": 0.003103384994570166,
+          "actual_optimizer_step": 2
+        }
+      }
+    },
+    {
+      "seed": 53,
+      "origin_sha256": "2c9beebe62d53096d01151bead01203d37c6a3fa7dc23260f73d28168db84b93",
+      "cases": {
+        "original": {
+          "activation_mean_abs_before_update": 0.1634923927051372,
+          "incoming_gradient_l2": 0.0015328341317303895,
+          "bias_gradient_l2": 0.0004977829464141792,
+          "previous_adam_moment_l2": 6.976246488679808e-05,
+          "actual_incoming_parameter_delta_l2": 0.00280231663538221,
+          "actual_optimizer_step": 2
+        },
+        "inactive_moments_preserved": {
+          "activation_mean_abs_before_update": 0.0,
+          "incoming_gradient_l2": 0.0,
+          "bias_gradient_l2": 0.0,
+          "previous_adam_moment_l2": 6.976246488679808e-05,
+          "actual_incoming_parameter_delta_l2": 0.0021986607077643474,
+          "actual_optimizer_step": 2
+        },
+        "restored": {
+          "activation_mean_abs_before_update": 0.1634923927051372,
+          "incoming_gradient_l2": 0.0015328341317303895,
+          "bias_gradient_l2": 0.0004977829464141792,
+          "previous_adam_moment_l2": 6.976246488679808e-05,
+          "actual_incoming_parameter_delta_l2": 0.00280231663538221,
+          "actual_optimizer_step": 2
+        }
+      }
+    },
+    {
+      "seed": 71,
+      "origin_sha256": "f4932edefb41b686505356347416282661201b7370fadd69f0f8c7b055c8e086",
+      "cases": {
+        "original": {
+          "activation_mean_abs_before_update": 0.24109339935759477,
+          "incoming_gradient_l2": 0.001768545534961679,
+          "bias_gradient_l2": 0.0005065718015002387,
+          "previous_adam_moment_l2": 0.00010206972772149546,
+          "actual_incoming_parameter_delta_l2": 0.0030195085321108625,
+          "actual_optimizer_step": 2
+        },
+        "inactive_moments_preserved": {
+          "activation_mean_abs_before_update": 0.0,
+          "incoming_gradient_l2": 0.0,
+          "bias_gradient_l2": 0.0,
+          "previous_adam_moment_l2": 0.00010206972772149546,
+          "actual_incoming_parameter_delta_l2": 0.0021958015915443992,
+          "actual_optimizer_step": 2
+        },
+        "restored": {
+          "activation_mean_abs_before_update": 0.24109339935759477,
+          "incoming_gradient_l2": 0.001768545534961679,
+          "bias_gradient_l2": 0.0005065718015002387,
+          "previous_adam_moment_l2": 0.00010206972772149546,
+          "actual_incoming_parameter_delta_l2": 0.0030195085321108625,
+          "actual_optimizer_step": 2
+        }
+      }
+    }
+  ],
+  "scope": "Controlled multi-entry lesion of first eight ReLU units; same saved rollout, old probabilities, batch and noise. Explicit fixed-batch counterfactual, no new on-policy continuation. Each case cloned from same state; original/restored are identical controls.",
+  "interpretation": "Zero local activation/gradient can coexist with nonzero actual Adam parameter change when earlier moments are preserved. No natural-dormancy frequency, revival efficacy or trained-policy success claim."
+}

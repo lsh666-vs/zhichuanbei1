@@ -1,0 +1,1243 @@
+{
+  "schema": "policyglass.dependency-audit.v1",
+  "checked_at": "2026-11-16T15:19:07.476882+00:00",
+  "service": "https://api.osv.dev/v1/querybatch",
+  "packages": [
+    {
+      "name": "Farama-Notifications",
+      "version": "0.0.6",
+      "installed_version": "0.0.6"
+    },
+    {
+      "name": "Jinja2",
+      "version": "3.1.6",
+      "installed_version": "3.1.6"
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "3.0.3",
+      "installed_version": "3.0.3"
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0",
+      "installed_version": "2.21.0"
+    },
+    {
+      "name": "annotated-doc",
+      "version": "0.0.6",
+      "installed_version": "0.0.6"
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "installed_version": "0.8.0"
+    },
+    {
+      "name": "anyio",
+      "version": "4.16.0",
+      "installed_version": "4.16.0"
+    },
+    {
+      "name": "certifi",
+      "version": "2026.10.23",
+      "installed_version": "2026.10.23"
+    },
+    {
+      "name": "click",
+      "version": "8.5.1",
+      "installed_version": "8.5.1"
+    },
+    {
+      "name": "cloudpickle",
+      "version": "3.1.2",
+      "installed_version": "3.1.2"
+    },
+    {
+      "name": "colorama",
+      "version": "0.4.6",
+      "installed_version": "0.4.6"
+    },
+    {
+      "name": "fastapi",
+      "version": "0.163.1",
+      "installed_version": "0.163.1"
+    },
+    {
+      "name": "filelock",
+      "version": "4.2.4",
+      "installed_version": "4.2.4"
+    },
+    {
+      "name": "fsspec",
+      "version": "2026.9.0",
+      "installed_version": "2026.9.0"
+    },
+    {
+      "name": "gymnasium",
+      "version": "1.2.2",
+      "installed_version": "1.2.2"
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "installed_version": "0.16.0"
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9",
+      "installed_version": "1.0.9"
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1",
+      "installed_version": "0.28.1"
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "installed_version": "3.20"
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.1",
+      "installed_version": "2.3.1"
+    },
+    {
+      "name": "mpmath",
+      "version": "1.3.0",
+      "installed_version": "1.3.0"
+    },
+    {
+      "name": "networkx",
+      "version": "3.7",
+      "installed_version": "3.7"
+    },
+    {
+      "name": "numpy",
+      "version": "2.2.6",
+      "installed_version": "2.2.6"
+    },
+    {
+      "name": "opentelemetry-api",
+      "version": "1.45.2",
+      "installed_version": "1.45.2"
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "installed_version": "26.3"
+    },
+    {
+      "name": "pluggy",
+      "version": "1.7.0",
+      "installed_version": "1.7.0"
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.3",
+      "installed_version": "2.14.3"
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.50.4",
+      "installed_version": "2.50.4"
+    },
+    {
+      "name": "pytest",
+      "version": "9.2.0",
+      "installed_version": "9.2.0"
+    },
+    {
+      "name": "ruff",
+      "version": "0.17.5",
+      "installed_version": "0.17.5"
+    },
+    {
+      "name": "safetensors",
+      "version": "0.6.2",
+      "installed_version": "0.6.2"
+    },
+    {
+      "name": "setuptools",
+      "version": "78.1.0",
+      "installed_version": "78.1.0"
+    },
+    {
+      "name": "starlette",
+      "version": "1.10.0",
+      "installed_version": "1.10.0"
+    },
+    {
+      "name": "sympy",
+      "version": "1.14.0",
+      "installed_version": "1.14.0"
+    },
+    {
+      "name": "torch",
+      "version": "2.8.0",
+      "installed_version": "2.8.0+cpu"
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.5",
+      "installed_version": "0.4.5"
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "installed_version": "4.16.0"
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.54.0",
+      "installed_version": "0.54.0"
+    }
+  ],
+  "raw_results": [
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {
+      "vulns": [
+        {
+          "id": "GHSA-5rjg-fvgr-3xxf",
+          "modified": "2026-09-10T03:50:24.253527Z"
+        },
+        {
+          "id": "GHSA-h35f-9h28-mq5c",
+          "modified": "2026-09-10T03:50:52.323347Z"
+        },
+        {
+          "id": "GHSA-xmj3-9gf7-h52w",
+          "modified": "2026-10-23T22:00:03.739009Z"
+        },
+        {
+          "id": "PYSEC-2025-49",
+          "modified": "2026-05-11T00:26:34.671259Z"
+        },
+        {
+          "id": "PYSEC-2026-3447",
+          "modified": "2026-07-14T10:56:37.948360Z"
+        }
+      ]
+    },
+    {},
+    {},
+    {
+      "vulns": [
+        {
+          "id": "GHSA-63cw-57p8-fm3p",
+          "modified": "2026-11-04T03:15:10.870748Z"
+        },
+        {
+          "id": "GHSA-qfhq-4f3w-5fph",
+          "modified": "2026-06-10T18:26:26.736808Z"
+        },
+        {
+          "id": "GHSA-rrmf-rvhw-rf47",
+          "modified": "2026-09-10T03:49:48.419046Z"
+        },
+        {
+          "id": "GHSA-vgrw-7cvw-pwgx",
+          "modified": "2026-06-10T17:41:15.774477Z"
+        },
+        {
+          "id": "PYSEC-2025-203",
+          "modified": "2026-05-20T09:19:19.739357Z"
+        },
+        {
+          "id": "PYSEC-2025-204",
+          "modified": "2026-05-20T09:19:19.802802Z"
+        },
+        {
+          "id": "PYSEC-2025-206",
+          "modified": "2026-05-20T09:19:19.928295Z"
+        },
+        {
+          "id": "PYSEC-2026-139",
+          "modified": "2026-05-21T15:00:31.962442Z"
+        },
+        {
+          "id": "PYSEC-2026-2286",
+          "modified": "2026-07-13T07:26:23.701611Z"
+        }
+      ]
+    },
+    {},
+    {},
+    {}
+  ],
+  "findings": [
+    {
+      "package": {
+        "name": "setuptools",
+        "version": "78.1.0",
+        "installed_version": "78.1.0"
+      },
+      "advisory": {
+        "id": "GHSA-5rjg-fvgr-3xxf",
+        "aliases": [
+          "BIT-setuptools-2025-47273",
+          "CVE-2025-47273",
+          "PYSEC-2025-49"
+        ],
+        "summary": "setuptools has a path traversal vulnerability in PackageIndex.download that leads to Arbitrary File Write",
+        "published": "2025-05-19T16:52:43Z",
+        "modified": "2026-09-10T03:50:24.253527717Z",
+        "references": [
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/security/advisories/GHSA-5rjg-fvgr-3xxf"
+          },
+          {
+            "type": "ADVISORY",
+            "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-47273"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/issues/4946"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/commit/250a6d17978f9f6ac3ac887091f2d32886fbbb0b"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/advisory-database/tree/main/vulns/setuptools/PYSEC-2025-49.yaml"
+          },
+          {
+            "type": "PACKAGE",
+            "url": "https://github.com/pypa/setuptools"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/blob/6ead555c5fb29bc57fe6105b1bffc163f56fd558/setuptools/package_index.py#L810C1-L825C88"
+          },
+          {
+            "type": "WEB",
+            "url": "https://lists.debian.org/debian-lts-announce/2025/05/msg00035.html"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "setuptools",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/setuptools"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "78.1.1"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "setuptools",
+        "version": "78.1.0",
+        "installed_version": "78.1.0"
+      },
+      "advisory": {
+        "id": "GHSA-h35f-9h28-mq5c",
+        "aliases": [
+          "BIT-setuptools-2026-59890",
+          "CVE-2026-59890",
+          "PYSEC-2026-3447"
+        ],
+        "summary": "setuptools: MANIFEST.in exclusion bypass in sdist via Unicode normalization collision (NFC/NFD) on macOS APFS/HFS+",
+        "published": "2026-07-21T19:09:21Z",
+        "modified": "2026-09-10T03:50:52.323347787Z",
+        "references": [
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/security/advisories/GHSA-h35f-9h28-mq5c"
+          },
+          {
+            "type": "ADVISORY",
+            "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59890"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/commit/dd9f436a36486b4cb8a4c70a2321548b0be09b8f"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/advisory-database/tree/main/vulns/setuptools/PYSEC-2026-3447.yaml"
+          },
+          {
+            "type": "PACKAGE",
+            "url": "https://github.com/pypa/setuptools"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/releases/tag/v83.0.0"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "setuptools",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/setuptools"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "83.0.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "setuptools",
+        "version": "78.1.0",
+        "installed_version": "78.1.0"
+      },
+      "advisory": {
+        "id": "GHSA-xmj3-9gf7-h52w",
+        "summary": "setuptools: Windows path escape via namespace_packages.txt during legacy wheel installation  Description",
+        "published": "2026-10-23T21:44:11Z",
+        "modified": "2026-10-23T22:00:03.739009766Z",
+        "references": [
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/security/advisories/GHSA-xmj3-9gf7-h52w"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/pull/5329"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/commit/6d07b8d17890dda58d944ac51e58f54af92d52af"
+          },
+          {
+            "type": "PACKAGE",
+            "url": "https://github.com/pypa/setuptools"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/releases/tag/v84.1.0"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "setuptools",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/setuptools"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "38.2.2"
+                  },
+                  {
+                    "fixed": "84.1.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "setuptools",
+        "version": "78.1.0",
+        "installed_version": "78.1.0"
+      },
+      "advisory": {
+        "id": "PYSEC-2025-49",
+        "aliases": [
+          "BIT-setuptools-2025-47273",
+          "CVE-2025-47273",
+          "GHSA-5rjg-fvgr-3xxf"
+        ],
+        "published": "2025-05-17T16:15:19Z",
+        "modified": "2026-05-11T00:26:34.671259971Z",
+        "references": [
+          {
+            "type": "EVIDENCE",
+            "url": "https://github.com/pypa/setuptools/security/advisories/GHSA-5rjg-fvgr-3xxf"
+          },
+          {
+            "type": "ARTICLE",
+            "url": "https://lists.debian.org/debian-lts-announce/2025/05/msg00035.html"
+          },
+          {
+            "type": "REPORT",
+            "url": "https://github.com/pypa/setuptools/issues/4946"
+          },
+          {
+            "type": "FIX",
+            "url": "https://github.com/pypa/setuptools/commit/250a6d17978f9f6ac3ac887091f2d32886fbbb0b"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/setuptools/blob/6ead555c5fb29bc57fe6105b1bffc163f56fd558/setuptools/package_index.py#L810C1-L825C88"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "setuptools",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/setuptools"
+            },
+            "ranges": [
+              {
+                "type": "GIT",
+                "repo": "https://github.com/pypa/setuptools",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "250a6d17978f9f6ac3ac887091f2d32886fbbb0b"
+                  }
+                ]
+              },
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "78.1.1"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "setuptools",
+        "version": "78.1.0",
+        "installed_version": "78.1.0"
+      },
+      "advisory": {
+        "id": "PYSEC-2026-3447",
+        "aliases": [
+          "BIT-setuptools-2026-59890",
+          "CVE-2026-59890",
+          "GHSA-h35f-9h28-mq5c"
+        ],
+        "published": "2026-07-08T17:17:27.020Z",
+        "modified": "2026-07-14T10:56:37.948360943Z",
+        "references": [
+          {
+            "type": "ADVISORY",
+            "url": "https://github.com/pypa/setuptools/releases/tag/v83.0.0"
+          },
+          {
+            "type": "FIX",
+            "url": "https://github.com/pypa/setuptools/commit/dd9f436a36486b4cb8a4c70a2321548b0be09b8f"
+          },
+          {
+            "type": "EVIDENCE",
+            "url": "https://github.com/pypa/setuptools/security/advisories/GHSA-h35f-9h28-mq5c"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "setuptools",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/setuptools"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "83.0.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "torch",
+        "version": "2.8.0",
+        "installed_version": "2.8.0+cpu"
+      },
+      "advisory": {
+        "id": "GHSA-63cw-57p8-fm3p",
+        "aliases": [
+          "BIT-pytorch-2026-24747",
+          "CVE-2026-24747",
+          "PYSEC-2026-1856",
+          "PYSEC-2026-2286"
+        ],
+        "summary": "PyTorch Vulnerable to Remote Code Execution via Untrusted Checkpoint Files",
+        "published": "2026-01-27T20:10:54Z",
+        "modified": "2026-11-04T03:15:10.870748916Z",
+        "references": [
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/security/advisories/GHSA-63cw-57p8-fm3p"
+          },
+          {
+            "type": "ADVISORY",
+            "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-24747"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/issues/163105"
+          },
+          {
+            "type": "WEB",
+            "url": "https://access.redhat.com/errata/RHSA-2026:24977"
+          },
+          {
+            "type": "WEB",
+            "url": "https://access.redhat.com/security/cve/CVE-2026-24747"
+          },
+          {
+            "type": "WEB",
+            "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2433612"
+          },
+          {
+            "type": "ADVISORY",
+            "url": "https://github.com/advisories/GHSA-63cw-57p8-fm3p"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/advisory-database/tree/main/vulns/pytorch/PYSEC-2026-1856.yaml"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2026-2286.yaml"
+          },
+          {
+            "type": "PACKAGE",
+            "url": "https://github.com/pytorch/pytorch"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/163122/commit/954dc5183ee9205cbe79876ad05dd2d9ae752139"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/releases/tag/v2.10.0"
+          },
+          {
+            "type": "WEB",
+            "url": "https://pypi.org/project/pytorch"
+          },
+          {
+            "type": "WEB",
+            "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-24747.json"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "torch",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/torch"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "2.10.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "torch",
+        "version": "2.8.0",
+        "installed_version": "2.8.0+cpu"
+      },
+      "advisory": {
+        "id": "GHSA-qfhq-4f3w-5fph",
+        "aliases": [
+          "BIT-pytorch-2025-3001",
+          "CVE-2025-3001",
+          "PYSEC-2025-195"
+        ],
+        "summary": "PyTorch is vulnerable to memory corruption through its torch.lstm_cell function",
+        "published": "2025-03-31T18:31:08Z",
+        "modified": "2026-06-10T18:26:26.736808954Z",
+        "references": [
+          {
+            "type": "ADVISORY",
+            "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3001"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/issues/149626"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/issues/149626#issue-2935860995"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/commit/999d94b5ede5f4ec111ba7dd144129e2c2725b03"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2025-195.yaml"
+          },
+          {
+            "type": "PACKAGE",
+            "url": "https://github.com/pytorch/pytorch"
+          },
+          {
+            "type": "WEB",
+            "url": "https://vuldb.com/?ctiid.302050"
+          },
+          {
+            "type": "WEB",
+            "url": "https://vuldb.com/?id.302050"
+          },
+          {
+            "type": "WEB",
+            "url": "https://vuldb.com/?submit.524212"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "torch",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/torch"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "2.10.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "torch",
+        "version": "2.8.0",
+        "installed_version": "2.8.0+cpu"
+      },
+      "advisory": {
+        "id": "GHSA-rrmf-rvhw-rf47",
+        "aliases": [
+          "BIT-pytorch-2025-3000",
+          "CVE-2025-3000",
+          "PYSEC-2025-194"
+        ],
+        "summary": "PyTorch is vulnerable to memory corruption through its torch.jit.script function",
+        "published": "2025-03-31T15:30:48Z",
+        "modified": "2026-09-10T03:49:48.419046410Z",
+        "references": [
+          {
+            "type": "ADVISORY",
+            "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3000"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/issues/149623"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/issues/149623#issue-2935703015"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/commit/b90c94991cdf8b87c8f7439f79518e0ef2c4ca4f"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2025-194.yaml"
+          },
+          {
+            "type": "PACKAGE",
+            "url": "https://github.com/pytorch/pytorch"
+          },
+          {
+            "type": "WEB",
+            "url": "https://vuldb.com/?ctiid.302049"
+          },
+          {
+            "type": "WEB",
+            "url": "https://vuldb.com/?id.302049"
+          },
+          {
+            "type": "WEB",
+            "url": "https://vuldb.com/?submit.524197"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "torch",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/torch"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "2.13.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "torch",
+        "version": "2.8.0",
+        "installed_version": "2.8.0+cpu"
+      },
+      "advisory": {
+        "id": "GHSA-vgrw-7cvw-pwgx",
+        "aliases": [
+          "BIT-pytorch-2025-2999",
+          "CVE-2025-2999",
+          "PYSEC-2025-193"
+        ],
+        "summary": "PyTorch is vulnerable to memory corruption through its unpack_sequence function",
+        "published": "2025-03-31T15:30:48Z",
+        "modified": "2026-06-10T17:41:15.774477397Z",
+        "references": [
+          {
+            "type": "ADVISORY",
+            "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-2999"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/issues/149622"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/issues/149622#issue-2935495265"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/commit/494518046816d29099b7d056a74ffa5c244fdcdd"
+          },
+          {
+            "type": "WEB",
+            "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2025-193.yaml"
+          },
+          {
+            "type": "PACKAGE",
+            "url": "https://github.com/pytorch/pytorch"
+          },
+          {
+            "type": "WEB",
+            "url": "https://vuldb.com/?ctiid.302048"
+          },
+          {
+            "type": "WEB",
+            "url": "https://vuldb.com/?id.302048"
+          },
+          {
+            "type": "WEB",
+            "url": "https://vuldb.com/?submit.524198"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "torch",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/torch"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "2.9.1"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "torch",
+        "version": "2.8.0",
+        "installed_version": "2.8.0+cpu"
+      },
+      "advisory": {
+        "id": "PYSEC-2025-203",
+        "aliases": [
+          "BIT-pytorch-2025-55551",
+          "CVE-2025-55551"
+        ],
+        "published": "2025-09-25T15:16:12.887Z",
+        "modified": "2026-05-20T09:19:19.739357Z",
+        "references": [
+          {
+            "type": "ADVISORY",
+            "url": "https://gist.github.com/shaoyuyoung/0e7d2a586297ae9c8ed14d8706749efc"
+          },
+          {
+            "type": "REPORT",
+            "url": "https://github.com/pytorch/pytorch/issues/151401"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "torch",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/torch"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "2.9.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "torch",
+        "version": "2.8.0",
+        "installed_version": "2.8.0+cpu"
+      },
+      "advisory": {
+        "id": "PYSEC-2025-204",
+        "aliases": [
+          "BIT-pytorch-2025-55552",
+          "CVE-2025-55552"
+        ],
+        "published": "2025-09-25T16:15:34.320Z",
+        "modified": "2026-05-20T09:19:19.802802Z",
+        "references": [
+          {
+            "type": "ADVISORY",
+            "url": "https://gist.github.com/shaoyuyoung/0e7d2a586297ae9c8ed14d8706749efc"
+          },
+          {
+            "type": "REPORT",
+            "url": "https://github.com/pytorch/pytorch/issues/147847"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "torch",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/torch"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "2.9.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "torch",
+        "version": "2.8.0",
+        "installed_version": "2.8.0+cpu"
+      },
+      "advisory": {
+        "id": "PYSEC-2025-206",
+        "aliases": [
+          "BIT-pytorch-2025-55554",
+          "CVE-2025-55554"
+        ],
+        "published": "2025-09-25T16:15:34.593Z",
+        "modified": "2026-05-20T09:19:19.928295Z",
+        "references": [
+          {
+            "type": "ADVISORY",
+            "url": "https://gist.github.com/shaoyuyoung/0e7d2a586297ae9c8ed14d8706749efc"
+          },
+          {
+            "type": "REPORT",
+            "url": "https://github.com/pytorch/pytorch/issues/151510"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "torch",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/torch"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "2.9.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "torch",
+        "version": "2.8.0",
+        "installed_version": "2.8.0+cpu"
+      },
+      "advisory": {
+        "id": "PYSEC-2026-139",
+        "aliases": [
+          "BIT-pytorch-2026-4538",
+          "CVE-2026-4538"
+        ],
+        "published": "2026-03-22T05:16:20.273Z",
+        "modified": "2026-05-21T15:00:31.962442644Z",
+        "references": [
+          {
+            "type": "WEB",
+            "url": "https://github.com/pytorch/pytorch/"
+          },
+          {
+            "type": "ADVISORY",
+            "url": "https://vuldb.com/?id.352326"
+          },
+          {
+            "type": "ADVISORY",
+            "url": "https://vuldb.com/?submit.774681"
+          },
+          {
+            "type": "REPORT",
+            "url": "https://vuldb.com/?ctiid.352326"
+          },
+          {
+            "type": "FIX",
+            "url": "https://github.com/pytorch/pytorch/pull/176791"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "torch",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/torch"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "last_affected": "2.10.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "package": {
+        "name": "torch",
+        "version": "2.8.0",
+        "installed_version": "2.8.0+cpu"
+      },
+      "advisory": {
+        "id": "PYSEC-2026-2286",
+        "aliases": [
+          "BIT-pytorch-2026-24747",
+          "CVE-2026-24747",
+          "GHSA-63cw-57p8-fm3p",
+          "PYSEC-2026-1856"
+        ],
+        "published": "2026-01-27T22:15:56.470Z",
+        "modified": "2026-07-13T07:26:23.701611780Z",
+        "references": [
+          {
+            "type": "WEB",
+            "url": "https://access.redhat.com/security/cve/CVE-2026-24747"
+          },
+          {
+            "type": "WEB",
+            "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-24747.json"
+          },
+          {
+            "type": "ADVISORY",
+            "url": "https://access.redhat.com/errata/RHSA-2026:24977"
+          },
+          {
+            "type": "ADVISORY",
+            "url": "https://github.com/pytorch/pytorch/releases/tag/v2.10.0"
+          },
+          {
+            "type": "ADVISORY",
+            "url": "https://github.com/pytorch/pytorch/security/advisories/GHSA-63cw-57p8-fm3p"
+          },
+          {
+            "type": "REPORT",
+            "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2433612"
+          },
+          {
+            "type": "REPORT",
+            "url": "https://github.com/pytorch/pytorch/issues/163105"
+          },
+          {
+            "type": "FIX",
+            "url": "https://github.com/pytorch/pytorch/163122/commit/954dc5183ee9205cbe79876ad05dd2d9ae752139"
+          }
+        ],
+        "affected": [
+          {
+            "package": {
+              "name": "torch",
+              "ecosystem": "PyPI",
+              "purl": "pkg:pypi/torch"
+            },
+            "ranges": [
+              {
+                "type": "ECOSYSTEM",
+                "events": [
+                  {
+                    "introduced": "0"
+                  },
+                  {
+                    "fixed": "2.10.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Point-in-time public OSV database query; not an independent penetration test.",
+    "Torch local +cpu suffix queried as upstream base version, retaining installed local version.",
+    "Runtime reachability and fix decisions are documented separately; do not infer absence of all vulnerabilities."
+  ],
+  "omissions": [
+    "Long descriptions, exploit examples and enumerated versions omitted; full response retained privately, SHA256 a059785aa5041bbfdadf871d94cf60737c0ea4728a34dc473a3f9992a56813e4"
+  ]
+}

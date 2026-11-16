@@ -1,4 +1,4 @@
-param([switch]$InstallBrowser)
+param([switch]$InstallBrowser, [string[]]$Spec=@())
 $ErrorActionPreference='Stop'
 . (Join-Path $PSScriptRoot 'Environment.ps1')
 foreach ($PolicyGlassPort in @(8787,5173)) {
@@ -24,7 +24,7 @@ try {
     Push-Location frontend
     try {
         if ($InstallBrowser) { pnpm.cmd exec playwright install chromium; if ($LASTEXITCODE -ne 0) { throw 'D: browser install failed' } }
-        pnpm.cmd e2e
+        pnpm.cmd exec playwright test @Spec
         if ($LASTEXITCODE -ne 0) { throw 'Real browser E2E failed' }
     } finally { Pop-Location }
 } finally {

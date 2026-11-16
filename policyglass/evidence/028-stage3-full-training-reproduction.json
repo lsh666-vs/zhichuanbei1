@@ -1,0 +1,35 @@
+{
+  "schema": "policyglass.full-training-reproduction.v1",
+  "scope": "Same machine, fresh processes after safety/trace fixes, complete checkpoint bytes including optimizer/RNG/replay/physics. Not cross-machine.",
+  "actual_commands": [
+    "python -m policyglass.studies --condition ppo_reference --seed 11 --output .runtime/stage3-reproduction",
+    "python -m policyglass.studies --condition sac_reuse1 --seed 11 --output .runtime/stage3-reproduction"
+  ],
+  "platform": "Windows-11-10.0.26200-SP0",
+  "rows": [
+    {
+      "condition": "ppo_reference",
+      "seed": 11,
+      "original_sha256": "d446695564d2005d23a1ec81ca7a5a994848b4d249cfd5e531ae8222392b30f5",
+      "rerun_sha256": "d446695564d2005d23a1ec81ca7a5a994848b4d249cfd5e531ae8222392b30f5",
+      "exact_match": true,
+      "original_revision_label": "d4e164dce9b0be6ea1ed328846e3f0a9b3d0698d",
+      "rerun_revision_label": "61bbf004e82dc1c1a7c396c3db191af341c524c0",
+      "original_seconds": 67.81799220000175,
+      "rerun_seconds": 70.0238829000009,
+      "config_equal": true
+    },
+    {
+      "condition": "sac_reuse1",
+      "seed": 11,
+      "original_sha256": "da21ab639ffee899deb5884dab92d6366b7df373eae61aca13e06397ca3e6766",
+      "rerun_sha256": "da21ab639ffee899deb5884dab92d6366b7df373eae61aca13e06397ca3e6766",
+      "exact_match": true,
+      "original_revision_label": "d4e164dce9b0be6ea1ed328846e3f0a9b3d0698d",
+      "rerun_revision_label": "61bbf004e82dc1c1a7c396c3db191af341c524c0",
+      "original_seconds": 231.7008965999994,
+      "rerun_seconds": 215.91569940000045,
+      "config_equal": true
+    }
+  ]
+}

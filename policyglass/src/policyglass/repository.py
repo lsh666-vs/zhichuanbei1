@@ -10,6 +10,8 @@ import uuid
 from contextlib import contextmanager
 from pathlib import Path
 
+from filelock import FileLock
+
 from .agents import Learner
 from .checkpoint import decode, encode, json_bytes
 from .validation import validate_temperature
@@ -53,6 +55,9 @@ class Repository:
                   origin_checkpoint TEXT NOT NULL, output_checkpoint TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS notebooks(
                   experiment TEXT PRIMARY KEY, document TEXT NOT NULL);
+                CREATE TABLE IF NOT EXISTS trace_projections(
+                  trace TEXT PRIMARY KEY, source_sha256 TEXT NOT NULL,
+                  manifest_sha256 TEXT NOT NULL, manifest_bytes INTEGER NOT NULL);
             """)
 
     @contextmanager
@@ -254,7 +259,7 @@ class Repository:
         blob = json_bytes(trace)
         if len(blob) > 64 * 1024 * 1024:
             raise ValueError("Trace exceeds 64 MiB budget")
-        self._atomic_write(self.root / "traces" / f"{object_id}.json", blob)
+        self._atomic_write(self._trace_path(object_id), blob)
         with self.connect() as db:
             db.execute(
                 "INSERT INTO traces VALUES(?,?,?,?,?,?,?,?)",
@@ -269,15 +274,165 @@ class Repository:
                     output,
                 ),
             )
+        self._ensure_trace_parts(object_id, document=trace)
         return object_id
 
-    def trace(self, trace):
+    def _contained(self, path):
+        resolved = path.resolve()
+        if resolved.drive.upper() == "C:" or not resolved.is_relative_to(self.root):
+            raise ValueError("Trace artifact path outside configured root")
+        return resolved
+
+    def _trace_path(self, trace, part=None):
+        identifier(trace)
+        base = self.root / "traces"
+        if part is None:
+            return self._contained(base / f"{trace}.json")
+        if not re.fullmatch(r"(?:index|frames|manifest|event-[0-9]+)\.json", part):
+            raise ValueError("Invalid trace projection name")
+        return self._contained(base / f"{trace}.parts" / part)
+
+    def _trace_row(self, trace):
         identifier(trace)
         with self.connect() as db:
             row = db.execute("SELECT * FROM traces WHERE id=?", (trace,)).fetchone()
         if row is None:
             raise KeyError("Trace not found")
-        path = self.root / "traces" / f"{trace}.json"
+        return row
+
+    @staticmethod
+    def _source_fingerprint(path):
+        try:
+            stat = path.stat()
+        except OSError as exc:
+            raise ValueError("Stored trace source unavailable") from exc
+        return {"bytes": stat.st_size, "mtime_ns": stat.st_mtime_ns, "ctime_ns": stat.st_ctime_ns}
+
+    @staticmethod
+    def _verified_bytes(path, record, maximum):
+        size = record["bytes"]
+        try:
+            if type(size) is not int or not 0 <= size <= maximum or path.stat().st_size != size:
+                raise ValueError("Stored trace projection size mismatch")
+            blob = path.read_bytes()
+        except OSError as exc:
+            raise ValueError("Stored trace projection unavailable") from exc
+        if len(blob) != size or hashlib.sha256(blob).hexdigest() != record["sha256"]:
+            raise ValueError("Stored trace projection integrity mismatch")
+        return blob
+
+    @staticmethod
+    def _verified_json(path, record, maximum):
+        return json.loads(Repository._verified_bytes(path, record, maximum))
+
+    def _ensure_trace_parts(self, trace, document=None):
+        identifier(trace)
+        with self.connect() as db:
+            if db.execute("SELECT 1 FROM trace_projections WHERE trace=?", (trace,)).fetchone():
+                return
+        lock = self._contained(self.root / "traces" / f"{trace}.projection.lock")
+        with FileLock(str(lock), timeout=30):
+            with self.connect() as db:
+                if db.execute("SELECT 1 FROM trace_projections WHERE trace=?", (trace,)).fetchone():
+                    return
+            source = self._trace_row(trace)
+            # Legacy objects are verified in full exactly once before derivation.
+            # The save path supplies its actual just-serialized document instead.
+            document = self.trace(trace) if document is None else document
+            if not isinstance(document.get("events"), list) or len(document["events"]) > 10000:
+                raise ValueError("Trace event count exceeds projection budget")
+            source_path = self._trace_path(trace)
+            fingerprint = self._source_fingerprint(source_path)
+            if fingerprint["bytes"] != source["bytes"]:
+                raise ValueError("Stored trace size mismatch")
+            folder = self._contained(self.root / "traces" / f"{trace}.parts")
+            folder.mkdir(exist_ok=True)
+            files = {}
+
+            def write_part(name, value):
+                blob = json_bytes(value)
+                self._atomic_write(self._trace_path(trace, name), blob)
+                files[name] = {"sha256": hashlib.sha256(blob).hexdigest(), "bytes": len(blob)}
+
+            write_part("index.json", self._describe_trace(document))
+            write_part(
+                "frames.json",
+                {
+                    "mode": "saved_actual_physics",
+                    "frames": document["frames"],
+                    "sample_ids": document["batch"]["sample_id"],
+                },
+            )
+            for index, event in enumerate(document["events"]):
+                write_part(f"event-{index}.json", event)
+            if self._source_fingerprint(source_path) != fingerprint:
+                raise ValueError("Stored trace changed during projection creation")
+            manifest = json_bytes(
+                {
+                    "schema": "policyglass.trace-projections.v1",
+                    "trace": trace,
+                    "source_sha256": source["sha256"],
+                    "source_fingerprint": fingerprint,
+                    "event_count": len(document["events"]),
+                    "files": files,
+                }
+            )
+            if len(manifest) > 2 * 1024 * 1024:
+                raise ValueError("Trace projection manifest exceeds budget")
+            self._atomic_write(self._trace_path(trace, "manifest.json"), manifest)
+            # Publish only after all complete atomic files exist; no partial row
+            # is observable. Concurrent legacy readers share the same file lock.
+            with self.connect() as db:
+                db.execute(
+                    "INSERT INTO trace_projections VALUES(?,?,?,?)",
+                    (trace, source["sha256"], hashlib.sha256(manifest).hexdigest(), len(manifest)),
+                )
+
+    def _trace_part_bytes(self, trace, name=None, event_index=None):
+        source = self._trace_row(trace)
+        self._ensure_trace_parts(trace)
+        with self.connect() as db:
+            record = db.execute(
+                "SELECT * FROM trace_projections WHERE trace=?", (trace,)
+            ).fetchone()
+        if record["source_sha256"] != source["sha256"]:
+            raise ValueError("Trace projection source binding mismatch")
+        manifest = self._verified_json(
+            self._trace_path(trace, "manifest.json"),
+            {"sha256": record["manifest_sha256"], "bytes": record["manifest_bytes"]},
+            2 * 1024 * 1024,
+        )
+        if (
+            manifest.get("schema") != "policyglass.trace-projections.v1"
+            or manifest.get("trace") != trace
+            or manifest.get("source_sha256") != source["sha256"]
+        ):
+            raise ValueError("Trace projection source binding mismatch")
+        count = manifest.get("event_count")
+        if type(count) is not int or not 0 <= count <= 10000:
+            raise ValueError("Invalid trace projection event count")
+        expected = {"index.json", "frames.json"} | {f"event-{i}.json" for i in range(count)}
+        if set(manifest["files"]) != expected:
+            raise ValueError("Unexpected trace projection entries")
+        # Projections are bound to the immutable original SHA in SQLite. A cheap
+        # stat guard additionally rejects ordinary source changes without reading
+        # 12MB on every partial request. Full reads always rehash the original.
+        if self._source_fingerprint(self._trace_path(trace)) != manifest["source_fingerprint"]:
+            raise ValueError("Stored trace changed after projection creation")
+        if event_index is not None:
+            if type(event_index) is not int or not 0 <= event_index < count:
+                raise ValueError("Event index outside trace")
+            name = f"event-{event_index}.json"
+        return self._verified_bytes(
+            self._trace_path(trace, name), manifest["files"][name], 64 * 1024 * 1024
+        )
+
+    def _trace_part(self, trace, name=None, event_index=None):
+        return json.loads(self._trace_part_bytes(trace, name, event_index))
+
+    def trace(self, trace):
+        row = self._trace_row(trace)
+        path = self._trace_path(trace)
         if path.stat().st_size != row["bytes"]:
             raise ValueError("Stored trace size mismatch")
         blob = path.read_bytes()
@@ -286,8 +441,29 @@ class Repository:
         return json.loads(blob)
 
     def trace_index(self, trace):
-        document = self.trace(trace)
+        return self._trace_part(trace, "index.json")
 
+    def trace_index_bytes(self, trace):
+        return self._trace_part_bytes(trace, "index.json")
+
+    def trace_event(self, trace, event_index):
+        if type(event_index) is not int or event_index < 0:
+            raise ValueError("Event index outside trace")
+        return self._trace_part(trace, event_index=event_index)
+
+    def trace_event_bytes(self, trace, event_index):
+        if type(event_index) is not int or event_index < 0:
+            raise ValueError("Event index outside trace")
+        return self._trace_part_bytes(trace, event_index=event_index)
+
+    def trace_frames(self, trace):
+        return self._trace_part(trace, "frames.json")
+
+    def trace_frames_bytes(self, trace):
+        return self._trace_part_bytes(trace, "frames.json")
+
+    @staticmethod
+    def _describe_trace(document):
         def descriptor(value):
             if isinstance(value, list):
                 shape = []

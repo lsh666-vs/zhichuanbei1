@@ -31,3 +31,7 @@ A second isolated environment at `.runtime/repro-venv` was created with CPython3
 Raw local receipts: `.runtime/repro-install-timing.json`, `.runtime/repro-test-timing.json`, `.runtime/repro-junit.xml`, `.runtime/repro-schema.json`. Their paths are local artifacts, not claims they are tracked in Git.
 
 Full scientific scope and failed ridge-convergence cases are recorded separately in `005-scientific-rerun.json` and `docs/science/STAGE_1_NUMERICS.md`. This stage contains no verified adjoint, optical splitter, robust optimum or finished 3D product UI.
+
+## Final CLI smoke check
+
+Root executed `python -m lightforge.cli validate examples/cavity.json` successfully, then `solve examples/cavity.json --output .runtime/cavity`:572 unknowns, relative residual1.202e-15, analytic electric error0.00223707, elapsed0.158s. Started `serve --port4321` (with a space between option/value), received HTTP200 on /api/health with truthful Stage1 capabilities, then stopped the owned validation server. API smoke state is not a promise that a permanent website is running.

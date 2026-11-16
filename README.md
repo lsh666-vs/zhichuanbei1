@@ -1,4 +1,8 @@
-# CounterLab · 反例实验室
+# 当前参赛作品：光铸 LightForge
+
+当前开发入口与真实验收记录见 [LightForge](lightforge/README.md)。作品按用户选定的新方向重做，覆盖光子芯片逆向设计、电磁场、伴随梯度、约束优化与制造鲁棒性。旧项目及其真实 Git 历史保留归档，下面是原 CounterLab 的历史说明。
+
+# CounterLab · 反例实验室（历史项目）
 
 **让直觉，接受检验。**
 

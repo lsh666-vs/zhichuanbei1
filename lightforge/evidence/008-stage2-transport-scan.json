@@ -1,0 +1,542 @@
+[
+  {
+    "spec": {
+      "schema_version": 1,
+      "name": "stage2 transport investigation",
+      "wavelength_um": 1.55,
+      "geometry": {
+        "kind": "layered_waveguide",
+        "length_um": 2.4,
+        "width_um": 1.2,
+        "height_um": 1.2,
+        "core_width_um": 0.5,
+        "core_thickness_um": 0.3,
+        "etch_depth_um": 0.3,
+        "sidewall_angle_deg": 90.0,
+        "core_index": 2.0,
+        "cladding_index": 1.44,
+        "design_length_um": 1.0,
+        "pml_thickness_um": 0.6,
+        "material_loss": 0.0
+      },
+      "mesh": {
+        "maxh_um": 0.2,
+        "order": 2,
+        "sample_shape": [
+          25,
+          17,
+          13
+        ],
+        "max_dofs": 250000
+      },
+      "excitation": {
+        "kind": "localized_current",
+        "amplitude": 1.0,
+        "component": "y",
+        "center_um": null,
+        "width_um": 0.12
+      }
+    },
+    "spec_hash": "de4d9ab517963e5cb6ffefdd55eec75be7b05382363829fe3872f944b7dcab46",
+    "unknowns": 6666,
+    "power": {
+      "method": "native_staggered_dual_volume",
+      "bounds_um": [
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -0.4,
+          0.4
+        ],
+        [
+          -0.4,
+          0.4
+        ]
+      ],
+      "planes": [
+        {
+          "axis": "x",
+          "normal_sign": -1,
+          "coordinate_um": -1.0,
+          "outward_power_w": 1.282244766544411e-19
+        },
+        {
+          "axis": "x",
+          "normal_sign": 1,
+          "coordinate_um": 0.9999999999999998,
+          "outward_power_w": 3.6008805527297096e-20
+        },
+        {
+          "axis": "y",
+          "normal_sign": -1,
+          "coordinate_um": -0.4,
+          "outward_power_w": 4.521867003244008e-20
+        },
+        {
+          "axis": "y",
+          "normal_sign": 1,
+          "coordinate_um": 0.3999999999999999,
+          "outward_power_w": 4.5218670032440203e-20
+        },
+        {
+          "axis": "z",
+          "normal_sign": -1,
+          "coordinate_um": -0.4,
+          "outward_power_w": 8.885413752655989e-20
+        },
+        {
+          "axis": "z",
+          "normal_sign": 1,
+          "coordinate_um": 0.3999999999999999,
+          "outward_power_w": 8.88541375265601e-20
+        }
+      ],
+      "outward_power_w": 4.323788972997385e-19,
+      "absorbed_power_w": 0.0,
+      "source_power_w": 4.323788972997384e-19,
+      "relative_balance_error": 2.227132217153653e-16
+    },
+    "probe_real": [
+      [
+        -1.0538979208725613e-17,
+        -0.008585455213202937,
+        -7.529903885425047e-18
+      ],
+      [
+        -2.9515085373294035e-17,
+        -0.005028648490125206,
+        -2.500982079265991e-17
+      ],
+      [
+        -0.0012880073959885294,
+        0.006242435271791141,
+        -0.0002854233279442182
+      ]
+    ],
+    "probe_imag": [
+      [
+        -2.4978706119397794e-18,
+        -0.0044883085758455924,
+        4.066956211745045e-18
+      ],
+      [
+        5.364158699745784e-18,
+        -0.003623435370755603,
+        1.3648176938096592e-17
+      ],
+      [
+        -0.003344375976731528,
+        0.002378696034215354,
+        -0.00043847203406456115
+      ]
+    ],
+    "elapsed_s": 2.3366354999998293
+  },
+  {
+    "spec": {
+      "schema_version": 1,
+      "name": "stage2 transport investigation",
+      "wavelength_um": 1.55,
+      "geometry": {
+        "kind": "layered_waveguide",
+        "length_um": 2.4,
+        "width_um": 1.2,
+        "height_um": 1.2,
+        "core_width_um": 0.5,
+        "core_thickness_um": 0.3,
+        "etch_depth_um": 0.3,
+        "sidewall_angle_deg": 90.0,
+        "core_index": 2.0,
+        "cladding_index": 1.44,
+        "design_length_um": 1.0,
+        "pml_thickness_um": 1.2,
+        "material_loss": 0.0
+      },
+      "mesh": {
+        "maxh_um": 0.2,
+        "order": 2,
+        "sample_shape": [
+          25,
+          17,
+          13
+        ],
+        "max_dofs": 250000
+      },
+      "excitation": {
+        "kind": "localized_current",
+        "amplitude": 1.0,
+        "component": "y",
+        "center_um": null,
+        "width_um": 0.12
+      }
+    },
+    "spec_hash": "3a47c6a9cc1d6a704439d6362ea52291a44917692a3c83734eaf85ed7bf234d4",
+    "unknowns": 21012,
+    "power": {
+      "method": "native_staggered_dual_volume",
+      "bounds_um": [
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -0.4,
+          0.4
+        ],
+        [
+          -0.4,
+          0.4
+        ]
+      ],
+      "planes": [
+        {
+          "axis": "x",
+          "normal_sign": -1,
+          "coordinate_um": -1.0,
+          "outward_power_w": 1.2428189032597628e-19
+        },
+        {
+          "axis": "x",
+          "normal_sign": 1,
+          "coordinate_um": 0.9999999999999998,
+          "outward_power_w": 3.4475541341043345e-20
+        },
+        {
+          "axis": "y",
+          "normal_sign": -1,
+          "coordinate_um": -0.4,
+          "outward_power_w": 4.660904217247642e-20
+        },
+        {
+          "axis": "y",
+          "normal_sign": 1,
+          "coordinate_um": 0.3999999999999999,
+          "outward_power_w": 4.6609042172476416e-20
+        },
+        {
+          "axis": "z",
+          "normal_sign": -1,
+          "coordinate_um": -0.4,
+          "outward_power_w": 8.907550877740753e-20
+        },
+        {
+          "axis": "z",
+          "normal_sign": 1,
+          "coordinate_um": 0.3999999999999999,
+          "outward_power_w": 8.907550877740795e-20
+        }
+      ],
+      "outward_power_w": 4.301265335667879e-19,
+      "absorbed_power_w": 0.0,
+      "source_power_w": 4.3012653356679225e-19,
+      "relative_balance_error": 1.0074575820601815e-14
+    },
+    "probe_real": [
+      [
+        1.9056755897540892e-17,
+        -0.007510354895280307,
+        -1.2304500188072861e-17
+      ],
+      [
+        3.990251006285055e-17,
+        -0.004433599546718249,
+        1.4065368119994544e-17
+      ],
+      [
+        -0.0011963444733182733,
+        0.005716338142048821,
+        -0.00029868595599350894
+      ]
+    ],
+    "probe_imag": [
+      [
+        6.982768188437949e-17,
+        -0.005237432600391199,
+        -5.5824095774613e-18
+      ],
+      [
+        4.003941618621745e-17,
+        -0.003994262861254158,
+        -1.1639212507694473e-17
+      ],
+      [
+        -0.003369934150632701,
+        0.0026416071089338734,
+        -0.00044012156385197783
+      ]
+    ],
+    "elapsed_s": 23.626633299999412
+  },
+  {
+    "spec": {
+      "schema_version": 1,
+      "name": "stage2 transport investigation",
+      "wavelength_um": 1.55,
+      "geometry": {
+        "kind": "layered_waveguide",
+        "length_um": 2.4,
+        "width_um": 2.4,
+        "height_um": 2.4,
+        "core_width_um": 0.5,
+        "core_thickness_um": 0.3,
+        "etch_depth_um": 0.3,
+        "sidewall_angle_deg": 90.0,
+        "core_index": 2.0,
+        "cladding_index": 1.44,
+        "design_length_um": 1.0,
+        "pml_thickness_um": 0.6,
+        "material_loss": 0.0
+      },
+      "mesh": {
+        "maxh_um": 0.2,
+        "order": 2,
+        "sample_shape": [
+          25,
+          17,
+          13
+        ],
+        "max_dofs": 250000
+      },
+      "excitation": {
+        "kind": "localized_current",
+        "amplitude": 1.0,
+        "component": "y",
+        "center_um": null,
+        "width_um": 0.12
+      }
+    },
+    "spec_hash": "38917ecaaf2df49488157012df1477c3420719ee0845c9066aacf6a1f4aca299",
+    "unknowns": 15606,
+    "power": {
+      "method": "native_staggered_dual_volume",
+      "bounds_um": [
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -0.4,
+          0.4
+        ],
+        [
+          -0.4,
+          0.4
+        ]
+      ],
+      "planes": [
+        {
+          "axis": "x",
+          "normal_sign": -1,
+          "coordinate_um": -1.0,
+          "outward_power_w": 1.284621377578459e-19
+        },
+        {
+          "axis": "x",
+          "normal_sign": 1,
+          "coordinate_um": 0.9999999999999998,
+          "outward_power_w": 3.60270879343427e-20
+        },
+        {
+          "axis": "y",
+          "normal_sign": -1,
+          "coordinate_um": -0.4,
+          "outward_power_w": 4.5272578313655636e-20
+        },
+        {
+          "axis": "y",
+          "normal_sign": 1,
+          "coordinate_um": 0.3999999999999999,
+          "outward_power_w": 4.5272578313656016e-20
+        },
+        {
+          "axis": "z",
+          "normal_sign": -1,
+          "coordinate_um": -0.4,
+          "outward_power_w": 9.037339472076354e-20
+        },
+        {
+          "axis": "z",
+          "normal_sign": 1,
+          "coordinate_um": 0.3999999999999999,
+          "outward_power_w": 9.037339472076361e-20
+        }
+      ],
+      "outward_power_w": 4.357811717610274e-19,
+      "absorbed_power_w": 0.0,
+      "source_power_w": 4.35781171761027e-19,
+      "relative_balance_error": 8.838977308746025e-16
+    },
+    "probe_real": [
+      [
+        -1.299210285554778e-16,
+        -0.008621572298414874,
+        -1.2371967027078376e-16
+      ],
+      [
+        9.965040494593966e-17,
+        -0.0050148185067452975,
+        -3.877699908592476e-17
+      ],
+      [
+        -0.0012569562347036734,
+        0.006194253155428438,
+        -0.0002916430451493942
+      ]
+    ],
+    "probe_imag": [
+      [
+        1.0672959272385924e-16,
+        -0.004587789977779382,
+        2.5478982571070183e-16
+      ],
+      [
+        1.6587697021880408e-16,
+        -0.0035945489244536936,
+        2.8317645615987283e-16
+      ],
+      [
+        -0.0033400943997602367,
+        0.0023561264907809277,
+        -0.00046741720931575795
+      ]
+    ],
+    "elapsed_s": 16.96355760000006
+  },
+  {
+    "spec": {
+      "schema_version": 1,
+      "name": "stage2 transport investigation",
+      "wavelength_um": 1.55,
+      "geometry": {
+        "kind": "layered_waveguide",
+        "length_um": 2.4,
+        "width_um": 2.4,
+        "height_um": 2.4,
+        "core_width_um": 0.5,
+        "core_thickness_um": 0.3,
+        "etch_depth_um": 0.3,
+        "sidewall_angle_deg": 90.0,
+        "core_index": 2.0,
+        "cladding_index": 1.44,
+        "design_length_um": 1.0,
+        "pml_thickness_um": 1.2,
+        "material_loss": 0.0
+      },
+      "mesh": {
+        "maxh_um": 0.2,
+        "order": 2,
+        "sample_shape": [
+          25,
+          17,
+          13
+        ],
+        "max_dofs": 250000
+      },
+      "excitation": {
+        "kind": "localized_current",
+        "amplitude": 1.0,
+        "component": "y",
+        "center_um": null,
+        "width_um": 0.12
+      }
+    },
+    "spec_hash": "de77f82c5df6027f1290b339f35c672d72253d935bd8c90b8b2f49fed6316a74",
+    "unknowns": 38088,
+    "power": {
+      "method": "native_staggered_dual_volume",
+      "bounds_um": [
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -0.4,
+          0.4
+        ],
+        [
+          -0.4,
+          0.4
+        ]
+      ],
+      "planes": [
+        {
+          "axis": "x",
+          "normal_sign": -1,
+          "coordinate_um": -1.0,
+          "outward_power_w": 1.2428570762957053e-19
+        },
+        {
+          "axis": "x",
+          "normal_sign": 1,
+          "coordinate_um": 0.9999999999999998,
+          "outward_power_w": 3.44756054724092e-20
+        },
+        {
+          "axis": "y",
+          "normal_sign": -1,
+          "coordinate_um": -0.4,
+          "outward_power_w": 4.660471386255914e-20
+        },
+        {
+          "axis": "y",
+          "normal_sign": 1,
+          "coordinate_um": 0.3999999999999999,
+          "outward_power_w": 4.660471386255831e-20
+        },
+        {
+          "axis": "z",
+          "normal_sign": -1,
+          "coordinate_um": -0.4,
+          "outward_power_w": 8.911486031112431e-20
+        },
+        {
+          "axis": "z",
+          "normal_sign": 1,
+          "coordinate_um": 0.3999999999999999,
+          "outward_power_w": 8.911486031112734e-20
+        }
+      ],
+      "outward_power_w": 4.3020046144934885e-19,
+      "absorbed_power_w": 0.0,
+      "source_power_w": 4.302004614493416e-19,
+      "relative_balance_error": 1.689999475027979e-14
+    },
+    "probe_real": [
+      [
+        8.360145228483376e-16,
+        -0.007512154102498498,
+        3.858024728014323e-16
+      ],
+      [
+        1.0887416272260337e-16,
+        -0.0044328631803184255,
+        2.7883279943336326e-16
+      ],
+      [
+        -0.0011958734525904814,
+        0.0057154980897545955,
+        -0.00029888248144962007
+      ]
+    ],
+    "probe_imag": [
+      [
+        -6.707231104862553e-16,
+        -0.005239427263203726,
+        -1.6132468040352518e-16
+      ],
+      [
+        -1.1095090019072513e-16,
+        -0.0039937456913446264,
+        -6.180382547887606e-16
+      ],
+      [
+        -0.0033698680885280922,
+        0.002641373954825221,
+        -0.0004407159096115216
+      ]
+    ],
+    "elapsed_s": 139.3921167999997
+  }
+]

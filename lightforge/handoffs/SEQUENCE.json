@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
   "stage_1": {"owner": "current original chat", "state": "READY", "code_baseline_commit": "43763f5"},
-  "stage_2": {"thread_id": "01a1e377-ff56-7842-8f68-6ca6b2e18756", "host_id": "local", "state": "WAITING"},
+  "stage_2": {"thread_id": "01a1e377-ff56-7842-8f68-6ca6b2e18756", "host_id": "local", "state": "IN_PROGRESS", "received_ready_commit": "9426d2fe513bc651cbe327b334a4b4002a50d4af", "first_gate": "calibrated_open_3d_transport"},
   "stage_3": {"thread_id": "01a1e377-452e-74b2-8e4d-b57291d31d92", "host_id": "local", "state": "WAITING"}
 }

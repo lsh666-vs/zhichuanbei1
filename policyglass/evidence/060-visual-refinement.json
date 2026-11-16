@@ -1,0 +1,134 @@
+{
+  "schema": "policyglass.visual-refinement.v1",
+  "created_utc": "2026-11-16T18:56:41.885293+00:00",
+  "status": "FUNCTIONAL_VISUAL_AND_PARAMETER_CHECKS_PASSED",
+  "trigger": "Direct user reported default cuboid network and blank-looking Q/loss views; asked for actual neural network shape and W/b. Earlier generic success statements did not establish adequate default visual interaction.",
+  "changes": [
+    "Default complete neuron/weight graph; no cuboid substitute; all149referenceActorneurons5440weights134biases",
+    "Actual checkpoint-bound W/b before training and stage-consistent recorded layer parameters; foreigncheckpointrejected",
+    "Actual Canvas picking, source readout, forward-only action, W/b prefilled branch controls; parent unchanged",
+    "Auto real Q/loss mesh with prerequisites and selected grid point marker; fix post-training batch/source readiness race",
+    "Readable output distribution labels, source values, full incoming-weight row, and explicit .cmd offline launcher"
+  ],
+  "verification": {
+    "python_full_passed": 112,
+    "vitest_passed": 7,
+    "full_real_browser_scenarios": {
+      "startTime": "2026-11-16T18:34:57.326Z",
+      "duration": 180293.647,
+      "expected": 13,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "final_after_label_layout_adjustments": {
+      "startTime": "2026-11-16T18:46:32.041Z",
+      "duration": 98573.097,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "actual_node_pick": "Clicked actual projected hidden neuron7 in WebGL canvas; UI index and APIweight matched",
+    "parameter_intervention": "Real bias0->0.25 child; parentfullparameters exactly unchanged",
+    "numerical_source": "Queried actual owned checkpoint parameters; raw recorded forward output compared; no training for forward action",
+    "surface": "Actual server Qgridcentralvalue compared; real training creates batch; visible actual loss mesh and no user alert after readinessfix",
+    "final_after_geometry_reuse": {
+      "startTime": "2026-11-16T18:53:14.710Z",
+      "duration": 96449.61600000001,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "renderer": {
+    "selection": {
+      "coldMs": {
+        "count": 2,
+        "p50": 72.29999999981374,
+        "p95": 73.19999999981374,
+        "min": 71.29999999981374,
+        "max": 73.29999999981374
+      },
+      "warmMs": {
+        "count": 20,
+        "p50": 25.149999999906868,
+        "p95": 76.31000000038185,
+        "min": 19.5,
+        "max": 84.1000000005588
+      }
+    },
+    "full1080p": {
+      "arm": {
+        "deliveryFps": 120.04706163877752,
+        "frameIntervalMs": {
+          "count": 602,
+          "p50": 8.299999999813735,
+          "p95": 9.200000000186265,
+          "min": 4.7000000001862645,
+          "max": 10.299999999813735
+        },
+        "p95Within30FpsBudget": true
+      },
+      "network": {
+        "deliveryFps": 119.90454966769434,
+        "frameIntervalMs": {
+          "count": 608,
+          "p50": 8.399999999441206,
+          "p95": 9.299999999813735,
+          "min": 1.300000000745058,
+          "max": 19.299999999813735
+        },
+        "p95Within30FpsBudget": true
+      },
+      "q": {
+        "deliveryFps": 119.92309064599007,
+        "frameIntervalMs": {
+          "count": 605,
+          "p50": 8.299999999813735,
+          "p95": 9.279999999888236,
+          "min": 1.8999999994412065,
+          "max": 13.799999999813735
+        },
+        "p95Within30FpsBudget": true
+      },
+      "loss": {
+        "deliveryFps": 120.05495052463604,
+        "frameIntervalMs": {
+          "count": 603,
+          "p50": 8.300000000745058,
+          "p95": 9,
+          "min": 6.699999999254942,
+          "max": 9.599999999627471
+        },
+        "p95Within30FpsBudget": true
+      }
+    },
+    "scope": "Same AMD host and real120HzR3F callbacks in short windows. Not GPU completion/display timing or permanent stability. Last targeted pass runs without concurrent pytest; original full suite overlapped pytest."
+  },
+  "observed_and_fixed_during_validation": [
+    "First local test build used unsupported PlaywrighttoBeFinite matcher; replaced with Number.isFinite assertion, no product numerical change.",
+    "Screenshot revealed an auto loss request reached old batchless initial checkpoint while completed training refresh was switching source; source-readiness gate added and browser nowasserts no alert.",
+    "Output label boxes overlapped; small layers spaced apart and sprites avoid tone mapping. Final3scenarios rerun.",
+    "Selection benchmark after label adjustment had warm p95119.42ms; identified new positions arrays rebuilding all dense geometries each selection. Memoized topology positions without dropping any connection, then repeated actual3visual/renderer scenarios. Earlier119.42ms report retained060-before-geometry-reuse."
+  ],
+  "not_claimed": [
+    "No human learner study or educational efficacy; user participants still deferred.",
+    "No new training algorithm/physics/serialization change or new multi-seed study.",
+    "Existing different-machine/provider/dependency/native-memory limitations remain."
+  ],
+  "screenshots": {
+    "evidence/visual-refinement/real-loss.png": "abb3a90786ae924a813f1c508394d9a15181c1b98b3e5672cfa046c3b40f91a9",
+    "evidence/visual-refinement/real-network.png": "fc57ba53e830a74b8d9877009c077d054b903cc9ea1a3ec2e8e6a3a1d9152be6",
+    "evidence/visual-refinement/real-q.png": "c5bf8174a1cc84b51b1a9d4a7a024bb116edbbfd2d481a646895580b4ad25fcd"
+  },
+  "reports": {
+    "060-visual-before-geometry-reuse.json": "8392c539734e734a43b4466c3dc400f0e8568a5a2eafc7caa83094a5de8ed2f2",
+    "060-visual-complete-browser-results.json": "3c2da47c5e6464be1130cb62f52afc3268a539c8726ffede8d9a911e505fbf0a",
+    "060-visual-final-browser-results.json": "8c34f24fbb17f7ccc2e39c03aabcdc4a7fb056f16bfb9776809bccfa8c5b95c1",
+    "060-visual-label-pass-browser-results.json": "e916fc6be1ac7de3101face5ba988c06b73ef04f2bb038045d58518f91124ac2",
+    "060-visual-python-tests.xml": "a524dc8269986089909a47a82c3edd80c7f6dbc18f65ecd19f7a6052d0ad458c",
+    "060-visual-renderer-performance.json": "e16888a07cc451ea40435f6a2d36fb26cdceaedccfacdd37a42924051c39cde3"
+  }
+}

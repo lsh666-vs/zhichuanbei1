@@ -2,6 +2,12 @@
 
 Status: NOT_READY
 
+## User-requested visual correction after r3
+
+The user rejected the default cuboid network and blank-looking surface views. r4 replaces the cuboid with the complete, selectable neuron/weight graph, puts actual W/b and provenance beside it, provides direct forward and parameter-branch actions, and computes eligible Q/loss grids on entry with explicit prerequisites. Details: docs/NETWORK_EXPLORER.md. A .cmd offline launcher addresses the reported .ps1/Notepad startup problem.
+
+This correction passed112 Python tests,7 frontend checks and13 actual browser scenarios, including real Canvas picking and a genuine single-bias branch. Three final visual/renderer scenarios passed after readable labels and geometry reuse;060/061 preserve all results and96exact source inputs. The updated delivery target is PolicyGlass-stage3-review-20261117-r4; its post-build receipt is062. Earlier r3 details below remain historical and do not identify this new UI. Full-plan external feedback/provider/cross-machine limits remain unchanged.
+
 Stage2 READY and explicit completion delivery were received before any Stage3 writes. Predecessor47 hashes,55 Python tests and6 actual browser scenarios were independently verified (019/020).
 
 The Stage3 technical review candidate implements optional official DeepSeek explanations, all-seed research/import, security/keyboard fixes, immutable Trace projections and measured rendering/interaction performance. All20 preregistered learning runs completed; every learned state hash/reload/actual update checked042. Full training seed11 PPO/SAC checkpoint bytes reproduced exactly028. The final lifetime correction passes110 Python tests,4 frontend checks and11 genuine browser scenarios (055); post-build package receipts follow actual execution.

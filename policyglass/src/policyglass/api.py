@@ -306,8 +306,8 @@ def create_app(root=None):
         return repository.checkpoints(experiment_id)
 
     @app.get("/api/experiments/{experiment_id}/parameters")
-    def parameters(experiment_id: str):
-        _, learner = load_experiment(experiment_id)
+    def parameters(experiment_id: str, checkpoint: str | None = None):
+        _, learner = load_experiment(experiment_id, checkpoint)
         try:
             return {
                 name: plain(dict(model.named_parameters()))

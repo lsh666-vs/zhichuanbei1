@@ -73,10 +73,11 @@ export default function App() {
     [notice, setNotice] = useState(''),
     [busy, setBusy] = useState(''),
     [createOpen, setCreateOpen] = useState(false),
+    [createAlgorithm, setCreateAlgorithm] = useState('ppo'),
     [course, setCourse] = useState(-1),
     [panel, setPanel] = useState('inspect');
   const [backward, setBackward] = useState(false),
-    [expanded, setExpanded] = useState(false),
+    [expanded, setExpanded] = useState(true),
     [path, setPath] = useState('actor'),
     [playing, setPlaying] = useState(false),
     [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -128,6 +129,7 @@ export default function App() {
     sliceController = useRef<AbortController>(undefined),
     sliceTask = useRef<string>('');
   const eventRequests = useRef(new Map<string, Promise<void>>());
+  const autoSlice = useRef('');
   const surface =
     surfaceData?.view === view &&
     surfaceData?.checkpoint === checkpoint &&
@@ -450,6 +452,17 @@ export default function App() {
       sliceTask.current = '';
     }
   };
+  useEffect(() => {
+    if (!detail || busy || (job && !terminal(job.status)) || surface) return;
+    const lossSourceReady =
+      detail.has_batch &&
+      (checkpoint === detail.checkpoint || (traceId && checkpoint === trace?.origin_checkpoint));
+    if (!(view === 'q' && detail.config.algorithm === 'sac') && !(view === 'loss' && lossSourceReady)) return;
+    const key = [detail.id, checkpoint, traceId, s.sample, view].join(':');
+    if (autoSlice.current === key) return;
+    autoSlice.current = key;
+    run('真实切片计算（固定条件）', calculateSlice);
+  }, [view, detail?.id, detail?.has_batch, checkpoint, traceId, s.sample, busy, job?.status]);
   const saveNote = async () => {
     if (!note.trim() || !detail) return;
     if (course >= 0 && (!guess.trim() || !explain.trim() || !traceId || !event?.id))
@@ -1036,6 +1049,7 @@ export default function App() {
                   surface,
                   fields: view === 'loss' ? ['loss'] : fields,
                   onPick: (i, j) => setPick([i, j]),
+                  gridPick: pick,
                   marker: projection?.delta,
                   gradient: projection
                     ? surface.directions.map(
@@ -1045,7 +1059,87 @@ export default function App() {
                       )
                     : undefined,
                   backward,
-                  onExpand: () => setExpanded(true),
+                  onExpanded: setExpanded,
+                  onPath: setPath,
+                  experiment: detail.id,
+                  checkpoint,
+                  traceId,
+                  onParameter: (path, index, value) => {
+                    setBranchKind('parameter');
+                    setBranchPath(path);
+                    setBranchIndex(index.join(','));
+                    setBranchValue(value);
+                    setPanel('branch');
+                  },
+                  busy: !!busy || !!active,
+                  onForward: () => {
+                    setPath('actor');
+                    select({ model: 'actor', layer: 0, neuron: 0, input: 0 });
+                    run('实际 Actor 前向', predict);
+                  },
+                  empty: (
+                    <>
+                      <span className="eyebrow">
+                        {view === 'q' ? 'ACTION VALUE · SAC' : 'LOCAL LOSS · FIXED BATCH'}
+                      </span>
+                      <h3>
+                        {busy.includes('切片')
+                          ? '正在计算真实曲面…'
+                          : view === 'q' && detail.config.algorithm !== 'sac'
+                            ? '双 Q 属于 SAC'
+                            : view === 'loss' && !detail.has_batch
+                              ? '先记录一批真实学习数据'
+                              : '从当前检查点计算曲面'}
+                      </h3>
+                      <p>
+                        {view === 'q' && detail.config.algorithm !== 'sac'
+                          ? '当前是 PPO，使用状态价值 V(s)。SAC 的两个 Critic 才定义 Q₁ / Q₂。'
+                          : view === 'loss' && !detail.has_batch
+                            ? '局部损失需要固定的真实批次、目标和噪声。记录一次更新后即可计算。'
+                            : '每个网格点都会重新运行网络。坐标和高度来自当前实验的实际数值。'}
+                      </p>
+                      {busy.includes('切片') ? (
+                        <button onClick={() => sliceController.current?.abort()}>取消曲面计算</button>
+                      ) : view === 'q' && detail.config.algorithm !== 'sac' ? (
+                        <button
+                          className="primary"
+                          onClick={() => {
+                            setCourse(-1);
+                            setCreateAlgorithm('sac');
+                            setCreateOpen(true);
+                          }}
+                        >
+                          新建 SAC 查看双 Q
+                        </button>
+                      ) : view === 'loss' && !detail.has_batch ? (
+                        <button
+                          className="primary"
+                          disabled={!!busy || !!active}
+                          onClick={() =>
+                            run('记录真实批次', async () => {
+                              const j = await api('/experiments/' + detail.id + '/jobs', {
+                                iterations: 1,
+                                record: true,
+                                mode: 'train',
+                              });
+                              setJob(j);
+                              historyUrl(detail.id, j.id);
+                            })
+                          }
+                        >
+                          {active ? '正在记录真实更新…' : '记录一次真实更新'}
+                        </button>
+                      ) : (
+                        <button
+                          className="primary"
+                          disabled={!!busy}
+                          onClick={() => run('真实切片计算（固定条件）', calculateSlice)}
+                        >
+                          计算并显示曲面
+                        </button>
+                      )}
+                    </>
+                  ),
                 }}
               />
               <div className="viewport-footer">
@@ -1235,12 +1329,12 @@ export default function App() {
                                 checked={expanded}
                                 onChange={(e) => setExpanded(e.target.checked)}
                               />
-                              展开全部单元（实例化渲染）
+                              显示全部层间连接
                             </label>
                           </div>
                           <p className="muted small">
-                            单击单元定位真实 layer
-                            事件；选择一组入边后显示该单元全部连接。未加载数值为灰色，完整权重仍保留在原始张量中。
+                            默认绘制各层的全部神经元和权重连线。单击节点或连接可检查
+                            W[j,i]、b[j]、激活和来源；取消全部连线后仍保留神经元与选中单元的入边。
                           </p>
                           <RawTree value={detail.architecture} />
                         </>
@@ -2103,6 +2197,7 @@ export default function App() {
       {createOpen && (
         <CreateDialog
           course={course}
+          initialAlgorithm={createAlgorithm}
           busy={!!busy}
           onClose={() => setCreateOpen(false)}
           onCreate={(config) =>
@@ -2161,7 +2256,7 @@ function Vector({ label, values, onChange }: any) {
     </fieldset>
   );
 }
-function CreateDialog({ course, busy, onClose, onCreate }: any) {
+function CreateDialog({ course, initialAlgorithm, busy, onClose, onCreate }: any) {
   const dialog = useRef<HTMLFormElement>(null);
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
@@ -2206,7 +2301,9 @@ function CreateDialog({ course, busy, onClose, onCreate }: any) {
     };
   }, []);
   const [label, setLabel] = useState(course >= 0 ? courses[course].title : '空间机械臂 · 机制实验'),
-    [algorithm, setAlgorithm] = useState(course >= 0 ? courses[course].algorithm : 'ppo'),
+    [algorithm, setAlgorithm] = useState(
+      course >= 0 ? courses[course].algorithm : (initialAlgorithm ?? 'ppo'),
+    ),
     [seed, setSeed] = useState(17),
     [hidden, setHidden] = useState('64,64'),
     [activation, setActivation] = useState('tanh'),

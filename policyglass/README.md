@@ -2,7 +2,7 @@
 
 PPO / SAC 神经网络底层机制的真实计算与交互实验室。
 
-**离线包使用者**：把整个包解压到D盘，运行包根目录 `Start-PolicyGlass-Offline.ps1`，打开 `http://127.0.0.1:8787/`。包内已带运行时，不用安装Python/Node或创建虚拟环境。下方 `.venv`、pnpm及Setup命令用于源码开发；完整离线核验见 [离线说明](docs/OFFLINE_RELEASE.md)。
+**离线包使用者**：把整个包解压到D盘，双击包根目录 `Start-PolicyGlass-Offline.cmd`，打开 `http://127.0.0.1:8787/`。保留启动窗口，Ctrl+C停止服务。`.ps1`直接双击可能被记事本打开；新的`.cmd`入口显式调用PowerShell，只对该进程设置执行策略。包内已带运行时，不用安装Python/Node或创建虚拟环境。下方 `.venv`、pnpm及Setup命令用于源码开发；完整离线核验见 [离线说明](docs/OFFLINE_RELEASE.md)。
 
 用户已批准完整方案：[开发方案](docs/DEVELOPMENT_PLAN.md)、[科学契约](docs/SCIENTIFIC_CONTRACT.md)、[竞品与来源](docs/COMPETITOR_AUDIT.md)。
 
@@ -65,3 +65,5 @@ Setup下载官方PyPA zipapp到D盘并检查已记录SHA256。若上游文件变
 本地服务仅绑定loopback，浏览器Origin和Host有白名单。不要把该科学服务直接暴露到公网。[DeepSeek讲解配置和限制](docs/EXPLANATION.md)：只有服务端D盘本地配置可持有密钥；用户看过外发预览并点击发送后才请求官方API。未配置时完整离线功能继续可用。供应商测试使用明确模拟响应，未声称真实账户与讲解质量已验证。`.env.example`不包含凭证。
 
 研究预登记见 `docs/STAGE3_STUDY.json`；运行 `python -m policyglass.studies` 会实际消耗CPU训练，不能把研究脚本当瞬时截图演示。科学图通过独立分析依赖重建，`scripts/analyze_study.py` 只接受全部登记运行，并验证检查点哈希；分析依赖在D盘 `.runtime/analysis-libs/`，不加入应用运行依赖。真实反馈方案见 [LEARNER_PROTOCOL](docs/LEARNER_PROTOCOL.md)，比赛素材索引见 [SUBMISSION_MATERIALS](docs/SUBMISSION_MATERIALS.md)。
+
+网络默认绘制全部神经元与层间权重，直接检查W/b、真实前向及参数分支。双Q和损失的自动计算与前提见 [网络与曲面](docs/NETWORK_EXPLORER.md)。

@@ -1,6 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 const evidence = '../.runtime/e2e';
+const productionUrl = process.env.POLICYGLASS_E2E_API_URL ?? 'http://127.0.0.1:8787';
 async function create(page: Page, algorithm = 'ppo', name = 'E2E PPO real flow') {
   await page.getByRole('button', { name: '新建实验', exact: true }).click();
   await page.getByLabel('实验名称', { exact: true }).fill(name);
@@ -38,7 +39,7 @@ test('PPO actual create → inspect → branch → notes → export → import �
   await expect(page.locator('canvas')).toBeVisible();
   await page.screenshot({ path: evidence + '/01-arm.png', fullPage: true });
   await page.getByRole('tab', { name: '计算网络' }).click();
-  await page.getByLabel(/展开全部单元/).check();
+  await page.getByLabel('全部权重连线', { exact: true }).check();
   const li = idx.events.findIndex((e) => e.kind === 'layer' && e.label === 'actor/layer0');
   await page.locator('.event-list button').nth(li).click();
   await expect(page.locator('.inspector h3')).toHaveText('actor/layer0');
@@ -181,13 +182,11 @@ test('Real task pause, reload, resume, cancel and corrupt import errors', async 
   await page.getByRole('button', { name: '恢复任务', exact: true }).click();
   await page.getByRole('button', { name: '取消任务', exact: true }).click();
   await expect(page.getByTestId('job-status')).toContainText('cancelled', { timeout: 60000 });
-  await page
-    .locator('input[type=file]')
-    .setInputFiles({
-      name: 'corrupt.pgz',
-      mimeType: 'application/octet-stream',
-      buffer: Buffer.from('not a checkpoint'),
-    });
+  await page.locator('input[type=file]').setInputFiles({
+    name: 'corrupt.pgz',
+    mimeType: 'application/octet-stream',
+    buffer: Buffer.from('not a checkpoint'),
+  });
   await expect(page.getByRole('alert')).toContainText('操作未完成');
   const exp = await (await page.request.get(`/api/experiments/${id}`)).json();
   expect(exp.checkpoint).toMatch(/^[a-f0-9]{32}$/);
@@ -247,10 +246,10 @@ test('Production workbench serves local assets without CDN dependencies', async 
   const external: string[] = [];
   const errors: string[] = [];
   page.on('request', (r) => {
-    if (/^https?:/.test(r.url()) && !r.url().startsWith('http://127.0.0.1:8787')) external.push(r.url());
+    if (/^https?:/.test(r.url()) && !r.url().startsWith(productionUrl)) external.push(r.url());
   });
   page.on('pageerror', (e) => errors.push(e.message));
-  await page.goto('http://127.0.0.1:8787/');
+  await page.goto(productionUrl + '/');
   await expect(page.getByRole('heading', { name: '最近实验' })).toBeVisible();
   await expect(page.locator('.connection')).toContainText('已连接');
   expect(external).toEqual([]);

@@ -1,47 +1,11 @@
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Line, TransformControls } from '@react-three/drei';
 import * as THREE from 'three';
-import { Doc, fmt, quaternion, surfaceVertices, useLab } from './core';
+import { Doc, fmt, quaternion, surfaceVertices } from './core';
+import Label from './SceneLabel';
+import NetworkExplorer from './NetworkExplorer';
 
-function Label({ at, children }: { at: number[]; children: React.ReactNode }) {
-  const text = React.Children.toArray(children)
-    .map((c) => (typeof c === 'string' || typeof c === 'number' ? String(c) : ''))
-    .join('');
-  const sprite = useRef<THREE.Sprite>(null);
-  const { texture, aspect } = useMemo(() => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d')!;
-    ctx.font = '20px "Segoe UI", "Microsoft YaHei",sans-serif';
-    canvas.width = Math.ceil(ctx.measureText(text).width) + 24;
-    canvas.height = 42;
-    ctx.fillStyle = '#ffffffeb';
-    ctx.fillRect(0, 0, canvas.width, 42);
-    ctx.strokeStyle = '#dce6e9';
-    ctx.strokeRect(1, 1, canvas.width - 2, 40);
-    ctx.font = '20px "Segoe UI", "Microsoft YaHei",sans-serif';
-    ctx.fillStyle = '#607e8b';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(text, 12, 21);
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    return { texture, aspect: canvas.width / 42 };
-  }, [text]);
-  useEffect(() => () => texture.dispose(), [texture]);
-  useFrame(({ camera, size }) => {
-    if (!sprite.current) return;
-    const distance = camera.position.distanceTo(new THREE.Vector3(...(at as [number, number, number])));
-    const height =
-      (2 * Math.tan(THREE.MathUtils.degToRad((camera as THREE.PerspectiveCamera).fov / 2)) * distance * 18) /
-      size.height;
-    sprite.current.scale.set(height * aspect, height, 1);
-  });
-  return (
-    <sprite ref={sprite} position={at as any} renderOrder={20}>
-      <spriteMaterial map={texture} transparent depthTest={false} depthWrite={false} />
-    </sprite>
-  );
-}
 function CameraPose({ view, count }: { view: string; count: number }) {
   const { camera, invalidate } = useThree();
   useLayoutEffect(() => {
@@ -235,248 +199,20 @@ function Arm({
     </>
   );
 }
-function Neurons({
-  points,
-  values,
-  selected,
-  onPick,
-}: {
-  points: number[][];
-  values: number[];
-  selected: number;
-  onPick: (i: number) => void;
-}) {
-  const ref = useRef<THREE.InstancedMesh>(null);
-  useLayoutEffect(() => {
-    if (!ref.current) return;
-    const mat = new THREE.Matrix4();
-    points.forEach((p, i) => {
-      mat.makeTranslation(...(p as [number, number, number]));
-      ref.current!.setMatrixAt(i, mat);
-      const v = values?.[i];
-      ref.current!.setColorAt(
-        i,
-        new THREE.Color(i === selected ? '#eaa048' : v == null ? '#b6c8d1' : v < 0 ? '#547cbe' : '#36a89b'),
-      );
-    });
-    ref.current.instanceMatrix.needsUpdate = true;
-    if (ref.current.instanceColor) ref.current.instanceColor.needsUpdate = true;
-  }, [points, values, selected]);
-  return (
-    <instancedMesh
-      ref={ref}
-      args={[undefined, undefined, points.length]}
-      onClick={(e) => {
-        e.stopPropagation();
-        if (e.instanceId != null) onPick(e.instanceId);
-      }}
-    >
-      <sphereGeometry args={[0.062, 10, 10]} />
-      <meshStandardMaterial roughness={0.35} metalness={0.2} />
-    </instancedMesh>
-  );
-}
-const nodePosition = (layer: number, i: number, n: number, offset = 0): [number, number, number] => [
-  layer * 1.75 - 2.5,
-  ((i % 8) - Math.min(n - 1, 7) / 2) * 0.23,
-  Math.floor(i / 8) * 0.23 + offset,
-];
-function Connections({ event, layer, width, base, sample, neuron, input, backward, onPick }: any) {
-  const edges = useMemo(
-    () =>
-      Array.from({ length: width }, (_, j) => {
-        const a = nodePosition(layer - 1, j, width, base),
-          b = nodePosition(layer, neuron, event.weight.length, base);
-        const value = backward
-          ? event.weight[neuron]?.[j] * event.preactivation_gradient?.[sample]?.[neuron]
-          : event.weight[neuron]?.[j] * event.input?.[sample]?.[j];
-        return { a, b, value };
-      }),
-    [event, layer, width, base, sample, neuron, backward],
-  );
-  const geometry = useMemo(() => {
-    const g = new THREE.BufferGeometry();
-    g.setAttribute(
-      'position',
-      new THREE.Float32BufferAttribute(
-        edges.flatMap(({ a, b }) => [...a, ...b]),
-        3,
-      ),
-    );
-    g.setAttribute(
-      'color',
-      new THREE.Float32BufferAttribute(
-        edges.flatMap(({ value }) => {
-          const c = new THREE.Color(value < 0 ? '#547cbe' : '#2b9e8e');
-          return [...c.toArray(), ...c.toArray()];
-        }),
-        3,
-      ),
-    );
-    return g;
-  }, [edges]);
-  useEffect(() => () => geometry.dispose(), [geometry]);
-  const selected = edges[Math.min(input, edges.length - 1)];
-  if (!selected) return null;
-  const start = new THREE.Vector3(...((backward ? selected.b : selected.a) as [number, number, number]));
-  const end = new THREE.Vector3(...((backward ? selected.a : selected.b) as [number, number, number]));
-  const direction = end.clone().sub(start),
-    color = selected.value < 0 ? '#547cbe' : '#2b9e8e';
-  return (
-    <>
-      <lineSegments
-        geometry={geometry}
-        onClick={(e) => {
-          e.stopPropagation();
-          onPick(Math.floor((e.index ?? 0) / 2));
-        }}
-      >
-        <lineBasicMaterial vertexColors transparent opacity={0.45} />
-      </lineSegments>
-      <Line points={[selected.a, selected.b]} color={color} lineWidth={2.5} />
-      {Number.isFinite(selected.value) && (
-        <>
-          <arrowHelper args={[direction.clone().normalize(), start, direction.length(), color, 0.15, 0.08]} />
-          <Label at={start.clone().lerp(end, 0.5).toArray()}>
-            {backward ? 'W·dL/dz' : 'W·x'} = {fmt(selected.value)}
-          </Label>
-        </>
-      )}
-    </>
-  );
-}
-function Network({
-  architecture,
-  events,
-  onEvent,
-  expanded,
-  path,
-  backward,
-  onExpand,
-}: {
-  architecture: Doc;
-  events: Doc[];
-  onEvent: (i: number) => void;
-  expanded: boolean;
-  path: string;
-  backward: boolean;
-  onExpand: () => void;
-}) {
-  const s = useLab((x) => x.selection),
-    select = useLab((x) => x.select);
-  const models = Object.keys(architecture).filter((k) => path === 'all' || k === path);
-  return (
-    <>
-      {models.map((name, mi) => {
-        const spec = architecture[name],
-          base = (models.length - 1 - mi) * 2.7;
-        return (
-          <group key={name}>
-            <Label at={[-3.1, -1, base + 0.8]}>
-              {name} · {spec.sizes.join(' → ')}
-            </Label>
-            {!expanded ? (
-              <mesh
-                position={[0, 0, base + 0.3]}
-                onClick={() => {
-                  select({ model: name, layer: 0 });
-                  onExpand();
-                }}
-              >
-                <boxGeometry args={[4.4, 1.3, 0.5]} />
-                <meshStandardMaterial
-                  color={s.model === name ? '#288e88' : '#8ba5b6'}
-                  transparent
-                  opacity={0.75}
-                />
-              </mesh>
-            ) : (
-              spec.sizes.map((n: number, l: number) => {
-                const modelLabel =
-                  path === 'q1' &&
-                  events.some((e) => e.label?.startsWith('q1_actor_path/')) &&
-                  s.model === 'q1_actor_path'
-                    ? 'q1_actor_path'
-                    : name;
-                const ei = events.findIndex(
-                  (e) =>
-                    e.kind === 'layer' &&
-                    e.label ===
-                      `${s.model === name + '_actor_path' ? s.model : modelLabel}/layer${Math.max(0, l - 1)}`,
-                );
-                const ev = events[ei];
-                const values = backward
-                  ? l === 0
-                    ? ev?.input_gradient?.[s.sample]
-                    : ev?.output_gradient?.[s.sample]
-                  : l === 0
-                    ? ev?.input?.[s.sample]
-                    : ev?.output?.[s.sample];
-                const positions = Array.from({ length: n }, (_, i) => nodePosition(l, i, n, base));
-                return (
-                  <group key={l}>
-                    <Label at={[l * 1.75 - 2.5, -1.3, base + 0.1]}>
-                      {l === 0 ? '输入' : l === spec.sizes.length - 1 ? '输出' : `隐藏 ${l}`} · {n}
-                    </Label>
-                    <Neurons
-                      points={positions}
-                      values={values}
-                      selected={
-                        s.model.replace('_actor_path', '') === name
-                          ? l === 0 && s.layer === 0
-                            ? s.input
-                            : s.layer === l - 1
-                              ? s.neuron
-                              : -1
-                          : -1
-                      }
-                      onPick={(i) => {
-                        select(
-                          l === 0
-                            ? { model: name, layer: 0, input: i }
-                            : { model: name, layer: l - 1, neuron: i },
-                        );
-                        if (ei >= 0) onEvent(ei);
-                      }}
-                    />
-                    {l > 0 &&
-                      s.model.replace('_actor_path', '') === name &&
-                      s.layer === l - 1 &&
-                      ev?.weight && (
-                        <Connections
-                          event={ev}
-                          layer={l}
-                          width={spec.sizes[l - 1]}
-                          base={base}
-                          sample={s.sample}
-                          neuron={Math.min(s.neuron, n - 1)}
-                          input={s.input}
-                          backward={backward}
-                          onPick={(input) => select({ input })}
-                        />
-                      )}
-                  </group>
-                );
-              })
-            )}
-          </group>
-        );
-      })}
-    </>
-  );
-}
 function Surface({
   data,
   fields,
   onPick,
   marker,
   gradient,
+  pick,
 }: {
   data: Doc;
   fields: string[];
   onPick: (i: number, j: number) => void;
   marker?: number[];
   gradient?: number[];
+  pick?: number[];
 }) {
   const stats = useMemo(() => {
     const vals = fields.flatMap((k) => data[k].flat());
@@ -514,6 +250,31 @@ function Surface({
       <Label at={[-1.3, 0, 1]}>
         高度 {fmt(stats.lo)} … {fmt(stats.hi)}
       </Label>
+      {pick &&
+        fields.map((key, i) => {
+          const value = data[key]?.[pick[0]]?.[pick[1]];
+          if (!Number.isFinite(value)) return null;
+          const point: [number, number, number] = [
+            data.x[pick[0]] / extent,
+            data.y[pick[1]] / extent,
+            (value - stats.lo) / range + 0.01,
+          ];
+          return (
+            <group key={'pick-' + key}>
+              <mesh position={point}>
+                <sphereGeometry args={[0.035, 16, 14]} />
+                <meshBasicMaterial color={i === 0 ? '#dc9139' : '#6578c8'} />
+              </mesh>
+              <Line
+                points={[[point[0], point[1], -0.04], point]}
+                color="#d3a35a"
+                dashed
+                dashSize={0.035}
+                gapSize={0.02}
+              />
+            </group>
+          );
+        })}
       {marker &&
         [marker, gradient].filter(Boolean).map((vector, i) => (
           <Line
@@ -644,8 +405,41 @@ export default function Scenes({
   marker,
   gradient,
   backward,
-  onExpand,
+  onExpanded,
+  onPath,
+  experiment,
+  checkpoint,
+  traceId,
+  empty,
+  onParameter,
+  onForward,
+  busy,
+  gridPick,
 }: any) {
+  if (view === 'network')
+    return (
+      <SceneBoundary key="network">
+        <NetworkExplorer
+          {...{
+            architecture,
+            events,
+            onEvent,
+            expanded,
+            onExpanded,
+            path,
+            onPath,
+            backward,
+            experiment,
+            checkpoint,
+            traceId,
+            onParameter,
+            onForward,
+            busy,
+          }}
+          probe={<FrameProbe />}
+        />
+      </SceneBoundary>
+    );
   const camera =
     view === 'arm'
       ? { position: [1.2, -1.3, 0.95], zoom: 1 }
@@ -677,11 +471,8 @@ export default function Scenes({
           {view === 'arm' && frame && (
             <Arm {...{ frame, geometry, frames, compare, target, onTarget, drag }} />
           )}
-          {view === 'network' && (
-            <Network {...{ architecture, events, onEvent, expanded, path, backward, onExpand }} />
-          )}
           {(view === 'q' || view === 'loss') && surface && (
-            <Surface data={surface} {...{ fields, onPick, marker, gradient }} />
+            <Surface data={surface} {...{ fields, onPick, marker, gradient }} pick={gridPick} />
           )}
           <OrbitControls
             key={view + ':' + modelCount}
@@ -698,6 +489,7 @@ export default function Scenes({
           />
         </Canvas>
       </SceneBoundary>
+      {(view === 'q' || view === 'loss') && !surface && <div className="surface-empty">{empty}</div>}
       <div className="scene-hint">拖动旋转 · 滚轮缩放 · Shift 平移</div>
     </div>
   );

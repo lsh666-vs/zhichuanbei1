@@ -21,7 +21,7 @@
 
 ## 解压和启动
 
-必须把整个目录解压到 D 盘；例如 `D:\PolicyGlass-review\`。无需安装软件、激活虚拟环境或改系统设置。
+双击包根目录的 Start-PolicyGlass-Offline.cmd 启动，避免.ps1被记事本打开；此入口不永久更改执行策略。必须把整个目录解压到 D 盘；例如 `D:\PolicyGlass-review\`。无需安装软件、激活虚拟环境或改系统设置。
 
 ```powershell
 & 'D:\PolicyGlass-review\Start-PolicyGlass-Offline.ps1'

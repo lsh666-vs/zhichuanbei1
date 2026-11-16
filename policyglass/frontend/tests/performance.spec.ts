@@ -182,6 +182,9 @@ test('Collect genuine renderer, event-selection and repeated-view performance ev
     for (const path of [
       'src/App.tsx',
       'src/Scenes.tsx',
+      'src/NetworkExplorer.tsx',
+      'src/networkData.ts',
+      'src/SceneLabel.tsx',
       'tests/performance.spec.ts',
       'playwright.config.ts',
     ]) {
@@ -240,7 +243,7 @@ test('Collect genuine renderer, event-selection and repeated-view performance ev
     report.views.arm = await frameWindow(page);
     report.fullscreenViews.arm = await fullscreen1080p(page);
     await view(page, '计算网络', 'network');
-    await page.getByLabel(/展开全部单元/).check();
+    await page.getByLabel('全部权重连线', { exact: true }).check();
     const events = index.events
       .map((event: any, index: number) => ({ ...event, index }))
       .filter((event: any) => event.kind === 'layer' && /^actor\/layer[01]$/.test(event.label));

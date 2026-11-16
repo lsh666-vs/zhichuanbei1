@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+const productionUrl = process.env.POLICYGLASS_E2E_API_URL ?? 'http://127.0.0.1:8787';
 
 test('Keyboard dialog, reduced motion and source tabs remain usable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -64,19 +65,19 @@ test('Production uses local docs, defensive headers and text-only user labels', 
       data: { label: hostile, config: { network: { hidden: [8, 8] } } },
     })
   ).json();
-  await page.goto('http://127.0.0.1:8787/?experiment=' + created.id);
+  await page.goto(productionUrl + '/?experiment=' + created.id);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(hostile);
   expect(await page.evaluate(() => (window as any).__unsafe)).toBeUndefined();
   expect(await page.locator('h1 img').count()).toBe(0);
-  const response = await page.request.get('http://127.0.0.1:8787/');
+  const response = await page.request.get(productionUrl + '/');
   expect(response.headers()['content-security-policy']).toContain("script-src 'self'");
   expect(response.headers()['x-content-type-options']).toBe('nosniff');
   const calls: string[] = [];
   page.on('request', (r) => calls.push(r.url()));
-  await page.goto('http://127.0.0.1:8787/docs');
+  await page.goto(productionUrl + '/docs');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('PolicyGlass 本地 API');
   expect(calls.every((url) => new URL(url).hostname === '127.0.0.1')).toBeTruthy();
-  const denied = await page.request.post('http://127.0.0.1:8787/api/experiments', {
+  const denied = await page.request.post(productionUrl + '/api/experiments', {
     headers: { Origin: 'https://untrusted.invalid' },
     data: {},
   });

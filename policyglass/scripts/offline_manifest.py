@@ -415,9 +415,14 @@ def assemble(args):
     for entry in (project / "evidence").iterdir():
         if entry.name == "private":
             continue
-        if entry.is_file() and entry.suffix.lower() in (".md", ".json", ".jsonl", ".xml"):
+        if entry.is_file() and entry.suffix.lower() in (".md", ".json", ".jsonl", ".xml", ".log"):
             copy_file(entry, bundle / "evidence" / entry.name)
-        elif entry.is_dir() and entry.name in ("stage2-ui", "stage3-ui", "stage3-figures"):
+        elif entry.is_dir() and entry.name in (
+            "stage2-ui",
+            "stage3-ui",
+            "stage3-figures",
+            "visual-refinement",
+        ):
             copy_tree(entry, bundle / "evidence" / entry.name)
     study_examples = []
     if args.include_study:
@@ -466,6 +471,19 @@ def assemble(args):
             copy_file(source, bundle / "scripts" / source.name)
     (bundle / "Start-PolicyGlass-Offline.ps1").write_text(
         "& (Join-Path $PSScriptRoot 'scripts\\Start-Offline.ps1')\n", "utf-8"
+    )
+    (bundle / "Start-PolicyGlass-Offline.cmd").write_text(
+        "@echo off\n"
+        "setlocal\n"
+        'cd /d "%~dp0"\n'
+        'powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%~dp0Start-PolicyGlass-Offline.ps1"\n'
+        "if errorlevel 1 (\n"
+        "  echo Startup failed. Keep this window open and share the error shown above.\n"
+        "  pause\n"
+        ")\n"
+        "endlocal\n",
+        encoding="ascii",
+        newline="\r\n",
     )
     npm_tree = json.loads(Path(args.npm_tree).read_text("utf-8-sig"))
     copy_file(rendered_path, bundle / "frontend" / "rendered-modules.json")

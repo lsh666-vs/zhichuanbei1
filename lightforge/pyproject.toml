@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lightforge"
+version = "0.1.0"
+description = "Reproducible three-dimensional photonic design laboratory"
+requires-python = ">=3.12,<3.13"
+dependencies = ["numpy==2.2.6", "scipy==1.15.3", "fastapi>=0.115,<1", "uvicorn>=0.34,<1", "pydantic>=2.10,<3", "h5py==3.13.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3,<10", "httpx>=0.28,<1", "ruff>=0.11,<1"]
+fem = ["ngsolve==6.2.2608"]
+
+[project.scripts]
+lightforge = "lightforge.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["scientific: actual finite element solves", "slow: convergence and full pipeline"]
+
+[tool.ruff]
+line-length = 100
+

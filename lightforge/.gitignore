@@ -1,0 +1,14 @@
+.venv/
+.runtime/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+__pycache__/
+*.pyc
+*.h5
+*.npz
+*.vtk
+*.vol
+.env
+!.env.example
+

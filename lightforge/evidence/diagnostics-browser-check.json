@@ -1,0 +1,29 @@
+{
+  "title": "LightForge · 真实三维场诊断",
+  "plots": [
+    {
+      "traces": 2,
+      "type": "isosurface"
+    },
+    {
+      "traces": 9,
+      "type": "surface"
+    },
+    {
+      "traces": 9,
+      "type": "surface"
+    },
+    {
+      "traces": 3,
+      "type": "scatter"
+    }
+  ],
+  "canvases": 3,
+  "externalScripts": 0,
+  "overflow": false,
+  "sliders": 2,
+  "signedFieldSelected": true,
+  "sliceActiveIndex": 8,
+  "visibleSliceName": "z=0.8 μm",
+  "pageErrors": []
+}

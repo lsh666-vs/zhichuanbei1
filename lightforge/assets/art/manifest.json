@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "assets": [{
+    "file": "lightforge-hero-v1.png",
+    "sha256": "aeb059633cd9299e27664aa20be0d251186c14b88266d7a7fc39471d3ed8f4dc",
+    "generator": "built-in imagegen, user requested image-2",
+    "created_on": "2026-11-16",
+    "purpose": "Original conceptual cover artwork; never a simulation result or experimental photograph",
+    "alt_zh": "深石墨色光学台上的层状光子器件概念图，青色与琥珀色光束穿过微结构。",
+    "layout": "16:9 hero, left negative space for live text",
+    "prompt_summary": "Macro architectural cutaway of a silicon nitride inverse-designed chip, layered translucent ceramic membrane, graphite optical table, cyan and amber beams, restrained scientific instrument aesthetic, no text or watermark."
+  }]
+}

@@ -1,0 +1,209 @@
+{
+  "schema": "policyglass.visual-release.v1",
+  "created_utc": "2026-11-16T19:08:05.206846+00:00",
+  "status": "UPDATED_LOCAL_INSTALLATION_AND_OFFLINE_PACKAGE_VERIFIED",
+  "source_revision": "94b458aff8c445256f665f0cfcdf159d1bcd3660",
+  "zip": {
+    "sha256": "f6f7976067a0c282837072dc8339f99b2eb2a5fb18205ecd430cbf37cd7ad08c",
+    "bytes": 977900075,
+    "archive_seconds": 59.71055720000004,
+    "file": "PolicyGlass-stage3-review-20261117-r4.zip",
+    "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\release\\PolicyGlass-stage3-review-20261117-r4.zip"
+  },
+  "manifest": {
+    "sha256": "3a35e39c9936b98f261a350cb6b80820c0e5eb920cbf41038b16940b0b7257c1",
+    "files": 16980,
+    "uncompressed_bytes": 3887220874,
+    "registered_examples": 20
+  },
+  "source_checks": {
+    "all_packaged_git_files_exact": 223,
+    "missing_tracked_files": [],
+    "all_061_inputs_exact": 96,
+    "mismatches": []
+  },
+  "runtime_checks": {
+    "base_verification": "PASSED",
+    "actual_core_jobs": [
+      {
+        "algorithm": "ppo",
+        "job_id": "110ccb78b4ea43c297c51870607cc4cf",
+        "trace_id": "e5771fd7b9ee46ee98980d8a9c19298f",
+        "events": 17,
+        "checkpoint": "5465d28f3ed549218f33504edb8cc4c6",
+        "summary": [
+          {
+            "policy_loss": 1.6653345369377348e-16,
+            "value_loss": 1.6111616442704682,
+            "entropy_mc": 6.79834080495037,
+            "kl_approx": 0.0,
+            "sampled_kl": 0.0,
+            "update": 1,
+            "env_steps": 8,
+            "epoch": 0,
+            "minibatch_size": 8,
+            "post_update_kl": 1.5419598087831887e-05
+          }
+        ]
+      },
+      {
+        "algorithm": "sac",
+        "job_id": "7cba9e6a0b944b2b9ff634327d293d2e",
+        "trace_id": "d19187d9ac734624b0ec08d7637ec435",
+        "events": 46,
+        "checkpoint": "776f678a59ef48cd87882e0301929330",
+        "summary": [
+          {
+            "q1_loss": 0.5241546453733419,
+            "q2_loss": 0.3241935725033458,
+            "actor_loss": -0.8543130530878942,
+            "alpha": 0.19994000899916367,
+            "entropy_mc": 6.436411912269378,
+            "update": 1,
+            "env_steps": 8,
+            "replay_update_index": 0
+          }
+        ]
+      }
+    ],
+    "all_20_reference_states_available": 20,
+    "real_imported_learned_state_updates": [
+      {
+        "condition": "ppo_reference",
+        "seed": 11,
+        "import_provenance": {
+          "kind": "reference_study_import",
+          "condition": "ppo_reference",
+          "seed": 11,
+          "checkpoint_sha256": "d446695564d2005d23a1ec81ca7a5a994848b4d249cfd5e531ae8222392b30f5",
+          "report_sha256": "233d93b00a975aead533275f42a15e89c650c288c1eea40418265d469d932e59",
+          "source": "evidence/025-stage3-study-results.json",
+          "original_env_steps": 32768,
+          "original_updates": 1599,
+          "scope": "loaded trained state; no learning, no source overwrite; not a universal success claim"
+        },
+        "experiment_id": "4550c5d1e94a42bf8319faeee65e595b",
+        "job_id": "a81699c17228470d90fc7ded3b5a7ec6",
+        "trace_id": "e9e71eaa533f44df9b435c6e5e9da927",
+        "optimizer_event_ids": [
+          "u1600/e15",
+          "u1600/e16"
+        ],
+        "max_parameter_delta": 0.00028399826015026997,
+        "original_env_steps": 32768,
+        "after_env_steps": 32768,
+        "original_updates": 1599,
+        "after_updates": 1600,
+        "immutable_import_checkpoint_sha256": "ec092ed56dc87abce1b74e2e5337c9cc008273fd002b5cf374c91a1595fa1e88",
+        "summary": [
+          {
+            "policy_loss": -0.09100047291054543,
+            "value_loss": 0.0005281210740361897,
+            "entropy_mc": 0.3835355522882129,
+            "kl_approx": 0.024303148065782404,
+            "sampled_kl": 0.0028127841064133387,
+            "update": 1600,
+            "env_steps": 32768
+          }
+        ]
+      },
+      {
+        "condition": "sac_reuse1",
+        "seed": 11,
+        "import_provenance": {
+          "kind": "reference_study_import",
+          "condition": "sac_reuse1",
+          "seed": 11,
+          "checkpoint_sha256": "da21ab639ffee899deb5884dab92d6366b7df373eae61aca13e06397ca3e6766",
+          "report_sha256": "233d93b00a975aead533275f42a15e89c650c288c1eea40418265d469d932e59",
+          "source": "evidence/025-stage3-study-results.json",
+          "original_env_steps": 16384,
+          "original_updates": 15873,
+          "scope": "loaded trained state; no learning, no source overwrite; not a universal success claim"
+        },
+        "experiment_id": "00ae226071334992bfb17ea67fe2e986",
+        "job_id": "731761d89f4642239191849d91630451",
+        "trace_id": "b7a9221c5f374bb2871584906ce26a08",
+        "optimizer_event_ids": [
+          "u15874/e12",
+          "u15874/e13",
+          "u15874/e30",
+          "u15874/e33"
+        ],
+        "max_parameter_delta": 0.0005451826153431982,
+        "original_env_steps": 16384,
+        "after_env_steps": 16384,
+        "original_updates": 15873,
+        "after_updates": 15874,
+        "immutable_import_checkpoint_sha256": "207e1c9a14539bb3b2de43a988c6982727eb301ec5c53d99c71a8c33159ccf84",
+        "summary": [
+          {
+            "q1_loss": 0.001003311628007369,
+            "q2_loss": 0.0011947990434569974,
+            "actor_loss": -4.75797484934295,
+            "alpha": 0.0021789857229487417,
+            "entropy_mc": 0.6813931922920916,
+            "update": 15874,
+            "env_steps": 16384
+          }
+        ]
+      }
+    ],
+    "original_reference_state_hashes_unchanged": true,
+    "owned_8791_verification_services_stopped": true,
+    "new_cmd_launcher_actually_started_user_service": true
+  },
+  "timing": {
+    "build_seconds": 153.7311378,
+    "zip_to_actual_reference_updates_seconds": 126.649007,
+    "same_host_and_warm_caches": true,
+    "background": "No browser benchmark or training worker. Isolated previewAPI8793/Vite5173 and user-owned8787 remain idle; original user installation/data untouched during build. Same host, warm filesystem caches."
+  },
+  "installed_app": {
+    "path": "D:\\传智杯1\\PolicyGlass-final-offline-20261117-r4-01\\PolicyGlass-stage3-review-20261117-r4",
+    "url": "http://127.0.0.1:8787/",
+    "original_installation_and_user_data_retained": true,
+    "business_rows_identical": true,
+    "business_row_counts": {
+      "experiments": 1,
+      "checkpoints": 7,
+      "jobs": 2,
+      "traces": 2,
+      "notebooks": 0
+    },
+    "actual_browser_check": {
+      "schema": "policyglass.installed-visual-smoke.v1",
+      "status": "PASSED",
+      "url": "http://127.0.0.1:8787/",
+      "user_experiment_count": 1,
+      "actual_canvas_node_pick": true,
+      "selected_neuron": 5,
+      "real_weight_visible": true,
+      "bias_visible": true,
+      "updates_unchanged": true,
+      "env_steps_unchanged": true,
+      "checkpoint_unchanged": true,
+      "page_errors": [],
+      "scope": "Actual migrated user store and actual r4 .cmd->WindowsPowerShell->bundledPython service. No new experiment, training, note content or parameter edit."
+    },
+    "service_intentionally_left_running": true
+  },
+  "license_notices": {
+    "gaps": [],
+    "source_license_unchanged": true
+  },
+  "limitations": [
+    "Same host relocation and current WindowsPowerShell .cmd start; different machine not tested.",
+    "Q belongs to SAC; PPO shows a real prerequisite and SAC creation action. Loss requires a real fixed batch.",
+    "Trace and checkpoint parameter provenance are shown separately; complete graph layout is conceptual.",
+    "Original learner/provider/cross-machine/native-memory/Torch advisory limits remain; no educational or universal performance claim.",
+    "Postbuild062 reports/user-store migration are outside the immutable ZIP. User store and notes are never included in the ZIP or Git.",
+    "Verification source seal94b458a predates final postbuild documentation; source inputs and manifest identify exact package contents."
+  ],
+  "reports": {
+    "062-r4-installed-browser-check.json": "02022da90e8e6436e7e47b5c4c68ffd1a1ca0ead86c4b8b9914c4308a50491b2",
+    "062-r4-reference-update-checks.json": "c522d4198e76eeb058ca89ae8c28c2da3c61bb723b73782feb1547fcebda9365",
+    "062-r4-relocated-verification.json": "eb8fed9c97788be75c7808f974cf1c4f832e632628eedc975af69c5a26158934",
+    "062-r4-user-store-upgrade.json": "552f1c28eb0aa10fe17d239a37f25485f7b7261dd5fd3f2785caf6d30f7700a8"
+  }
+}

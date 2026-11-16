@@ -1,0 +1,15 @@
+{
+  "schema": "policyglass.installed-visual-smoke.v1",
+  "status": "PASSED",
+  "url": "http://127.0.0.1:8787/",
+  "user_experiment_count": 1,
+  "actual_canvas_node_pick": true,
+  "selected_neuron": 5,
+  "real_weight_visible": true,
+  "bias_visible": true,
+  "updates_unchanged": true,
+  "env_steps_unchanged": true,
+  "checkpoint_unchanged": true,
+  "page_errors": [],
+  "scope": "Actual migrated user store and actual r4 .cmd->WindowsPowerShell->bundledPython service. No new experiment, training, note content or parameter edit."
+}

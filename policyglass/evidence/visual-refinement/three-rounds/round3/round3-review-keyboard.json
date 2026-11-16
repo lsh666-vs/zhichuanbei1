@@ -1,0 +1,31 @@
+{
+  "results": [
+    {
+      "size": {
+        "width": 1440,
+        "height": 900
+      },
+      "parameter": "weights.1",
+      "numericControls": 0,
+      "tabFromParameter": {
+        "tag": "SELECT",
+        "text": "weights.0weights.1weights.2biases.0biases.1biases.2",
+        "label": null
+      }
+    },
+    {
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "parameter": "weights.1",
+      "numericControls": 0,
+      "tabFromParameter": {
+        "tag": "SELECT",
+        "text": "weights.0weights.1weights.2biases.0biases.1biases.2",
+        "label": null
+      }
+    }
+  ],
+  "postCount": 0
+}

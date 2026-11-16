@@ -1,0 +1,29 @@
+{
+  "case": "slice_draft",
+  "before": {
+    "axes": [
+      0,
+      1
+    ],
+    "value": "-0.52465",
+    "postCount": 1
+  },
+  "draft": {
+    "selectedAxis": "2",
+    "resultAxes": [
+      0,
+      1
+    ],
+    "value": "-0.52465",
+    "postCount": 1,
+    "alerts": []
+  },
+  "computed": {
+    "axes": [
+      2,
+      1
+    ],
+    "value": "-1.11676",
+    "postCount": 2
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "request": {
+    "experiment": "ea4b248a865345eb8f21c482faad4783",
+    "kind": "loss",
+    "sample": 0,
+    "traceId": "74cc75d2ee56426cbf97a2ba2bf4a15b",
+    "body": {
+      "checkpoint": "75a531a3702f469081c45861aa7568a1",
+      "path_x": "actor/biases.2",
+      "index_x": [
+        0
+      ],
+      "path_y": "actor/biases.2",
+      "index_y": [
+        1
+      ],
+      "trace_id": "74cc75d2ee56426cbf97a2ba2bf4a15b",
+      "extent": 0.1,
+      "resolution": 15
+    }
+  },
+  "results": [
+    {
+      "face": 0,
+      "corner": 0,
+      "px": 117,
+      "py": 195,
+      "clientX": 368,
+      "clientY": 445,
+      "vertex": 0,
+      "index": [
+        0,
+        0
+      ],
+      "value": -1.118142316669044,
+      "marker": {
+        "index": [
+          0,
+          0
+        ],
+        "position": [
+          -1,
+          -1,
+          0.22926252891143192
+        ],
+        "color": "#b76891"
+      }
+    },
+    {
+      "face": 0,
+      "corner": 1,
+      "px": 121,
+      "py": 197,
+      "clientX": 372,
+      "clientY": 447,
+      "vertex": 15,
+      "index": [
+        1,
+        0
+      ],
+      "value": -1.1148719027261098,
+      "marker": {
+        "index": [
+          1,
+          0
+        ],
+        "position": [
+          -0.8571428571428571,
+          -1,
+          0.254436537510748
+        ],
+        "color": "#b76891"
+      }
+    },
+    {
+      "face": 0,
+      "corner": 2,
+      "px": 124,
+      "py": 194,
+      "clientX": 375,
+      "clientY": 444,
+      "vertex": 1,
+      "index": [
+        0,
+        1
+      ],
+      "value": -1.1223315313630124,
+      "marker": {
+        "index": [
+          0,
+          1
+        ],
+        "position": [
+          -1,
+          -0.8571428571428571,
+          0.19701605229700003
+        ],
+        "color": "#b76891"
+      }
+    },
+    {
+      "face": 0,
+      "corner": 0,
+      "px": 117,
+      "py": 195,
+      "clientX": 368,
+      "clientY": 445,
+      "vertex": 0,
+      "index": [
+        0,
+        0
+      ],
+      "value": -1.118142316669044,
+      "marker": {
+        "index": [
+          0,
+          0
+        ],
+        "position": [
+          -1,
+          -1,
+          0.22926252891143192
+        ],
+        "color": "#b76891"
+      }
+    },
+    {
+      "face": 0,
+      "corner": 2,
+      "px": 209,
+      "py": 101,
+      "clientX": 460,
+      "clientY": 351,
+      "vertex": 1,
+      "index": [
+        0,
+        1
+      ],
+      "value": -1.1223315313630124,
+      "marker": {
+        "index": [
+          0,
+          1
+        ],
+        "position": [
+          -1,
+          -0.8571428571428571,
+          0.19701605229700003
+        ],
+        "color": "#b76891"
+      },
+      "rotated": true
+    }
+  ],
+  "exportedSelection": {
+    "index": [
+      0,
+      1
+    ],
+    "x": -0.1,
+    "y": -0.08571428571428572,
+    "values": {
+      "loss": -1.1223315313630124
+    }
+  },
+  "viewerNumericalPosts": 0,
+  "cancelledRealResponseStayedHidden": true,
+  "errors": []
+}

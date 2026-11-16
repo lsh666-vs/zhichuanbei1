@@ -1,0 +1,465 @@
+{
+  "optimizer": {
+    "before": {
+      "updates": 1,
+      "env_steps": 4
+    },
+    "heading": "actor",
+    "parameter": "weights.1",
+    "inputs": [
+      {
+        "type": "checkbox",
+        "label": null
+      }
+    ],
+    "instruction": [
+      "梯度在实际 backward 后记录，使用最小化损失约定。",
+      "坐标 [0,0]，在上方“检查单元/输入”或矩阵中选择。超出维度时显示未计算。"
+    ],
+    "selectedEvent": "actor\noptimizer · u1/e15",
+    "smallInputs": 0,
+    "afterGraphCoordinate": {
+      "selectedEvent": "actor/layer1\nlayer · u1/e2",
+      "kind": "layer\nu1/e2"
+    },
+    "returnedInstruction": [
+      "梯度在实际 backward 后记录，使用最小化损失约定。",
+      "坐标 [7,7]，在上方“检查单元/输入”或矩阵中选择。超出维度时显示未计算。"
+    ],
+    "after": {
+      "id": "e3fc5bcb08554f17b6026e52fed8d3db",
+      "created": 1794860534.089048,
+      "label": "首屏真实计算 1440x900",
+      "parent": null,
+      "parent_checkpoint": null,
+      "intervention": null,
+      "checkpoint": "988b77de1fed48248009fe21be539331",
+      "config": {
+        "algorithm": "ppo",
+        "seed": 17,
+        "network": {
+          "hidden": [
+            8,
+            8
+          ],
+          "activation": "tanh"
+        },
+        "environment": {
+          "horizon": 128,
+          "timestep": 0.01,
+          "substeps": 4,
+          "damping": 0.15,
+          "mass_scale": 1,
+          "gravity": 9.81,
+          "torque_limit": 5,
+          "target": [
+            0.45,
+            0.12,
+            0.45
+          ]
+        },
+        "ppo": {
+          "learning_rate": 0.0003,
+          "gamma": 0.99,
+          "gae_lambda": 0.95,
+          "clip_epsilon": 0.2,
+          "value_coefficient": 0.5,
+          "entropy_coefficient": 0,
+          "max_gradient_norm": 0.5,
+          "rollout_steps": 4,
+          "minibatch_size": 4,
+          "epochs": 1,
+          "target_kl": 0.03
+        },
+        "sac": {
+          "learning_rate": 0.0003,
+          "gamma": 0.99,
+          "tau": 0.005,
+          "initial_alpha": 0.2,
+          "target_entropy": null,
+          "batch_size": 16,
+          "replay_capacity": 4096,
+          "warmup_steps": 32,
+          "updates_per_step": 1,
+          "max_gradient_norm": 10
+        }
+      },
+      "architecture": {
+        "actor": {
+          "sizes": [
+            15,
+            8,
+            8,
+            6
+          ],
+          "activation": "tanh",
+          "parameters": {
+            "weights.0": [
+              8,
+              15
+            ],
+            "weights.1": [
+              8,
+              8
+            ],
+            "weights.2": [
+              6,
+              8
+            ],
+            "biases.0": [
+              8
+            ],
+            "biases.1": [
+              8
+            ],
+            "biases.2": [
+              6
+            ]
+          }
+        },
+        "value": {
+          "sizes": [
+            15,
+            8,
+            8,
+            1
+          ],
+          "activation": "tanh",
+          "parameters": {
+            "weights.0": [
+              8,
+              15
+            ],
+            "weights.1": [
+              8,
+              8
+            ],
+            "weights.2": [
+              1,
+              8
+            ],
+            "biases.0": [
+              8
+            ],
+            "biases.1": [
+              8
+            ],
+            "biases.2": [
+              1
+            ]
+          }
+        }
+      },
+      "geometry": {
+        "schema": "policyglass.geometry.v1",
+        "base_height_m": 0.18,
+        "link_lengths_m": [
+          0.32,
+          0.28
+        ],
+        "capsule_radius_m": 0.025,
+        "base_cylinder_radius_m": 0.04,
+        "base_cylinder_half_height_m": 0.04,
+        "masses_kg": [
+          0.2,
+          0.8,
+          0.5
+        ],
+        "joint_axes_local": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "joint_limits_rad": [
+          [
+            -2.8,
+            2.8
+          ],
+          [
+            -1.75,
+            1.4
+          ],
+          [
+            -2.3,
+            2.3
+          ]
+        ],
+        "observation_labels": [
+          "sin_yaw",
+          "sin_shoulder",
+          "sin_elbow",
+          "cos_yaw",
+          "cos_shoulder",
+          "cos_elbow",
+          "yaw_velocity_rad_s",
+          "shoulder_velocity_rad_s",
+          "elbow_velocity_rad_s",
+          "tip_x_m",
+          "tip_y_m",
+          "tip_z_m",
+          "target_x_m",
+          "target_y_m",
+          "target_z_m"
+        ],
+        "timestep_s": 0.01,
+        "substeps": 4,
+        "gravity_m_s2": 9.81,
+        "torque_limit_nm": 5,
+        "target_joint_solutions_rad": [
+          [
+            0.2606023917473408,
+            -0.950964744759546,
+            0.9169310914350948
+          ],
+          [
+            0.2606023917473408,
+            -0.09981513602714731,
+            -0.9169310914350948
+          ]
+        ],
+        "target_static_torque_nm": [
+          [
+            0,
+            -2.3275020686665524,
+            -0.6863023396660924
+          ],
+          [
+            0,
+            -3.1725148760382456,
+            -0.36129741375390295
+          ]
+        ],
+        "target_statically_holdable": true,
+        "damping_nm_s_rad": 0.15,
+        "model_scope": "ideal rigid bodies; no self/ground contact; no real hardware safety claim",
+        "target_scope": "closed-form position reachability and declared joint limits checked; no collision model",
+        "xml": "<mujoco model=\"policyglass_spatial_arm\">\n      <compiler angle=\"radian\"/>\n      <option timestep=\"0.01\" gravity=\"0 0 -9.81\" integrator=\"implicitfast\"/>\n      <default><joint damping=\"0.15\" armature=\"0.02\" limited=\"true\"/>\n        <geom type=\"capsule\" size=\"0.025\" contype=\"0\" conaffinity=\"0\" rgba=\"0.22 0.54 0.72 1\"/>\n      </default>\n      <worldbody>\n        <body name=\"base\" pos=\"0 0 0.18\">\n          <joint name=\"yaw\" axis=\"0 0 1\" range=\"-2.8 2.8\"/>\n          <geom type=\"cylinder\" size=\"0.04 0.04\" mass=\"0.2\"/>\n          <body name=\"upper\">\n            <joint name=\"shoulder\" axis=\"0 1 0\" range=\"-1.75 1.4\"/>\n            <geom fromto=\"0 0 0 0.32 0 0\" mass=\"0.8\"/>\n            <body name=\"forearm\" pos=\"0.32 0 0\">\n              <joint name=\"elbow\" axis=\"0 1 0\" range=\"-2.3 2.3\"/>\n              <geom fromto=\"0 0 0 0.28 0 0\" mass=\"0.5\"/>\n              <site name=\"tip\" pos=\"0.28 0 0\" size=\"0.018\"/>\n            </body>\n          </body>\n        </body>\n      </worldbody>\n      <actuator>\n        <motor joint=\"yaw\" ctrllimited=\"true\" ctrlrange=\"-5.0 5.0\"/>\n        <motor joint=\"shoulder\" ctrllimited=\"true\" ctrlrange=\"-5.0 5.0\"/>\n        <motor joint=\"elbow\" ctrllimited=\"true\" ctrlrange=\"-5.0 5.0\"/>\n      </actuator>\n    </mujoco>"
+      },
+      "physics": {
+        "schema": "policyglass.physics.v1",
+        "time_s": 0.16,
+        "qpos_rad": [
+          -0.014854826803772573,
+          0.6206591292538989,
+          -0.43043955666960976
+        ],
+        "qvel_rad_s": [
+          0.9630225198466862,
+          5.102986992172247,
+          -3.1642913700943507
+        ],
+        "torque_nm": [
+          2.293547581150409,
+          -0.7340344746886791,
+          -1.4985247846107042
+        ],
+        "tip_m": [
+          0.535209008324985,
+          -0.007951021970842014,
+          -0.05904373857878205
+        ],
+        "energy_j": [
+          0.8757602466420319,
+          1.6886519336397203
+        ],
+        "bias_torque_nm": [
+          -0.5197520494872582,
+          -3.128430556540204,
+          -0.9121334761689665
+        ],
+        "bodies": [
+          {
+            "name": "base",
+            "position_m": [
+              0,
+              0,
+              0.18
+            ],
+            "quaternion_wxyz": [
+              0.9999724168918843,
+              0,
+              0,
+              -0.0074273451113784136
+            ]
+          },
+          {
+            "name": "upper",
+            "position_m": [
+              0,
+              0,
+              0.18
+            ],
+            "quaternion_wxyz": [
+              0.9522067160887044,
+              0.002268106761782963,
+              0.3053640522068075,
+              -0.007072562981032492
+            ]
+          },
+          {
+            "name": "forearm",
+            "position_m": [
+              0.2602897756625392,
+              -0.0038668439672856205,
+              -0.006102875322434753
+            ],
+            "quaternion_wxyz": [
+              0.9954530142935911,
+              0.0007053486673505038,
+              0.09496383984654419,
+              -0.00739377702267141
+            ]
+          }
+        ],
+        "coordinate_system": "right-handed Z-up, SI",
+        "engine": "canonical_mujoco_wasm",
+        "engine_version": "4.0.1",
+        "target_m": [
+          0.45,
+          0.12,
+          0.45
+        ],
+        "external_wrench_world": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "force_steps_remaining": 0
+      },
+      "observation": [
+        -0.014854280484230388,
+        0.5815714853826086,
+        -0.41727030410224436,
+        0.999889669089193,
+        0.8134953026231105,
+        0.9087824235285477,
+        0.9630225198466862,
+        5.102986992172247,
+        -3.1642913700943507,
+        0.535209008324985,
+        -0.007951021970842014,
+        -0.05904373857878205,
+        0.45,
+        0.12,
+        0.45
+      ],
+      "env_steps": 4,
+      "updates": 1,
+      "has_batch": true,
+      "observation_normalization": {
+        "kind": "fixed_physical_units_v1",
+        "mean": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.18,
+          0,
+          0,
+          0.18
+        ],
+        "scale": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          5,
+          5,
+          5,
+          0.6,
+          0.6,
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ]
+      }
+    }
+  },
+  "surface": {
+    "canvas": {
+      "x": 251,
+      "y": 530.484375,
+      "width": 858,
+      "height": 370
+    },
+    "numericQ1": {
+      "x": 1045.015625,
+      "y": 1330.578125,
+      "width": 43.984375,
+      "height": 15
+    },
+    "posts": 1,
+    "grid": {
+      "axes": [
+        0,
+        1
+      ],
+      "resolution": 15
+    },
+    "beforePick": [
+      "7",
+      "7"
+    ],
+    "pick": {
+      "px": 403.7191112008549,
+      "py": 111.041990054481,
+      "face": 20,
+      "firstVertex": 10,
+      "nearestVertex": 11,
+      "expectedFirst": [
+        0,
+        10
+      ],
+      "nearest": [
+        0,
+        11
+      ],
+      "actual": [
+        0,
+        10
+      ],
+      "q1": "0.48795"
+    },
+    "postsAfterDisplayAndPick": 1,
+    "small": {
+      "canvas": {
+        "x": 251,
+        "y": 350.484375,
+        "width": 698,
+        "height": 370
+      },
+      "numericQ1": {
+        "x": 835.515625,
+        "y": 1150.578125,
+        "width": 93.484375,
+        "height": 15
+      }
+    }
+  },
+  "errors": []
+}

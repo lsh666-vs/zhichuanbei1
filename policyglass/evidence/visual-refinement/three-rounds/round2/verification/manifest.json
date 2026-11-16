@@ -1,0 +1,139 @@
+{
+  "round": 2,
+  "head": "c17444fb18faae64422c3d0f5284b61b0b4e3ed5",
+  "recordedLocal": "2026-11-17 04:25:08 +08:00",
+  "sourceInputs": [
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "c2c2f2665bf744655fe02bac9ba391c97cf6e4c3f0d1a93287294b747427d336"
+    },
+    {
+      "path": "frontend/src/Inspector.tsx",
+      "sha256": "f027f361124462eb9cc79a4c64600ea6f774eb1ec256b1d0271f10d072ad8611"
+    },
+    {
+      "path": "frontend/src/NetworkExplorer.tsx",
+      "sha256": "1aadc1d32c61f759d18829f1aa416edf94590359b0a73574becf63c6121cf146"
+    },
+    {
+      "path": "frontend/src/SceneLabel.tsx",
+      "sha256": "f3bf5e90b31bceb975d4bc940936c518b826e90c84b807970eae7f33199ddc5d"
+    },
+    {
+      "path": "frontend/src/Scenes.tsx",
+      "sha256": "d1a8fd1b44570f35d786141afa3c28d5ba8a4d70b74c33ad0c970b4a2bdfe055"
+    },
+    {
+      "path": "frontend/src/networkData.ts",
+      "sha256": "04a6cd2f8337192235637a3d06728b136a0e81574bd6e006ff3a2eb4f514f24d"
+    },
+    {
+      "path": "frontend/src/style.css",
+      "sha256": "7d6355210e10fd72393734ffca1ac1381f019f8eae906a4bbaaf2f5d7d3cc3c6"
+    },
+    {
+      "path": "frontend/tests/networkData.test.ts",
+      "sha256": "3a134ac4cef62f81bd500e845a9ed0616a9df2a864f79c3485fc025cc1e3bc14"
+    },
+    {
+      "path": "frontend/tests/workbench.spec.ts",
+      "sha256": "386534929d88bbd9abd4580aa9464316bc73d231a0b8e27064c3e3519f4882f3"
+    },
+    {
+      "path": "frontend/tests/usability.spec.ts",
+      "sha256": "08bbae6c355333df98fa6a6ad34a90a5ba0de248afd3888dbde48e0ee49f223f"
+    },
+    {
+      "path": "docs/NETWORK_EXPLORER.md",
+      "sha256": "9b768a25b7b632f01f6c09ec7e83d1b9cfe29b2c1995d83d9d490bd203c531d8"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "01-entry-1280x720.png",
+      "sha256": "46e057f08dc08477d36b79facc3c615c67f3df244b90c98c05d125da74626e61"
+    },
+    {
+      "path": "01-entry-1440x900.png",
+      "sha256": "6fcdd2905d9eb385a7164b5d8723b7be0a8073521bfbab18d5c717cabecd4929"
+    },
+    {
+      "path": "02-running-1280x720.png",
+      "sha256": "df4c6ecf93df13f4ce5acc6d9425b9b851803afc75c3e9788d00faa9cd789ef9"
+    },
+    {
+      "path": "02-running-1440x900.png",
+      "sha256": "eb1eb25a750c4225bc1beb5f722c4865209427c8ef47b98c462c46e17793d966"
+    },
+    {
+      "path": "03-ready-1280x720.png",
+      "sha256": "2783cc79d0ee08ed9f143badd10c18510130dcd47b11e995914414768788fc6e"
+    },
+    {
+      "path": "03-ready-1440x900.png",
+      "sha256": "04197b550500f89bd753475c2d407cca8433dff16ff37db7ea773ce708243a3e"
+    },
+    {
+      "path": "04-focused-path-1280x720.png",
+      "sha256": "0e65a0545d7b339be2abfa8426774112b24c17617ae3f48d2009d04475d6b477"
+    },
+    {
+      "path": "04-focused-path-1440x900.png",
+      "sha256": "6a92a19494eeebaf5063d8eb43e964b8964b2dd81972c8e9e512a23bdb2b8bac"
+    },
+    {
+      "path": "05-sac-complete-overview.png",
+      "sha256": "5085297ade93c94497ccc9b44da26e73929f550ef49a97db2f5465147eb948d2"
+    },
+    {
+      "path": "06-sac-selected-path.png",
+      "sha256": "f4e8bf0cf4fb45df6d18f487a4fa95c5ed376ca17f3c059fac54b7b3607e746b"
+    },
+    {
+      "path": "07-real-failure-retry.png",
+      "sha256": "8ace9ab9a6c099f1b3a88dbd1be67c25fe28ec3d2641dbd936731d23a3dc055d"
+    },
+    {
+      "path": "08-focused-gradient-1280x720.png",
+      "sha256": "b2bb044824c617b0818b183ef821862c0d5c7c2a0b6f53002effcb1ab671f154"
+    },
+    {
+      "path": "08-focused-gradient-1440x900.png",
+      "sha256": "a13bff9a0864bc1d93b8ffc98a562d42296deb356abb3c98ddd6f19a14c0f3aa"
+    },
+    {
+      "path": "browser-results.json",
+      "sha256": "5f4ce056dd67c7ed25b1a304287647e41d039fd0e59c5aa213a6a330f31ec78a"
+    },
+    {
+      "path": "control-1280x720.json",
+      "sha256": "4eb1864749793b31762012bda623892132bf46ff9d528f06cd8d5d1ed0b4f4eb"
+    },
+    {
+      "path": "control-1440x900.json",
+      "sha256": "ab7380379e2930b860962a42c0e6a9b3107738157deebd5ae55b197291db0c39"
+    },
+    {
+      "path": "focus-1280x720.json",
+      "sha256": "067c0f5ddef581c666f736a80d7b3a90e47c668f8c978d647072352b11a0a696"
+    },
+    {
+      "path": "focus-1440x900.json",
+      "sha256": "ebe14fb2f36824852b97b2486df892aff1eefa3d6294d1f2a29a8498e73bb76b"
+    },
+    {
+      "path": "performance-browser-runtime.json",
+      "sha256": "e3964c1ee1300a0edefd21646021be7c452342184f4f7e785815bb99501278ec"
+    }
+  ],
+  "browser": {
+    "startTime": "2026-11-16T20:20:00.074Z",
+    "duration": 243877.469,
+    "expected": 21,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "python": "112 passed, 1 warning in 23.28s",
+  "frontend": "tsc -b passed; final Vite build 5.10s; Vitest 9 passed (240ms)"
+}

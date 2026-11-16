@@ -67,3 +67,5 @@ Setup下载官方PyPA zipapp到D盘并检查已记录SHA256。若上游文件变
 研究预登记见 `docs/STAGE3_STUDY.json`；运行 `python -m policyglass.studies` 会实际消耗CPU训练，不能把研究脚本当瞬时截图演示。科学图通过独立分析依赖重建，`scripts/analyze_study.py` 只接受全部登记运行，并验证检查点哈希；分析依赖在D盘 `.runtime/analysis-libs/`，不加入应用运行依赖。真实反馈方案见 [LEARNER_PROTOCOL](docs/LEARNER_PROTOCOL.md)，比赛素材索引见 [SUBMISSION_MATERIALS](docs/SUBMISSION_MATERIALS.md)。
 
 网络默认绘制全部神经元与层间权重，直接检查W/b、真实前向及参数分支。双Q和损失的自动计算与前提见 [网络与曲面](docs/NETWORK_EXPLORER.md)。
+
+用户指定的两个聊天、三轮共六条前端迭代及每轮实际证据见 [三轮迭代记录](docs/THREE_ROUND_REFINEMENT.md)。

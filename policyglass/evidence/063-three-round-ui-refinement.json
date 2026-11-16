@@ -1,0 +1,142 @@
+{
+  "schema": "policyglass.three-round-ui-refinement.v1",
+  "status": "THREE_ROUNDS_SIX_RECOMMENDATIONS_VERIFIED",
+  "created_utc": "2026-11-16T21:51:40.805009+00:00",
+  "requested_settings": {
+    "model": "gpt-6.1-sol",
+    "thinking": "xhigh",
+    "speed": "normal; no1.5x/Fast"
+  },
+  "review_thread": {
+    "thread_id": "01a1e5cb-6da0-7d00-abec-063bf6adf881",
+    "host_id": "local"
+  },
+  "implementation_thread": {
+    "thread_id": "01a1e5cb-f613-7a10-9f7f-a201be6e2bbd",
+    "host_id": "local"
+  },
+  "round_limit": 3,
+  "rounds_completed": 3,
+  "recommendation_count": 6,
+  "rounds": [
+    {
+      "round": 1,
+      "recommendations": [
+        {
+          "number": 1,
+          "priority": "P1",
+          "title": "Bind parameter-edit provenance to actual branch parent checkpoint"
+        },
+        {
+          "number": 2,
+          "priority": "P2",
+          "title": "Separate surface draft settings and immutable calculated result identity"
+        }
+      ],
+      "source_commit": "c17444fb18faae64422c3d0f5284b61b0b4e3ed5",
+      "browser": {
+        "startTime": "2026-11-16T19:41:46.464Z",
+        "duration": 201599.757,
+        "expected": 15,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "python": "112 passed, 1 warning in 22.13s",
+      "frontend": "tsc -b passed; Vite build passed (5.51s); Vitest 8/8 passed (231ms)",
+      "records": {
+        "review": {
+          "path": "evidence/visual-refinement/three-rounds/round1/review-top2.md",
+          "sha256": "65d9ed3d72d403d31d56712e73bebfb312fc542024c56146ca6cb7201fb558cb"
+        },
+        "implementation": {
+          "path": "evidence/visual-refinement/three-rounds/round1/implementation-result.md",
+          "sha256": "2c476b5c3a81ed3824f9fc7907621e0cdf252d09137736c39c9bb9f7fc11051a"
+        },
+        "verification_manifest": {
+          "path": "evidence/visual-refinement/three-rounds/round1/verification/manifest.json",
+          "sha256": "4b4030356bdcb974c5dcf11632339a4de41e4eb66af32483b57a933448e38c32"
+        }
+      }
+    },
+    {
+      "round": 2,
+      "recommendations": [
+        {
+          "number": 3,
+          "title": "First-screen real computation controls and actionable next step"
+        },
+        {
+          "number": 4,
+          "title": "Focused network exploration with readable progressive labels and co-located values"
+        }
+      ],
+      "source_commit": "9015bba01f0101272f2e9b650635872190ca5a6e",
+      "browser": {
+        "startTime": "2026-11-16T20:20:00.074Z",
+        "duration": 243877.469,
+        "expected": 21,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "python": "112 passed, 1 warning in 23.28s",
+      "frontend": "tsc -b passed; final Vite build 5.10s; Vitest 9 passed (240ms)",
+      "records": {
+        "review": {
+          "path": "evidence/visual-refinement/three-rounds/round2/review-round2.md",
+          "sha256": "f1f59b8c7a6f1b9ee1bdd9857df7d7471c392b8ab3666b7212b3f08be46d2790"
+        },
+        "implementation": {
+          "path": "evidence/visual-refinement/three-rounds/round2/implementation-round2-result.md",
+          "sha256": "5101b2b0093f77354a08fdd25a3812d92a2b3d40b533bc6ef52996eaeee59775"
+        },
+        "verification_manifest": {
+          "path": "evidence/visual-refinement/three-rounds/round2/verification/manifest.json",
+          "sha256": "471dbf2a8caca39261d6678bfe66e67320a98853201e99aaba30db6ce72fcae6"
+        }
+      }
+    },
+    {
+      "round": 3,
+      "recommendations": [
+        {
+          "number": 5,
+          "title": "Direct optimizer coordinate selection and actual update summary"
+        },
+        {
+          "number": 6,
+          "title": "Stable surface legend and actual nearest-grid numerical probe"
+        }
+      ],
+      "source_commit": "9f7348feccbcea836da0723418a67d89e8187827",
+      "browser": {
+        "startTime": "2026-11-16T21:38:07.509Z",
+        "duration": 393879.196,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "python": "112 passed, 1 warning in 32.71s",
+      "frontend": "tsc passed; final Vite build 6.53s; Vitest 11 passed (345ms)",
+      "records": {
+        "review": {
+          "path": "evidence/visual-refinement/three-rounds/round3/review-round3.md",
+          "sha256": "80b50cbda3d499be6de0330329557942a0d1fc383be59fc3272b32c61c3be7ab"
+        },
+        "implementation": {
+          "path": "evidence/visual-refinement/three-rounds/round3/implementation-round3-result.md",
+          "sha256": "d231c4adf1033e7b4eef4a6055348c74505d3a066d604ff190aa58c34c328bc3"
+        },
+        "verification_manifest": {
+          "path": "evidence/visual-refinement/three-rounds/round3/verification/manifest.json",
+          "sha256": "e5662321e2c3937c62779191e1e685e0fb1d36e8a62eb9bf361cd58436d2bad1"
+        }
+      }
+    }
+  ],
+  "stop_rule": "No fourth round; review and implementation frozen.",
+  "real_learner_expert_feedback": null,
+  "scope": "Actual source, API values and browser checks on this Windows host. No educational efficacy or different-machine acceptance claim. Private raw chat reasoning, participant data and user stores are not exported."
+}

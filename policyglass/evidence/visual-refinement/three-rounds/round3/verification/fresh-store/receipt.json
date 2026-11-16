@@ -1,0 +1,25 @@
+{
+  "initialExperiments": 0,
+  "finalExperiments": 2,
+  "browserOrigin": "http://localhost:5173",
+  "proxyAddress": "[::1]:5173",
+  "proxyPid": 6796,
+  "api": "http://127.0.0.1:8794",
+  "apiPid": 20124,
+  "originHostPolicy": "unchanged",
+  "stats": {
+    "startTime": "2026-11-16T21:23:35.121Z",
+    "duration": 74592.08899999999,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "store": "D:/传智杯1/counterlab/policyglass/.runtime/two-chat-76425c0/round3-fresh-store",
+  "fixtures": {
+    "ppoId": "a15c57790440499f8ba3d4e272a4ba91",
+    "sacId": "ea4b248a865345eb8f21c482faad4783",
+    "baseURL": "http://localhost:5173",
+    "initialExperimentCount": 0
+  }
+}

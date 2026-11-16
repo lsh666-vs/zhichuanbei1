@@ -1,0 +1,31 @@
+{
+  "experiment": "ad4ec466c28d42c39e9e3a984c393656",
+  "trace": "6a322cc2578b4186a3629d5437395a73",
+  "cases": [
+    {
+      "cp": "f92ed4d18ccb45a1a6d96e37b370ff61",
+      "value": 0,
+      "child": "3cfd687e1fe04881aa479ec8dc71a20a",
+      "unchanged": true
+    },
+    {
+      "cp": "bd9d35566a704a7897d3af2e84dbf7e3",
+      "value": -0.00029999999527883354,
+      "child": "51b4ea440c934da7be94f5b139bfd183",
+      "unchanged": true
+    },
+    {
+      "case": "W and source invalidation",
+      "passed": true
+    },
+    {
+      "case": "post-critic",
+      "actualEvent": -0.33518645850210754,
+      "parent": -0.33548645777942665
+    },
+    {
+      "case": "forward",
+      "passed": true
+    }
+  ]
+}

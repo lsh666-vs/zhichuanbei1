@@ -2,6 +2,12 @@
 
 Status: NOT_READY
 
+## User-directed three-round UI refinement
+
+The user requested two new chats (gpt-6.1-sol / xhigh), exactly two recommendations per round, and subsequently authorized a third final round. Rounds two and three emphasize frontend usability. All six recommendations are implemented and verified. The final suite passed112Python/11frontend checks/27actual browser scenarios, with zero browser failures/skips/flaky; the six new cases also passed in an initially-empty isolated store. Round1/2 source commits are c17444f/9015bba; round3's exact source commit and all reports are recorded in evidence063 and docs/THREE_ROUND_REFINEMENT.md. No fourth round is authorized. Ordinary speed is required; the coordinator never requests Fast/1.5x.
+
+The combined build candidate is PolicyGlass-stage3-review-20261117-r5. Its immutable manifest identifies the clean build revision;064seals the final tested inputs. Post-build065receipts and066installed-app checks are generated only after actual execution and remain outside that immutable ZIP. The r4 package and PID5000/service statements below describe an earlier verification moment, not current process identity. During refinement8787was observed stopped;5173/8793are isolated previews. Existing r4 installation/data remain intact for rollback. Learner/expert feedback remains deferred, and the full-plan NOT_READY boundary is unchanged.
+
 ## User-requested visual correction after r3
 
 The user rejected the default cuboid network and blank-looking surface views. r4 replaces the cuboid with the complete, selectable neuron/weight graph, puts actual W/b and provenance beside it, provides direct forward and parameter-branch actions, and computes eligible Q/loss grids on entry with explicit prerequisites. Details: docs/NETWORK_EXPLORER.md. A .cmd offline launcher addresses the reported .ps1/Notepad startup problem.

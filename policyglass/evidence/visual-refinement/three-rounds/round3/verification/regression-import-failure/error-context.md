@@ -1,0 +1,472 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - link "跳到实验内容" [ref=e4] [cursor=pointer]:
+    - /url: "#experiment-content"
+  - banner [ref=e5]:
+    - link "策镜 PolicyGlass LAB 03" [ref=e6] [cursor=pointer]:
+      - /url: /
+      - img [ref=e8]
+      - generic [ref=e12]: 策镜 PolicyGlass
+      - generic [ref=e13]: LAB 03
+    - navigation "主导航" [ref=e14]:
+      - button "实验工作台" [ref=e15] [cursor=pointer]
+      - button "机制课程 8" [ref=e16] [cursor=pointer]:
+        - img [ref=e17]
+        - text: 机制课程
+        - generic [ref=e19]: "8"
+      - button "实验笔记" [ref=e20] [cursor=pointer]
+    - generic [ref=e21]:
+      - text: 已连接 · 任务状态同步
+      - generic [ref=e23]: CPU · Float64
+  - generic [ref=e24]:
+    - generic [ref=e25]:
+      - text: REINFORCEMENT LEARNING / MECHANISM LAB
+      - heading "E2E task lifecycle" [level=1] [ref=e26]
+      - paragraph [ref=e27]: PPO · 8 × 8 · seed 17 · 理想刚体实验
+    - generic [ref=e28]:
+      - button "导入实验" [ref=e29] [cursor=pointer]:
+        - img [ref=e30]
+        - text: 导入实验
+      - button "导出" [ref=e33] [cursor=pointer]:
+        - img [ref=e34]
+        - text: 导出
+      - button "新建实验" [ref=e37] [cursor=pointer]:
+        - img [ref=e38]
+        - text: 新建实验
+  - generic [ref=e39]:
+    - generic [ref=e40]:
+      - text: 打开实验
+      - combobox "打开实验" [ref=e41]:
+        - option "E2E task lifecycle" [selected]
+        - option "E2E SAC double Q"
+        - option "Imported experiment"
+        - option "E2E PPO real flow · ppo.learning_rate=0.001"
+        - option "E2E PPO real flow"
+        - option "真实失败与重试"
+        - option "SAC完整模型专注总览"
+        - option "专注64网络 1280x720"
+        - option "首屏真实计算 1280x720"
+        - option "专注64网络 1440x900"
+        - option "首屏真实计算 1440x900"
+        - option "登记研究 · ppo_reference · seed 11"
+        - option "<img src=x onerror=\"window.__unsafe=true\">"
+        - option "Assistant offline source"
+        - option "Keyboard source check"
+        - option "第一轮真实 SAC 来源验证"
+        - option "第一轮真实 SAC 来源验证 · q1/weights.0=-0.33548645777942665"
+        - option "第一轮真实 SAC 来源验证 · actor/biases.2=-0.00029999999527883354"
+        - option "第一轮真实 SAC 来源验证 · actor/biases.2=0"
+        - option "第一轮真实 SAC 来源验证"
+        - option "Performance default 64x64 SAC"
+        - option "实际自动双Q与局部损失"
+        - option "PPO 曲面前提说明"
+        - option "真实完整网络与偏置操作 · actor/biases.0=0.25"
+        - option "真实完整网络与偏置操作"
+        - option "第三轮独立 sac"
+        - option "第三轮独立 ppo"
+        - option "第三轮独立 sac"
+        - option "第三轮独立 ppo"
+        - option "第三轮独立 sac"
+        - option "第三轮独立 ppo"
+        - option "第三轮独立 sac"
+        - option "第三轮独立 ppo"
+        - option "第三轮独立 sac"
+        - option "第三轮独立 ppo"
+        - option "第三轮独立 sac"
+        - option "第三轮独立 ppo"
+        - option "第三轮独立 sac"
+        - option "第三轮独立 ppo"
+        - option "第三轮独立 sac"
+        - option "第三轮独立 ppo"
+        - option "复用实验 seed71 ratio4"
+        - option "复用实验 seed71 ratio1"
+        - option "复用实验 seed53 ratio4"
+        - option "复用实验 seed53 ratio1"
+        - option "复用实验 seed37 ratio4"
+        - option "复用实验 seed37 ratio1"
+        - option "复用实验 seed23 ratio4"
+        - option "复用实验 seed23 ratio1"
+        - option "复用实验 seed11 ratio4"
+        - option "复用实验 seed11 ratio1"
+        - option "E2E actual course protocol"
+        - option "E2E forward and physics · 物理干预"
+        - option "E2E forward and physics"
+        - option "E2E task lifecycle"
+        - option "E2E SAC double Q"
+        - option "Imported experiment"
+        - option "E2E PPO real flow · ppo.learning_rate=0.001"
+        - option "E2E PPO real flow"
+        - option "真实失败与重试"
+        - option "SAC完整模型专注总览"
+        - option "专注64网络 1280x720"
+        - option "首屏真实计算 1280x720"
+        - option "专注64网络 1440x900"
+        - option "首屏真实计算 1440x900"
+        - option "登记研究 · ppo_reference · seed 11"
+        - option "<img src=x onerror=\"window.__unsafe=true\">"
+        - option "Assistant offline source"
+        - option "Keyboard source check"
+        - option "第一轮真实 SAC 来源验证"
+        - option "第一轮真实 SAC 来源验证 · q1/weights.0=-0.33548645777942665"
+        - option "第一轮真实 SAC 来源验证 · actor/biases.2=-0.00029999999527883354"
+        - option "第一轮真实 SAC 来源验证 · actor/biases.2=0"
+        - option "第一轮真实 SAC 来源验证"
+        - option "Performance default 64x64 SAC"
+        - option "实际自动双Q与局部损失"
+        - option "PPO 曲面前提说明"
+        - option "真实完整网络与偏置操作 · actor/biases.0=0.25"
+        - option "真实完整网络与偏置操作"
+        - option "复用实验 seed71 ratio4"
+        - option "复用实验 seed71 ratio1"
+        - option "复用实验 seed53 ratio4"
+        - option "复用实验 seed53 ratio1"
+        - option "复用实验 seed37 ratio4"
+        - option "复用实验 seed37 ratio1"
+        - option "复用实验 seed23 ratio4"
+        - option "复用实验 seed23 ratio1"
+        - option "复用实验 seed11 ratio4"
+        - option "复用实验 seed11 ratio1"
+        - option "E2E actual course protocol"
+        - option "E2E forward and physics · 物理干预"
+        - option "E2E forward and physics"
+        - option "E2E task lifecycle"
+        - option "E2E SAC double Q"
+        - option "Imported experiment"
+        - option "E2E PPO real flow · ppo.learning_rate=0.001"
+        - option "E2E PPO real flow"
+        - option "真实失败与重试"
+        - option "SAC完整模型专注总览"
+        - option "专注64网络 1280x720"
+        - option "首屏真实计算 1280x720"
+        - option "专注64网络 1440x900"
+        - option "首屏真实计算 1440x900"
+        - option "登记研究 · ppo_reference · seed 11"
+        - option "<img src=x onerror=\"window.__unsafe=true\">"
+        - option "Assistant offline source"
+        - option "Keyboard source check"
+        - option "第一轮真实 SAC 来源验证"
+        - option "第一轮真实 SAC 来源验证 · q1/weights.0=-0.33548645777942665"
+        - option "第一轮真实 SAC 来源验证 · actor/biases.2=-0.00029999999527883354"
+        - option "第一轮真实 SAC 来源验证 · actor/biases.2=0"
+        - option "第一轮真实 SAC 来源验证"
+        - option "Performance default 64x64 SAC"
+        - option "实际自动双Q与局部损失"
+        - option "PPO 曲面前提说明"
+        - option "真实完整网络与偏置操作 · actor/biases.0=0.25"
+        - option "真实完整网络与偏置操作"
+        - option "真实失败与重试"
+        - option "SAC完整模型专注总览"
+        - option "专注64网络 1280x720"
+        - option "首屏真实计算 1280x720"
+        - option "专注64网络 1440x900"
+        - option "首屏真实计算 1440x900"
+        - option "真实失败与重试"
+        - option "SAC完整模型专注总览"
+        - option "专注64网络 1280x720"
+        - option "首屏真实计算 1280x720"
+        - option "专注64网络 1440x900"
+        - option "首屏真实计算 1440x900"
+        - option "第二轮完整SAC网络观察"
+        - option "第二轮首次使用审查"
+        - option "复用实验 seed71 ratio4"
+        - option "复用实验 seed71 ratio1"
+        - option "复用实验 seed53 ratio4"
+        - option "复用实验 seed53 ratio1"
+        - option "复用实验 seed37 ratio4"
+        - option "复用实验 seed37 ratio1"
+        - option "复用实验 seed23 ratio4"
+        - option "复用实验 seed23 ratio1"
+        - option "复用实验 seed11 ratio4"
+        - option "复用实验 seed11 ratio1"
+        - option "E2E actual course protocol"
+        - option "E2E forward and physics · 物理干预"
+        - option "E2E forward and physics"
+        - option "E2E task lifecycle"
+        - option "E2E SAC double Q"
+        - option "Imported experiment"
+        - option "E2E PPO real flow · ppo.learning_rate=0.001"
+        - option "E2E PPO real flow"
+        - option "登记研究 · ppo_reference · seed 11"
+        - option "<img src=x onerror=\"window.__unsafe=true\">"
+        - option "Assistant offline source"
+        - option "Keyboard source check"
+        - option "第一轮真实 SAC 来源验证"
+        - option "第一轮真实 SAC 来源验证 · q1/weights.0=-0.33548645777942665"
+        - option "第一轮真实 SAC 来源验证 · actor/biases.2=-0.00029999999527883354"
+        - option "第一轮真实 SAC 来源验证 · actor/biases.2=0"
+        - option "第一轮真实 SAC 来源验证"
+        - option "Performance default 64x64 SAC"
+        - option "实际自动双Q与局部损失"
+        - option "PPO 曲面前提说明"
+        - option "真实完整网络与偏置操作 · actor/biases.0=0.25"
+        - option "真实完整网络与偏置操作"
+        - option "第一轮真实 SAC 来源验证"
+        - option "第一轮真实 SAC 来源验证 · actor/biases.2=-0.00029999999527883354"
+        - option "第一轮真实 SAC 来源验证 · actor/biases.2=0"
+        - option "第一轮真实 SAC 来源验证"
+        - option "独立审查来源一致性 · actor/biases.2=0"
+        - option "独立审查来源一致性"
+    - generic [ref=e42]:
+      - generic [ref=e43]: 环境交互
+      - generic [ref=e44]: "4"
+      - generic [ref=e45]: steps
+    - generic [ref=e46]:
+      - generic [ref=e47]: 优化更新
+      - generic [ref=e48]: "2"
+      - generic [ref=e49]: updates
+    - generic [ref=e50]:
+      - generic [ref=e51]: 物理时间
+      - generic [ref=e52]: "0.08000"
+      - generic [ref=e53]: s
+    - generic [ref=e54]:
+      - generic [ref=e55]: 当前来源
+      - generic [ref=e56]: 历史 Trace 回放
+    - generic [ref=e57]:
+      - checkbox "减弱动效" [ref=e58]
+      - text: 减弱动效
+  - region "真实计算控制" [ref=e59]:
+    - status [ref=e60]:
+      - strong [ref=e61]: 任务已取消
+      - generic [ref=e62]: 历史 Trace 回放 · c465490a17 · 已连接 · 任务状态同步
+    - button "看一次 Actor 前向 参数不更新 · 不推进物理" [ref=e63] [cursor=pointer]:
+      - img [ref=e64]
+      - generic [ref=e69]:
+        - text: 看一次 Actor 前向
+        - generic [ref=e70]: 参数不更新 · 不推进物理
+    - button "继续计算 记录真实更新 · 会更新当前实验" [ref=e71] [cursor=pointer]:
+      - img [ref=e72]
+      - generic [ref=e74]:
+        - text: 继续计算
+        - generic [ref=e75]: 记录真实更新 · 会更新当前实验
+    - button "检查实际参数更新" [ref=e76] [cursor=pointer]:
+      - text: 检查实际参数更新
+      - img [ref=e77]
+    - generic [ref=e79]:
+      - group [ref=e80]:
+        - generic "预算与计算模式" [ref=e81] [cursor=pointer]
+        - option "train · 重新采样续训" [selected]
+        - option "fixed_batch · 固定批次反事实"
+      - generic [ref=e82]: cancelled · 1/100 · train
+      - generic [ref=e83]:
+        - button "暂停任务" [disabled] [ref=e84]:
+          - img [ref=e85]
+        - button "恢复任务" [disabled] [ref=e88]:
+          - img [ref=e89]
+        - button "取消任务" [disabled] [ref=e91]:
+          - img [ref=e92]
+        - button "重连并刷新" [ref=e95] [cursor=pointer]:
+          - img [ref=e96]
+  - main [ref=e99]:
+    - complementary [ref=e100]:
+      - generic [ref=e101]:
+        - heading "计算导航" [level=3] [ref=e102]
+        - img [ref=e103]
+      - generic [ref=e106]:
+        - button "前向传播" [ref=e107] [cursor=pointer]:
+          - generic [ref=e108]: "01"
+          - text: 前向传播
+        - button "目标与损失" [ref=e109] [cursor=pointer]:
+          - generic [ref=e110]: "02"
+          - text: 目标与损失
+        - button "梯度反传" [ref=e111] [cursor=pointer]:
+          - generic [ref=e112]: "03"
+          - text: 梯度反传
+        - button "参数更新" [ref=e113] [cursor=pointer]:
+          - generic [ref=e114]: "04"
+          - text: 参数更新
+      - generic [ref=e115]:
+        - heading "事件时间线" [level=3] [ref=e116]
+        - generic [ref=e117]: "17"
+      - combobox "选择历史Trace" [ref=e118]:
+        - option "选择一次真实更新"
+        - option "#1 · 0a286694" [selected]
+      - generic [ref=e119]:
+        - button "actor_input observation_transform · u1/e0" [ref=e120] [cursor=pointer]:
+          - generic [ref=e122]:
+            - generic [ref=e123]: actor_input
+            - generic [ref=e124]: observation_transform · u1/e0
+        - button "actor/layer0 layer · u1/e1" [ref=e125] [cursor=pointer]:
+          - generic [ref=e127]:
+            - generic [ref=e128]: actor/layer0
+            - generic [ref=e129]: layer · u1/e1
+        - button "actor/layer1 layer · u1/e2" [ref=e130] [cursor=pointer]:
+          - generic [ref=e132]:
+            - generic [ref=e133]: actor/layer1
+            - generic [ref=e134]: layer · u1/e2
+        - button "actor/layer2 layer · u1/e3" [ref=e135] [cursor=pointer]:
+          - generic [ref=e137]:
+            - generic [ref=e138]: actor/layer2
+            - generic [ref=e139]: layer · u1/e3
+        - button "actor distribution · u1/e4" [ref=e140] [cursor=pointer]:
+          - generic [ref=e142]:
+            - generic [ref=e143]: actor
+            - generic [ref=e144]: distribution · u1/e4
+        - button "ppo_behavior_likelihood policy_operation · u1/e5" [ref=e145] [cursor=pointer]:
+          - generic [ref=e147]:
+            - generic [ref=e148]: ppo_behavior_likelihood
+            - generic [ref=e149]: policy_operation · u1/e5
+        - button "ppo_entropy_sample policy_operation · u1/e6" [ref=e150] [cursor=pointer]:
+          - generic [ref=e152]:
+            - generic [ref=e153]: ppo_entropy_sample
+            - generic [ref=e154]: policy_operation · u1/e6
+        - button "value_input observation_transform · u1/e7" [ref=e155] [cursor=pointer]:
+          - generic [ref=e157]:
+            - generic [ref=e158]: value_input
+            - generic [ref=e159]: observation_transform · u1/e7
+        - button "value/layer0 layer · u1/e8" [ref=e160] [cursor=pointer]:
+          - generic [ref=e162]:
+            - generic [ref=e163]: value/layer0
+            - generic [ref=e164]: layer · u1/e8
+        - button "value/layer1 layer · u1/e9" [ref=e165] [cursor=pointer]:
+          - generic [ref=e167]:
+            - generic [ref=e168]: value/layer1
+            - generic [ref=e169]: layer · u1/e9
+        - button "value/layer2 layer · u1/e10" [ref=e170] [cursor=pointer]:
+          - generic [ref=e172]:
+            - generic [ref=e173]: value/layer2
+            - generic [ref=e174]: layer · u1/e10
+        - button "ppo_clip objective · u1/e11" [ref=e175] [cursor=pointer]:
+          - generic [ref=e177]:
+            - generic [ref=e178]: ppo_clip
+            - generic [ref=e179]: objective · u1/e11
+        - button "actor sample_gradients · u1/e12" [ref=e180] [cursor=pointer]:
+          - generic [ref=e182]:
+            - generic [ref=e183]: actor
+            - generic [ref=e184]: sample_gradients · u1/e12
+        - button "value sample_gradients · u1/e13" [ref=e185] [cursor=pointer]:
+          - generic [ref=e187]:
+            - generic [ref=e188]: value
+            - generic [ref=e189]: sample_gradients · u1/e13
+        - button "actual_batch_backward backward · u1/e14" [ref=e190] [cursor=pointer]:
+          - generic [ref=e192]:
+            - generic [ref=e193]: actual_batch_backward
+            - generic [ref=e194]: backward · u1/e14
+        - button "actor optimizer · u1/e15" [ref=e195] [cursor=pointer]:
+          - generic [ref=e197]:
+            - generic [ref=e198]: actor
+            - generic [ref=e199]: optimizer · u1/e15
+        - button "value optimizer · u1/e16" [ref=e200] [cursor=pointer]:
+          - generic [ref=e202]:
+            - generic [ref=e203]: value
+            - generic [ref=e204]: optimizer · u1/e16
+      - generic [ref=e205]: 环境轨迹提供奖励和观测。标准 PPO / SAC 不穿过物理引擎反传。
+    - generic [ref=e206]:
+      - tablist "可视化视图" [ref=e207]:
+        - tab "物理实验" [selected] [ref=e208] [cursor=pointer]:
+          - img [ref=e209]
+          - text: 物理实验
+        - tab "计算网络" [ref=e212] [cursor=pointer]:
+          - img [ref=e213]
+          - text: 计算网络
+        - tab "双 Q 曲面" [ref=e218] [cursor=pointer]:
+          - img [ref=e219]
+          - text: 双 Q 曲面
+        - tab "局部损失" [ref=e223] [cursor=pointer]:
+          - img [ref=e224]
+          - text: 局部损失
+      - generic [ref=e226]:
+        - generic [ref=e227]:
+          - text: 世界坐标 · MuJoCo
+          - heading "空间机械臂" [level=2] [ref=e228]
+        - generic [ref=e229]: 历史 Trace 回放
+      - tabpanel "物理实验" [ref=e231]:
+        - generic: 拖动旋转 · 滚轮缩放 · Shift 平移
+      - generic [ref=e235]:
+        - generic [ref=e236]: 世界 Z 向上 · 长度 m · 力矩 Nm · 刚体位姿来自 MuJoCo
+        - generic [ref=e237]: MUJOCO 4.0.1
+      - generic [ref=e238]:
+        - button "上一个样本" [ref=e239] [cursor=pointer]:
+          - img [ref=e240]
+        - button "播放历史样本" [ref=e242] [cursor=pointer]:
+          - img [ref=e243]
+        - slider "样本回放位置" [ref=e245]: "0"
+        - button "下一个样本" [ref=e246] [cursor=pointer]:
+          - img [ref=e247]
+        - code [ref=e249]: 行 0 / 3 · sample_id 2
+      - generic [ref=e250]:
+        - generic [ref=e251]:
+          - button "视图控制" [ref=e252] [cursor=pointer]
+          - button "前向实验" [ref=e253] [cursor=pointer]
+          - button "受控分支" [ref=e254] [cursor=pointer]
+          - button "对照比较" [ref=e255] [cursor=pointer]
+          - button "机制课程" [ref=e256] [cursor=pointer]
+          - button "引用与笔记" [ref=e257] [cursor=pointer]
+          - button "数值讲解" [ref=e258] [cursor=pointer]
+        - generic [ref=e259]:
+          - generic [ref=e260]:
+            - heading "物理干预 · 总是创建子分支" [level=3] [ref=e261]
+            - generic [ref=e262]:
+              - checkbox "在 3D 中拖动目标" [ref=e263]
+              - text: 在 3D 中拖动目标
+          - generic [ref=e264]:
+            - checkbox "更改质量/阻尼并显式重置环境（清除旧批次）" [ref=e265]
+            - text: 更改质量/阻尼并显式重置环境（清除旧批次）
+          - group "目标位置 m" [ref=e266]:
+            - generic [ref=e267]: 目标位置 m
+            - generic [ref=e268]:
+              - text: x
+              - spinbutton "目标位置 m 0" [ref=e269]: "0.45"
+            - generic [ref=e270]:
+              - text: "y"
+              - spinbutton "目标位置 m 1" [ref=e271]: "0.12"
+            - generic [ref=e272]:
+              - text: z
+              - spinbutton "目标位置 m 2" [ref=e273]: "0.45"
+          - group "外力 N · 世界轴 · 前臂质心" [ref=e274]:
+            - generic [ref=e275]: 外力 N · 世界轴 · 前臂质心
+            - generic [ref=e276]:
+              - text: x
+              - spinbutton "外力 N · 世界轴 · 前臂质心 0" [ref=e277]: "0"
+            - generic [ref=e278]:
+              - text: "y"
+              - spinbutton "外力 N · 世界轴 · 前臂质心 1" [ref=e279]: "0"
+            - generic [ref=e280]:
+              - text: z
+              - spinbutton "外力 N · 世界轴 · 前臂质心 2" [ref=e281]: "0"
+          - generic [ref=e282]:
+            - generic [ref=e283]:
+              - text: 力持续控制步
+              - spinbutton "力持续控制步" [ref=e284]: "4"
+            - generic [ref=e285]:
+              - text: 实际仿真控制步
+              - spinbutton "实际仿真控制步" [ref=e286]: "16"
+            - button "记录并计算干预" [ref=e287] [cursor=pointer]
+          - paragraph [ref=e288]: 先拖动预览标记，再记录干预。目标须通过可达性检查；无驱动力矩为 [0,0,0]。质量/阻尼改变必须显式重置，不能伪装成连续运动。模型没有地面/自碰撞；屏幕网格仅为标尺。
+          - group [ref=e289]:
+            - generic "二维物理状态与奖励分解" [ref=e290] [cursor=pointer]
+          - button "运行无学习评估（3 个登记种子）" [ref=e291] [cursor=pointer]
+    - complementary "深层张量检查" [ref=e292]:
+      - generic [ref=e293]: DEEP INSPECTOR
+      - heading "actor_input" [level=3] [ref=e294]
+      - generic [ref=e295]:
+        - generic [ref=e296]: observation_transform
+        - code [ref=e297]: u1/e0
+      - paragraph [ref=e298]:
+        - text: 来源 0a286694a2c740e9b255efccc7e59348
+        - text: 参数版本 c465490a175f
+        - text: 样本行 0 · 单元 0
+      - generic [ref=e299]:
+        - checkbox "回看该次更新已完成的反传结果" [ref=e300]
+        - text: 回看该次更新已完成的反传结果
+      - paragraph [ref=e301]: 当前只展示前向数值。局部导数与总梯度是不同对象。
+      - group [ref=e302]:
+        - generic "原始字段 · 分页完整张量" [ref=e303] [cursor=pointer]
+  - generic [ref=e304]:
+    - generic [ref=e305]:
+      - text: 来源检查点
+      - combobox "来源检查点" [ref=e306]:
+        - option "initial · u0 / env0 · 64810aa3b2"
+        - option "iteration · u2 / env4 · 3a672f72ee"
+        - option "trace_origin · u0 / env4 · c465490a17" [selected]
+        - option "trace_output · u1 / env4 · 982831f46d"
+    - generic [ref=e307]: 精确选中更新前 origin
+    - button "保存检查点 .pgz" [ref=e308] [cursor=pointer]
+    - group [ref=e309]:
+      - generic "全部任务指标" [ref=e310] [cursor=pointer]
+  - generic [ref=e311]:
+    - generic [ref=e312]: 策镜 · PolicyGlass
+    - generic [ref=e313]: 真实计算 / 可恢复状态 / 受控解释
+    - generic [ref=e314]: 真实实验与独立技术核验 · 用户研究待真实参与
+```

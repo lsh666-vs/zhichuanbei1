@@ -1,0 +1,87 @@
+{
+  "round": 1,
+  "head": "76425c009d9d4d1a1b3e838158f2292c9e841b03",
+  "recordedLocal": "2026-11-17 03:46:42 +08:00",
+  "sourceInputs": [
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "fcda2490099cca97d9e92e78a4874b4c80225ed061407ee6f646c3ba251be86a"
+    },
+    {
+      "path": "frontend/src/NetworkExplorer.tsx",
+      "sha256": "21e3ab3d993ea0ac0682f38ddfadce4f7803ac4dfbd99541320fdf69fc87bcd4"
+    },
+    {
+      "path": "frontend/src/Scenes.tsx",
+      "sha256": "17dd35f0498958c85dd8ab0466515c3e1650c9385ab3c004f256859d5f2d6f47"
+    },
+    {
+      "path": "frontend/src/networkData.ts",
+      "sha256": "fcac3a7f4fd275a2ca5f1db5dd65d87b3f0aade8cd32f0b387c4691574ed7c8e"
+    },
+    {
+      "path": "frontend/src/style.css",
+      "sha256": "f0a05df050c2c5d16a3883a8e6e5769c58197134d0dca0d34092ba1ef1034f19"
+    },
+    {
+      "path": "frontend/tests/networkData.test.ts",
+      "sha256": "6186d9f8d27fb19263ed1bf9dfb02b15fb735daae125a7dc8ccdd809950cebf8"
+    },
+    {
+      "path": "frontend/tests/provenance.spec.ts",
+      "sha256": "a15efb2def149022d04efd796daaa3d3854f9b58768265843f3c69dc04267d21"
+    },
+    {
+      "path": "docs/NETWORK_EXPLORER.md",
+      "sha256": "168ebc17aa475eac2f6208c75ff9b2a7865bef5f55f3d78989ca09fbf590db03"
+    }
+  ],
+  "verificationArtifacts": [
+    {
+      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\two-chat-76425c0\\verification\\01-complete-parent-edit.png",
+      "sha256": "dc061926bc1e5d0be30c0e336d8117f9f1b969459e321d1ae789b4f55bd1fcd9"
+    },
+    {
+      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\two-chat-76425c0\\verification\\02-post-critic-complete-state.png",
+      "sha256": "34c51b6678c3690ba7f0ac2563f76b645d74c7c4b9da2bd8adac5034cd6b02af"
+    },
+    {
+      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\two-chat-76425c0\\verification\\03-q-draft-pending.png",
+      "sha256": "04395371c94857c2dfb0b49807d2ad0cce642623f8b283435c21dea6f0711881"
+    },
+    {
+      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\two-chat-76425c0\\verification\\04-q-computed-identity.png",
+      "sha256": "85d92fe8263fedcb66c9605f9e9530aa136f579b4756971ca69668da6dea43e2"
+    },
+    {
+      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\two-chat-76425c0\\verification\\05-loss-computed-identity.png",
+      "sha256": "f6b38cc65524110f6dcd99409d4ccf9ee4ada1870d94ce361e8736b1507c064f"
+    },
+    {
+      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\two-chat-76425c0\\verification\\browser-results.json",
+      "sha256": "e700f4537f99d5c2b6fd63e02537c4e38f0faf1a6e295c968d6cafbad1d959c7"
+    },
+    {
+      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\two-chat-76425c0\\verification\\network-results.json",
+      "sha256": "e1cad28446098371553a72faa34f4d44e7852421b331d054ffedca8737ac3ab7"
+    },
+    {
+      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\two-chat-76425c0\\verification\\performance-browser-runtime.json",
+      "sha256": "5177de60df0c020dc5ef61523fee179878fb4aa522ed79f22cf14ca74ec14555"
+    },
+    {
+      "path": "D:\\传智杯1\\counterlab\\policyglass\\.runtime\\two-chat-76425c0\\verification\\surface-results.json",
+      "sha256": "4124078b3538d6b464e3150f7236f3e7d5336484cd7b394124dc248b2b047505"
+    }
+  ],
+  "browserStats": {
+    "startTime": "2026-11-16T19:41:46.464Z",
+    "duration": 201599.757,
+    "expected": 15,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "python": "112 passed, 1 warning in 22.13s",
+  "frontend": "tsc -b passed; Vite build passed (5.51s); Vitest 8/8 passed (231ms)"
+}

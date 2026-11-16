@@ -1,0 +1,22 @@
+{
+  "schema": "policyglass.study.v1",
+  "registered": "2026-11-16",
+  "question": "On the fixed spatial reaching task, what do actual PPO/SAC learning, replay reuse and an excessive PPO learning rate do under disclosed CPU budgets?",
+  "training_seeds": [11,23,37,53,71],
+  "evaluation_seeds": [701,702,703,704,705],
+  "evaluation_steps": 128,
+  "evaluation_interval": 2048,
+  "network": [64,64],
+  "conditions": [
+    {"name":"ppo_reference","algorithm":"ppo","environment_steps":32768,"learning_rate":0.0003},
+    {"name":"ppo_large_step","algorithm":"ppo","environment_steps":8192,"learning_rate":0.05},
+    {"name":"sac_reuse1","algorithm":"sac","environment_steps":16384,"updates_per_step":1},
+    {"name":"sac_reuse4","algorithm":"sac","environment_steps":16384,"updates_per_step":4}
+  ],
+  "ppo": {"rollout_steps":256,"minibatch_size":64,"epochs":4,"target_kl":0.03},
+  "sac": {"batch_size":64,"warmup_steps":512,"replay_capacity":20000},
+  "evaluation": "Frozen tanh(mean)*physical_scale. Same five initial-state seeds at each evaluation. Continuing fixed target task, not generalization to other targets. Report return, mean/final distance, fraction of steps under .04m, final-32-step mean, wall time, interaction and optimizer counts.",
+  "analysis": "Retain every seed and failed run. Median/IQR/range and paired per-seed differences at equal interaction budgets; descriptive only, no p-values or efficacy claim. PPO vs SAC are not equal-compute comparisons. Poor outcomes are valid. No selecting best seed for headline.",
+  "mechanisms": "At five independent seeds, controlled ReLU neuron inactivation (zero incoming weights, bias -100) versus restoration at identical stored batch/noise; compare activations and actual actor gradients. This is induced inactivity, not evidence that ordinary training necessarily produces dormant neurons.",
+  "stop": "Per-run hard budget 3600 seconds; record timeout/failed status and partial data. No silent retries or extensions. Pilot uses seed999 outside study and 512 interactions solely for timing, excluded from results."
+}

@@ -3,3 +3,6 @@
 *.md text eol=lf
 *.py text eol=lf
 *.xml text eol=lf
+# Immutable evidence/lock hashes refer to actual bytes; do not normalize them on checkout.
+evidence/** -text
+requirements-*.lock -text

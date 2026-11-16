@@ -34,6 +34,7 @@ import {
   projectedUpdate,
   useLab,
   View,
+  boundedIndex,
 } from './core';
 import Scenes from './Scenes';
 import Inspector, { Formula, RawTree } from './Inspector';
@@ -140,11 +141,11 @@ export default function App() {
   const autoSlice = useRef('');
   const pendingOperations = useRef(new Map<number, string>()),
     operationId = useRef(0);
-  const run = useCallback(async (label: string, action: () => Promise<void>) => {
+  const run = useCallback(async (label: string, action: () => Promise<void>, clearPreviousError = true) => {
     const id = ++operationId.current;
     pendingOperations.current.set(id, label);
     setBusy(label);
-    setError('');
+    if (clearPreviousError) setError('');
     try {
       await action();
     } catch (e) {
@@ -301,7 +302,7 @@ export default function App() {
     [traceId, cache],
   );
   useEffect(() => {
-    if (traceId && !prediction && !cache[s.event]) run('读取实际事件', () => getEvent(s.event));
+    if (traceId && !prediction && !cache[s.event]) run('读取实际事件', () => getEvent(s.event), false);
   }, [traceId, s.event, prediction]);
   useEffect(() => {
     if (view !== 'network' || prediction || !trace) return;
@@ -1138,6 +1139,7 @@ export default function App() {
                 {['forward', 'loss', 'backward', 'optimizer'].map((phase, i) => (
                   <button
                     key={phase}
+                    disabled={!!busy}
                     aria-label={['前向传播', '目标与损失', '梯度反传', '参数更新'][i]}
                     onClick={() => {
                       const index = events.findIndex((e) =>
@@ -1337,8 +1339,13 @@ export default function App() {
                   path,
                   surface,
                   surfaceLabels,
+                  surfaceRequest,
+                  onFields: setFields,
                   fields: view === 'loss' ? ['loss'] : fields,
-                  onPick: (i, j) => setPick([i, j]),
+                  onPick: (i, j) => {
+                    if (surface)
+                      setPick([boundedIndex(i, surface.x.length), boundedIndex(j, surface.y.length)]);
+                  },
                   gridPick: pick,
                   marker: projection?.delta,
                   gradient: projection
@@ -1768,14 +1775,14 @@ export default function App() {
                                 <NumberField
                                   label="网格 i"
                                   value={pick[0]}
-                                  onChange={(n) => setPick([n, pick[1]])}
+                                  onChange={(n) => setPick([boundedIndex(n, surface.x.length), pick[1]])}
                                   min={0}
                                   max={surface.x.length - 1}
                                 />
                                 <NumberField
                                   label="网格 j"
                                   value={pick[1]}
-                                  onChange={(n) => setPick([pick[0], n])}
+                                  onChange={(n) => setPick([pick[0], boundedIndex(n, surface.y.length)])}
                                   min={0}
                                   max={surface.y.length - 1}
                                 />
@@ -1855,6 +1862,17 @@ export default function App() {
                                     ...surface,
                                     checkpoint: surfaceRequest.body.checkpoint,
                                     request: surfaceRequest,
+                                    selected_point: {
+                                      index: [...pick],
+                                      x: surface.x[pick[0]],
+                                      y: surface.y[pick[1]],
+                                      values: Object.fromEntries(
+                                        (view === 'q' ? ['q1', 'q2', 'minimum'] : ['loss']).map((key) => [
+                                          key,
+                                          surface[key][pick[0]][pick[1]],
+                                        ]),
+                                      ),
+                                    },
                                   })
                                 }
                               >

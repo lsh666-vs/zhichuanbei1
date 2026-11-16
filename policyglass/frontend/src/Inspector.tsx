@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import katex from 'katex';
-import { at, Doc, fmt, numeric, shape, useLab } from './core';
+import { at, Doc, fmt, numeric, shape, useLab, optimizerIndex, boundedIndex } from './core';
 export function Formula({ tex }: { tex: string }) {
   const html = useMemo(
     () => katex.renderToString(tex, { throwOnError: false, strict: 'ignore', trust: false }),
@@ -74,6 +74,160 @@ export function RawTree({ value, path = 'event' }: { value: any; path?: string }
     </>
   );
 }
+function OptimizerDetails({
+  event,
+  traceId,
+  checkpoint,
+}: {
+  event: Doc;
+  traceId: string;
+  checkpoint: string;
+}) {
+  const s = useLab((x) => x.selection),
+    select = useLab((x) => x.select);
+  const [parameter, setParameter] = useState(''),
+    [coordinateNote, setCoordinateNote] = useState('');
+  const names = Object.keys(event.parameters ?? {}),
+    pk = names.includes(parameter) ? parameter : names[0];
+  const p = event.parameters?.[pk],
+    dims = shape(p?.before);
+  const ix = optimizerIndex(p?.before, s.neuron, s.input);
+  const row = ix[0] ?? 0,
+    column = ix[1] ?? 0;
+  useEffect(() => {
+    const layer = Number(pk?.match(/\.(\d+)$/)?.[1] ?? s.layer);
+    const model = ['actor', 'value', 'q1', 'q2', 'target_q1', 'target_q2'].includes(event.label)
+      ? event.label
+      : s.model;
+    if (s.neuron !== row || s.input !== column || s.layer !== layer || s.model !== model) {
+      if (s.neuron !== row || s.input !== column)
+        setCoordinateNote(`原坐标已按真实 shape [${dims.join(',')}] 规范为 [${ix.join(',')}]。`);
+      select({ neuron: row, input: column, model, layer });
+    }
+  }, [event.id, traceId, pk, row, column, s.neuron, s.input, s.layer, s.model]);
+  const val = (key: string) => at(p?.[key], ix);
+  const coordinate = (axis: number, value: number) => {
+    const bounded = boundedIndex(value, dims[axis]);
+    setCoordinateNote(value === bounded ? '' : `坐标已限制在 0…${dims[axis] - 1}。`);
+    select(axis === 0 ? { neuron: bounded } : { input: bounded });
+  };
+  return (
+    <section className="optimizer-inspection" aria-label="优化器参数检查" data-testid="optimizer-inspection">
+      <label>
+        记录参数
+        <select
+          aria-label="优化器参数"
+          value={pk ?? ''}
+          onChange={(e) => {
+            setParameter(e.target.value);
+            setCoordinateNote('');
+          }}
+        >
+          {names.map((k) => (
+            <option key={k}>{k}</option>
+          ))}
+        </select>
+      </label>
+      {dims.length > 0 ? (
+        <div className="optimizer-coordinates">
+          <label>
+            {dims.length === 2 ? '矩阵行 j' : '向量索引'}
+            <input
+              aria-label={dims.length === 2 ? '优化器矩阵行' : '优化器向量索引'}
+              type="number"
+              min={0}
+              max={dims[0] - 1}
+              value={row}
+              onChange={(e) => coordinate(0, +e.target.value)}
+            />
+          </label>
+          {dims.length === 2 && (
+            <label>
+              矩阵列 i
+              <input
+                aria-label="优化器矩阵列"
+                type="number"
+                min={0}
+                max={dims[1] - 1}
+                value={column}
+                onChange={(e) => coordinate(1, +e.target.value)}
+              />
+            </label>
+          )}
+          <small>真实 shape [{dims.join(' × ')}]</small>
+        </div>
+      ) : (
+        <p className="optimizer-scalar">标量，无索引</p>
+      )}
+      {coordinateNote && <small role="status">{coordinateNote}</small>}
+      <b className="optimizer-path" data-testid="optimizer-path">
+        {event.label}/{pk}
+        {dims.length ? `[${ix.join(',')}]` : ' · 标量'}
+      </b>
+      <div className="optimizer-step" aria-label="记录的参数更新">
+        {(
+          [
+            ['before', '更新前'],
+            ['delta', '记录 Δ'],
+            ['after', '更新后'],
+          ] as const
+        ).map(([key, label]) => (
+          <div key={key}>
+            <small>{label}</small>
+            <b data-testid={'optimizer-' + key} title={String(val(key))}>
+              {fmt(val(key))}
+            </b>
+          </div>
+        ))}
+      </div>
+      <dl className="optimizer-gradients">
+        <dt>原始批梯度 · 裁剪前</dt>
+        <dd data-testid="optimizer-raw_gradient" title={String(val('raw_gradient'))}>
+          {fmt(val('raw_gradient'))}
+        </dd>
+        <dt>实际梯度 · 裁剪后 / 送入 Adam</dt>
+        <dd data-testid="optimizer-gradient" title={String(val('gradient'))}>
+          {fmt(val('gradient'))}
+        </dd>
+      </dl>
+      <small>
+        全局范数 {fmt(event.gradient_norm)} · clip factor {fmt(event.clip_factor)}
+      </small>
+      <p className="optimizer-source" data-testid="optimizer-source">
+        同一事件 {event.id} · Trace {traceId}
+        <br />
+        origin 检查点 {checkpoint}
+        <br />
+        样本行 {s.sample}（更新是批次级记录）；这里只浏览坐标，不修改参数。
+      </p>
+      <details className="optimizer-advanced">
+        <summary>Adam 历史与高级记录</summary>
+        <Formula tex={String.raw`m_t=\beta_1m_{t-1}+(1-\beta_1)g_t`} />
+        <Formula tex={String.raw`\Delta\theta=-\eta\hat m_t/(\sqrt{\hat v_t}+\epsilon)`} />
+        <dl>
+          {[
+            'moment_before',
+            'variance_before',
+            'moment',
+            'variance',
+            'corrected_moment',
+            'corrected_variance',
+          ].map((key) => (
+            <React.Fragment key={key}>
+              <dt>{key}</dt>
+              <dd title={String(val(key))}>{fmt(val(key))}</dd>
+            </React.Fragment>
+          ))}
+        </dl>
+        <small>
+          step {event.step} · lr {event.lr} · β₁ {event.beta1} · β₂ {event.beta2} · ε {event.epsilon}
+          。数值均为该事件保存记录，没有重新计算 Adam。
+        </small>
+      </details>
+    </section>
+  );
+}
+
 export default function Inspector({
   event,
   traceId,
@@ -91,7 +245,6 @@ export default function Inspector({
 }) {
   const s = useLab((x) => x.selection),
     select = useLab((x) => x.select);
-  const [parameter, setParameter] = useState('');
   if (!event)
     return (
       <aside className="inspector" tabIndex={-1} aria-label="深层张量检查">
@@ -99,13 +252,7 @@ export default function Inspector({
         <p className="muted">选择一个事件，检查它的真实数值。</p>
       </aside>
     );
-  const layer = event.kind === 'layer',
-    params = Object.keys(event.parameters ?? {}),
-    pk = params.includes(parameter) ? parameter : params[0],
-    p = event.parameters?.[pk];
-  const ix =
-    shape(p?.before).length === 2 ? [s.neuron, s.input] : shape(p?.before).length === 1 ? [s.neuron] : [];
-  const val = (key: string) => at(p?.[key], ix);
+  const layer = event.kind === 'layer';
   const row = event.output?.[s.sample],
     n = Math.min(s.neuron, (row?.length ?? 1) - 1),
     j = Math.min(s.input, (event.input?.[s.sample]?.length ?? 1) - 1);
@@ -121,26 +268,30 @@ export default function Inspector({
         <span>{event.kind}</span>
         <code>{event.id}</code>
       </div>
-      <p className="source">
-        来源 {traceId || '实时 forward-only'}
-        <br />
-        参数版本 {checkpoint?.slice(0, 12) || '当前完整检查点'}
-        <br />
-        样本行 {s.sample} · 单元 {n}
-      </p>
-      {!forwardOnly && (
-        <label className="check">
-          <input type="checkbox" checked={backward} onChange={onBackward} />
-          回看该次更新已完成的反传结果
-        </label>
+      {event.kind !== 'optimizer' && (
+        <>
+          <p className="source">
+            来源 {traceId || '实时 forward-only'}
+            <br />
+            参数版本 {checkpoint?.slice(0, 12) || '当前完整检查点'}
+            <br />
+            样本行 {s.sample} · 单元 {n}
+          </p>
+          {!forwardOnly && (
+            <label className="check">
+              <input type="checkbox" checked={backward} onChange={onBackward} />
+              回看该次更新已完成的反传结果
+            </label>
+          )}
+          <p className="muted small">
+            {forwardOnly
+              ? '此处只运行了前向；null 梯度表示未执行反传。'
+              : backward
+                ? '梯度在实际 backward 后记录，使用最小化损失约定。'
+                : '当前只展示前向数值。局部导数与总梯度是不同对象。'}
+          </p>
+        </>
       )}
-      <p className="muted small">
-        {forwardOnly
-          ? '此处只运行了前向；null 梯度表示未执行反传。'
-          : backward
-            ? '梯度在实际 backward 后记录，使用最小化损失约定。'
-            : '当前只展示前向数值。局部导数与总梯度是不同对象。'}
-      </p>
       {layer && (
         <>
           <Formula tex="z_j=\sum_i W_{ji}x_i+b_j,\quad h_j=f(z_j)" />
@@ -221,45 +372,7 @@ export default function Inspector({
         </>
       )}
       {event.kind === 'optimizer' && (
-        <>
-          <label>
-            参数
-            <select value={pk ?? ''} onChange={(e) => setParameter(e.target.value)}>
-              {params.map((k) => (
-                <option key={k}>{k}</option>
-              ))}
-            </select>
-          </label>
-          <p className="small">
-            坐标 [{ix.join(',')}]，在上方“检查单元/输入”或矩阵中选择。超出维度时显示未计算。
-          </p>
-          <Formula tex="m_t=\beta_1m_{t-1}+(1-\beta_1)g_t" />
-          <Formula tex="\Delta\theta=-\eta\hat m_t/(\sqrt{\hat v_t}+\epsilon)" />
-          <dl>
-            {[
-              'before',
-              'raw_gradient',
-              'gradient',
-              'moment_before',
-              'variance_before',
-              'moment',
-              'variance',
-              'corrected_moment',
-              'corrected_variance',
-              'delta',
-              'after',
-            ].map((k) => (
-              <React.Fragment key={k}>
-                <dt>{k}</dt>
-                <dd title={String(val(k))}>{fmt(val(k))}</dd>
-              </React.Fragment>
-            ))}
-            <dt>全局范数 / clip</dt>
-            <dd>
-              {fmt(event.gradient_norm)} / {fmt(event.clip_factor)}
-            </dd>
-          </dl>
-        </>
+        <OptimizerDetails event={event} traceId={traceId} checkpoint={checkpoint} />
       )}
       {event.kind === 'sample_gradients' && (
         <div className="callout">

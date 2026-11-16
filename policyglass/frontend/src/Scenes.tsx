@@ -1,10 +1,11 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, Line, TransformControls } from '@react-three/drei';
+import { OrbitControls, Line, TransformControls, Billboard } from '@react-three/drei';
 import * as THREE from 'three';
 import { Doc, fmt, quaternion, surfaceVertices } from './core';
 import Label from './SceneLabel';
 import NetworkExplorer from './NetworkExplorer';
+import { nearestFaceVertex, surfaceIdentity } from './surfaceData';
 
 function CameraPose({ view, count }: { view: string; count: number }) {
   const { camera, invalidate } = useThree();
@@ -229,7 +230,7 @@ function Surface({
         rotation={[Math.PI / 2, 0, 0]}
         position={[0, 0, -0.05]}
       />
-      {fields.map((key, si) => (
+      {fields.map((key) => (
         <SurfaceMesh
           key={key}
           x={data.x}
@@ -238,7 +239,7 @@ function Surface({
           lo={stats.lo}
           range={range}
           extent={extent}
-          color={['#2eaaa0', '#687dcb', '#dfab68'][si]}
+          color={surfaceIdentity[key].color}
           transparent={fields.length > 1}
           onPick={onPick}
         />
@@ -249,7 +250,7 @@ function Surface({
         高度 {fmt(stats.lo)} … {fmt(stats.hi)}
       </Label>
       {pick &&
-        fields.map((key, i) => {
+        fields.map((key) => {
           const value = data[key]?.[pick[0]]?.[pick[1]];
           if (!Number.isFinite(value)) return null;
           const point: [number, number, number] = [
@@ -259,13 +260,19 @@ function Surface({
           ];
           return (
             <group key={'pick-' + key}>
-              <mesh position={point}>
+              <Billboard position={point}>
+                <mesh renderOrder={20}>
+                  <ringGeometry args={[0.039, 0.055, 24]} />
+                  <meshBasicMaterial color="white" depthTest={false} side={THREE.DoubleSide} />
+                </mesh>
+              </Billboard>
+              <mesh position={point} renderOrder={21} userData={{ surfaceMarker: key, gridIndex: [...pick] }}>
                 <sphereGeometry args={[0.035, 16, 14]} />
-                <meshBasicMaterial color={i === 0 ? '#dc9139' : '#6578c8'} />
+                <meshBasicMaterial color={surfaceIdentity[key].color} depthTest={false} />
               </mesh>
               <Line
                 points={[[point[0], point[1], -0.04], point]}
-                color="#d3a35a"
+                color={surfaceIdentity[key].color}
                 dashed
                 dashSize={0.035}
                 gapSize={0.02}
@@ -314,7 +321,17 @@ function SurfaceMesh({ x, y, values, lo, range, extent, color, transparent, onPi
         geometry={geometry}
         onClick={(e) => {
           e.stopPropagation();
-          const vertex = geometry.index!.getX((e.faceIndex ?? 0) * 3);
+          const hit = e.object.worldToLocal(e.point.clone());
+          const position = geometry.getAttribute('position');
+          const vertex = nearestFaceVertex(
+            hit.toArray(),
+            [0, 1, 2].map((corner) => {
+              const index = geometry.index!.getX((e.faceIndex ?? 0) * 3 + corner);
+              return { index, position: [position.getX(index), position.getY(index), position.getZ(index)] };
+            }),
+          );
+          if (new URLSearchParams(location.search).get('diagnostics') === '1')
+            (window as any).__policyglassSurfaceHit = { face: e.faceIndex, vertex, point: hit.toArray() };
           onPick(Math.floor(vertex / y.length), vertex % y.length);
         }}
       >
@@ -348,7 +365,7 @@ class SceneBoundary extends React.Component<{ children: React.ReactNode }, { err
 
 // Opt-in local benchmark. Normal workbench keeps demand rendering and allocates no log.
 function FrameProbe() {
-  const { gl, invalidate } = useThree();
+  const { gl, invalidate, camera, size, scene } = useThree();
   const enabled = new URLSearchParams(window.location.search).get('diagnostics') === '1';
   useEffect(() => {
     if (!enabled) return;
@@ -363,6 +380,23 @@ function FrameProbe() {
   useFrame(() => {
     if (!enabled) return;
     const target = window as any;
+    target.__policyglassCamera = {
+      width: size.width,
+      height: size.height,
+      projection: camera.projectionMatrix.toArray(),
+      world: camera.matrixWorld.toArray(),
+    };
+    const markers: Doc = {};
+    scene.traverse((object) => {
+      const key = object.userData.surfaceMarker;
+      if (key)
+        markers[key] = {
+          index: object.userData.gridIndex,
+          position: object.getWorldPosition(new THREE.Vector3()).toArray(),
+          color: '#' + ((object as THREE.Mesh).material as THREE.MeshBasicMaterial).color.getHexString(),
+        };
+    });
+    target.__policyglassSurfaceMarkers = markers;
     const frames = (target.__policyglassFrames ??= []);
     if (frames.length < 7200)
       frames.push({
@@ -383,6 +417,97 @@ function FrameProbe() {
   });
   return null;
 }
+function SurfaceProbe({ data, pick, labels, fields, onFields, onPick, request }: any) {
+  const keys = request.kind === 'q' ? ['q1', 'q2', 'minimum'] : ['loss'];
+  return (
+    <aside
+      className="surface-probe"
+      aria-label="曲面网格方向键检查"
+      tabIndex={0}
+      data-testid="surface-probe"
+      data-i={pick[0]}
+      data-j={pick[1]}
+      onKeyDown={(event) => {
+        if (event.target !== event.currentTarget) return;
+        const steps: Record<string, number[]> = {
+          ArrowLeft: [-1, 0],
+          ArrowRight: [1, 0],
+          ArrowUp: [0, 1],
+          ArrowDown: [0, -1],
+        };
+        const step = steps[event.key];
+        if (step) {
+          event.preventDefault();
+          onPick(pick[0] + step[0], pick[1] + step[1]);
+        }
+      }}
+    >
+      <div className="surface-legend" role="group" aria-label="曲面身份与显示">
+        {keys.map((key) => (
+          <button
+            key={key}
+            data-field={key}
+            data-color={surfaceIdentity[key].color}
+            style={{ borderColor: fields.includes(key) ? surfaceIdentity[key].color : undefined }}
+            aria-label={'显示 ' + surfaceIdentity[key].label}
+            aria-pressed={fields.includes(key)}
+            disabled={key === 'loss'}
+            onClick={() => onFields([key])}
+          >
+            <i style={{ background: surfaceIdentity[key].color }} />
+            {surfaceIdentity[key].label}
+          </button>
+        ))}
+        {request.kind === 'q' && (
+          <button aria-pressed={fields.join(',') === 'q1,q2'} onClick={() => onFields(['q1', 'q2'])}>
+            双 Q 同显
+          </button>
+        )}
+      </div>
+      <strong>吸附到实际网格点</strong>
+      <div className="probe-indices">
+        {['i', 'j'].map((name, axis) => (
+          <label key={name}>
+            网格 {name}
+            <input
+              aria-label={'探针网格 ' + name}
+              type="number"
+              min={0}
+              max={(axis === 0 ? data.x : data.y).length - 1}
+              value={pick[axis]}
+              onChange={(e) =>
+                onPick(axis === 0 ? +e.target.value : pick[0], axis === 1 ? +e.target.value : pick[1])
+              }
+            />
+          </label>
+        ))}
+      </div>
+      <dl className="probe-values">
+        <dt>x · {labels[0]}</dt>
+        <dd data-testid="probe-x" title={String(data.x[pick[0]])}>
+          {fmt(data.x[pick[0]])}
+        </dd>
+        <dt>y · {labels[1]}</dt>
+        <dd data-testid="probe-y" title={String(data.y[pick[1]])}>
+          {fmt(data.y[pick[1]])}
+        </dd>
+        {keys.map((key) => (
+          <React.Fragment key={key}>
+            <dt style={{ color: surfaceIdentity[key].color }}>{surfaceIdentity[key].label}</dt>
+            <dd data-testid={'probe-' + key} title={String(data[key][pick[0]][pick[1]])}>
+              {fmt(data[key][pick[0]][pick[1]])}
+            </dd>
+          </React.Fragment>
+        ))}
+      </dl>
+      <small>
+        {request.kind === 'loss' && 'x/y 是参数偏移 Δθ。'}
+        命中三角形的最近真实顶点；读服务器原数组，不插值重算。聚焦此卡：←→ 调 i，↑↓ 调 j。
+      </small>
+    </aside>
+  );
+}
+
 export default function Scenes({
   view,
   frame,
@@ -418,6 +543,8 @@ export default function Scenes({
   focused,
   onFocused,
   onDeepInspect,
+  surfaceRequest,
+  onFields,
 }: any) {
   if (view === 'network')
     return (
@@ -455,54 +582,67 @@ export default function Scenes({
         : { position: [3, -3, 2.7], zoom: 1 };
   const modelCount = path === 'all' ? Object.keys(architecture ?? {}).length : 1;
   return (
-    <div
-      className="scene"
-      data-testid={`scene-${view}`}
-      role="tabpanel"
-      id={'view-panel-' + view}
-      aria-labelledby={'view-tab-' + view}
-    >
-      <SceneBoundary>
-        <Canvas
-          camera={{ ...camera, up: [0, 0, 1], near: 0.01, far: 100 } as any}
-          dpr={[1, 1.5]}
-          frameloop="demand"
-          gl={{ antialias: true, powerPreference: 'high-performance' }}
-          fallback={<div>WebGL 不可用；二维数据仍可检查。</div>}
-        >
-          <FrameProbe />
-          <color attach="background" args={['#f1f5f6']} />
-          <CameraPose view={view} count={modelCount} />
-          <ambientLight intensity={1.7} />
-          <directionalLight position={[3, -3, 7]} intensity={2.2} />
-          {view === 'arm' && frame && (
-            <Arm {...{ frame, geometry, frames, compare, target, onTarget, drag }} />
-          )}
-          {(view === 'q' || view === 'loss') && surface && (
-            <Surface
-              data={surface}
-              {...{ fields, onPick, marker, gradient }}
-              pick={gridPick}
-              labels={surfaceLabels}
+    <div className={(view === 'q' || view === 'loss') && surface ? 'surface-workspace' : undefined}>
+      <div
+        className="scene"
+        data-testid={`scene-${view}`}
+        role="tabpanel"
+        id={'view-panel-' + view}
+        aria-labelledby={'view-tab-' + view}
+      >
+        <SceneBoundary>
+          <Canvas
+            camera={{ ...camera, up: [0, 0, 1], near: 0.01, far: 100 } as any}
+            dpr={[1, 1.5]}
+            frameloop="demand"
+            gl={{ antialias: true, powerPreference: 'high-performance' }}
+            fallback={<div>WebGL 不可用；二维数据仍可检查。</div>}
+          >
+            <FrameProbe />
+            <color attach="background" args={['#f1f5f6']} />
+            <CameraPose view={view} count={modelCount} />
+            <ambientLight intensity={1.7} />
+            <directionalLight position={[3, -3, 7]} intensity={2.2} />
+            {view === 'arm' && frame && (
+              <Arm {...{ frame, geometry, frames, compare, target, onTarget, drag }} />
+            )}
+            {(view === 'q' || view === 'loss') && surface && (
+              <Surface
+                data={surface}
+                {...{ fields, onPick, marker, gradient }}
+                pick={gridPick}
+                labels={surfaceLabels}
+              />
+            )}
+            <OrbitControls
+              key={view + ':' + modelCount}
+              makeDefault
+              target={
+                view === 'arm'
+                  ? [0.18, 0, 0.2]
+                  : view === 'network'
+                    ? [0, 0, Math.max(1, ((modelCount - 1) * 2.7) / 2)]
+                    : [0, 0, 0.35]
+              }
+              minDistance={view === 'arm' ? 0.3 : 1}
+              maxDistance={view === 'arm' ? 4 : 25}
             />
-          )}
-          <OrbitControls
-            key={view + ':' + modelCount}
-            makeDefault
-            target={
-              view === 'arm'
-                ? [0.18, 0, 0.2]
-                : view === 'network'
-                  ? [0, 0, Math.max(1, ((modelCount - 1) * 2.7) / 2)]
-                  : [0, 0, 0.35]
-            }
-            minDistance={view === 'arm' ? 0.3 : 1}
-            maxDistance={view === 'arm' ? 4 : 25}
-          />
-        </Canvas>
-      </SceneBoundary>
-      {(view === 'q' || view === 'loss') && !surface && <div className="surface-empty">{empty}</div>}
-      <div className="scene-hint">拖动旋转 · 滚轮缩放 · Shift 平移</div>
+          </Canvas>
+        </SceneBoundary>
+        {(view === 'q' || view === 'loss') && !surface && <div className="surface-empty">{empty}</div>}
+        <div className="scene-hint">拖动旋转 · 滚轮缩放 · Shift 平移</div>
+      </div>
+      {(view === 'q' || view === 'loss') && surface && (
+        <SurfaceProbe
+          data={surface}
+          pick={gridPick}
+          labels={surfaceLabels}
+          fields={fields}
+          onFields={onFields}
+          onPick={onPick}
+          request={surfaceRequest}
+        />
+      )}
     </div>
   );
 }

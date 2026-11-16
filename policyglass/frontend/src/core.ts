@@ -36,6 +36,17 @@ export function shape(v: any): number[] {
 export function at(v: any, index: number[]) {
   return index.reduce((a, i) => a?.[i], v);
 }
+export function boundedIndex(value: number, size: number) {
+  return Math.max(0, Math.min(Number.isFinite(value) ? Math.trunc(value) : 0, size - 1));
+}
+export function optimizerIndex(before: any, row: number, column: number) {
+  const dims = shape(before);
+  return dims.length === 2
+    ? [boundedIndex(row, dims[0]), boundedIndex(column, dims[1])]
+    : dims.length === 1
+      ? [boundedIndex(row, dims[0])]
+      : [];
+}
 export function numeric(v: any): number[] {
   return Array.isArray(v)
     ? v.flat(Infinity).filter((x) => typeof x === 'number')

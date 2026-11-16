@@ -1,0 +1,22 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@mujoco/mujoco':
+        specifier: 4.0.1
+        version: 4.0.1
+
+packages:
+
+  '@mujoco/mujoco@4.0.1':
+    resolution: {integrity: sha512-vLuwD6biiyo2D2LG1fwpwJUfWSDZhBIr6aUd3AuPJR8P7FAIeSHgofGC+0XgIpZ0vYi0EOyju+Kv7zPJepX7wA==}
+
+snapshots:
+
+  '@mujoco/mujoco@4.0.1': {}

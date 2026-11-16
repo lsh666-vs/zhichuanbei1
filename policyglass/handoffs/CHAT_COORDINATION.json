@@ -1,0 +1,7 @@
+{
+  "mode": "serial",
+  "project": "D:/传智杯1/counterlab/policyglass",
+  "stage2": {"thread_id": "01a1e40b-2634-72d3-bdfd-58388a0befa1", "host_id": "local", "title": "策镜 2/3｜3D交互与机制教学"},
+  "stage3": {"thread_id": "01a1e40b-28d2-7720-a473-a311e7352cc5", "host_id": "local", "title": "策镜 3/3｜科学评估与完整交付"},
+  "rules": "Successor starts only after predecessor READY plus explicit completion delivery. User authorized these three chats and serial handoffs. No concurrent writes."
+}

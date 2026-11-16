@@ -1,0 +1,8 @@
+{
+  "name": "policyglass-physics-host",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Original JSONL host for canonical MuJoCo WebAssembly, avoiding Windows native DLL requirements",
+  "dependencies": {"@mujoco/mujoco": "4.0.1"}
+}

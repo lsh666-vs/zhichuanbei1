@@ -2,6 +2,8 @@
 
 PPO / SAC 神经网络底层机制的真实计算与交互实验室。
 
+**离线包使用者**：把整个包解压到D盘，运行包根目录 `Start-PolicyGlass-Offline.ps1`，打开 `http://127.0.0.1:8787/`。包内已带运行时，不用安装Python/Node或创建虚拟环境。下方 `.venv`、pnpm及Setup命令用于源码开发；完整离线核验见 [离线说明](docs/OFFLINE_RELEASE.md)。
+
 用户已批准完整方案：[开发方案](docs/DEVELOPMENT_PLAN.md)、[科学契约](docs/SCIENTIFIC_CONTRACT.md)、[竞品与来源](docs/COMPETITOR_AUDIT.md)。
 
 已实现本地 React/Three.js 工作台、四处计算来源明确的3D、深度张量/梯度/Adam检查、八课、受控分支、笔记和安全保存导入导出。第三阶段增加官方DeepSeek可选讲解、预登记多种子训练与机制实验、全部种子研究库、独立核验、键盘操作及离线评审包。准确结果和完成边界见 [第三阶段核验](docs/STAGE3_VALIDATION.md) 与 [最终交接](handoffs/STAGE_3.md)。真实学习者/专家反馈按用户要求暂留空，跨机器复现不能由同机迁移检查替代；视频/PDF继续暂缓。
@@ -10,7 +12,7 @@ PPO / SAC 神经网络底层机制的真实计算与交互实验室。
 
 ## 本机启动
 
-现有开发环境已经安装在本目录的 `.venv/`。PowerShell中：
+本源码工作区的开发环境已经安装在 `.venv/`。PowerShell中：
 
 ```powershell
 Set-Location 'D:\传智杯1\counterlab\policyglass'

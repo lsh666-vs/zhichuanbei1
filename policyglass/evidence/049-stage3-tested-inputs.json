@@ -1,6 +1,6 @@
 {
   "schema": "policyglass.tested-inputs.v1",
-  "captured_utc": "2026-11-16T16:02:39.476212+00:00",
+  "captured_utc": "2026-11-16T16:17:22.740066+00:00",
   "implementation_revision": "020549fb7e6d80dead50752ce5df52bfe23895af",
   "environment": "Python3.12.7, Torch2.8.0+cpu, NumPy2.2.6, setuptools84.1.0; CPU float64 one Torch thread",
   "inputs": {
@@ -49,11 +49,11 @@
     "scripts/compare_runtime_versions.py": "656eaa113be847b5c6086c078875f937c51b1f4d91d9a677943525550a670276",
     "scripts/export_dialogue.py": "0ab4679e04c03c0acf956d23c17cf9c2088105298af72f0ae5f6e3b707e86a7d",
     "scripts/export_stage2_dialogue.py": "a58d8315d4f4c94bc16954c2e41fee2ff5614ea2cd52ad2252d2086e05deddc1",
-    "scripts/export_stage3_dialogue.py": "3bf9a0ed8cd4329cb684b6b34a74085482ac2c688ba6647d4ca8b13b5372c8cb",
+    "scripts/export_stage3_dialogue.py": "40c340c26509abba04efe0aaa00ac9c231c571f5955ff0466539e58719518a7d",
     "scripts/lock_environment.py": "68a6c95c38e050be26eef569acf71a7fc0e85242f97f46d16455f132a09f89ee",
     "scripts/measure_event_bytes.py": "9b521ce575b6f4f4ab90edd4975d1dcf1629c4f937ac39983ad787fd4aa76a32",
     "scripts/measure_runtime.py": "ae74667c6a9407118e34dc00ddd69709bbfc824a714d9aaabfe0f9bc2a94aba8",
-    "scripts/offline_manifest.py": "a897d43b93cb589f2a34ef14a9175acbeff09a0d0e23a37b67086bc2079e5cca",
+    "scripts/offline_manifest.py": "441a590fc32a049dcb83b42df922e3434de97a372d7bbd84b1adde8eed20c692",
     "scripts/offline_network_guard.py": "13622567d9e9919b0caf6277a8484111c52d4a783e951d3e4032c6011affec14",
     "scripts/probe_neuron_updates.py": "b24fe4a7a08a908f5dc92e556e48d614f3a67188cf50d6dae552780e5ddc8042",
     "scripts/smoke_tcp.py": "e71db8d8021a4ebd40bc551923c2c752f39924452c845291d541fe9cf230e50e",
@@ -111,9 +111,13 @@
   "packaging_allowlist_patch": {
     "files": [
       "requirements-study-py312.lock",
-      ".gitattributes"
+      ".gitattributes",
+      "frontend/pnpm-workspace.yaml",
+      "physics/pnpm-workspace.yaml",
+      ".gitignore",
+      "Start-PolicyGlass.ps1"
     ],
-    "validation": "Ruff/format passed; final offline verification will validate actual inclusion and bytes."
+    "validation": "Ruff/format passed; both workspace boundaries and original source startup retained. Helper working-tree newlines unified with its existing Git LF blob; no semantic change."
   },
   "revision_scope": "Implementation93c53bf; byte preservation020549f. Final packaging/document commit is identified by bundle manifest; exact source inputs use individual hashes."
 }

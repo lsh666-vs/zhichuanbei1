@@ -380,11 +380,12 @@ def assemble(args):
         project / "physics" / "node_modules" / "@mujoco" / "mujoco",
         bundle / "physics" / "node_modules" / "@mujoco" / "mujoco",
     )
-    for name in ("host.mjs", "package.json", "pnpm-lock.yaml"):
+    for name in ("host.mjs", "package.json", "pnpm-lock.yaml", "pnpm-workspace.yaml"):
         copy_file(project / "physics" / name, bundle / "physics" / name)
     for name in (
         "package.json",
         "pnpm-lock.yaml",
+        "pnpm-workspace.yaml",
         "index.html",
         "tsconfig.json",
         "vite.config.ts",
@@ -401,6 +402,8 @@ def assemble(args):
         "requirements-win-py312.lock",
         "requirements-study-py312.lock",
         ".gitattributes",
+        ".gitignore",
+        "Start-PolicyGlass.ps1",
         ".env.example",
     ):
         copy_file(project / name, bundle / name)

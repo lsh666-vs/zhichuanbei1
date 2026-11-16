@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "name": "Current-driven 3D SiN ridge (uncalibrated)",
+  "wavelength_um": 1.55,
+  "geometry": {
+    "kind": "layered_waveguide",
+    "length_um": 3.0,
+    "width_um": 2.0,
+    "height_um": 1.6,
+    "core_width_um": 0.7,
+    "core_thickness_um": 0.4,
+    "etch_depth_um": 0.4,
+    "sidewall_angle_deg": 90.0,
+    "core_index": 2.0,
+    "cladding_index": 1.44,
+    "design_length_um": 1.0,
+    "pml_thickness_um": 0.6,
+    "material_loss": 0.0
+  },
+  "mesh": {
+    "maxh_um": 0.35,
+    "order": 2,
+    "sample_shape": [
+      25,
+      17,
+      13
+    ],
+    "max_dofs": 250000
+  },
+  "excitation": {
+    "kind": "localized_current",
+    "amplitude": 1.0,
+    "component": "y",
+    "center_um": null,
+    "width_um": 0.15
+  }
+}

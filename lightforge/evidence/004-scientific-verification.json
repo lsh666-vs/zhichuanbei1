@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "purpose": "first-stage numerical verification, not a validated optical splitter",
+  "manufactured_cavity": [
+    {
+      "cells_per_axis": 4,
+      "spec_hash": "fdb9e17dd3b242116a58392e4d8b0ac940d3c551ac89b714d206fb4d8f08b13f",
+      "relative_residual": 2.5188994494486537e-16,
+      "unknowns": 108,
+      "cells": [
+        4,
+        4,
+        4
+      ],
+      "spacing_um": [
+        0.4,
+        0.4,
+        0.4
+      ],
+      "relative_electric_l2_error": 0.006648190501251549,
+      "analytic_discrete_relative_error": 0.0066481905012515385,
+      "total_outward_power_w": 0.0,
+      "elapsed_seconds": 0.12720580000041082
+    },
+    {
+      "cells_per_axis": 8,
+      "spec_hash": "1100bf8fbe2afc1165ec9a825c3290e47ed0061045068ec95794ad46effd6d91",
+      "relative_residual": 5.210045133403427e-15,
+      "unknowns": 1176,
+      "cells": [
+        8,
+        8,
+        8
+      ],
+      "spacing_um": [
+        0.19999999999999996,
+        0.19999999999999996,
+        0.19999999999999996
+      ],
+      "relative_electric_l2_error": 0.0016962669573322563,
+      "analytic_discrete_relative_error": 0.0016962669573324929,
+      "total_outward_power_w": 0.0,
+      "elapsed_seconds": 0.11671860000024026
+    },
+    {
+      "cells_per_axis": 12,
+      "spec_hash": "2c9c9ddd25a92b1813f47efd574615efe349bae484f02cb20de81267e4793271",
+      "relative_residual": 3.000046705432984e-14,
+      "unknowns": 4356,
+      "cells": [
+        12,
+        12,
+        12
+      ],
+      "spacing_um": [
+        0.1333333333333333,
+        0.1333333333333333,
+        0.1333333333333333
+      ],
+      "relative_electric_l2_error": 0.0007567634167928134,
+      "analytic_discrete_relative_error": 0.0007567634167919834,
+      "total_outward_power_w": 0.0,
+      "elapsed_seconds": 0.9305304999998043
+    }
+  ],
+  "measured_convergence_order": 1.977994727280715,
+  "manufactured_pass": true,
+  "open_pml": [
+    {
+      "pml_thickness_um": 0.3,
+      "spec_hash": "5a96cbc3f89aa5dd5a495d8e3817eba6d8d7ce4605736b1826773882a1f5e9db",
+      "relative_residual": 6.281062387615661e-14,
+      "unknowns": 3996,
+      "cells": [
+        16,
+        10,
+        10
+      ],
+      "spacing_um": [
+        0.19999999999999996,
+        0.20000000000000007,
+        0.20000000000000007
+      ],
+      "pml_actual_thickness_um_xyz": [
+        0.3999999999999999,
+        0.4,
+        0.4
+      ],
+      "pml_requested_thickness_um": 0.3,
+      "total_outward_power_w": 4.044748959609772e-19,
+      "source_supplied_power_w": 4.477752312124427e-19,
+      "surface_source_power_relative_mismatch": 0.0967010505119299,
+      "elapsed_seconds": 0.6213698000001386,
+      "probe_e_real": [
+        [
+          -1.0939179595745859e-16,
+          -0.008614796637585125,
+          -3.8087846272882525e-17
+        ],
+        [
+          9.512502304975363e-17,
+          -0.005007691366897147,
+          -1.538544111479873e-16
+        ],
+        [
+          -0.0012186747128209569,
+          0.005745280997867548,
+          -0.0003249133810154763
+        ]
+      ],
+      "probe_e_imag": [
+        [
+          -1.6404873879987914e-16,
+          -0.008404358346920325,
+          2.0692600200630677e-17
+        ],
+        [
+          -1.4177116613751985e-16,
+          -0.005536840958772547,
+          1.3905551082647037e-16
+        ],
+        [
+          -0.003673418833264648,
+          0.003952479404103093,
+          -0.0004666678699473619
+        ]
+      ]
+    },
+    {
+      "pml_thickness_um": 0.6,
+      "spec_hash": "3f828a013fad21b7ba56d59a466b388a315d88e8c825b5ddc5d0cf184abdeea8",
+      "relative_residual": 3.2853515822699723e-14,
+      "unknowns": 6666,
+      "cells": [
+        18,
+        12,
+        12
+      ],
+      "spacing_um": [
+        0.19999999999999996,
+        0.19999999999999996,
+        0.19999999999999996
+      ],
+      "pml_actual_thickness_um_xyz": [
+        0.5999999999999999,
+        0.6,
+        0.6
+      ],
+      "pml_requested_thickness_um": 0.6,
+      "total_outward_power_w": 3.913453309235474e-19,
+      "source_supplied_power_w": 4.323788972997384e-19,
+      "surface_source_power_relative_mismatch": 0.0949018710960476,
+      "elapsed_seconds": 3.357944000000316,
+      "probe_e_real": [
+        [
+          -1.0538979208725613e-17,
+          -0.008585455213202937,
+          -7.529903885425047e-18
+        ],
+        [
+          -2.9515085373294035e-17,
+          -0.005028648490125206,
+          -2.500982079265991e-17
+        ],
+        [
+          -0.0012880073959885294,
+          0.006242435271791141,
+          -0.0002854233279442182
+        ]
+      ],
+      "probe_e_imag": [
+        [
+          -2.4978706119397794e-18,
+          -0.0044883085758455924,
+          4.066956211745045e-18
+        ],
+        [
+          5.364158699745784e-18,
+          -0.003623435370755603,
+          1.3648176938096592e-17
+        ],
+        [
+          -0.003344375976731528,
+          0.002378696034215354,
+          -0.00043847203406456115
+        ]
+      ]
+    },
+    {
+      "pml_thickness_um": 1.2,
+      "spec_hash": "e1980e950a690f289349300626348401ef67ef736139f5e23b144b4c7ea095a1",
+      "relative_residual": 8.190606501580007e-14,
+      "unknowns": 21012,
+      "cells": [
+        24,
+        18,
+        18
+      ],
+      "spacing_um": [
+        0.20000000000000018,
+        0.19999999999999996,
+        0.19999999999999996
+      ],
+      "pml_actual_thickness_um_xyz": [
+        1.2,
+        1.1999999999999997,
+        1.1999999999999997
+      ],
+      "pml_requested_thickness_um": 1.2,
+      "total_outward_power_w": 3.886277796106737e-19,
+      "source_supplied_power_w": 4.3012653356679216e-19,
+      "surface_source_power_relative_mismatch": 0.09648033942940724,
+      "elapsed_seconds": 34.74459529999967,
+      "probe_e_real": [
+        [
+          1.9056755897540892e-17,
+          -0.007510354895280307,
+          -1.2304500188072861e-17
+        ],
+        [
+          3.990251006285055e-17,
+          -0.004433599546718249,
+          1.4065368119994544e-17
+        ],
+        [
+          -0.0011963444733182733,
+          0.005716338142048821,
+          -0.00029868595599350894
+        ]
+      ],
+      "probe_e_imag": [
+        [
+          6.982768188437949e-17,
+          -0.005237432600391199,
+          -5.5824095774613e-18
+        ],
+        [
+          4.003941618621745e-17,
+          -0.003994262861254158,
+          -1.1639212507694473e-17
+        ],
+        [
+          -0.003369934150632701,
+          0.0026416071089338734,
+          -0.00044012156385197783
+        ]
+      ]
+    }
+  ],
+  "physical_probe_coordinates_um": [
+    [
+      0.6,
+      0.0,
+      0.0
+    ],
+    [
+      0.6,
+      0.0,
+      0.25
+    ],
+    [
+      0.0,
+      0.35,
+      0.2
+    ]
+  ],
+  "pml_doubling_probe_relative_changes": [
+    0.33900394748740703,
+    0.12202726754891742
+  ],
+  "pml_converged_to_one_percent": false,
+  "open_modal_reference": [
+    {
+      "benchmark": "full_3d_yee_TE_mode_open_x_with_PEC_yz",
+      "reference": "independently derived discrete infinite-guide Green function",
+      "pml_thickness_um": 0.4,
+      "actual_spacing_um": [
+        0.10000000000000009,
+        0.09999999999999998,
+        0.09999999999999998
+      ],
+      "unknowns": 3662,
+      "relative_residual": 1.2974821236391271e-14,
+      "relative_electric_reference_error": 0.0033491146614472774,
+      "reflected_amplitude_ratio": 0.0024452559341542647,
+      "source_power_w": 1.5222161701979228e-16,
+      "outward_plane_powers_w": [
+        7.611080850989597e-17,
+        7.611080850989614e-17
+      ],
+      "source_flux_relative_mismatch": 1.1336321765302176e-15
+    },
+    {
+      "benchmark": "full_3d_yee_TE_mode_open_x_with_PEC_yz",
+      "reference": "independently derived discrete infinite-guide Green function",
+      "pml_thickness_um": 0.8,
+      "actual_spacing_um": [
+        0.10000000000000009,
+        0.09999999999999998,
+        0.09999999999999998
+      ],
+      "unknowns": 4598,
+      "relative_residual": 1.4872570963862325e-14,
+      "relative_electric_reference_error": 0.002593158353355656,
+      "reflected_amplitude_ratio": 0.0018924717420357791,
+      "source_power_w": 1.523579961115403e-16,
+      "outward_plane_powers_w": [
+        7.617899805577012e-17,
+        7.617899805577007e-17
+      ],
+      "source_flux_relative_mismatch": 8.090124547880349e-16
+    },
+    {
+      "benchmark": "full_3d_yee_TE_mode_open_x_with_PEC_yz",
+      "reference": "independently derived discrete infinite-guide Green function",
+      "pml_thickness_um": 1.6,
+      "actual_spacing_um": [
+        0.10000000000000009,
+        0.09999999999999998,
+        0.09999999999999998
+      ],
+      "unknowns": 6470,
+      "relative_residual": 1.4472180449997347e-14,
+      "relative_electric_reference_error": 0.002073389379982291,
+      "reflected_amplitude_ratio": 0.0015148927395877134,
+      "source_power_w": 1.5200732360688938e-16,
+      "outward_plane_powers_w": [
+        7.600366180344473e-17,
+        7.600366180344474e-17
+      ],
+      "source_flux_relative_mismatch": 4.865272811179078e-16
+    }
+  ],
+  "open_modal_reference_pass": true,
+  "limitations": [
+    "Layered-device PML comparison holds physical grid fixed; thick 3D cladding PML and material-interface convergence still require independent validation.",
+    "Independent solver and calibrated waveguide transport are not part of these manufactured-source checks.",
+    "A small algebraic residual does not certify field accuracy or optical efficiency."
+  ]
+}

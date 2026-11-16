@@ -50,7 +50,9 @@ class GeometrySpec(StrictModel):
 class MeshSpec(StrictModel):
     maxh_um: Annotated[float, Field(ge=0.06, le=0.8)] = 0.35
     order: Literal[2] = 2
-    sample_shape: tuple[Annotated[int, Field(ge=3, le=129)], ...] = (25, 17, 13)
+    sample_shape: Annotated[
+        tuple[Annotated[int, Field(ge=3, le=129)], ...], Field(min_length=3, max_length=3)
+    ] = (25, 17, 13)
     max_dofs: Annotated[int, Field(ge=1000, le=500000)] = 250000
 
     @model_validator(mode="after")
@@ -85,22 +87,33 @@ class ExperimentSpec(StrictModel):
             raise ValueError("analytic cavity benchmark requires y polarization and zero loss")
         g = self.geometry
         if cavity:
-            resonant_wavelength = 2*g.core_index / math.sqrt(1/g.length_um**2 + 1/g.height_um**2)
-            if abs(self.wavelength_um/resonant_wavelength - 1) < 0.03:
+            resonant_wavelength = (
+                2 * g.core_index / math.sqrt(1 / g.length_um**2 + 1 / g.height_um**2)
+            )
+            if abs(self.wavelength_um / resonant_wavelength - 1) < 0.03:
                 raise ValueError("manufactured analytic source is near its cavity resonance")
         if self.excitation.center_um is not None:
-            for val, length in zip(self.excitation.center_um, (g.length_um,g.width_um,g.height_um)):
+            for val, length in zip(
+                self.excitation.center_um, (g.length_um, g.width_um, g.height_um)
+            ):
                 if not math.isfinite(val) or abs(val) >= length / 2:
                     raise ValueError("source center must lie strictly inside physical domain")
-        padded = tuple(v + (0 if cavity else 2*g.pml_thickness_um) for v in
-                       (g.length_um,g.width_um,g.height_um))
+        padded = tuple(
+            v + (0 if cavity else 2 * g.pml_thickness_um)
+            for v in (g.length_um, g.width_um, g.height_um)
+        )
         if math.prod(padded) / self.mesh.maxh_um**3 > 120000:
             raise ValueError("estimated mesh budget exceeded; use a smaller domain or larger maxh")
         return self
 
     def canonical_json(self) -> str:
-        return json.dumps(self.model_dump(mode="json"), sort_keys=True, separators=(",", ":"),
-                          ensure_ascii=False, allow_nan=False)
+        return json.dumps(
+            self.model_dump(mode="json"),
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+            allow_nan=False,
+        )
 
     @property
     def spec_hash(self) -> str:
